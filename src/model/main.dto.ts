@@ -1,12 +1,14 @@
-import { StateDto } from "./config"
+import { StateDto } from './config'
 
 export interface match {
     matchId: number,
     matchDate: string,
     homeTeamId: number,
     awayTeamId: number,
-    hometeamLogo: string,
-    awayteamLogo: string,
+    homeTeamName: string,
+    awayTeamName: string,
+    homeTeamLogo: string,
+    awayTeamLogo: string,
     homeTeamScore: number,
     awayTeamScore: number,
     matchState: string,

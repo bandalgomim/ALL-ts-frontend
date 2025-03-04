@@ -11,6 +11,16 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		6F8A84114DBF405BB0B561CA /* built titling bd it.otf in Resources */ = {isa = PBXBuildFile; fileRef = 46DC3D8083E24FD696620F13 /* built titling bd it.otf */; };
+		0732D99FDAAC45D0AB090558 /* built titling bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03A579B6FBC7474B8948FB01 /* built titling bd.otf */; };
+		1BB703FAA0CE4B2E819DC182 /* built titling el it.otf in Resources */ = {isa = PBXBuildFile; fileRef = 53CBD82E909D4954ADA515E3 /* built titling el it.otf */; };
+		E73A038DF0484DDE92B39921 /* built titling el.otf in Resources */ = {isa = PBXBuildFile; fileRef = 309C3E1BA94C4FDFABF4630C /* built titling el.otf */; };
+		229B3AAE17F1484AB0936F1E /* built titling lt it.otf in Resources */ = {isa = PBXBuildFile; fileRef = FD88B57A6BA848EDB74886DA /* built titling lt it.otf */; };
+		62EDB9F0B7AD4F5892D0DD94 /* built titling lt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3293D4F976D947EABA153A42 /* built titling lt.otf */; };
+		0985FF7140B945BA83FBC244 /* built titling rg it.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BBD5E64494948D49B2BB2DF /* built titling rg it.otf */; };
+		6C514841D77442A0956C1EE9 /* built titling rg.otf in Resources */ = {isa = PBXBuildFile; fileRef = 38D28C2A40594B3F902C45DF /* built titling rg.otf */; };
+		C15AFCB5B2034D71AF570847 /* built titling sb it.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2AED7BB24679403CA1027F21 /* built titling sb it.otf */; };
+		70B42C2CB84E4B008FC534E3 /* built titling sb.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7A2BBCA446BD4E2A98F815F8 /* built titling sb.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +45,16 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ALLts/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ALLts/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		46DC3D8083E24FD696620F13 /* built titling bd it.otf */ = {isa = PBXFileReference; name = "built titling bd it.otf"; path = "../src/assets/fonts/built titling bd it.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		03A579B6FBC7474B8948FB01 /* built titling bd.otf */ = {isa = PBXFileReference; name = "built titling bd.otf"; path = "../src/assets/fonts/built titling bd.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		53CBD82E909D4954ADA515E3 /* built titling el it.otf */ = {isa = PBXFileReference; name = "built titling el it.otf"; path = "../src/assets/fonts/built titling el it.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		309C3E1BA94C4FDFABF4630C /* built titling el.otf */ = {isa = PBXFileReference; name = "built titling el.otf"; path = "../src/assets/fonts/built titling el.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD88B57A6BA848EDB74886DA /* built titling lt it.otf */ = {isa = PBXFileReference; name = "built titling lt it.otf"; path = "../src/assets/fonts/built titling lt it.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3293D4F976D947EABA153A42 /* built titling lt.otf */ = {isa = PBXFileReference; name = "built titling lt.otf"; path = "../src/assets/fonts/built titling lt.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5BBD5E64494948D49B2BB2DF /* built titling rg it.otf */ = {isa = PBXFileReference; name = "built titling rg it.otf"; path = "../src/assets/fonts/built titling rg it.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		38D28C2A40594B3F902C45DF /* built titling rg.otf */ = {isa = PBXFileReference; name = "built titling rg.otf"; path = "../src/assets/fonts/built titling rg.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2AED7BB24679403CA1027F21 /* built titling sb it.otf */ = {isa = PBXFileReference; name = "built titling sb it.otf"; path = "../src/assets/fonts/built titling sb it.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7A2BBCA446BD4E2A98F815F8 /* built titling sb.otf */ = {isa = PBXFileReference; name = "built titling sb.otf"; path = "../src/assets/fonts/built titling sb.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +113,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				7FE5E53DAE944FA18054B3E9 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -115,6 +136,24 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		7FE5E53DAE944FA18054B3E9 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				46DC3D8083E24FD696620F13 /* built titling bd it.otf */,
+				03A579B6FBC7474B8948FB01 /* built titling bd.otf */,
+				53CBD82E909D4954ADA515E3 /* built titling el it.otf */,
+				309C3E1BA94C4FDFABF4630C /* built titling el.otf */,
+				FD88B57A6BA848EDB74886DA /* built titling lt it.otf */,
+				3293D4F976D947EABA153A42 /* built titling lt.otf */,
+				5BBD5E64494948D49B2BB2DF /* built titling rg it.otf */,
+				38D28C2A40594B3F902C45DF /* built titling rg.otf */,
+				2AED7BB24679403CA1027F21 /* built titling sb it.otf */,
+				7A2BBCA446BD4E2A98F815F8 /* built titling sb.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -185,6 +224,16 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				6F8A84114DBF405BB0B561CA /* built titling bd it.otf in Resources */,
+				0732D99FDAAC45D0AB090558 /* built titling bd.otf in Resources */,
+				1BB703FAA0CE4B2E819DC182 /* built titling el it.otf in Resources */,
+				E73A038DF0484DDE92B39921 /* built titling el.otf in Resources */,
+				229B3AAE17F1484AB0936F1E /* built titling lt it.otf in Resources */,
+				62EDB9F0B7AD4F5892D0DD94 /* built titling lt.otf in Resources */,
+				0985FF7140B945BA83FBC244 /* built titling rg it.otf in Resources */,
+				6C514841D77442A0956C1EE9 /* built titling rg.otf in Resources */,
+				C15AFCB5B2034D71AF570847 /* built titling sb it.otf in Resources */,
+				70B42C2CB84E4B008FC534E3 /* built titling sb.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,45 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/built titling bd it.otf",
+      "sha1": "54198f2355b68c8658cc46c6c20aabc98a6d89da"
+    },
+    {
+      "path": "src/assets/fonts/built titling bd.otf",
+      "sha1": "4c6ffaaacb0b4e4740f0a41ae2242ba6e7728240"
+    },
+    {
+      "path": "src/assets/fonts/built titling el it.otf",
+      "sha1": "027987ba9c47b0aec7677d75a913b771a60daac9"
+    },
+    {
+      "path": "src/assets/fonts/built titling el.otf",
+      "sha1": "9c462bfd00561968b21a10c1395116541dcb5a38"
+    },
+    {
+      "path": "src/assets/fonts/built titling lt it.otf",
+      "sha1": "a35500b28a1192beac57101a103f8b704ccccfa9"
+    },
+    {
+      "path": "src/assets/fonts/built titling lt.otf",
+      "sha1": "2de949da5d99fa97dc996fb83ca786aed211ff23"
+    },
+    {
+      "path": "src/assets/fonts/built titling rg it.otf",
+      "sha1": "dd8c44fad2c605edebe44002aba0dd27c116e447"
+    },
+    {
+      "path": "src/assets/fonts/built titling rg.otf",
+      "sha1": "7d8da27f48790d1b6b6ea017bb26c8b4bc0aac7c"
+    },
+    {
+      "path": "src/assets/fonts/built titling sb it.otf",
+      "sha1": "44c2b500d12bcdf4a76354d33b2e0750683e577f"
+    },
+    {
+      "path": "src/assets/fonts/built titling sb.otf",
+      "sha1": "f0df46c1c90f01b756576987dcc6becd2ea2a50d"
+    }
+  ]
+}

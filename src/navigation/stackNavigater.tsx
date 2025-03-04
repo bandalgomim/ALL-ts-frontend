@@ -1,36 +1,44 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, Header } from '@react-navigation/stack';
 import BottomTabNavigator from './bottomNavigation';
-import Header from '../components/header/header';
-import MyPostScreen from '../screen/myPage/myPost';
-import HomeScreen from '../screen/home/home';
+import { MainScreen } from '../screen/main';
+import { TeamScreen } from '../screen/team';
+import { LeagueScreen } from '../screen/league';
+import { TestScreen } from '../screen/test';
+
 
 const Stack = createStackNavigator();
-const CustomHeader = () => <Header />;
 
 const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{
-          header: CustomHeader, // 커스텀 헤더를 적용
-        }}
       >
         <Stack.Screen
           name="MainTabs"
           component={BottomTabNavigator}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="MyPostScreen"
-          component={MyPostScreen}
-          options={{ headerShown: true }}
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ headerShown: true }}
+          name="TeamScreen"
+          component={TeamScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LeagueScreen"
+          component={LeagueScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TestScreen"
+          component={TestScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

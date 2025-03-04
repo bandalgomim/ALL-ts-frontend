@@ -1,10 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MyPageScreen } from '../screen/myPage/myPage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../global';
 import { Dimensions, Platform } from 'react-native';
-import HomeScreen from '../screen/home/home';
+import { LeagueScreen } from '../screen/league';
+import { MainScreen } from '../screen/main';
+import { TeamScreen } from '../screen/team';
+import { TestScreen } from '../screen/test';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,10 +25,7 @@ const getTabBarIcon = (routeName: string, color: string, size: number) => {
     case '경기 짤방':
       iconName = 'person';
       break;
-    case '커뮤니티':
-      iconName = 'person';
-      break;
-    case '마이페이지':
+    case '경기 짤방':
       iconName = 'person';
       break;
     default:
@@ -53,11 +52,10 @@ const BottomTabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="경기 짤방" component={MyPageScreen} />
-      <Tab.Screen name="글쓰기" component={MyPageScreen} />
-      <Tab.Screen name="홈" component={HomeScreen} />
-      <Tab.Screen name="커뮤니티" component={MyPageScreen} />
-      <Tab.Screen name="마이페이지" component={MyPageScreen} />
+      <Tab.Screen name="MAIN" component={MainScreen} />
+      <Tab.Screen name="TEAM" component={TeamScreen} />
+      <Tab.Screen name="LEAGUE" component={LeagueScreen} />
+      <Tab.Screen name="TEST" component={TestScreen} />
     </Tab.Navigator>
   );
 };
