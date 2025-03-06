@@ -20,7 +20,7 @@ export const MatchScore: React.FC<MatchScorePros> = ({score, shadowStart, shadow
         style={[{width: (width*0.058)-6, height: (width*0.08225)-6}, styles.ShadowContainer]}
       >
         <View
-          style={{ width:width*0.058, height: width*0.08225, backgroundColor:'#ffffff', borderRadius: 5, marginLeft: -3}}
+          style={{ width:width*0.058, height: width*0.08225, backgroundColor:'#ffffff', borderRadius: 5 }}
         >
         <Text style={[styles.scoreBox, {fontSize:width*0.0745, marginTop: -height*0.0017}]}>{score}</Text></View>
       </Shadow>
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   },
   ShadowContainer: {
     borderRadius: 5,
+    alignItems: 'center',
   },
   scoreBox: {
     textAlign: 'center',

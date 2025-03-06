@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Select from './mode/mode';
+import { TeamListBar } from '../main/teamListBar';
 
 export default function MainCalendar() {
   const { width, height } = Dimensions.get('window');
@@ -41,7 +42,8 @@ export default function MainCalendar() {
     setCurrentDate(newDate);
   };
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: height*0.5}]}>
+    <>
+    <View style={[styles.CalendarContainer, {width: width, height: height*0.44, marginTop: -width*0.02, }]}>
       {/* Header */}
       <MainHeader
         year={year}
@@ -63,12 +65,16 @@ export default function MainCalendar() {
         mode={mode}
       />
     </View>
+    <TeamListBar
+      mode={mode}
+    />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   CalendarContainer: {
     alignItems: 'center',
-    backgroundColor: '#30397A',
+    //backgroundColor: 'yellow',
   },
 });

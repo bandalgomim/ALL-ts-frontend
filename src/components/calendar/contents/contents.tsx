@@ -27,7 +27,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
   }
 
   return (
-    <View style={[styles.calendarContainer, {width: width*0.8, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
+    <View style={[styles.calendarContainer, {width: width*0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
       {/* Day of Week */}
       <View style={styles.weekRow}>
         {DAYS_OF_WEEK.map((day, index) => (
@@ -70,7 +70,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
               {day instanceof Date && day.getDate() === 1 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/1bar.png')} />}
               {day instanceof Date && day.getDate() === 3 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/2bar.png')} />}
               {day instanceof Date && day.getDate() === 5 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/3bar.png')} />}
-              {day instanceof Date && day.getDate() === (17) && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/4bar.png')} />}
+              {day instanceof Date && day.getDate() === (29) && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/4bar.png')} />}
             </View>
           ))}
         </View>

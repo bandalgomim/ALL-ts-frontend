@@ -5,6 +5,7 @@ import { Shadow  } from 'react-native-shadow-2';
 import { MatchLogo } from './matchLogo';
 import { MatchScore } from './matchScore';
 import { IsSelected } from './isSelected';
+import { TeamLogo } from '../teamLogo';
 
 interface MatchBarPros {
     match: match | null;  // Assuming match is your interface from earlier
@@ -33,10 +34,10 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, cover}) => {
         <Text style={[styles.teamName, {fontSize:width*0.0745, marginRight: width*0.005}]}>
           GEN.G
         </Text>
-        <MatchLogo
+        <TeamLogo
           logo={null}
-          shadowStart="#242b5c"
-          shadowEnd="#30397A"
+          type={"match"}
+          color={"blue"}
         />
         {<MatchScore
           score={0}
@@ -49,10 +50,10 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, cover}) => {
           shadowStart="#242b5c"
           shadowEnd="#30397A"
         />}
-        <MatchLogo
+        <TeamLogo
           logo={null}
-          shadowStart="#242b5c"
-          shadowEnd="#30397A"
+          type={"match"}
+          color={"blue"}
         />
         <Text style={[styles.teamName, {fontSize:width*0.0745, marginRight:width*0.018, marginLeft: width*0.005}]}>
           GEN.G

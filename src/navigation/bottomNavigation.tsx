@@ -16,8 +16,8 @@ const getTabBarIcon = (routeName: string, color: string, size: number) => {
   let iconName: string;
 
   switch (routeName) {
-    case '홈':
-      iconName = 'person';
+    case 'MAIN':
+      iconName = 'home';
       break;
     case '글쓰기':
       iconName = 'person';
@@ -47,7 +47,8 @@ const BottomTabNavigator = () => {
           marginBottom: Platform.OS === 'android' ? height * 0.01 : 0, // 탭바 내 글씨
         },
         tabBarStyle: {
-          height: Platform.OS === 'ios' ? height * 0.1 : height * 0.08, // 탭바 높이
+          //display: route.name === 'MAIN' ? 'none' : 'flex', // MAIN에서 숨기기
+          height: Platform.OS === 'ios' ? height * 0.08 : height * 0.07, // 탭바 높이
         },
         headerShown: false,
       })}
