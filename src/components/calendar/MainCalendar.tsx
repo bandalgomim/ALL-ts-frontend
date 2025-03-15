@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
-import Select from './mode/mode';
+import Mode from './mode/mode';
 import { TeamListBar } from '../main/teamListBar';
 
 export default function MainCalendar() {
@@ -51,7 +51,7 @@ export default function MainCalendar() {
         goToPrevious={goToPrevious}
         goToNext={goToNext}
       />
-      <Select
+      <Mode
         mode={mode}
         setMode={setMode}
         type={'white'}

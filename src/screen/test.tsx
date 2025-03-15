@@ -5,22 +5,13 @@ import TeamCalendar from '../components/calendar/TeamCalendar';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import { MatchLogo } from '../components/matchBar/matchLogo';
+import { Logo } from '../components/logo';
+import { Match } from '../components/match';
 
 export const TestScreen = () => {
     return (
-        <ScrollView contentContainerStyle={{width: '100%', alignItems: 'center'}}>
-          <MatchBar
-            match={null}
-            cover={false}
-          />
-          <MatchBar
-            match={null}
-            cover={false}
-          />
-          <MatchBar
-            match={null}
-            cover={false}
-          />
-        </ScrollView>
+      <Match
+        match={null}
+      />
       );
 }

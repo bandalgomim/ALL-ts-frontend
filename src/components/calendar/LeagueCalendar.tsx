@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
-import Select from './mode/mode';
+import Mode from './mode/mode';
 
 export default function LeagueCalendar() {
   const { width, height } = Dimensions.get('window');
@@ -43,7 +43,7 @@ export default function LeagueCalendar() {
   };
 
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*1.04 : width*0.52}]}>
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*0.94 : width*0.52}]}>
         <Image
           resizeMode="contain" 
           style={[styles.leagueBackground, {width:width*1, height: mode === 'm' ? width*0.92 : width*0.495}]} 
@@ -56,7 +56,7 @@ export default function LeagueCalendar() {
           goToNext={goToNext}
         />
         <View style={{alignItems: 'center', top: -height*0.015}}>
-          <Select
+          <Mode
             type={'white'}
             mode={mode}
             setMode={setMode}
@@ -69,7 +69,6 @@ export default function LeagueCalendar() {
             mode={mode}
           />
         </View>
-
     </View>
   );
 }

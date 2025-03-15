@@ -41,7 +41,7 @@ export default function TeamCalendar() {
   };
 
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: height*0.465}]}>
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*0.94 : width*0.52}]}>
         <Image 
           resizeMode="contain" 
           style={[styles.teamBackground, {width:width*1, height: mode === 'm' ? width*0.92 : width*0.495}]} 

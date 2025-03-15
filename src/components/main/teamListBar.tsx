@@ -43,7 +43,7 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode }) => {
           </ScrollView>
           <View style={[styles.serchBarContainer, {height: height*0.05, marginLeft: width*0.37, marginBottom:height*0.028}]}>
             <SerchBar
-              type="b"
+              type="blue"
             />
           </View>
         </ImageBackground>

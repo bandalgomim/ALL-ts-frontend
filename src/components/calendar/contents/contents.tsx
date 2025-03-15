@@ -1,6 +1,6 @@
 // Contents.tsx
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates } from '../utills';
 
 
@@ -14,12 +14,11 @@ interface ContentsProps {
 
 const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) => {
   const { width, height } = Dimensions.get('window');
-
   const monthDates: (Date | string)[] = getMonthDates(month, year)
   const weekDates: (Date | string)[] = getWeekDates(today)
-
+  const [visible, setVisible] = useState(false);
+  
   let fontColor = [];
-
   if ( color === "white") {
     fontColor = [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
   } else {
@@ -35,11 +34,9 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
             {day === 'S' 
             ? <Text style={[fontColor[0], {fontSize: width*0.067, color: '#DB3D3D'}]}>{day}</Text> : 
             <Text style={[fontColor[0], {fontSize: width*0.067}]}>{day}</Text>}
-            
           </View>
         ))}
       </View>
-      
       {mode === 'm' ? [...Array(5)].map((_, rowIndex) => (
         <View key={rowIndex} style={styles.weekRow}>
           {monthDates.slice(rowIndex * 7, rowIndex * 7 + 7).map((day, index) => (
@@ -54,18 +51,17 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
                   }
                 }}
               >
-              <Text
-                style={
-                  day instanceof Date
-                    ? day.getMonth() === month
-                      ? [fontColor[0], {fontSize: width*0.067}]
-                      : [fontColor[1], {fontSize: width*0.067}]
-                    : {}
-                }
-              >
-                {day instanceof Date ? day.getDate() : ''}
-              </Text>
-              
+                <Text
+                  style={
+                    day instanceof Date
+                      ? day.getMonth() === month
+                        ? [fontColor[0], {fontSize: width*0.067}]
+                        : [fontColor[1], {fontSize: width*0.067}]
+                      : {}
+                  }
+                >
+                  {day instanceof Date ? day.getDate() : ''}
+                </Text>
               </TouchableOpacity>
               {day instanceof Date && day.getDate() === 1 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/1bar.png')} />}
               {day instanceof Date && day.getDate() === 3 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/2bar.png')} />}
@@ -76,7 +72,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
         </View>
       )) :
       <View style={styles.weekRow}>
-        
         {weekDates.slice(0, 7).map((day, index) => (
           <View key={index} style={styles.dayContainer}>
           <TouchableOpacity
@@ -100,7 +95,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
           >
             {day instanceof Date ? day.getDate() : ''}
           </Text>
-          
           </TouchableOpacity>
           {day instanceof Date && day.getDate() === 1 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/1bar.png')} />}
           {day instanceof Date && day.getDate() === 3 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/2bar.png')} />}
@@ -109,7 +103,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
         </View>
         ))}
       </View>
-      
       }
     </View>
   );

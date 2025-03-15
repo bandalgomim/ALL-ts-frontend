@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import { Logo } from '../components/logo';
@@ -31,13 +31,11 @@ export const MainScreen = () => {
               <Icon name={'person'} size={30} color={"white"} />
               <Text style={[styles.myPageText,{marginTop: -height*0.005}]}>USER</Text>
             </TouchableOpacity>
-            
-            
           </View>
           <MainCalendar/>
-          <View style={[styles.logo, {marginTop: -height*0.04}]}>
+          <View style={[styles.logo, {bottom: -height*0.03}]}>
             <Logo
-              type="white"
+              color="white"
             />
           </View>
         </View>
@@ -46,6 +44,7 @@ export const MainScreen = () => {
 
 const styles = StyleSheet.create({
   Container: {
+    position: 'relative',
     height: '100%',
     width: '100%',
     backgroundColor: '#30397A',
@@ -76,9 +75,9 @@ const styles = StyleSheet.create({
     fontFamily: ''
   },
   logo: {
+    position: 'absolute',
     flexDirection: 'row',
-    justifyContent: 'flex-start',  // 가로 방향 중�� 정��
+    justifyContent: 'flex-start',
     alignItems: 'flex-end',
-    
   }
 });

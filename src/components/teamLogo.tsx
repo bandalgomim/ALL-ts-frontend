@@ -10,7 +10,16 @@ interface TeamLogoPros {
 
 export const TeamLogo: React.FC<TeamLogoPros> = ({logo, color, type }) => {
   const { width, height } = Dimensions.get('window');
-  const size = type === "match" ? width*0.08225 : width*0.5;
+  let size;
+
+  if (type === "small") { 
+    size = width*0.08225 
+  } else if(type === "big") {
+    size = width*0.245;
+  } else {
+    size = width*0.15;
+  }
+
 
   const [start, end] = color === "blue" ? ["#242b5c", "#30397A"] : ["#c0c0c0", "#ffffff"];
 

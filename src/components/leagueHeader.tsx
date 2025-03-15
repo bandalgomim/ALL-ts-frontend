@@ -1,0 +1,75 @@
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { SerchBar } from './serchBar';
+import { TeamLogo } from './teamLogo';
+import { IsSelected } from './isSelected';
+
+
+const LeagueHeader = () => {
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+  return (
+    <View style={[styles.container, {width: width*0.8, marginBottom: -height*0.01, }]}>
+      <SerchBar
+        type="blue" 
+      />
+      <View style={[styles.LeagueInfoContainer, {width: width*0.8}]}>
+
+        <View style={[styles.LeagueInfoTextContainer, ]}>
+            <Text style={[styles.LeagueInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>LCK</Text>
+            <Text style={[styles.LeagueInfoEtc, {fontSize: width*0.055}]}>KOREA LOL test</Text>
+        </View>
+        <View style={[styles.TeamLogo, {}]}>
+          <TeamLogo
+            logo={null}
+            type={'big'}
+            color={'white'}
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    container: {
+    flexDirection: 'column',
+    justifyContent: 'center', // 가로 방향 중앙 정렬
+    alignItems: 'center', // 세로 방향 중앙 정렬
+    //
+  },
+  LeagueInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  TeamLogo: {
+    
+  },
+  LeagueInfo: {
+    flexDirection: 'row',
+  },
+  LeagueInfoTextContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    transform: [{ rotate: '2deg' }],
+    //
+  },
+  LeagueInfoName: {
+    textAlign: 'center',
+    fontFamily: 'built titling sb it',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
+    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
+    textShadowRadius: 10.5, // 그림자 반경
+  },
+  LeagueInfoEtc: {
+    textAlign: 'center',
+    fontFamily: 'built titling sb it',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
+    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
+    textShadowRadius: 10.5, // 그림자 반경
+  }
+});
+
+export default LeagueHeader;

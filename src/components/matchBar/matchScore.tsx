@@ -4,25 +4,29 @@ import { Shadow  } from 'react-native-shadow-2';
 
 interface MatchScorePros {
     score: number | null;
-    shadowStart: string | null;
-    shadowEnd: string | null;
+    color: string;
+    type: string;
 }
 
-export const MatchScore: React.FC<MatchScorePros> = ({score, shadowStart, shadowEnd}) => {
+export const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
   const { width, height } = Dimensions.get('window');
+  const [start, end] = color === "blue" ? ["#242b5c", "#30397A"] : ["#c0c0c0", "#ffffff"];
+  const size = type === 'small' ? [width*0.058, width*0.08225] : [width*0.2, width*0.27]
 
   return (
-    <View style={[styles.scoreContainer, {width: width*0.058+6, height: width*0.08225}]}>
-      <Shadow startColor={shadowStart as string}
-        endColor={shadowEnd as string}
+    <View style={[styles.scoreContainer, {width: size[0]+6, height: size[1]}]}>
+      <Shadow startColor={start as string}
+        endColor={end as string}
         distance={6}
         offset={[0, 6]}
-        style={[{width: (width*0.058)-6, height: (width*0.08225)-6}, styles.ShadowContainer]}
+        style={[{width: (size[0])-6, height: (size[1])-6}, styles.ShadowContainer]}
       >
         <View
-          style={{ width:width*0.058, height: width*0.08225, backgroundColor:'#ffffff', borderRadius: 5 }}
+          style={{ width:size[0], height: size[1], borderRadius:5, backgroundColor: color === "white" ? "#30397A" : "#ffffff"}}
         >
-        <Text style={[styles.scoreBox, {fontSize:width*0.0745, marginTop: -height*0.0017}]}>{score}</Text></View>
+        <Text style={[styles.scoreBox, {color: color === "white" ? "#ffffff" : "#30397A", 
+          fontSize: type === 'small' ? width*0.0745 : width*0.22, 
+          marginTop: type === 'small' ? -height*0.0017 : height*0.001}]}>{score}</Text></View>
       </Shadow>
     </View>
   )
@@ -40,9 +44,5 @@ const styles = StyleSheet.create({
   scoreBox: {
     textAlign: 'center',
     fontFamily: 'built titling sb it',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 1 }, // 그림자의 오프셋
-    textShadowRadius: 10.5, // 그림자 반경
-  }
+  },
 });
