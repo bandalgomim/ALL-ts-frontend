@@ -1,30 +1,48 @@
 // Contents.tsx
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates } from '../utills';
 
+=======
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
+import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
+import { match } from '../../../model/main.dto';
+>>>>>>> feat/hooks
 
 interface ContentsProps {
-  month: number;
-  year: number;
-  today: Date;
-  color: string;
-  mode: "m" | "w";
+  month: number,
+  year: number,
+  today: Date,
+  color: string,
+  mode: "m" | "w",
+  matchList: match[] | null
 }
 
-const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) => {
+const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, matchList }) => {
   const { width, height } = Dimensions.get('window');
   const monthDates: (Date | string)[] = getMonthDates(month, year)
   const weekDates: (Date | string)[] = getWeekDates(today)
+<<<<<<< HEAD
   const [visible, setVisible] = useState(false);
   
+=======
+  const groupedMatches = groupMatchesByDate(matchList); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
+
+
+>>>>>>> feat/hooks
   let fontColor = [];
   if ( color === "white") {
     fontColor = [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
   } else {
     fontColor = [styles.currentMonthDayBlue, styles.otherMonthDayBlue]
   }
-
+  const onPressDate = (day: Date) => {
+    if (day instanceof Date) {
+      console.log(groupedMatches[day.toISOString().split('T')[0]]);
+    }
+  }
   return (
     <View style={[styles.calendarContainer, {width: width*0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
       {/* Day of Week */}
@@ -42,13 +60,17 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
           {monthDates.slice(rowIndex * 7, rowIndex * 7 + 7).map((day, index) => (
             <View key={index} style={styles.dayContainer}>
               <TouchableOpacity
-                onPress={() => {
-                  if (day instanceof Date) {
-                    const year = day.getFullYear();
-                    const month = day.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 실제 월이 나옵니다.
-                    const date = day.getDate();
-                    console.log(`Year: ${year}, Month: ${month}, Date: ${date}`);
+                onPress={() => {onPressDate(day as Date)}}
+              >
+                <Text
+                  style={
+                    day instanceof Date
+                      ? day.getMonth() === month
+                        ? [fontColor[0], {fontSize: width*0.067}]
+                        : [fontColor[1], {fontSize: width*0.067}]
+                      : {}
                   }
+<<<<<<< HEAD
                 }}
               >
                 <Text
@@ -59,14 +81,39 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
                         : [fontColor[1], {fontSize: width*0.067}]
                       : {}
                   }
+=======
+>>>>>>> feat/hooks
                 >
                   {day instanceof Date ? day.getDate() : ''}
                 </Text>
               </TouchableOpacity>
-              {day instanceof Date && day.getDate() === 1 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/1bar.png')} />}
-              {day instanceof Date && day.getDate() === 3 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/2bar.png')} />}
-              {day instanceof Date && day.getDate() === 5 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/3bar.png')} />}
-              {day instanceof Date && day.getDate() === (29) && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/4bar.png')} />}
+              {day instanceof Date && (
+                <Image
+                  resizeMode="contain"
+                  style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.011}]}
+                  source={
+                    (() => {
+                      const dateString = day.toISOString().split('T')[0]; // "2025-02-28" 형태로 추출
+                      const matchesForDay = groupedMatches[dateString];
+                      const matchCount = matchesForDay ? matchesForDay.length : 0;
+                      switch (matchCount) {
+                        case 1:
+                          return require('./../../../assets/calendar/underBar/1bar.png');
+                        case 2:
+                          return require('./../../../assets/calendar/underBar/2bar.png');
+                        case 3:
+                          return require('./../../../assets/calendar/underBar/3bar.png');
+
+                        default:
+                          if (matchCount >= 4) {
+                            return require('./../../../assets/calendar/underBar/4bar.png'); // 4 이상일 때는 4번째 이미지 반환
+                          }
+                          return null; // 이미지가 없으면 null 반환
+                      }
+                    })()
+                  }
+                />
+              )}
             </View>
           ))}
         </View>
@@ -75,13 +122,17 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
         {weekDates.slice(0, 7).map((day, index) => (
           <View key={index} style={styles.dayContainer}>
           <TouchableOpacity
-            onPress={() => {
-              if (day instanceof Date) {
-                const year = day.getFullYear();
-                const month = day.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해야 실제 월이 나옵니다.
-                const date = day.getDate();
-                console.log(`Year: ${year}, Month: ${month}, Date: ${date}`);
+            onPress={() => {onPressDate(day as Date)}}
+          >
+            <Text
+              style={
+                day instanceof Date
+                  ? day.getMonth() === month
+                    ? [fontColor[0], {fontSize: width*0.067}]
+                    : [fontColor[1], {fontSize: width*0.067}]
+                  : {}
               }
+<<<<<<< HEAD
             }}
           >
           <Text
@@ -95,12 +146,39 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode }) 
           >
             {day instanceof Date ? day.getDate() : ''}
           </Text>
+=======
+            >
+              {day instanceof Date ? day.getDate() : ''}
+            </Text>
+>>>>>>> feat/hooks
           </TouchableOpacity>
-          {day instanceof Date && day.getDate() === 1 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/1bar.png')} />}
-          {day instanceof Date && day.getDate() === 3 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/2bar.png')} />}
-          {day instanceof Date && day.getDate() === 5 && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/3bar.png')} />}
-          {day instanceof Date && day.getDate() === (17) && <Image resizeMode="contain" style={[styles.underBar, {height: height*0.013, width: width*0.1, bottom: -height*0.003, right: width*0.011}]} source={require('./../../../assets/calendar/underBar/4bar.png')} />}
-        </View>
+          {day instanceof Date && (
+            <Image
+              resizeMode="contain"
+              style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003,right: width * 0.011,}]}
+              source={
+                (() => {
+                  const dateString = day.toISOString().split('T')[0]; // "2025-02-28" 형태로 추출
+                  const matchesForDay = groupedMatches[dateString];
+                  const matchCount = matchesForDay ? matchesForDay.length : 0;
+                  switch (matchCount) {
+                    case 1:
+                      return require('./../../../assets/calendar/underBar/1bar.png');
+                    case 2:
+                      return require('./../../../assets/calendar/underBar/2bar.png');
+                    case 3:
+                      return require('./../../../assets/calendar/underBar/3bar.png');
+                    default:
+                      if (matchCount >= 4) {
+                        return require('./../../../assets/calendar/underBar/4bar.png'); // 4 이상일 때는 4번째 이미지 반환
+                      }
+                      return null; // 이미지가 없으면 null 반환
+                  }
+                })()
+              }
+            />
+          )}
+          </View>
         ))}
       </View>
       }

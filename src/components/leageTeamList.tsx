@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Dimensions, Image, ImageBackground, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
+import { ApiContext } from '../context/context';
+import { TeamPageParamList } from '../model/navigation.dto';
+import { team } from '../model/league.dto';
 
 export const LeageTeamListBar = () => {
   const { width, height } = Dimensions.get('window');
+  const navigation = useNavigation<NavigationProp<TeamPageParamList>>();
+  const {league} = useContext(ApiContext);
+  const navigateTeam = (teamId: number) => {
+    navigation.navigate("TeamScreen", { teamId: teamId });
+  };
 
   return (
     <View style={[styles.CalendarContainer, {width: width, height: width*0.320, marginTop: height*0.005, marginBottom: -height*0.036}]}>
@@ -17,9 +26,12 @@ export const LeageTeamListBar = () => {
           showsHorizontalScrollIndicator={false} 
           style={[styles.scrollView, {width: width*0.8}]}
         >
-          {[...Array(5)].map((_, index) => (
+          {league?.data?.teamList?.map((team: team, index: number) => (
             <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.057, marginRight: index !== 4 ? width*0.093 : 0}]}>
-              <TouchableOpacity style={{alignItems: "center"}}>
+              <TouchableOpacity 
+                style={{alignItems: "center"}}
+                onPress={()=>{navigateTeam(team.teamId)}}
+              >
                 <Shadow startColor='#242b5c'
                   endColor='#30397A'
                   distance={6}
@@ -32,7 +44,7 @@ export const LeageTeamListBar = () => {
                     source={ require('./../assets/main/botton.png')}/
                   >
                 </Shadow>
-                <Text style={[styles.teamName, {fontSize:width*0.05, marginTop: height*0.005}]}>T1</Text>
+                <Text style={[styles.teamName, {fontSize:width*0.05, marginTop: height*0.005}]}>{team.teamInit}</Text>
               </TouchableOpacity>
             </View>
           )) } 

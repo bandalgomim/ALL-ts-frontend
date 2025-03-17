@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Image, ImageBackground, ScrollView, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Dimensions, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
 import { SerchBar } from '../serchBar';
+import { team } from '../../model/main.dto';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { TeamPageParamList } from '../../model/navigation.dto';
 
 interface ContentsProps {
-    mode: "m" | "w";
+    mode: "m" | "w",
+    teamList: team[]
   }
 
-export const TeamListBar: React.FC<ContentsProps>  = ({ mode }) => {
+export const TeamListBar: React.FC<ContentsProps>  = ({ mode, teamList }) => {
   const { width, height } = Dimensions.get('window');
-
+  const navigation = useNavigation<NavigationProp<TeamPageParamList>>();
+  const navigateTeam = (teamId: number) => {
+    navigation.navigate("TeamScreen", { teamId: teamId });
+  };
 
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*0.42 : width}]}>
@@ -23,7 +30,7 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode }) => {
             showsHorizontalScrollIndicator={false} 
             style={[styles.scrollView, {width: width*0.8}]}
           >
-            {[...Array(5)].map((_, index) => (
+            {(teamList ?? []).map(( team, index) => (
               <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.04, marginRight: index !== 4 ? width*0.093 : 0}]}>
                 <Shadow startColor='#bfbfbf'
                   endColor='#ffffff'
@@ -31,7 +38,9 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode }) => {
                   offset={[0, 3]}
                   style={[{ width:width*0.13-6, height: width*0.13-6}, styles.ShadowContainer]}
                 >
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={()=>{navigateTeam(team.teamId)}}
+                  >
                     <Image 
                       resizeMode="contain" 
                       style={[{width:width*0.13, height: width*0.13 }]} 

@@ -1,4 +1,5 @@
 import { PostState, PostAction } from '../model/config';
+import { patchIsLeagueSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 import { getLeagueResDto } from '../model/league.dto';
 import { getMainResDto } from '../model/main.dto';
 import { getMatchReqDto } from '../model/match.dto';
@@ -48,8 +49,8 @@ export const initialteam = createInitial<getTeamResDto>({
 
 export const initialLeague = createInitial<getLeagueResDto>({
   league: null,
-  team: null,
-  match: null
+  teamList: null,
+  matchList: null
 });
 
 export const initialmatch = createInitial<getMatchReqDto>({
@@ -64,4 +65,12 @@ export const initialmatch = createInitial<getMatchReqDto>({
   matchState: null,
   isMatchSelected: null,
   platform: null
+});
+
+export const initialIsTeamSelected = createInitial<patchIsTeamSelected>({
+  teamId: null
+});
+
+export const initialIsLeagueSelected = createInitial<patchIsLeagueSelected>({
+  leagueId: null
 });

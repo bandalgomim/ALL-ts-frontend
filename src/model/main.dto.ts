@@ -7,8 +7,10 @@ export interface match {
     awayTeamId: number,
     homeTeamName: string,
     awayTeamName: string,
-    homeTeamLogo: string,
-    awayTeamLogo: string,
+    homeTeamInit: string,
+    awayTeamInit: string,
+    hometeamLogo: string,
+    awayteamLogo: string,
     homeTeamScore: number,
     awayTeamScore: number,
     matchState: string,
@@ -26,5 +28,7 @@ export interface getMainResDto {
     matchList: match[] | null,
     teamList: team[] | null
 }
+
+export interface getMainReqQueryDto {}
 
 export type getMainReqDto = StateDto<null>

@@ -13,20 +13,21 @@ export interface league {
 export interface team {
     teamId: number,
     teamName: string,
+    teamInit: string,
     teamLogo: string
 }
 
 export interface getLeagueResDto {
     league: league | null,
-    team: team[] | null,
-    match: match[] | null
+    teamList: team[] | null,
+    matchList: match[] | null
 }
 
-export interface getleagueReqQueryDto {
+export interface getLeagueReqQueryDto {
     leagueId: number
 }
 
-export type getTeamReqDto = StateDto<getleagueReqQueryDto>
+export type getLeagueReqDto = StateDto<getLeagueReqQueryDto>
 
 
 

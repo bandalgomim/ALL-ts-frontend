@@ -1,17 +1,40 @@
+<<<<<<< HEAD
 import React, {  } from 'react';
+=======
+import React, { useContext, useState } from 'react';
+>>>>>>> feat/hooks
 import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import TeamHeader from '../components/teamHeader';
 import { Logo } from '../components/logo';
+<<<<<<< HEAD
 
 export const TeamScreen = () => {
+=======
+import { ApiContext } from '../context/context';
+import { useTeam } from '../hooks/team.hook';
+import { getTeamReqDto } from '../model/team.dto';
+import { match } from '../model/main.dto'
+import { useRoute } from '@react-navigation/native';
+
+export const TeamScreen = () => {
+  const {team} = useContext(ApiContext);
+  const route = useRoute();
+  const { teamId } = route.params as { teamId: number };
+  const [teamState, setTeamState] = useState<getTeamReqDto>({
+    method: 'GET',
+    data: {teamId},
+  });
+  useTeam(teamState.method, teamState.data);
+>>>>>>> feat/hooks
   const { width, height } = Dimensions.get('window');
     return (
         <View style={styles.Container}>
           <TeamHeader/>
           <TeamCalendar/>
           <ScrollView style={{paddingTop: 5}}>
+<<<<<<< HEAD
             <MatchBar
               match={null}
               cover={false}
@@ -41,6 +64,17 @@ export const TeamScreen = () => {
               match={null}
               cover={false}
             color={'white'}/>
+=======
+            {team?.data?.matchList?.map((match: match, index: number) => {
+              return (
+                <MatchBar
+                  key={index}
+                  match={match}
+                  color={'white'}
+                />
+              );
+            })}
+>>>>>>> feat/hooks
           </ScrollView>
           <View style={[styles.logo, {bottom: -height*0.03}]}>
             <Logo

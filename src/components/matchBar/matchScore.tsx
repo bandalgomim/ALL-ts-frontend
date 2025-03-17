@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground }
 import { Shadow  } from 'react-native-shadow-2';
 
 interface MatchScorePros {
-    score: number | null;
+    score: string | number;
     color: string;
     type: string;
 }

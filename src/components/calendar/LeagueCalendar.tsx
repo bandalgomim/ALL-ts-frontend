@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
+<<<<<<< HEAD
+=======
+import { ApiContext } from '../../context/context';
+>>>>>>> feat/hooks
 
 export default function LeagueCalendar() {
   const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m')
-
+  const {league} = useContext(ApiContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
@@ -67,6 +71,7 @@ export default function LeagueCalendar() {
             today={currentDate}
             color={'white'}
             mode={mode}
+            matchList={league.data.matchList}
           />
         </View>
     </View>

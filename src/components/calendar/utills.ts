@@ -1,3 +1,5 @@
+import { match } from "../../model/main.dto";
+
 export const DAYS_OF_WEEK = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 export const getDaysInMonth = (month: number, year: number): Date[] => {
@@ -64,3 +66,19 @@ export const getWeekDates = (today: Date) => {
 
   return weekDates;
 };
+
+export function groupMatchesByDate(matches: match[] | null): Record<string, match[]> {
+  const groupedMatches: Record<string, match[]> = {};
+  if (matches) {
+    for (const match of matches) {
+      // "YYYY-MM-DD HH:mm:ss" → "YYYY-MM-DD" 추출
+      const dateString = match.matchDate.split(" ")[0];
+      // 날짜별 그룹화
+      if (!groupedMatches[dateString]) {
+          groupedMatches[dateString] = [];
+      }
+      groupedMatches[dateString].push(match);
+    }
+  }
+  return groupedMatches;
+}

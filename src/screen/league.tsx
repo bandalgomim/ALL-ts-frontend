@@ -5,15 +5,35 @@ import { MatchBar } from '../components/matchBar/matchBar';
 import LeagueHeader from '../components/leagueHeader';
 import { LeageTeamListBar } from '../components/leageTeamList';
 import { Logo } from '../components/logo';
+<<<<<<< HEAD
 
 export const LeagueScreen = () => {
   const { width, height } = Dimensions.get('window');
+=======
+import { ApiContext } from '../context/context';
+import { useTeam } from '../hooks/team.hook';
+import { getLeagueReqDto } from '../model/league.dto';
+import { useLeague } from '../hooks/league.hook';
+import { match } from '../model/main.dto'
+
+
+export const LeagueScreen = () => {
+  const { width, height } = Dimensions.get('window');
+  const {league} = useContext(ApiContext);
+  const [leagueState, setLeagueState] = useState<getLeagueReqDto>({
+    method: 'GET',
+    data: {leagueId: 1},
+  });
+  useLeague(leagueState.method, leagueState.data);
+  console.log("in League screen:", JSON.stringify(league, null, 2));
+>>>>>>> feat/hooks
     return (
         <View style={styles.Container}>
           <LeagueHeader/>
           <LeageTeamListBar/>
           <LeagueCalendar/>
           <ScrollView style={{paddingTop: 5}}>
+<<<<<<< HEAD
             <MatchBar
               match={null}
               cover={false}
@@ -43,6 +63,17 @@ export const LeagueScreen = () => {
               match={null}
               cover={false}
             color={'blue'}/>
+=======
+            {league?.data?.matchList?.map((match: match, index: number) => {
+              return (
+                <MatchBar
+                  key={index}
+                  match={match}
+                  color={'blue'}
+                />
+              );
+            })}
+>>>>>>> feat/hooks
           </ScrollView>
           <View style={[styles.logo, {bottom: -height*0.03}]}>
             <Logo

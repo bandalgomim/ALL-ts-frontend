@@ -1,13 +1,26 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+import React, { useContext, useState } from 'react';
+>>>>>>> feat/hooks
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import { Logo } from '../components/logo';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
+import { useMain } from '../hooks/main.hook';
+import { ApiContext } from '../context/context';
+import { getMainReqDto } from '../model/main.dto';
 
  {boderWidth: 1}
 export const MainScreen = () => {
   const { width, height } = Dimensions.get('window');
+  const {main} = useContext(ApiContext);
+  const [mainState, setMainState] = useState<getMainReqDto>({
+    method: 'GET',
+    data: null,
+  });
+  useMain(mainState.method, mainState.data);
     return (
         <View style={styles.Container}>
           <View style={[styles.header, {width: width*0.8, height: height*0.04, marginTop: height*0.02},]}>

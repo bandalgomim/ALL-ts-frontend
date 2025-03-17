@@ -126,71 +126,87 @@ const styles = StyleSheet.create({
 });*/
 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { match } from '../../model/main.dto';
 import { MatchScore } from './matchScore';
 import { IsSelected } from '../isSelected';
 import { TeamLogo } from '../teamLogo';
 
 interface MatchBarPros {
-    match: match | null;  // Assuming match is your interface from earlier
-    cover: boolean;   // type will be a string
+    match: match;  // Assuming match is your interface from earlier
     color: string;
 }
 
-export const MatchBar: React.FC<MatchBarPros> = ({match, cover, color}) => {
+export const MatchBar: React.FC<MatchBarPros> = ({match, color}) => {
   const { width, height } = Dimensions.get('window');
+  const [score, setScore] = useState(false)
   const style = color === "white" 
     ? [styles.stateTextWhite, styles.teamNameWhite]
     : [styles.stateTextBlue, styles.teamNameBlue];
-
+  const dateMatch = match?.matchDate?.match(/-(\d{2})-(\d{2})/);
+  const formattedDate = dateMatch ? `${dateMatch[1]}/${dateMatch[2]}` : "";
+  const onPressScore = () => {
+    setScore(!score)
+  }
   return (
-    <View style={[styles.matchBarContainer, {height:height*0.095, width: width*0.94+6}]}>
-      <ImageBackground
-        resizeMode='contain'
-        source={color === "white" 
-          ? require('../../assets/match/bar/matchBar_w.png')
-          : require('../../assets/match/bar/matchBar_b.png')}
-        style={[styles.matchBar, { height:height*0.0875}]}
-      >
-        <View style={[styles.matchBar, {width:width*0.94, marginTop: -height*0.007}]}>
-          <View style={[styles.state, { width:width*0.22, height:height*0.054, marginRight: -width*0.027}]}>
-            <Text style={[style[0], {width: width*0.21, fontSize: width*0.048, marginLeft:width*0.02, marginBottom:-height*0.005, marginTop:-height*0.0035}]}>02/27</Text>
-            <Text style={[style[0], {width: width*0.21, fontSize: width*0.072}]}>LIVE</Text>
+    <TouchableOpacity 
+      activeOpacity={0.9}
+      
+    >
+      <View style={[styles.matchBarContainer, {height:height*0.095, width: width*0.94+6}]}>
+        <ImageBackground
+          resizeMode='contain'
+          source={color === "white" 
+            ? require('../../assets/match/bar/matchBar_w.png')
+            : require('../../assets/match/bar/matchBar_b.png')}
+          style={[styles.matchBar, { height:height*0.0875}]}
+        >
+          <View style={[styles.matchBar, {width:width*0.94, marginTop: -height*0.007}]}>
+            <View style={[styles.state, { width:width*0.22, height:height*0.054, marginRight: -width*0.027}]}>
+              <Text style={[style[0], {width: width*0.21, fontSize: width*0.048, marginLeft:width*0.02, marginBottom:-height*0.005, marginTop:-height*0.0035}]}>
+                {`${formattedDate}`}
+              </Text>
+              <Text style={[style[0], {width: width*0.21, fontSize: width*0.072}, {color : match.matchState === "live" ? "#EA5579" : style[0].color} ]}>{`${match.matchState}`}</Text>
+            </View>
+            <Text style={[style[1], {fontSize:width*0.0745, marginRight: width*0.005, width: width*0.132, textAlign: 'right'}]}>
+              {`${match.homeTeamInit}`}
+            </Text>
+            <TeamLogo
+              logo={null}
+              type={"small"}
+              color={color}
+            />
+            <TouchableOpacity 
+              style={styles.matchBar}
+              onPress={onPressScore}
+            >
+              <MatchScore
+                score={score === true ? match.homeTeamScore : "?"}
+                color={color}
+                type={'small'}
+              />
+              <Text style={[style[1], {fontSize:width*0.0745, margin: -width*0.01, marginTop: -height*0.01}]}> : </Text>
+              <MatchScore
+                score={score === true ? match.awayTeamScore : "?"}
+                color={color}
+                type={'small'}
+              />
+            </TouchableOpacity>
+            <TeamLogo
+              logo={null}
+              type={"small"}
+              color={color}
+            />
+            <Text style={[style[1], {fontSize:width*0.0745, marginRight:width*0.01, marginLeft: width*0.005, width: width*0.132, textAlign: 'left'}]}>
+              {`${match.awayTeamInit}`}
+            </Text>
+            <IsSelected
+              isSelectrd={match.isMatchSelected}
+            />
           </View>
-          <Text style={[style[1], {fontSize:width*0.0745, marginRight: width*0.005, width: width*0.132, textAlign: 'right'}]}>
-            T1
-          </Text>
-          <TeamLogo
-            logo={null}
-            type={"small"}
-            color={color}
-          />
-          {<MatchScore
-            score={0}
-            color={color}
-            type={'small'}
-          />}
-          <Text style={[style[1], {fontSize:width*0.0745, margin: -width*0.01, marginTop: -height*0.01}]}> : </Text>
-          {<MatchScore
-            score={0}
-            color={color}
-            type={'small'}
-          />}
-          <TeamLogo
-            logo={null}
-            type={"small"}
-            color={color}
-          />
-          <Text style={[style[1], {fontSize:width*0.0745, marginRight:width*0.01, marginLeft: width*0.005, width: width*0.132, textAlign: 'left'}]}>
-            T1
-          </Text>
-          <IsSelected
-            isSelectrd={true}
-          />
-        </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
+    </TouchableOpacity>
   )
 }
 

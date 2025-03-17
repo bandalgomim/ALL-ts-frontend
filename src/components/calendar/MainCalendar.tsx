@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import { TeamListBar } from '../main/teamListBar';
+import { ApiContext } from '../../context/context';
 
 export default function MainCalendar() {
   const { width, height } = Dimensions.get('window');
+  const {main} = useContext(ApiContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m')
-
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
-  
   // Handlers for changing the month
   const goToPrevious = () => {
     const newDate = new Date(currentDate);  // currentDate 복사
@@ -63,10 +63,12 @@ export default function MainCalendar() {
         today={currentDate}
         color={'white'}
         mode={mode}
+        matchList={main.data.matchList}
       />
     </View>
     <TeamListBar
       mode={mode}
+      teamList={main.data.teamList}
     />
     </>
   );
