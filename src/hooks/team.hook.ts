@@ -7,7 +7,7 @@ export const useTeam = (method: string, data: getTeamReqQueryDto | null = null) 
     
     const {team, setTeam} = useContext(ApiContext);
     useEffect(() => {
-        const url = 'http://10.0.2.2:3000/Team';
+        const url = 'http://10.0.2.2:3000/team';
         const fetchMyPage = async () => {
             setTeam({ type: 'LOADING' });
             console.log('useTeam before: ', method=== 'GET');
