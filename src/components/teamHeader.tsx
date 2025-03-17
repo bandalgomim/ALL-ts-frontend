@@ -1,25 +1,15 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React, { useContext } from 'react';
->>>>>>> feat/hooks
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { SerchBar } from './serchBar';
 import { TeamLogo } from './teamLogo';
 import { IsSelected } from './isSelected';
-<<<<<<< HEAD
-=======
 import { ApiContext } from '../context/context';
->>>>>>> feat/hooks
 
 
 const TeamHeader = () => {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-<<<<<<< HEAD
-=======
   const {team} = useContext(ApiContext);
->>>>>>> feat/hooks
   return (
     <View style={[styles.container, {width: width*0.8, marginBottom: -height*0.01, }]}>
       <SerchBar
@@ -35,10 +25,6 @@ const TeamHeader = () => {
         </View>
         <View style={[styles.teamInfo, {marginRight: -width*0.07}]}>
           <View style={[styles.teamInfoTextContainer, ]}>
-<<<<<<< HEAD
-            <Text style={[styles.teamInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>T1</Text>
-            <Text style={[styles.teamInfoEtc, {fontSize: width*0.055}]}>KOREA LOL/LCK</Text>
-=======
             {team?.data?.team?.teamName && team?.data?.team?.teamName.length < 9 
               ? <Text style={[styles.teamInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>{team.data?.team.teamName}</Text> 
               : <View>
@@ -47,7 +33,6 @@ const TeamHeader = () => {
                 </View>}
             
             <Text style={[styles.teamInfoEtc, {fontSize: width*0.055, width: width*0.5}]}>{`${team.data?.team?.countryName} ${team.data?.team?.sportName}/${team.data?.team?.leagueName}`}</Text>
->>>>>>> feat/hooks
           </View>
           <IsSelected
             isSelectrd={true}
@@ -82,11 +67,7 @@ const styles = StyleSheet.create({
     //
   },
   teamInfoName: {
-<<<<<<< HEAD
-    textAlign: 'center',
-=======
     textAlign: 'right',
->>>>>>> feat/hooks
     fontFamily: 'built titling sb it',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
@@ -94,11 +75,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
   },
   teamInfoEtc: {
-<<<<<<< HEAD
-    textAlign: 'center',
-=======
     textAlign: 'right',
->>>>>>> feat/hooks
     fontFamily: 'built titling sb it',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
