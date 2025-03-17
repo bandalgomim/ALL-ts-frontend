@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native';
 import { Shadow  } from 'react-native-shadow-2';
 
 interface TeamLogoPros {
@@ -17,7 +17,7 @@ export const TeamLogo: React.FC<TeamLogoPros> = ({logo, color, type }) => {
   } else if(type === "big") {
     size = width*0.245;
   } else {
-    size = width*0.15;
+    size = width*0.13;
   }
 
 
@@ -33,8 +33,13 @@ export const TeamLogo: React.FC<TeamLogoPros> = ({logo, color, type }) => {
         style={[{width: (size)-6}, styles.ShadowContainer]}
       >
         <View
-          style={{ width:size, aspectRatio: 1, backgroundColor:'#ffffff', borderRadius: 10 }}
-        ><Text>test</Text></View>
+          style={{ width:size, aspectRatio: 1, backgroundColor:'#f7e9ef', borderRadius: 10 }}
+        >
+          <Image
+            source={{ uri: 'https://velog.velcdn.com/images/sdb016/post/34bdac57-2d63-43ce-a14c-8054e9e036de/test.png' }}
+            style={{ width: size, height: size }}
+          />
+        </View>
       </Shadow>
     </View>
   )

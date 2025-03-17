@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React, { useContext, useState } from 'react';
->>>>>>> feat/hooks
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import { Logo } from '../components/logo';

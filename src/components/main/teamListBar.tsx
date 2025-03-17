@@ -5,6 +5,7 @@ import { SerchBar } from '../serchBar';
 import { team } from '../../model/main.dto';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TeamPageParamList } from '../../model/navigation.dto';
+import { TeamLogo } from '../teamLogo';
 
 interface ContentsProps {
     mode: "m" | "w",
@@ -41,10 +42,11 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode, teamList }) => {
                   <TouchableOpacity
                     onPress={()=>{navigateTeam(team.teamId)}}
                   >
-                    <Image 
-                      resizeMode="contain" 
-                      style={[{width:width*0.13, height: width*0.13 }]} 
-                      source={ require('./../../assets/main/botton.png')}/>
+                    <TeamLogo
+                      logo={null}
+                      type={"middle"}
+                      color={'white'}
+                    />
                   </TouchableOpacity>
                 </Shadow>
               </View>

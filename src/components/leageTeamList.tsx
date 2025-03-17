@@ -5,6 +5,7 @@ import { Shadow } from 'react-native-shadow-2';
 import { ApiContext } from '../context/context';
 import { TeamPageParamList } from '../model/navigation.dto';
 import { team } from '../model/league.dto';
+import { TeamLogo } from './teamLogo';
 
 export const LeageTeamListBar = () => {
   const { width, height } = Dimensions.get('window');
@@ -38,11 +39,11 @@ export const LeageTeamListBar = () => {
                   offset={[0, 3]}
                   style={[{ width:width*0.13-6, height: width*0.13-6}, styles.ShadowContainer]}
                 >
-                  <Image 
-                    resizeMode="contain" 
-                    style={[{width:width*0.13, height: width*0.13 }]} 
-                    source={ require('./../assets/main/botton.png')}/
-                  >
+                    <TeamLogo
+                      logo={null}
+                      type={"middle"}
+                      color={'blue'}
+                    />
                 </Shadow>
                 <Text style={[styles.teamName, {fontSize:width*0.05, marginTop: height*0.005}]}>{team.teamInit}</Text>
               </TouchableOpacity>

@@ -3,10 +3,7 @@ import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
-<<<<<<< HEAD
-=======
 import { ApiContext } from '../../context/context';
->>>>>>> feat/hooks
 
 export default function LeagueCalendar() {
   const { width, height } = Dimensions.get('window');

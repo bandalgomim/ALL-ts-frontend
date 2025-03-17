@@ -1,15 +1,8 @@
 // Contents.tsx
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
-import { DAYS_OF_WEEK, getMonthDates, getWeekDates } from '../utills';
-
-=======
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
 import { match } from '../../../model/main.dto';
->>>>>>> feat/hooks
 
 interface ContentsProps {
   month: number,
@@ -24,14 +17,9 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
   const { width, height } = Dimensions.get('window');
   const monthDates: (Date | string)[] = getMonthDates(month, year)
   const weekDates: (Date | string)[] = getWeekDates(today)
-<<<<<<< HEAD
-  const [visible, setVisible] = useState(false);
-  
-=======
   const groupedMatches = groupMatchesByDate(matchList); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
 
 
->>>>>>> feat/hooks
   let fontColor = [];
   if ( color === "white") {
     fontColor = [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
@@ -70,19 +58,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
                         : [fontColor[1], {fontSize: width*0.067}]
                       : {}
                   }
-<<<<<<< HEAD
-                }}
-              >
-                <Text
-                  style={
-                    day instanceof Date
-                      ? day.getMonth() === month
-                        ? [fontColor[0], {fontSize: width*0.067}]
-                        : [fontColor[1], {fontSize: width*0.067}]
-                      : {}
-                  }
-=======
->>>>>>> feat/hooks
                 >
                   {day instanceof Date ? day.getDate() : ''}
                 </Text>
@@ -132,25 +107,9 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
                     : [fontColor[1], {fontSize: width*0.067}]
                   : {}
               }
-<<<<<<< HEAD
-            }}
-          >
-          <Text
-            style={
-              day instanceof Date
-                ? day.getMonth() === month
-                  ? [fontColor[0], {fontSize: width*0.067}]
-                  : [fontColor[1], {fontSize: width*0.067}]
-                : {}
-            }
-          >
-            {day instanceof Date ? day.getDate() : ''}
-          </Text>
-=======
             >
               {day instanceof Date ? day.getDate() : ''}
             </Text>
->>>>>>> feat/hooks
           </TouchableOpacity>
           {day instanceof Date && (
             <Image
