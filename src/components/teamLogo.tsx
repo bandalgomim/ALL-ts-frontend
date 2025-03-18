@@ -36,7 +36,7 @@ export const TeamLogo: React.FC<TeamLogoPros> = ({logo, color, type }) => {
           style={{ width:size, aspectRatio: 1, backgroundColor:'#f7e9ef', borderRadius: 10 }}
         >
           <Image
-            source={{ uri: 'https://velog.velcdn.com/images/sdb016/post/34bdac57-2d63-43ce-a14c-8054e9e036de/test.png' }}
+            source={{ uri: logo as string}}
             style={{ width: size, height: size }}
           />
         </View>

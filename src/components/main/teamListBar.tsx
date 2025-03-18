@@ -43,7 +43,7 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode, teamList }) => {
                     onPress={()=>{navigateTeam(team.teamId)}}
                   >
                     <TeamLogo
-                      logo={null}
+                      logo={team.teamLogo}
                       type={"middle"}
                       color={'white'}
                     />

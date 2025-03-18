@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { SerchBar } from './serchBar';
 import { TeamLogo } from './teamLogo';
 import { IsSelected } from './isSelected';
+import { ApiContext } from '../context/context';
 
 
 const LeagueHeader = () => {
-  const width = Dimensions.get('window').width;
-  const height = Dimensions.get('window').height;
+  const { width, height } = Dimensions.get('window');
+  const {league} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width*0.8, marginBottom: -height*0.01, }]}>
       <SerchBar
@@ -21,7 +22,7 @@ const LeagueHeader = () => {
         </View>
         <View style={[styles.TeamLogo, {}]}>
           <TeamLogo
-            logo={null}
+            logo={league?.data?.league?.leagueLogo}
             type={'big'}
             color={'white'}
           />

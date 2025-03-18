@@ -172,7 +172,7 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color}) => {
               {`${match.homeTeamInit}`}
             </Text>
             <TeamLogo
-              logo={null}
+              logo={match.hometeamLogo}
               type={"small"}
               color={color}
             />
@@ -193,7 +193,7 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color}) => {
               />
             </TouchableOpacity>
             <TeamLogo
-              logo={null}
+              logo={match.awayteamLogo}
               type={"small"}
               color={color}
             />

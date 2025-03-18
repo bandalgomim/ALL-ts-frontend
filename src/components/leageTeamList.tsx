@@ -40,7 +40,7 @@ export const LeageTeamListBar = () => {
                   style={[{ width:width*0.13-6, height: width*0.13-6}, styles.ShadowContainer]}
                 >
                     <TeamLogo
-                      logo={null}
+                      logo={team.teamLogo}
                       type={"middle"}
                       color={'blue'}
                     />

@@ -18,7 +18,7 @@ const TeamHeader = () => {
       <View style={[styles.teamInfoContainer, {width: width*0.8}]}>
         <View style={[styles.teamLogo, {marginBottom:-height*0.01, }]}>
           <TeamLogo
-            logo={null}
+            logo={team?.data?.team?.teamLogo}
             type={'big'}
             color={'blue'}
           />
