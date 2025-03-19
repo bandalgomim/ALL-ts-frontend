@@ -5,7 +5,8 @@ import BottomTabNavigator from './bottomNavigation';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
 import { LeagueScreen } from '../screen/league';
-import { TestScreen } from '../screen/test';
+import { TestScreen } from '../screen/match';
+import TeamSearch from '../screen/test';
 
 
 const Stack = createStackNavigator();
@@ -36,7 +37,7 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="TestScreen"
+          name="MatchScreen"
           component={TestScreen}
           options={{ headerShown: false }}
         />

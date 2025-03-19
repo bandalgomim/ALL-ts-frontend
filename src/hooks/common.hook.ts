@@ -15,7 +15,6 @@ export const commonPostHook = async (
               'Content-Type': 'application/json',
             },
           });
-        console.log('in commonPostHook', JSON.stringify(response.data));
         let resultKeys = null;
         if (response.data.result) {resultKeys = Object.keys(response.data.result);}
         dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});

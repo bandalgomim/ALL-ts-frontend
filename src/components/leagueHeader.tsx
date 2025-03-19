@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { SerchBar } from './serchBar';
+import { SerchBar } from './serchBar/serchBar';
 import { TeamLogo } from './teamLogo';
 import { IsSelected } from './isSelected';
 import { ApiContext } from '../context/context';

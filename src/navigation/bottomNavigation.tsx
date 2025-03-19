@@ -6,7 +6,8 @@ import { Dimensions, Platform } from 'react-native';
 import { LeagueScreen } from '../screen/league';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
-import { TestScreen } from '../screen/test';
+import { TestScreen } from '../screen/match';
+import TeamSearch from '../screen/test';
 
 const { width, height } = Dimensions.get('window');
 
@@ -54,7 +55,6 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen name="MAIN" component={MainScreen} />
-      <Tab.Screen name="TEAM" component={TeamScreen} />
       <Tab.Screen name="LEAGUE" component={LeagueScreen} />
       <Tab.Screen name="TEST" component={TestScreen} />
     </Tab.Navigator>

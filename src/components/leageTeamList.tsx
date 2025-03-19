@@ -28,7 +28,7 @@ export const LeageTeamListBar = () => {
           style={[styles.scrollView, {width: width*0.8}]}
         >
           {league?.data?.teamList?.map((team: team, index: number) => (
-            <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.057, marginRight: index !== 4 ? width*0.093 : 0}]}>
+            <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.057, marginRight: index !== league.data.teamList.length - 1 ? width*0.093 : 0}]}>
               <TouchableOpacity 
                 style={{alignItems: "center"}}
                 onPress={()=>{navigateTeam(team.teamId)}}

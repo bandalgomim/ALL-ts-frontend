@@ -20,13 +20,12 @@ export const LeagueScreen = () => {
     data: {leagueId: 1},
   });
   useLeague(leagueState.method, leagueState.data);
-  console.log("in League screen:", JSON.stringify(league, null, 2));
     return (
         <View style={styles.Container}>
           <LeagueHeader/>
           <LeageTeamListBar/>
           <LeagueCalendar/>
-          <ScrollView style={{paddingTop: 5}}>
+          <ScrollView>
             {league?.data?.matchList?.map((match: match, index: number) => {
               return (
                 <MatchBar

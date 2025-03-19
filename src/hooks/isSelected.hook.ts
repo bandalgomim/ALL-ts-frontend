@@ -20,7 +20,6 @@ export const useIsTeamSelected = (method: string, data: patchIsTeamSelected | nu
         };
         fetchIsTeamSelected();
       }, [method, data]);
-      console.log('useIsTeamSelected after: ', isTeamSelected);
 };
 
 export const useIsLeagueSelected = (method: string, data: patchIsLeagueSelected | null = null) => {
@@ -40,5 +39,4 @@ export const useIsLeagueSelected = (method: string, data: patchIsLeagueSelected 
         };
         fetchIsLeagueSelected();
       }, [method, data]);
-      console.log('useIsLeagueSelected after: ', isLeagueSelected);
 };

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
 import { match } from '../../../model/main.dto';
+import { MatchModal } from './modal';
+
 
 interface ContentsProps {
   month: number,
@@ -18,7 +20,8 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
   const monthDates: (Date | string)[] = getMonthDates(month, year)
   const weekDates: (Date | string)[] = getWeekDates(today)
   const groupedMatches = groupMatchesByDate(matchList); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
-
+  const [isVisible, setIsVisible] = useState(false);
+  const [modalMatch, setModalMatch] = useState<match[] | null>(null);
 
   let fontColor = [];
   if ( color === "white") {
@@ -28,7 +31,8 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
   }
   const onPressDate = (day: Date) => {
     if (day instanceof Date) {
-      console.log(groupedMatches[day.toISOString().split('T')[0]]);
+      setModalMatch(groupedMatches[day.toISOString().split('T')[0]]);
+      setIsVisible(true)
     }
   }
   return (
@@ -65,7 +69,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
               {day instanceof Date && (
                 <Image
                   resizeMode="contain"
-                  style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.011}]}
+                  style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.013}]}
                   source={
                     (() => {
                       const dateString = day.toISOString().split('T')[0]; // "2025-02-28" 형태로 추출
@@ -114,7 +118,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
           {day instanceof Date && (
             <Image
               resizeMode="contain"
-              style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003,right: width * 0.011,}]}
+              style={[styles.underBar, {height: height * 0.013, width: width * 0.1, bottom: -height * 0.003,right: width * 0.013,}]}
               source={
                 (() => {
                   const dateString = day.toISOString().split('T')[0]; // "2025-02-28" 형태로 추출
@@ -141,6 +145,13 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
         ))}
       </View>
       }
+      <View style={styles.modalContainer}>
+        <MatchModal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          matchList={modalMatch}
+        />
+      </View>
     </View>
   );
 };
@@ -187,7 +198,10 @@ const styles = StyleSheet.create({
   },
   underBar: {
     position: 'absolute',
-    
+  },
+  modalContainer: {
+    justifyContent: 'center', 
+    alignItems: 'center', 
   }
 });
 

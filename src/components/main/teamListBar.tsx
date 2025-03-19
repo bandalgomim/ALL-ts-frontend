@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
-import { SerchBar } from '../serchBar';
+import { SerchBar } from '../serchBar/serchBar';
 import { team } from '../../model/main.dto';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TeamPageParamList } from '../../model/navigation.dto';
@@ -32,7 +32,7 @@ export const TeamListBar: React.FC<ContentsProps>  = ({ mode, teamList }) => {
             style={[styles.scrollView, {width: width*0.8}]}
           >
             {(teamList ?? []).map(( team, index) => (
-              <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.04, marginRight: index !== 4 ? width*0.093 : 0}]}>
+              <View key={index} style={[styles.box, {width: width*0.13, height: width*0.1, marginTop: height*0.04, marginRight: index !== teamList.length - 1 ? width*0.093 : 0}]}>
                 <Shadow startColor='#bfbfbf'
                   endColor='#ffffff'
                   distance={6}

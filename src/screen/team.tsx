@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
@@ -13,18 +13,27 @@ import { useRoute } from '@react-navigation/native';
 export const TeamScreen = () => {
   const {team} = useContext(ApiContext);
   const route = useRoute();
-  const { teamId } = route.params as { teamId: number };
   const [teamState, setTeamState] = useState<getTeamReqDto>({
     method: 'GET',
-    data: {teamId},
+    data: {teamId: (route.params as any).teamId || 0},
   });
   useTeam(teamState.method, teamState.data);
+
+  useEffect(() => {
+    if (route.params && 'teamId' in route.params) {
+      setTeamState({
+        method: 'GET',
+        data: {teamId: Number(route.params.teamId)},
+      });
+    }
+  }, [route.params]);
+
   const { width, height } = Dimensions.get('window');
     return (
         <View style={styles.Container}>
           <TeamHeader/>
           <TeamCalendar/>
-          <ScrollView style={{paddingTop: 5}}>
+          <ScrollView>
             {team?.data?.matchList?.map((match: match, index: number) => {
               return (
                 <MatchBar

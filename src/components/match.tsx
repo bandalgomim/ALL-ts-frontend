@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground, Image, Platform } from 'react-native';
 import { Shadow  } from 'react-native-shadow-2';
 import { getMatchReqDto } from '../model/match.dto';
-import { SerchBar } from './serchBar';
+import { SerchBar } from './serchBar/serchBar';
 import { TeamLogo } from './teamLogo';
 import { MatchScore } from './matchBar/matchScore';
 import { IsSelected } from './isSelected';
