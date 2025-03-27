@@ -7,6 +7,7 @@ import { Shadow } from 'react-native-shadow-2';
 import { useMain } from '../hooks/main.hook';
 import { ApiContext } from '../context/context';
 import { MainHeader } from '../components/main/mainHeader';
+import { LoadingScreen } from '../components/loadingPage';
 
 export const MainScreen = () => {
   const { width, height } = Dimensions.get('window');
@@ -31,9 +32,7 @@ export const MainScreen = () => {
 
 
   return !isReady ? (
-    <View style={styles.LoadingContainer}>
-      <ActivityIndicator size="large" color="#ffffff" />
-    </View>
+    <LoadingScreen/>
   ) : (
     <View style={styles.Container}>
       <MainHeader/>
@@ -48,12 +47,6 @@ export const MainScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  LoadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-  },
   Container: {
     position: 'relative',
     height: '100%',

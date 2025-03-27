@@ -38,7 +38,7 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
              isSelected={match.isMatchSelected}
              teamId={null}
              leagueId={null}
-             matchId={null}
+             matchId={match.matchId}
           />
         </View>
         <Image

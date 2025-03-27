@@ -9,6 +9,7 @@ import { ApiContext } from '../context/context';
 import { useLeague } from '../hooks/league.hook';
 import { matchDto } from '../model/main.dto';
 import { useRoute } from '@react-navigation/native';
+import { LoadingScreen } from '../components/loadingPage';
 
 
 export const LeagueScreen = () => {
@@ -37,43 +38,35 @@ export const LeagueScreen = () => {
   }, [leagueReq.loading]);
 
   return !render ? (
-    <View style={styles.LoadingContainer}>
-      <ActivityIndicator size="large" color="#ffffff" />
-    </View>
+    <LoadingScreen/>
   ) : (
-        <View style={styles.Container}>
-          <LeagueHeader/>
-          <LeageTeamListBar/>
-          <LeagueCalendar/>
-          <ScrollView style={{marginTop: -height * 0.01}}>
-            {leagueReq?.data?.matchList?.map((match: matchDto, index: number) => {
-              return (
-                <MatchBar
-                  isVisible={null}
-                  setIsVisible={null}
-                  key={index}
-                  match={match}
-                  color={'blue'}
-                />
-              );
-            })}
-          </ScrollView>
-          <View style={[styles.logo, {bottom: -height * 0.03}]}>
-            <Logo
-              color="blue"
+    <View style={styles.Container}>
+      <LeagueHeader/>
+      <LeageTeamListBar/>
+      <LeagueCalendar/>
+      <ScrollView style={{marginTop: -height * 0.01}}>
+        {leagueReq?.data?.matchList?.map((match: matchDto, index: number) => {
+          return (
+            <MatchBar
+              isVisible={null}
+              setIsVisible={null}
+              key={index}
+              match={match}
+              color={'blue'}
             />
-          </View>
-        </View>
-      );
+          );
+        })}
+      </ScrollView>
+      <View style={[styles.logo, {bottom: -height * 0.03}]}>
+        <Logo
+          color="blue"
+        />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  LoadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-  },
   Container: {
     height: '100%',
     width: '100%',

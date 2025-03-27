@@ -19,7 +19,6 @@ const getTabBarIcon = (routeName: string, color: string, size: number) => {
     default:
       iconName = 'person'; // Default icon
   }
-
   return <Icon name={iconName} size={size} color={color} />;
 };
 

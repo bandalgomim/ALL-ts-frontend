@@ -18,7 +18,7 @@ export const SerchBar: React.FC<SerchBarPros> = ({ type }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <View style={[styles.Container, { width: width * 0.7, height: height * 0.1 }]}>
+    <View style={[styles.Container, { width: width * 0.7, height: height * 0.1, marginTop: height * 0.015, marginBottom: -height * 0.015,}]}>
       <TouchableOpacity onPress={()=>{setIsVisible(true); console.log(isVisible)}}>
         <Image
           resizeMode="contain"

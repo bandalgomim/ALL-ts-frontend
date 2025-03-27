@@ -8,6 +8,7 @@ import { ApiContext } from '../context/context';
 import { useTeam } from '../hooks/team.hook';
 import { matchDto } from '../model/main.dto';
 import { useRoute } from '@react-navigation/native';
+import { LoadingScreen } from '../components/loadingPage';
 
 export const TeamScreen = () => {
   const { height } = Dimensions.get('window');
@@ -35,9 +36,7 @@ export const TeamScreen = () => {
   }, [teamReq.loading]);
 
   return !render ? (
-    <View style={styles.LoadingContainer}>
-      <ActivityIndicator size="large" color="#ffffff" />
-    </View>
+    <LoadingScreen/>
   ) : (
     <View style={styles.Container}>
       <TeamHeader/>
@@ -65,12 +64,6 @@ export const TeamScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  LoadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-  },
   Container: {
     position: 'relative',
     height: '100%',

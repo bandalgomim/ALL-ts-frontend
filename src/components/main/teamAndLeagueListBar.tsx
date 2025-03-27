@@ -83,7 +83,7 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
               showsVerticalScrollIndicator={false} // 수직 스크롤바 숨기기 (필요한 경우)
             /> : null}
           </View>
-          <View style={[styles.serchBarContainer, {height: height * 0.05, marginLeft: width * 0.37, marginBottom:height * 0.028}]}>
+          <View style={[styles.serchBarContainer, {height: height * 0.05, marginLeft: width * 0.37, marginTop:height * -0.009}]}>
             <SerchBar
               type="blue"
             />

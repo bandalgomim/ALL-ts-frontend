@@ -46,11 +46,13 @@ const TeamHeader = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-    flexDirection: 'column',
-    justifyContent: 'center', // 가로 방향 중앙 정렬
-    alignItems: 'center', // 세로 방향 중앙 정렬
-    //
+  container: {
+  flexDirection: 'column',
+  justifyContent: 'center', // 가로 방향 중앙 정렬
+  alignItems: 'center', // 세로 방향 중앙 정렬
+  },
+  searchBarContainer: {
+
   },
   teamInfoContainer: {
     flexDirection: 'row',

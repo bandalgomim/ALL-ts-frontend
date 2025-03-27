@@ -5,7 +5,7 @@ import { MatchScore } from './matchScore';
 import { IsSelected } from '../isSelected';
 import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { LeaguePageParamList, MatchPageParamList } from '../../model/navigation.dto';
+import { MatchPageParamList } from '../../model/navigation.dto';
 
 interface MatchBarPros {
     match: matchDto;  // Assuming match is your interface from earlier

@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native';
 import { ApiContext } from '../context/context';
 import { useMatch } from '../hooks/match.hook';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { LoadingScreen } from '../components/loadingPage';
 
 export const MatchScreen = () => {
   const {matchRes, setMatchRes, matchReq} = useContext(ApiContext);
@@ -30,9 +31,7 @@ export const MatchScreen = () => {
   }, [matchReq.loading]);
 
   return !render ? (
-    <View style={styles.LoadingContainer}>
-      <ActivityIndicator size="large" color="#ffffff" />
-    </View>
+    <LoadingScreen/>
   ) : (
     <Match
       match={matchReq.data}
@@ -40,11 +39,4 @@ export const MatchScreen = () => {
     );
   };
 
-const styles = StyleSheet.create({
-  LoadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-  },
-});
+
