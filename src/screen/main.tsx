@@ -6,55 +6,36 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
 import { useMain } from '../hooks/main.hook';
 import { ApiContext } from '../context/context';
-import { getMainReqDto } from '../model/main.dto';
+import { MainHeader } from '../components/main/mainHeader';
+import { LoadingScreen } from '../components/loadingPage';
 
 export const MainScreen = () => {
   const { width, height } = Dimensions.get('window');
-  const {main} = useContext(ApiContext);
-  const [mainState] = useState<getMainReqDto>({
-    method: 'GET',
-    data: null,
-  });
-  useMain(mainState.method, mainState.data);
+  const {mainRes, setMainRes, mainReq} = useContext(ApiContext);
+  useEffect(() => {
+    setMainRes({
+      method: 'GET',
+      data: null,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useMain(mainRes.method as string, mainRes.data);
 
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
-    if (!main.loading) {
+    if (!mainReq.loading) {
       InteractionManager.runAfterInteractions(() => {
         setIsReady(true);
       });
     }
-  }, [main.loading]);
+  }, [mainReq.loading]);
 
 
   return !isReady ? (
-    <View style={styles.LoadingContainer}>
-      <ActivityIndicator size="large" color="#ffffff" />
-    </View>
+    <LoadingScreen/>
   ) : (
     <View style={styles.Container}>
-      <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02},]}>
-        <TouchableOpacity style={[styles.myPage,{}]}>
-          <Shadow
-            startColor={'#242b5c'}
-            endColor={'#30397A'}
-            distance={6}
-            offset={[0, 8]}
-            style={[{width: (width * 0.1) - 3, height: (width * 0.09) - 6}, styles.ShadowContainer]}
-          >
-            <View style={[styles.menu, {width: width * 0.1, height: width * 0.09}]}>
-              <Image
-                resizeMode="contain"
-                style={[{width: width * 0.07, height: width * 0.09}]}
-                source={require('./../assets/main/three.png')} />
-            </View>
-          </Shadow>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]}>
-          <Icon name={'person'} size={30} color={'white'} />
-          <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
-        </TouchableOpacity>
-      </View>
+      <MainHeader/>
       <MainCalendar/>
       <View style={[styles.logo, {bottom: -height * 0.03}]}>
         <Logo
@@ -66,12 +47,6 @@ export const MainScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  LoadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-  },
   Container: {
     position: 'relative',
     height: '100%',
@@ -97,16 +72,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#30397A',
   },
   myPage: {
-     
   },
   myPageText: {
     color: 'white',
-    fontFamily: ''
+    fontFamily: '',
   },
   logo: {
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
-  }
+  },
 });

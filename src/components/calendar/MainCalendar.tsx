@@ -8,7 +8,7 @@ import { ApiContext } from '../../context/context';
 
 export default function MainCalendar() {
   const { width, height } = Dimensions.get('window');
-  const {main} = useContext(ApiContext);
+  const {mainReq} = useContext(ApiContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m');
   const month = currentDate.getMonth();
@@ -63,12 +63,12 @@ export default function MainCalendar() {
         today={currentDate}
         color={'white'}
         mode={mode}
-        matchList={main.data.matchList}
+        matchList={mainReq.data.matchList}
       />
     </View>
     <TeamAndLeagueListBar
       mode={mode}
-      teamAndLeagueList={main.data.teamAndLeagueList}
+      teamAndLeagueList={mainReq.data.teamAndLeagueList}
     />
     </>
   );

@@ -1,6 +1,6 @@
 import { StateDto } from './config';
 
-export interface match {
+export interface matchDto {
     matchId: number,
     matchDate: string,
     homeTeamId: number,
@@ -17,13 +17,13 @@ export interface match {
     isMatchSelected: boolean
 }
 
-export interface team {
+export interface teamDto {
     teamId: number,
     teamName: string,
     teamLogo: string,
     index: number
 }
-export interface league {
+export interface leagueDto {
     leagueId: number,
     leagueName: string,
     leagueLogo: string,
@@ -31,8 +31,8 @@ export interface league {
 }
 
 export interface getMainResDto {
-    matchList: match[] | null,
-    teamAndLeagueList: (team | league)[] | null,
+    matchList: matchDto[] | null,
+    teamAndLeagueList: (teamDto | leagueDto)[] | null,
 }
 
 export interface getMainReqQueryDto {}

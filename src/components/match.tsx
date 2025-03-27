@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { getMatchResDto } from '../model/match.dto';
 import { SerchBar } from './serchBar/serchBar';
-import { TeamLogo } from './teamLogo';
+import { TeamOrLeagueLogo } from './teamOrLeagueLogo';
 import { MatchScore } from './matchBar/matchScore';
 import { IsSelected } from './isSelected';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -38,7 +38,7 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
              isSelected={match.isMatchSelected}
              teamId={null}
              leagueId={null}
-             matchId={null}
+             matchId={match.matchId}
           />
         </View>
         <Image
@@ -52,10 +52,9 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={[styles.homeTeamContainer]}>
         <TouchableOpacity onPress={()=>{navigateTeam(match.homeTeamId as number);}}>
           <View style={[styles.teamLogoContainer, {marginTop: height * 0.1, width: width * 0.5}]}>
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={match?.hometeamLogo}
               type={'big'}
-              color={'blue'}
             />
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
@@ -91,7 +90,7 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
           </View>
           <View style={{alignItems:'center', width:width * 0.5, marginTop: height * 0.012}}>
             <Text style ={[styles.fontWhite, {fontSize: width * 0.16, width:width * 0.5}]}>
-              {match.matchDate? match.matchDate.slice(0, 4) : '0000'}
+              {match.matchDate ? match.matchDate.slice(0, 4) : '0000'}
             </Text>
             <Text style ={[styles.fontWhite, {fontSize: width * 0.13, width:width * 0.5, marginTop:-height * 0.017}]}>
               {match.matchDate ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}` : '0000'}
@@ -105,10 +104,9 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={[styles.awayTeamContainer, {}]}>
         <TouchableOpacity onPress={()=>{navigateTeam(match.awayTeamId as number);}}>
           <View style={[styles.teamLogoContainer, {marginTop: height * 0.1, width: width * 0.5, borderWidth:0}]}>
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={match?.awayteamLogo}
               type={'big'}
-              color={'white'}
             />
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
@@ -148,22 +146,20 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
             </Text>
           </View>
           <View style={[styles.platformContainer, {width: width * 0.4, marginTop: height * 0.03}]}>
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={null}
               type={'middle'}
-              color={'white'}
             />
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={null}
               type={'middle'}
-              color={'white'}
             />
           </View>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   middleContainer: {
     height:0,
@@ -197,21 +193,21 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '50%',
     backgroundColor: 'white',
-    flexDirection: 'column',  
+    flexDirection: 'column',
     alignItems: 'center',
   },
   teamLogoContainer: {
     alignItems: 'center',
   },
   teamInfoContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   platformContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   fontWhite: {
-    textAlign: 'center', 
+    textAlign: 'center',
     fontFamily: 'built titling sb it',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
@@ -219,7 +215,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
   },
   fontBlue: {
-    textAlign: 'center', 
+    textAlign: 'center',
     fontFamily: 'built titling sb it',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상

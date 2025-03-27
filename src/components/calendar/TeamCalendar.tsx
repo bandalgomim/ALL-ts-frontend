@@ -8,8 +8,8 @@ import { ApiContext } from '../../context/context';
 export default function TeamCalendar() {
   const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('m')
-  const {team} = useContext(ApiContext);
+  const [mode, setMode] = useState<'m' |'w'>('m');
+  const {teamReq} = useContext(ApiContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
@@ -42,19 +42,19 @@ export default function TeamCalendar() {
   };
 
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*0.94 : width*0.52}]}>
-        <Image 
-          resizeMode="contain" 
-          style={[styles.teamBackground, {width:width*1, height: mode === 'm' ? width*0.92 : width*0.495}]} 
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
+        <Image
+          resizeMode="contain"
+          style={[styles.teamBackground, {width:width * 1, height: mode === 'm' ? width * 0.92 : width * 0.495}]}
           source={ mode === 'm' ? require('./../../assets/calendar/teamBackground.png') : require('./../../assets/calendar/teamBackground_s.png')} />
         <Header
           year={year}
           month={month}
-          type={"team"}
+          type={'team'}
           goToPrevious={goToPrevious}
           goToNext={goToNext}
         />
-        <View style={{alignItems: 'center', top: -height*0.015}}>
+        <View style={[styles.teamCalendar, {top: -height * 0.015}]}>
           <Mode
             type={'blue'}
             mode={mode}
@@ -66,18 +66,21 @@ export default function TeamCalendar() {
             today={currentDate}
             color={'blue'}
             mode={mode}
-            matchList={team.data.matchList}
+            matchList={teamReq.data.matchList}
           />
         </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     CalendarContainer: {
     alignItems: 'center',
   },
   teamBackground: {
     position: 'absolute',
-  }
+  },
+  teamCalendar: {
+    alignItems: 'center',
+  },
 });

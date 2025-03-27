@@ -1,13 +1,13 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Dimensions, View, Text, Button, ScrollView, StyleSheet } from "react-native";
-import { match } from "../../../model/main.dto";
+import { matchDto } from "../../../model/main.dto";
 import Modal from 'react-native-modal';
 import { MatchBar } from "../../matchBar/matchBar";
 
 interface  MatchModalProps {
     isVisible: boolean;
     setIsVisible: (isVisible: boolean) => void;
-    matchList: match[] | null
+    matchList: matchDto[] | null
   }
 
 export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
@@ -22,7 +22,7 @@ export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible
     >
       <View style={[styles.modalView, { width: width * 1, height: height * 0.5, }]}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {matchList?.map((match: match, index: number) => {
+          {matchList?.map((match: matchDto, index: number) => {
             return (
               <MatchBar
                 key={index}

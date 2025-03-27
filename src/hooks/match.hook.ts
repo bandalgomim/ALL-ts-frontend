@@ -4,21 +4,21 @@ import { commonPostHook } from './common.hook';
 import { getMatchReqQueryDto } from '../model/match.dto';
 
 export const useMatch = (method: string, data: getMatchReqQueryDto | null = null) => {
-    const {match, setMatch} = useContext(ApiContext);
+    const {setMatchReq} = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;
         }
         const url = 'http://10.0.2.2:3000/match';
         const fetchMyPage = async () => {
-            setMatch({ type: 'LOADING' });
+            setMatchReq({ type: 'LOADING' });
             if (method === 'GET'){
                 const query = new URLSearchParams();
                 if (data) {
                     Object.entries(data as unknown as getMatchReqQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setMatch);
+                await commonPostHook(method, getUrl, null, setMatchReq);
             }
         };
         fetchMyPage();

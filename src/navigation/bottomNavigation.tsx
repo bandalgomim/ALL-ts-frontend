@@ -3,12 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../global';
 import { Dimensions, Platform } from 'react-native';
-import { LeagueScreen } from '../screen/league';
-import { MainScreen } from '../screen/main';
-import { TeamScreen } from '../screen/team';
-import { MatchScreen } from '../screen/match';
 import MainStackNavigator from './MainStackNavigator';
-import DraggableListScreen from '../screen/test';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,19 +16,9 @@ const getTabBarIcon = (routeName: string, color: string, size: number) => {
     case 'MAIN':
       iconName = 'home';
       break;
-    case '글쓰기':
-      iconName = 'person';
-      break;
-    case '경기 짤방':
-      iconName = 'person';
-      break;
-    case '경기 짤방':
-      iconName = 'person';
-      break;
     default:
       iconName = 'person'; // Default icon
   }
-
   return <Icon name={iconName} size={size} color={color} />;
 };
 

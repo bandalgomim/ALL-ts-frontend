@@ -1,5 +1,3 @@
-import { match } from "./main.dto";
-
 export type TeamPageParamList = {
     TeamScreen: { teamId: number }; // MyPostScreen에 전달될 파라미터 타입 정의
   };
@@ -9,5 +7,9 @@ export type LeaguePageParamList = {
 };
 
 export type MatchPageParamList = {
-  MatchScreen: { matchId: matchId }; // MyPostScreen에 전달될 파라미터 타입 정의
+  MatchScreen: { matchId: number }; // MyPostScreen에 전달될 파라미터 타입 정의
+};
+
+export type LoadingTeamPageParamList = {
+  LoadingTeamScreen: { teamId: number }; // MyPostScreen에 전달될 파라미터 타입 정의
 };

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Button } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
-import { match } from '../../../model/main.dto';
+import { matchDto } from '../../../model/main.dto';
 import { MatchModal } from './modal';
 
 
@@ -12,7 +12,7 @@ interface ContentsProps {
   today: Date,
   color: string,
   mode: "m" | "w",
-  matchList: match[] | null
+  matchList: matchDto[] | null
 }
 
 const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, matchList }) => {
@@ -21,7 +21,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
   const weekDates: (Date | string)[] = getWeekDates(today)
   const groupedMatches = groupMatchesByDate(matchList); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
   const [isVisible, setIsVisible] = useState(false);
-  const [modalMatch, setModalMatch] = useState<match[] | null>(null);
+  const [modalMatch, setModalMatch] = useState<matchDto[] | null>(null);
 
   let fontColor = [];
   if ( color === "white") {

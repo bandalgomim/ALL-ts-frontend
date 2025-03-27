@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
-import { match } from '../../model/main.dto';
+import { matchDto } from '../../model/main.dto';
 import { MatchScore } from './matchScore';
 import { IsSelected } from '../isSelected';
-import { TeamLogo } from '../teamLogo';
+import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { LeaguePageParamList, MatchPageParamList } from '../../model/navigation.dto';
+import { MatchPageParamList } from '../../model/navigation.dto';
 
 interface MatchBarPros {
-    match: match;  // Assuming match is your interface from earlier
+    match: matchDto;  // Assuming match is your interface from earlier
     color: string;
     isVisible: boolean | null;
     setIsVisible: ((isVisible: boolean) => void) | null
@@ -55,10 +55,9 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIs
                 {`${match.homeTeamInit}`}
               </Text>
             </View>
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={match.hometeamLogo}
               type={"small"}
-              color={color}
             />
             <TouchableOpacity
               style={[styles.matchBar, {marginLeft: width * 0.015, marginRight: width * 0.015}]}
@@ -76,10 +75,9 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIs
                 type={'small'}
               />
             </TouchableOpacity>
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={match.awayteamLogo}
               type={"small"}
-              color={color}
             />
             <View style={{marginRight: -width * 0.015, marginLeft: width * 0.01, width: width * 0.132,  }}>
               <Text style={[style[1], {fontSize:width * 0.08, textAlign: 'left'}]}>
