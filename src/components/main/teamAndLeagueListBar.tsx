@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { SerchBar } from '../serchBar/serchBar';
-import { league, team } from '../../model/main.dto';
+import { leagueDto, teamDto } from '../../model/main.dto';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { LeaguePageParamList, LoadingTeamPageParamList } from '../../model/navigation.dto';
-import { TeamLogo } from '../teamLogo';
+import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
+import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
 import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 
 interface ContentsProps {
     mode: 'm' | 'w',
-    teamAndLeagueList: (team | league)[]
+    teamAndLeagueList: (teamDto | leagueDto)[]
   }
 
 export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {
   const { width, height } = Dimensions.get('window');
 
-  const [list, setList] = useState<(team | league)[]>([]);
-  const navigationTeamLoading = useNavigation<NavigationProp<LoadingTeamPageParamList>>();
+  const [list, setList] = useState<(teamDto | leagueDto)[]>([]);
+  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<NavigationProp<LeaguePageParamList>>();
-
   const navigateTeam = (teamId: number) => {
-    navigationTeamLoading.navigate('LoadingTeamScreen', { teamId: teamId });
+    navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
     navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
@@ -32,7 +31,7 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
     }
   }, [teamAndLeagueList]);
 
-  const handleDragEnd = ({ data }: { data: (team | league)[] }) => {
+  const handleDragEnd = ({ data }: { data: (teamDto | leagueDto)[] }) => {
     // 데이터를 드래그 후 각 항목의 position을 재정렬
     const updatedData = data.map((item, index) => ({
       ...item,
@@ -40,10 +39,10 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
     }));
     setList(updatedData);
   };
-  const renderItem = ({ item, drag, isActive }: RenderItemParams<(team | league)>) => {
+  const renderItem = ({ item, drag, isActive }: RenderItemParams<(teamDto | leagueDto)>) => {
     return (
       <ScaleDecorator>
-        <View key={item.index} style={[styles.box, {width: width * 0.125, height: width * 0.2, marginTop: height * 0.035, marginRight: item.index !== teamAndLeagueList.length + 1 ? width * 0.079 : width * 0.012, marginLeft: width * 0.012 } ]}>
+        <View key={item.index} style={[styles.box, {width: width * 0.125, height: width * 0.2, marginTop: height * 0.035, marginRight: item.index !== teamAndLeagueList.length ? width * 0.079 : width * 0.012, marginLeft: width * 0.012 } ]}>
           <TouchableOpacity
             onLongPress={drag}
             onPress={() => {
@@ -57,11 +56,9 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
             // eslint-disable-next-line react-native/no-inline-styles
             style={[{ opacity: isActive ? 0.5 : 1}]}
           >
-
-            <TeamLogo
+            <TeamOrLeagueLogo
               logo={'teamId' in item ? item.teamLogo : item.leagueLogo}
               type={'middle'}
-              color={'white'}
             />
           </TouchableOpacity>
         </View>

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { SerchBar } from './serchBar/serchBar';
-import { TeamLogo } from './teamLogo';
-import { IsSelected } from './isSelected';
-import { ApiContext } from '../context/context';
+import { SerchBar } from './../serchBar/serchBar';
+import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
+import { IsSelected } from './../isSelected';
+import { ApiContext } from '../../context/context';
 
 
 const LeagueHeader = () => {
@@ -22,10 +22,9 @@ const LeagueHeader = () => {
             <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueReq.data?.league?.countryName} ${leagueReq.data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
-          <TeamLogo
+          <TeamOrLeagueLogo
             logo={leagueReq?.data?.league?.leagueLogo}
             type={'big'}
-            color={'white'}
           />
           <IsSelected
             isSelected={leagueReq.data?.league?.isSelected}

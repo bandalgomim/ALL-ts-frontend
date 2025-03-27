@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, View, NativeMethods } from 'react-native';
-import { match } from '../../model/main.dto';
+import { matchDto } from '../../model/main.dto';
 import { MatchBar } from './matchBar';
 
 interface MyComponentProps {
-  matchList: match[];
+  matchList: matchDto[];
 }
 
 const MyComponent: React.FC<MyComponentProps> = ({ matchList }) => {
@@ -65,7 +65,7 @@ const MyComponent: React.FC<MyComponentProps> = ({ matchList }) => {
     }
   }, [nearestMatchIndex]);
 
-  const renderItem = ({ item, index }: { item: match; index: number }) => (
+  const renderItem = ({ item, index }: { item: matchDto; index: number }) => (
     <View ref={(el) => (matchRefs.current[index] = el as View & NativeMethods)}>
       <MatchBar match={item} color={'white'} />
     </View>

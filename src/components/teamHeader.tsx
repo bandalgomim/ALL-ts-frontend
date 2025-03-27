@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { SerchBar } from './serchBar/serchBar';
-import { TeamLogo } from './teamLogo';
+import { TeamOrLeagueLogo } from './teamOrLeagueLogo';
 import { IsSelected } from './isSelected';
 import { ApiContext } from '../context/context';
 
@@ -17,10 +17,9 @@ const TeamHeader = () => {
       />
       <View style={[styles.teamInfoContainer, {width: width * 0.8}]}>
         <View style={[styles.teamLogo, {marginBottom:-height * 0.01 }]}>
-          <TeamLogo
+          <TeamOrLeagueLogo
             logo={teamReq?.data?.team?.teamLogo}
             type={'big'}
-            color={'blue'}
           />
         </View>
         <View style={[styles.teamInfo, {marginRight: -width * 0.07}]}>

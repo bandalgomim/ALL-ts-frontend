@@ -1,15 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Image, ImageBackground } from 'react-native';
-import { Shadow  } from 'react-native-shadow-2';
+import { StyleSheet, Dimensions, Image, ImageBackground } from 'react-native';
 
-interface TeamLogoPros {
+interface TeamOrLogoPros {
     logo: string | null;
     type: string;
-    color: string;
 }
 
-export const TeamLogo: React.FC<TeamLogoPros> = ({logo, color, type }) => {
-  const { width, height } = Dimensions.get('window');
+export const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
+  const { width } = Dimensions.get('window');
   let size;
   let req;
 

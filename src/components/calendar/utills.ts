@@ -1,4 +1,4 @@
-import { match } from "../../model/main.dto";
+import { matchDto } from '../../model/main.dto';
 
 export const DAYS_OF_WEEK = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
@@ -43,7 +43,7 @@ export const getMonthDates = (month: number, year: number)  => {
   const firstDayIndex = daysInMonth[0].getDay();
   let calendarMonth: (Date | string)[] = [];
   calendarMonth = getPreviousMonthDays(month, year, firstDayIndex).concat(daysInMonth);
-  
+
   if (calendarMonth.length > 35) {
     calendarMonth = calendarMonth.slice(0, 35);
   } else if (calendarMonth.length < 35) {
@@ -51,7 +51,7 @@ export const getMonthDates = (month: number, year: number)  => {
   }
 
   return calendarMonth;
-}
+};
 
 export const getWeekDates = (today: Date) => {
   const dayOfWeek = today.getDay(); // 오늘의 요일 (0: 일요일 ~ 6: 토요일)
@@ -67,12 +67,12 @@ export const getWeekDates = (today: Date) => {
   return weekDates;
 };
 
-export function groupMatchesByDate(matches: match[] | null): Record<string, match[]> {
-  const groupedMatches: Record<string, match[]> = {};
+export function groupMatchesByDate(matches: matchDto[] | null): Record<string, matchDto[]> {
+  const groupedMatches: Record<string, matchDto[]> = {};
   if (matches) {
     for (const match of matches) {
       // "YYYY-MM-DD HH:mm:ss" → "YYYY-MM-DD" 추출
-      const dateString = match.matchDate.split(" ")[0];
+      const dateString = match.matchDate.split(' ')[0];
       // 날짜별 그룹화
       if (!groupedMatches[dateString]) {
           groupedMatches[dateString] = [];
