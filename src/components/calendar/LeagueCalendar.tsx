@@ -8,8 +8,8 @@ import { ApiContext } from '../../context/context';
 export default function LeagueCalendar() {
   const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('m')
-  const {league} = useContext(ApiContext);
+  const [mode, setMode] = useState<'m' |'w'>('m');
+  const {leagueReq} = useContext(ApiContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
@@ -44,19 +44,19 @@ export default function LeagueCalendar() {
   };
 
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width*0.94 : width*0.52}]}>
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
         <Image
-          resizeMode="contain" 
-          style={[styles.leagueBackground, {width:width*1, height: mode === 'm' ? width*0.92 : width*0.495}]} 
-          source={ mode === 'm' ? require('./../../assets/calendar/leagueBackground.png') : require('./../../assets/calendar/leagueBackground_s.png')} />     
+          resizeMode="contain"
+          style={[styles.leagueBackground, {width:width * 1, height: mode === 'm' ? width * 0.92 : width * 0.495}]}
+          source={ mode === 'm' ? require('./../../assets/calendar/leagueBackground.png') : require('./../../assets/calendar/leagueBackground_s.png')} />
         <Header
           year={year}
           month={month}
-          type={"league"}
+          type={'league'}
           goToPrevious={goToPrevious}
           goToNext={goToNext}
         />
-        <View style={{alignItems: 'center', top: -height*0.015}}>
+        <View style={[styles.leagueCalendar, {top: -height * 0.015}]}>
           <Mode
             type={'white'}
             mode={mode}
@@ -68,19 +68,21 @@ export default function LeagueCalendar() {
             today={currentDate}
             color={'white'}
             mode={mode}
-            matchList={league.data.matchList}
+            matchList={leagueReq.data.matchList}
           />
         </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     CalendarContainer: {
     alignItems: 'center',
   },
   leagueBackground: {
     position: 'absolute',
-
-  }
+  },
+  leagueCalendar: {
+    alignItems: 'center',
+  },
 });

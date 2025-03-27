@@ -1,42 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useContext } from 'react';
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import TeamHeader from '../components/teamHeader';
 import { Logo } from '../components/logo';
 import { ApiContext } from '../context/context';
-import { useTeam } from '../hooks/team.hook';
-import { getTeamReqDto } from '../model/team.dto';
-import { match } from '../model/main.dto'
-import { useRoute } from '@react-navigation/native';
+import { match } from '../model/main.dto';
 
 export const TeamScreen = () => {
-  const {team} = useContext(ApiContext);
-  const route = useRoute();
-  const [teamState, setTeamState] = useState<getTeamReqDto>({
-    method: 'GET',
-    data: null,
-  });
-  useEffect(() => {
-    if (route.params && 'teamId' in route.params) {
-      setTeamState({
-        method: 'GET',
-        data: {teamId: Number(route.params.teamId)},
-      });
-    }
-  }, [route.params]);
-  useTeam(teamState.method, teamState.data);
+  const {teamReq} = useContext(ApiContext);
+
   const { width, height } = Dimensions.get('window');
-    return team.loading ? (
-      <View style={styles.LoadingContainer}>
-        <ActivityIndicator size="large" color="#ffffff" />
-      </View>
-    ) : (
+    return (
       <View style={styles.Container}>
         <TeamHeader/>
         <TeamCalendar/>
         <ScrollView>
-          {team?.data?.matchList?.map((match: match, index: number) => {
+          {teamReq?.data?.matchList?.map((match: match, index: number) => {
             return (
               <MatchBar
                 isVisible={null}
@@ -48,7 +28,7 @@ export const TeamScreen = () => {
             );
           })}
         </ScrollView>
-        <View style={[styles.logo, {bottom: -height*0.03}]}>
+        <View style={[styles.logo, {bottom: -height * 0.03}]}>
           <Logo
             color="white"
           />
@@ -67,10 +47,10 @@ const styles = StyleSheet.create({
   Container: {
     position: 'relative',
     height: '100%',
-    width: '100%',  
+    width: '100%',
     alignItems: 'center',
     backgroundColor: '#30397A',
-    zIndex:1
+    zIndex:1,
   },
   logo: {
     position: 'absolute',

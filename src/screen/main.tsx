@@ -10,21 +10,21 @@ import { getMainReqDto } from '../model/main.dto';
 
 export const MainScreen = () => {
   const { width, height } = Dimensions.get('window');
-  const {main} = useContext(ApiContext);
+  const {mainReq} = useContext(ApiContext);
   const [mainState] = useState<getMainReqDto>({
     method: 'GET',
     data: null,
   });
-  useMain(mainState.method, mainState.data);
+  useMain(mainState.method as string, mainState.data);
 
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
-    if (!main.loading) {
+    if (!mainReq.loading) {
       InteractionManager.runAfterInteractions(() => {
         setIsReady(true);
       });
     }
-  }, [main.loading]);
+  }, [mainReq.loading]);
 
 
   return !isReady ? (
@@ -33,7 +33,7 @@ export const MainScreen = () => {
     </View>
   ) : (
     <View style={styles.Container}>
-      <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02},]}>
+      <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02}]}>
         <TouchableOpacity style={[styles.myPage,{}]}>
           <Shadow
             startColor={'#242b5c'}
@@ -97,16 +97,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#30397A',
   },
   myPage: {
-     
   },
   myPageText: {
     color: 'white',
-    fontFamily: ''
+    fontFamily: '',
   },
   logo: {
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
-  }
+  },
 });

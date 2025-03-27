@@ -8,13 +8,13 @@ import { Logo } from '../components/logo';
 import { ApiContext } from '../context/context';
 import { getLeagueReqDto } from '../model/league.dto';
 import { useLeague } from '../hooks/league.hook';
-import { match } from '../model/main.dto'
+import { match } from '../model/main.dto';
 import { useRoute } from '@react-navigation/native';
 
 
 export const LeagueScreen = () => {
   const { width, height } = Dimensions.get('window');
-  const {league} = useContext(ApiContext);
+  const {leagueReq} = useContext(ApiContext);
   const route = useRoute();
   const [leagueState, setLeagueState] = useState<getLeagueReqDto>({
     method: 'GET',
@@ -30,15 +30,15 @@ export const LeagueScreen = () => {
     }
   }, [route.params]);
 
-  useLeague(leagueState.method, leagueState.data);
+  useLeague(leagueState.method as string, leagueState.data);
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
-    if (!league.loading) {
+    if (!leagueReq.loading) {
       InteractionManager.runAfterInteractions(() => {
         setIsReady(true);
       });
     }
-  }, [league.loading]);
+  }, [leagueReq.loading]);
 
   return !isReady ? (
     <View style={styles.LoadingContainer}>
@@ -49,8 +49,8 @@ export const LeagueScreen = () => {
           <LeagueHeader/>
           <LeageTeamListBar/>
           <LeagueCalendar/>
-          <ScrollView style={{marginTop: -height*0.01}}>
-            {league?.data?.matchList?.map((match: match, index: number) => {
+          <ScrollView style={{marginTop: -height * 0.01}}>
+            {leagueReq?.data?.matchList?.map((match: match, index: number) => {
               return (
                 <MatchBar
                   isVisible={null}
@@ -62,14 +62,14 @@ export const LeagueScreen = () => {
               );
             })}
           </ScrollView>
-          <View style={[styles.logo, {bottom: -height*0.03}]}>
+          <View style={[styles.logo, {bottom: -height * 0.03}]}>
             <Logo
               color="blue"
             />
           </View>
         </View>
       );
-}
+};
 
 const styles = StyleSheet.create({
   LoadingContainer: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    zIndex:1
+    zIndex:1,
   },
   logo: {
     position: 'absolute',
@@ -91,5 +91,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     zIndex: -1, // B 요소 뒤로 보냄
-  }
+  },
 });

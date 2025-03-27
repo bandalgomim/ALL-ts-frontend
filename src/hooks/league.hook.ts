@@ -4,22 +4,21 @@ import { commonPostHook } from './common.hook';
 import { getLeagueReqQueryDto } from '../model/league.dto';
 
 export const useLeague = (method: string, data: getLeagueReqQueryDto | null = null) => {
-    
-    const {league, setLeague} = useContext(ApiContext);
+    const {setLeagueReq} = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;
         }
         const url = 'http://10.0.2.2:3000/league';
         const fetchMyPage = async () => {
-            setLeague({ type: 'LOADING' });
+            setLeagueReq({ type: 'LOADING' });
             if (method === 'GET'){
                 const query = new URLSearchParams();
                 if (data) {
                     Object.entries(data as unknown as getLeagueReqQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setLeague);
+                await commonPostHook(method, getUrl, null, setLeagueReq);
             }
         };
         fetchMyPage();

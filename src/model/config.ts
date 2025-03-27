@@ -7,13 +7,13 @@ export interface PostState<T> {
 
   // 액션 타입 정의
 export type PostAction<P> =
-    | { type: "LOADING" }
-    | { type: "SUCCESS"; payload: P; items: string[] | null}
-    | { type: "ERROR"; payload: string };
+    | { type: 'LOADING' }
+    | { type: 'SUCCESS'; payload: P; items: string[] | null}
+    | { type: 'ERROR'; payload: string };
 
 // 기본 rest api 타입 정의
 
 export interface StateDto<T> {
-    method: "GET" | "POST" | "PATCH" | "DELETE",
+    method: 'GET' | 'POST' | 'PATCH' | 'DELETE' | null,
     data: T | null
 }

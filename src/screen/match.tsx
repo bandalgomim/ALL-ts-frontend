@@ -7,13 +7,13 @@ import { useMatch } from '../hooks/match.hook';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
 export const MatchScreen = () => {
-  const {match} = useContext(ApiContext);
+  const {matchReq} = useContext(ApiContext);
   const route = useRoute();
   const [matchState, setMatchState] = useState<getMatchReqDto>({
     method: 'GET',
     data: null,
   });
-  useMatch(matchState.method, matchState.data);
+  useMatch(matchState.method as string, matchState.data);
 
   useEffect(() => {
     if (route.params && 'matchId' in route.params) {
@@ -23,13 +23,13 @@ export const MatchScreen = () => {
       });
     }
   }, [route.params]);
-  return match.loading ? (
+  return matchReq.loading ? (
     <View style={styles.LoadingContainer}>
       <ActivityIndicator size="large" color="#ffffff" />
     </View>
   ) : (
     <Match
-      match={match.data}
+      match={matchReq.data}
     />
     );
   };

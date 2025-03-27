@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { SerchBar } from '../serchBar/serchBar';
 import { league, team } from '../../model/main.dto';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
+import { LeaguePageParamList, LoadingTeamPageParamList } from '../../model/navigation.dto';
 import { TeamLogo } from '../teamLogo';
 import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
-import { ApiContext } from '../../context/context';
-import { getTeamResDto } from '../../model/team.dto';
-import { createInitial } from '../../reducsers/apiReducer';
 
 interface ContentsProps {
     mode: 'm' | 'w',
@@ -19,11 +16,11 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
   const { width, height } = Dimensions.get('window');
 
   const [list, setList] = useState<(team | league)[]>([]);
-  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
+  const navigationTeamLoading = useNavigation<NavigationProp<LoadingTeamPageParamList>>();
   const navigationLeague = useNavigation<NavigationProp<LeaguePageParamList>>();
 
   const navigateTeam = (teamId: number) => {
-    navigationTeam.navigate('TeamScreen', { teamId: teamId });
+    navigationTeamLoading.navigate('LoadingTeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
     navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });

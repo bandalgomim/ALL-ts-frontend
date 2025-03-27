@@ -6,6 +6,7 @@ import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
 import { LeagueScreen } from '../screen/league';
 import { MatchScreen } from '../screen/match';
+import { LoadingTeamScreen } from '../components/loadingPage';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,11 @@ const StackNavigator = () => {
           component={MatchScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+                name="LoadingTeamScreen"
+                component={LoadingTeamScreen} 
+                options={{ headerShown: false }} 
+            />
       </Stack.Navigator>
     </NavigationContainer>
   );
