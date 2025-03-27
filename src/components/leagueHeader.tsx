@@ -8,6 +8,7 @@ import { ApiContext } from '../context/context';
 
 const LeagueHeader = () => {
   const { width, height } = Dimensions.get('window');
+
   const {league} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width*0.8, marginBottom: -height*0.01, }]}>
@@ -17,14 +18,20 @@ const LeagueHeader = () => {
       <View style={[styles.LeagueInfoContainer, {width: width*0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer, ]}>
-            <Text style={[styles.LeagueInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>LCK</Text>
-            <Text style={[styles.LeagueInfoEtc, {fontSize: width*0.055}]}>KOREA LOL test</Text>
+            <Text style={[styles.LeagueInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>{league.data.league.leagueName}</Text>
+            <Text style={[styles.LeagueInfoEtc, {fontSize: width*0.055}]}>{`${league.data?.league?.countryName} ${league.data?.league?.sportName}`}</Text>
         </View>
-        <View style={[styles.TeamLogo, {}]}>
+        <View style={[styles.TeamLogo, {marginRight: -width*0.07}]}>
           <TeamLogo
             logo={league?.data?.league?.leagueLogo}
             type={'big'}
             color={'white'}
+          />
+          <IsSelected
+            isSelected={league.data?.league?.isSelected}
+            teamId={null}
+            leagueId={league.data?.league?.leagueId}
+            matchId={null}
           />
         </View>
       </View>
@@ -44,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   TeamLogo: {
-    
+    flexDirection: 'row',
   },
   LeagueInfo: {
     flexDirection: 'row',

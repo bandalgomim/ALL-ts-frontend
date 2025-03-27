@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',  // 가로 방향 중�� 정��
     alignItems: 'flex-end',
-    //borderWidth: 1
+    // 
   },
   text1: {
     textAlign: 'center',

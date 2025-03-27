@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
-import { TeamListBar } from '../main/teamListBar';
+import { TeamAndLeagueListBar } from '../main/teamAndLeagueListBar';
 import { ApiContext } from '../../context/context';
 
 export default function MainCalendar() {
   const { width, height } = Dimensions.get('window');
   const {main} = useContext(ApiContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('m')
+  const [mode, setMode] = useState<'m' |'w'>('m');
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   // Handlers for changing the month
@@ -43,7 +43,7 @@ export default function MainCalendar() {
   };
   return (
     <>
-    <View style={[styles.CalendarContainer, {width: width, height: height*0.44, marginTop: -width*0.02, }]}>
+    <View style={[styles.CalendarContainer, {width: width, height: height * 0.44, marginTop: -width * 0.02 }]}>
       {/* Header */}
       <MainHeader
         year={year}
@@ -66,9 +66,9 @@ export default function MainCalendar() {
         matchList={main.data.matchList}
       />
     </View>
-    <TeamListBar
+    <TeamAndLeagueListBar
       mode={mode}
-      teamList={main.data.teamList}
+      teamAndLeagueList={main.data.teamAndLeagueList}
     />
     </>
   );

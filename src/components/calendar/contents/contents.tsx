@@ -159,7 +159,7 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, today, mode, ma
 const styles = StyleSheet.create({
   calendarContainer: {
     flexDirection: 'column',
-    //borderWidth: 1
+    // 
   },
   dayContainer: {
     flex: 1,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //borderWidth: 1
+    // 
   },
   currentMonthDayWhite: {
     color: '#F5CEDF',

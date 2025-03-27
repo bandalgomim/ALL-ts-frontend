@@ -1,34 +1,60 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Dimensions, InteractionManager, ScrollView, StyleSheet, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import LeagueHeader from '../components/leagueHeader';
 import { LeageTeamListBar } from '../components/leageTeamList';
 import { Logo } from '../components/logo';
 import { ApiContext } from '../context/context';
-import { useTeam } from '../hooks/team.hook';
 import { getLeagueReqDto } from '../model/league.dto';
 import { useLeague } from '../hooks/league.hook';
 import { match } from '../model/main.dto'
+import { useRoute } from '@react-navigation/native';
 
 
 export const LeagueScreen = () => {
   const { width, height } = Dimensions.get('window');
   const {league} = useContext(ApiContext);
+  const route = useRoute();
   const [leagueState, setLeagueState] = useState<getLeagueReqDto>({
     method: 'GET',
-    data: {leagueId: 1},
+    data: null,
   });
+
+  useEffect(() => {
+    if (route.params && 'leagueId' in route.params) {
+      setLeagueState({
+        method: 'GET',
+        data: {leagueId: Number(route.params.leagueId)},
+      });
+    }
+  }, [route.params]);
+
   useLeague(leagueState.method, leagueState.data);
-    return (
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    if (!league.loading) {
+      InteractionManager.runAfterInteractions(() => {
+        setIsReady(true);
+      });
+    }
+  }, [league.loading]);
+
+  return !isReady ? (
+    <View style={styles.LoadingContainer}>
+      <ActivityIndicator size="large" color="#ffffff" />
+    </View>
+  ) : (
         <View style={styles.Container}>
           <LeagueHeader/>
           <LeageTeamListBar/>
           <LeagueCalendar/>
-          <ScrollView>
+          <ScrollView style={{marginTop: -height*0.01}}>
             {league?.data?.matchList?.map((match: match, index: number) => {
               return (
                 <MatchBar
+                  isVisible={null}
+                  setIsVisible={null}
                   key={index}
                   match={match}
                   color={'blue'}
@@ -46,6 +72,12 @@ export const LeagueScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  LoadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
+  },
   Container: {
     height: '100%',
     width: '100%',

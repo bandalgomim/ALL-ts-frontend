@@ -25,7 +25,7 @@ const TeamHeader = () => {
         </View>
         <View style={[styles.teamInfo, {marginRight: -width*0.07}]}>
           <View style={[styles.teamInfoTextContainer, ]}>
-            {team?.data?.team?.teamName && team?.data?.team?.teamName.length < 9 
+            {team?.data?.team?.teamName && team?.data?.team?.teamName.length < 10 
               ? <Text style={[styles.teamInfoName, {fontSize: width*0.15, marginBottom: -height*0.01}]}>{team.data?.team.teamName}</Text> 
               : <View>
                   <Text style={[styles.teamInfoName, {fontSize: width*0.083, marginBottom: -height*0.01}]}>{team.data?.team?.teamName?.split(" ")[0]}</Text>
@@ -35,7 +35,10 @@ const TeamHeader = () => {
             <Text style={[styles.teamInfoEtc, {fontSize: width*0.055, width: width*0.5}]}>{`${team.data?.team?.countryName} ${team.data?.team?.sportName}/${team.data?.team?.leagueName}`}</Text>
           </View>
           <IsSelected
-            isSelectrd={true}
+             isSelected={team.data?.team?.isTeamSelected}
+             teamId={team.data?.team?.teamId}
+             leagueId={null}
+             matchId={null}
           />
         </View>
       </View>

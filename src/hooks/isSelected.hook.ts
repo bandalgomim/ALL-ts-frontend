@@ -1,42 +1,27 @@
 import { useContext, useEffect } from 'react';
 import { ApiContext } from '../context/context';
 import { commonPostHook } from './common.hook';
-import { patchIsLeagueSelected, patchIsTeamSelected } from '../model/isSelected.dto';
+import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 
-export const useIsTeamSelected = (method: string, data: patchIsTeamSelected | null = null) => {
-    const { isTeamSelected, setIsTeamSelected, isLeagueSelected, setIsLeagueSelected } = useContext(ApiContext);
+export const useIsSelected = (method: string, data: patchIsSelected | null = null) => {
+    const { setMain } = useContext(ApiContext);
     useEffect(() => {
+        if (data === null) {
+            return;
+        }
         const url = 'http://10.0.2.2:3000/isSelected';
-        const fetchIsTeamSelected = async () => {
-            setIsTeamSelected({ type: 'LOADING' });
+        const fetchIsSelected = async () => {
+            setMain({ type: 'LOADING' });
             if (method === 'PATCH'){
                 const query = new URLSearchParams();
                 if (data) {
                     Object.entries(data as unknown as patchIsTeamSelected).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setIsTeamSelected);
+                await commonPostHook(method, getUrl, null, setMain);
             }
         };
-        fetchIsTeamSelected();
-      }, [method, data]);
-};
-
-export const useIsLeagueSelected = (method: string, data: patchIsLeagueSelected | null = null) => {
-    const { isLeagueSelected, setIsLeagueSelected } = useContext(ApiContext);
-    useEffect(() => {
-        const url = 'http://10.0.2.2:3000/isSelected';
-        const fetchIsLeagueSelected = async () => {
-            setIsLeagueSelected({ type: 'LOADING' });
-            if (method === 'PATCH'){
-                const query = new URLSearchParams();
-                if (data) {
-                    Object.entries(data as unknown as patchIsLeagueSelected).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
-                }
-                const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setIsLeagueSelected);
-            }
-        };
-        fetchIsLeagueSelected();
+        fetchIsSelected();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [method, data]);
 };

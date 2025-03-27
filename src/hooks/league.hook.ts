@@ -7,6 +7,9 @@ export const useLeague = (method: string, data: getLeagueReqQueryDto | null = nu
     
     const {league, setLeague} = useContext(ApiContext);
     useEffect(() => {
+        if (data === null) {
+            return;
+        }
         const url = 'http://10.0.2.2:3000/league';
         const fetchMyPage = async () => {
             setLeague({ type: 'LOADING' });

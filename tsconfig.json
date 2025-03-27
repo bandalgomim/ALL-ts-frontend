@@ -1,3 +1,19 @@
 {
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["ES2017", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "esModuleInterop": true,
+    "types": ["styled-components-react-native"]
+  },
+  "include": [
+    "index.js",
+    "src/**/*"
+  ],
   "extends": "@react-native/typescript-config/tsconfig.json"
 }

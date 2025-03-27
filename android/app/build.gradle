@@ -111,14 +111,12 @@ android {
 }
 
 dependencies {
-    // React Native 기본 의존성
+    // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
-    // Hermes 활성화 여부에 따라 JSC 또는 Hermes 사용
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
 }
-

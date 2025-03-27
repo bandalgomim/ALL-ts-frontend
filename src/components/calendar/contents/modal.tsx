@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Dimensions, View, Text, Button, ScrollView, StyleSheet } from "react-native";
 import { match } from "../../../model/main.dto";
 import Modal from 'react-native-modal';
@@ -8,7 +9,6 @@ interface  MatchModalProps {
     setIsVisible: (isVisible: boolean) => void;
     matchList: match[] | null
   }
-  
 
 export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
   const { width, height } = Dimensions.get('window');
@@ -20,7 +20,7 @@ export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible
       animationOut="slideOutDown"
       style={styles.modal}
     >
-      <View style={[styles.modalView, { width: width*1, height: height*0.5, opacity: 1}]}>
+      <View style={[styles.modalView, { width: width * 1, height: height * 0.5, }]}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {matchList?.map((match: match, index: number) => {
             return (
@@ -28,6 +28,8 @@ export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible
                 key={index}
                 match={match}
                 color={'blue'}
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
               />
             );
           })}
@@ -49,7 +51,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     scrollView: {
-      opacity: 1,
       paddingTop: 10,
       alignItems: 'center',
       justifyContent: 'center',

@@ -4,7 +4,6 @@ import { commonPostHook } from './common.hook';
 import { getMainReqQueryDto } from '../model/main.dto';
 
 export const useMain = (method: string, data: getMainReqQueryDto | null = null) => {
-    
     const {main, setMain} = useContext(ApiContext);
     useEffect(() => {
         const url = 'http://10.0.2.2:3000/main';

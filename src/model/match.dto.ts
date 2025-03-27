@@ -7,7 +7,7 @@ export interface platform {
     platformUrl: string | null
 }
 
-export interface getMatchReqDto {
+export interface getMatchResDto {
     matchId: number | null,
     matchDate: string | null,
     homeTeamId: number | null,
@@ -20,6 +20,11 @@ export interface getMatchReqDto {
     awayteamLogo: string | null,
     homeTeamScore: number | null,
     awayTeamScore: number | null,
+    sportName: string | null,
+    homeCountryName: string | null,
+    awayCountryName: string | null,
+    homeLeagueName: string | null,
+    awayLeagueName: string | null,
     matchState: string | null,
     isMatchSelected: boolean | null,
     platform: platform[] | null
@@ -29,4 +34,4 @@ export interface getMatchReqQueryDto {
     matchId: number
 }
 
-export type getTeamReqDto = StateDto<getMatchReqQueryDto>
+export type getMatchReqDto = StateDto<getMatchReqQueryDto>

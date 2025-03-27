@@ -1,5 +1,5 @@
-import React, { createContext, useReducer } from "react";
-import { PostReducer, initialmain, initialteam, initialLeague, initialmatch, initialIsTeamSelected, initialIsLeagueSelected } from "../reducsers/apiReducer";
+import React, { createContext, useReducer } from 'react';
+import { PostReducer, initialmain, initialteam, initialLeague, initialmatch, initialIsSelected } from '../reducsers/apiReducer';
 
 export const ApiContext = createContext();
 
@@ -9,8 +9,7 @@ export function ApiProvider({ children }) {
   const [team, setTeam] = useReducer(PostReducer, initialteam);
   const [league, setLeague] = useReducer(PostReducer, initialLeague);
   const [match, setMatch] = useReducer(PostReducer, initialmatch);
-  const [isTeamSelected, setIsTeamSelected] = useReducer(PostReducer, initialIsTeamSelected);
-  const [isLeagueSelected, setIsLeagueSelected] = useReducer(PostReducer, initialIsLeagueSelected);
+  const [isSelected, setIsSelected] = useReducer(PostReducer, initialIsSelected);
   return (
     <ApiContext.Provider value={{
       main,
@@ -21,10 +20,8 @@ export function ApiProvider({ children }) {
       setLeague,
       match,
       setMatch,
-      isTeamSelected,
-      setIsTeamSelected,
-      isLeagueSelected,
-      setIsLeagueSelected,
+      isSelected,
+      setIsSelected,
       }}>
       {children}
     </ApiContext.Provider>

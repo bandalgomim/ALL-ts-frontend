@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import TeamHeader from '../components/teamHeader';
@@ -15,10 +15,8 @@ export const TeamScreen = () => {
   const route = useRoute();
   const [teamState, setTeamState] = useState<getTeamReqDto>({
     method: 'GET',
-    data: {teamId: (route.params as any).teamId || 0},
+    data: null,
   });
-  useTeam(teamState.method, teamState.data);
-
   useEffect(() => {
     if (route.params && 'teamId' in route.params) {
       setTeamState({
@@ -27,34 +25,45 @@ export const TeamScreen = () => {
       });
     }
   }, [route.params]);
-
+  useTeam(teamState.method, teamState.data);
   const { width, height } = Dimensions.get('window');
-    return (
-        <View style={styles.Container}>
-          <TeamHeader/>
-          <TeamCalendar/>
-          <ScrollView>
-            {team?.data?.matchList?.map((match: match, index: number) => {
-              return (
-                <MatchBar
-                  key={index}
-                  match={match}
-                  color={'white'}
-                />
-              );
-            })}
-          </ScrollView>
-          <View style={[styles.logo, {bottom: -height*0.03}]}>
-            <Logo
-              color="white"
-            />
-          </View>
+    return team.loading ? (
+      <View style={styles.LoadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    ) : (
+      <View style={styles.Container}>
+        <TeamHeader/>
+        <TeamCalendar/>
+        <ScrollView>
+          {team?.data?.matchList?.map((match: match, index: number) => {
+            return (
+              <MatchBar
+                isVisible={null}
+                setIsVisible={null}
+                key={index}
+                match={match}
+                color={'white'}
+              />
+            );
+          })}
+        </ScrollView>
+        <View style={[styles.logo, {bottom: -height*0.03}]}>
+          <Logo
+            color="white"
+          />
         </View>
-        
-      );
-}
+      </View>
+    );
+};
 
 const styles = StyleSheet.create({
+  LoadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
+  },
   Container: {
     position: 'relative',
     height: '100%',

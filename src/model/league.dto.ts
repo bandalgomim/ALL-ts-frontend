@@ -8,7 +8,8 @@ export interface league {
     sportId: number,
     sportName: string,
     countryId: number,
-    countryName: string
+    countryName: string,
+    isSelected: boolean
 }
 
 export interface team {

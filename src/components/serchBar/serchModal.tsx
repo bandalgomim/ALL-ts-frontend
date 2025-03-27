@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { View, TextInput, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
-import { searchItem } from "../../model/searchIteam";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { TeamPageParamList } from "../../model/navigation.dto";
+import React, { useState } from 'react';
+import { View, TextInput, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
+import { searchItem } from '../../model/searchIteam';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 
 interface  searchModalProps {
     isVisible: boolean;
@@ -12,73 +12,88 @@ interface  searchModalProps {
 
 interface filteredItems {
   name: string;
-  teamId: number
+  teamId: number | undefined;
+  leagueId: number | undefined;
 }
 
 const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) => {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const { width, height } = Dimensions.get('window');
-  const navigation = useNavigation<NavigationProp<TeamPageParamList>>();
+
+  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
+  const navigationLeague = useNavigation<NavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
     setIsVisible(false);
-    navigation.navigate("TeamScreen", { teamId: teamId });
+    setQuery('');
+    setFilteredTeams([]);
+    setIsFocused(false);
+    navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
+  const navigateLeague = (leagueId: number) => {
+    setIsVisible(false);
+    setQuery('');
+    setFilteredTeams([]);
+    setIsFocused(false);
+    navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
+  };
+
   // 검색 실행 함수
   const handleSearch = (input: string) => {
     setQuery(input);
-    
     if (!input) {
       setFilteredTeams([]);
       return;
     }
-    
     const lowerQuery = input.toLowerCase();
-    
     const results = searchItem
       .filter(t => t.keyword.some(k => k.toLowerCase().includes(lowerQuery)))
-      .map(t => ({name: t.keyword[0], teamId: t.teamId}));
-    
+      .map(t => ({name: t.keyword[0], teamId: t.teamId, leagueId: t.leagueId}));
     setFilteredTeams(results);
   };
-  
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity onPress={()=>{
+        if (item.teamId) {navigateTeam(item.teamId);}
+        else if (item.leagueId) {navigateLeague(item.leagueId);}
+      }}>
+        <Text style={[styles.serchText, {fontSize: width * 0.06, width: width * 0.43}]}>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Modal
       isVisible={isVisible}
-      
-      onBackdropPress={() => {setIsVisible(false); setQuery(""); setFilteredTeams([]), setIsFocused(false)}} // 바깥 터치 시 닫기
+      onBackdropPress={() => {setIsVisible(false); setQuery(''); setFilteredTeams([]); setIsFocused(false);}} // 바깥 터치 시 닫기
       animationIn="slideInUp"
       animationOut="slideOutDown"
       style={styles.modal}
     >
-      <View style={[styles.modalView, { width: width*0.85, height: height*0.5, opacity: 1}]}>
+      <View style={[styles.modalView, { width: width * 0.85, height: height * 0.5 }]}>
         <ImageBackground
-          resizeMode="contain" 
-          style={[styles.textBackground, {width:width*0.5, height:height*0.07, marginTop: height*0.015}]}
+          resizeMode="contain"
+          style={[styles.textBackground, {width:width * 0.5, height:height * 0.07, marginTop: height * 0.015}]}
           source={require('../../assets/searchBar/modal.png')}
         >
           <TextInput
-            placeholder={isFocused ? "" : "SEARCH"} // 포커스되면 placeholder 제거
+            placeholder={isFocused ? '' : 'SEARCH'} // 포커스되면 placeholder 제거
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             value={query}
             onChangeText={handleSearch}
-            style={[styles.textInput, { fontSize: width*0.07, width:width*0.3, height:height*0.06, }]}
+            style={[styles.textInput, { fontSize: width * 0.07, width:width * 0.3, height:height * 0.06 }]}
           />
         </ImageBackground>
 
         {filteredTeams.length > 0 ? (
           <FlatList
           data={filteredTeams}
-          keyExtractor={(item) => item.teamId.toString()} // item을 key로 지정
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={()=>{navigateTeam(item.teamId)}}>
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          )}
+          keyExtractor={(item) => item.name.toString()} // item을 key로 지정
+          renderItem={renderItem}
         />
-        ) : ( 
+        ) : (
           query ? <Text>검색 결과 없음</Text> : null
         )}
       </View>
@@ -90,29 +105,32 @@ const styles = StyleSheet.create({
     modal: {
       alignItems: 'center',
       justifyContent: 'center',
-      margin: 0
+      margin: 0,
     },
     modalView: {
-      backgroundColor: "white",
+      backgroundColor: 'white',
       borderRadius: 20,
       alignItems: 'center',
       //justifyContent: 'center',
     },
     textBackground: {
-      alignItems: "center", 
+      alignItems: 'center',
     },
     textInput: {
       fontFamily: 'built titling sb it',
       alignItems: 'center',
-      textAlign: "center",
-      color: "#30397A",
+      textAlign: 'center',
+      color: '#30397A',
     },
     scrollView: {
-      opacity: 1,
       paddingTop: 10,
       alignItems: 'center',
       justifyContent: 'center',
-    }
-})
+    },
+    serchText:{
+      fontFamily: 'built titling sb it',
+      color: '#30397A',
+    },
+});
 
 export default SearchModal;

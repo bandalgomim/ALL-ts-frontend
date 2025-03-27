@@ -6,8 +6,9 @@ import { Dimensions, Platform } from 'react-native';
 import { LeagueScreen } from '../screen/league';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
-import { TestScreen } from '../screen/match';
-import TeamSearch from '../screen/test';
+import { MatchScreen } from '../screen/match';
+import MainStackNavigator from './MainStackNavigator';
+import DraggableListScreen from '../screen/test';
 
 const { width, height } = Dimensions.get('window');
 
@@ -51,12 +52,11 @@ const BottomTabNavigator = () => {
           //display: route.name === 'MAIN' ? 'none' : 'flex', // MAIN에서 숨기기
           height: Platform.OS === 'ios' ? height * 0.08 : height * 0.07, // 탭바 높이
         },
+        animationEnabled: false,
         headerShown: false,
       })}
     >
-      <Tab.Screen name="MAIN" component={MainScreen} />
-      <Tab.Screen name="LEAGUE" component={LeagueScreen} />
-      <Tab.Screen name="TEST" component={TestScreen} />
+      <Tab.Screen name="MAIN" component={MainStackNavigator} />
     </Tab.Navigator>
   );
 };

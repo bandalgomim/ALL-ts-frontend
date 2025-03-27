@@ -4,9 +4,11 @@ import { commonPostHook } from './common.hook';
 import { getTeamReqQueryDto } from '../model/team.dto';
 
 export const useTeam = (method: string, data: getTeamReqQueryDto | null = null) => {
-    
     const {team, setTeam} = useContext(ApiContext);
     useEffect(() => {
+        if (data === null) {
+            return;
+        }
         const url = 'http://10.0.2.2:3000/team';
         const fetchMyPage = async () => {
             setTeam({ type: 'LOADING' });

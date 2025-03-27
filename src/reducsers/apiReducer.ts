@@ -1,8 +1,7 @@
 import { PostState, PostAction } from '../model/config';
-import { patchIsLeagueSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 import { getLeagueResDto } from '../model/league.dto';
 import { getMainResDto } from '../model/main.dto';
-import { getMatchReqDto } from '../model/match.dto';
+import { getMatchResDto } from '../model/match.dto';
 import { getTeamResDto } from '../model/team.dto';
 
 
@@ -29,48 +28,55 @@ export const PostReducer = <T>(state:PostState<T>, action: PostAction<T>): PostS
   }
 };
 
-const createInitial = <T>(data: T | null): PostState<T> => ({
+export const createInitial = <T>(data: T | null): PostState<T> => ({
   data,
-  loading: false,
-  error: null
+  loading: true,
+  error: null,
 });
 
 // 각 데이터 구조에 맞게 초기값을 생성
 
 export const initialmain = createInitial<getMainResDto>({
   matchList: null,
-  teamList: null
+  teamAndLeagueList: null,
 });
 
 export const initialteam = createInitial<getTeamResDto>({
   team: null,
-  matchList: null
+  matchList: null,
 });
 
 export const initialLeague = createInitial<getLeagueResDto>({
   league: null,
   teamList: null,
-  matchList: null
+  matchList: null,
 });
 
-export const initialmatch = createInitial<getMatchReqDto>({
+export const initialmatch = createInitial<getMatchResDto>({
   matchId: null,
   matchDate: null,
   homeTeamId: null,
   awayTeamId: null,
+  homeTeamName: null,
+  awayTeamName: null,
+  homeTeamInit: null,
+  awayTeamInit: null,
   hometeamLogo: null,
   awayteamLogo: null,
   homeTeamScore: null,
   awayTeamScore: null,
+  sportName: null,
+  homeCountryName: null,
+  awayCountryName: null,
+  homeLeagueName: null,
+  awayLeagueName: null,
   matchState: null,
   isMatchSelected: null,
-  platform: null
+  platform: null,
 });
 
-export const initialIsTeamSelected = createInitial<patchIsTeamSelected>({
-  teamId: null
+export const initialIsSelected = createInitial<getMainResDto>({
+  matchList: null,
+  teamAndLeagueList: null,
 });
 
-export const initialIsLeagueSelected = createInitial<patchIsLeagueSelected>({
-  leagueId: null
-});
