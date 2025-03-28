@@ -1,5 +1,6 @@
 import React from 'react';
 import StackNavigator from './src/navigation/stackNavigater';
+
 function App(): React.JSX.Element {
 
 

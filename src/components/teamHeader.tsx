@@ -7,8 +7,7 @@ import { ApiContext } from '../context/context';
 
 
 const TeamHeader = () => {
-  const width = Dimensions.get('window').width;
-  const height = Dimensions.get('window').height;
+  const { width, height } = Dimensions.get('window');
   const {teamReq} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>

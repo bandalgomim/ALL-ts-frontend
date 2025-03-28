@@ -1,16 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, Image, InteractionManager, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, InteractionManager, StyleSheet, View } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import { Logo } from '../components/logo';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Shadow } from 'react-native-shadow-2';
 import { useMain } from '../hooks/main.hook';
 import { ApiContext } from '../context/context';
 import { MainHeader } from '../components/main/mainHeader';
 import { LoadingScreen } from '../components/loadingPage';
 
 export const MainScreen = () => {
-  const { width, height } = Dimensions.get('window');
+  const { height } = Dimensions.get('window');
   const {mainRes, setMainRes, mainReq} = useContext(ApiContext);
   useEffect(() => {
     setMainRes({
@@ -21,18 +19,20 @@ export const MainScreen = () => {
   }, []);
   useMain(mainRes.method as string, mainRes.data);
 
-  const [isReady, setIsReady] = useState(false);
+  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
+  const [render, setRender] = useState(false);
   useEffect(() => {
-    if (!mainReq.loading) {
-      InteractionManager.runAfterInteractions(() => {
-        setIsReady(true);
-      });
+    if (prevLoading === true && mainReq.loading === false) {
+      setRender(true);
     }
+    setPrevLoading(mainReq.loading); // 이전 상태 업데이트
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainReq.loading]);
 
-
-  return !isReady ? (
-    <LoadingScreen/>
+  return !render ? (
+    <LoadingScreen
+    color='blue'
+    />
   ) : (
     <View style={styles.Container}>
       <MainHeader/>

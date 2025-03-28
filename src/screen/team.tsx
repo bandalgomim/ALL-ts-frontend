@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import TeamHeader from '../components/teamHeader';
@@ -15,7 +15,7 @@ export const TeamScreen = () => {
   const {teamRes, setTeamRes, teamReq} = useContext(ApiContext);
   const route = useRoute();
   useEffect(() => {
-    if (route.params && 'teamId' in route.params) {
+    if (route.params && 'teamId' in route.params && route.params.teamId !== teamRes.data?.teamId) {
       setTeamRes({
         method: 'GET',
         data: {teamId: Number(route.params.teamId)},
@@ -35,8 +35,11 @@ export const TeamScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamReq.loading]);
 
+
   return !render ? (
-    <LoadingScreen/>
+    <LoadingScreen
+      color='white'
+    />
   ) : (
     <View style={styles.Container}>
       <TeamHeader/>

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import { MatchBar } from '../components/matchBar/matchBar';
 import LeagueHeader from '../components/league/leagueHeader';
@@ -38,7 +38,9 @@ export const LeagueScreen = () => {
   }, [leagueReq.loading]);
 
   return !render ? (
-    <LoadingScreen/>
+    <LoadingScreen
+      color='blue'
+    />
   ) : (
     <View style={styles.Container}>
       <LeagueHeader/>

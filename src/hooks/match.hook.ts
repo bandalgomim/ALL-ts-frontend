@@ -4,7 +4,7 @@ import { commonPostHook } from './common.hook';
 import { getMatchReqQueryDto } from '../model/match.dto';
 
 export const useMatch = (method: string, data: getMatchReqQueryDto | null = null) => {
-    const {setMatchReq} = useContext(ApiContext);
+    const {matchReq, setMatchReq} = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;

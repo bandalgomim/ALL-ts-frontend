@@ -103,7 +103,7 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
 
         <View style={[styles.awayTeamContainer, {}]}>
         <TouchableOpacity onPress={()=>{navigateTeam(match.awayTeamId as number);}}>
-          <View style={[styles.teamLogoContainer, {marginTop: height * 0.1, width: width * 0.5, borderWidth:0}]}>
+          <View style={[styles.teamLogoContainer, {marginTop: height * 0.1, width: width * 0.5}]}>
             <TeamOrLeagueLogo
               logo={match?.awayteamLogo}
               type={'big'}
