@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
-import { LeagueScreen } from '../screen/league';
-import { MatchScreen } from '../screen/match';
+import LeagueScreen from '../screen/league';
+import MatchScreen  from '../screen/match';
 
 const MainStack = createStackNavigator();
 

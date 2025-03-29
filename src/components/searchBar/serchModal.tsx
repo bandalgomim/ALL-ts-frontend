@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { searchItem } from '../../model/searchIteam';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface  searchModalProps {
     isVisible: boolean;
@@ -22,21 +23,21 @@ const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) =
   const [isFocused, setIsFocused] = useState(false);
   const { width, height } = Dimensions.get('window');
 
-  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
-  const navigationLeague = useNavigation<NavigationProp<LeaguePageParamList>>();
+  const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
+  const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
     setIsVisible(false);
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
-    navigationTeam.navigate('TeamScreen', { teamId: teamId });
+    navigationTeam.replace('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
     setIsVisible(false);
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
-    navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
+    navigationLeague.replace('LeagueScreen', { leagueId: leagueId });
   };
 
   // 검색 실행 함수
@@ -52,7 +53,7 @@ const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) =
       .map(t => ({name: t.keyword[0], teamId: t.teamId, leagueId: t.leagueId}));
     setFilteredTeams(results);
   };
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item:filteredItems }) => {
     return (
       <TouchableOpacity onPress={()=>{
         if (item.teamId) {navigateTeam(item.teamId);}
@@ -133,4 +134,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SearchModal;
+export default React.memo(SearchModal);

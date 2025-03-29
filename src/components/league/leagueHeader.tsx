@@ -1,35 +1,35 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { SerchBar } from './../serchBar/serchBar';
-import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
-import { IsSelected } from './../isSelected';
+import SearchBar from '../searchBar/serchBar';
+import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
+import IsSelected from './../isSelected';
 import { ApiContext } from '../../context/context';
 
 
 const LeagueHeader = () => {
   const { width, height } = Dimensions.get('window');
 
-  const {leagueReq} = useContext(ApiContext);
+  const {leagueRes} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
-      <SerchBar
+      <SearchBar
         type="blue"
       />
       <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
-            <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueReq.data.league.leagueName}</Text>
-            <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueReq.data?.league?.countryName} ${leagueReq.data?.league?.sportName}`}</Text>
+            <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league.leagueName}</Text>
+            <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
           <TeamOrLeagueLogo
-            logo={leagueReq?.data?.league?.leagueLogo}
+            logo={leagueRes?.data?.league?.leagueLogo}
             type={'big'}
           />
           <IsSelected
-            isSelected={leagueReq.data?.league?.isSelected}
+            isSelected={leagueRes.data?.league?.isSelected}
             teamId={null}
-            leagueId={leagueReq.data?.league?.leagueId}
+            leagueId={leagueRes.data?.league?.leagueId}
             matchId={null}
           />
         </View>
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeagueHeader;
+export default React.memo(LeagueHeader);

@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../global';
@@ -46,4 +46,4 @@ const BottomTabNavigator = () => {
   );
 };
 
-export default BottomTabNavigator;
+export default BottomTabNavigator;*/

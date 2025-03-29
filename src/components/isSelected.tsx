@@ -10,10 +10,11 @@ interface IsSelectedPros {
     matchId: number | null;
 }
 
-export const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
+const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
   const { width } = Dimensions.get('window');
+  // 원래 컴포넌트 코드...
 
   const [isSelectedState, setIsSelectedState] = useState<patchIsSelectedReqDto>({
     method: 'PATCH',
@@ -28,19 +29,16 @@ export const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, league
   useEffect(() => {
     if (indicator !== state) {
       if (teamId) {
-        console.log("in indicator teamId");
         setIsSelectedState({
           method: 'PATCH',
           data: {teamId: teamId},
       });
       } else if (leagueId) {
-        console.log("in indicator leagueId");
         setIsSelectedState({
           method: 'PATCH',
           data: {leagueId: leagueId},
       });
       } else if (matchId) {
-        console.log("in indicator matchId");
         setIsSelectedState({
           method: 'PATCH',
           data: {matchId: matchId},
@@ -49,10 +47,9 @@ export const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, league
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ indicator ]);
-  useIsSelected(isSelectedState.method, isSelectedState.data);
+  useIsSelected(isSelectedState.method as string, isSelectedState.data);
 
   const onPressStart = ()=>{
-    console.log("in onPressStart");
     setIndicator(!state);
   };
   return (
@@ -70,3 +67,5 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
 });
+
+export default React.memo(IsSelected);

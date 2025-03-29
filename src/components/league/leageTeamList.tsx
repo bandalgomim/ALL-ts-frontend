@@ -1,19 +1,20 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { View, StyleSheet, Dimensions, ImageBackground, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { ApiContext } from '../../context/context';
 import { TeamPageParamList } from '../../model/navigation.dto';
 import { teamDto } from '../../model/league.dto';
-import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
+import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export const LeageTeamListBar = () => {
+const LeageTeamListBar = () => {
   const { width, height } = Dimensions.get('window');
-  const navigation = useNavigation<NavigationProp<TeamPageParamList>>();
-  const {leagueReq} = useContext(ApiContext);
+  const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
+  const {leagueRes} = useContext(ApiContext);
   const navigateTeam = (teamId: number) => {
-    navigation.navigate('TeamScreen', { teamId: teamId });
+    navigation.replace('TeamScreen', { teamId: teamId });
   };
-
+  
   return (
     <View style={[styles.CalendarContainer, {width: width, height: width * 0.320, marginTop: height * 0.005, marginBottom: -height * 0.036}]}>
       <ImageBackground
@@ -26,8 +27,8 @@ export const LeageTeamListBar = () => {
           showsHorizontalScrollIndicator={false}
           style={[styles.scrollView, {width: width * 0.8}]}
         >
-          {leagueReq?.data?.teamList?.map((team: teamDto, index: number) => (
-            <View key={index} style={[styles.box, {width: width * 0.13, height: width * 0.1, marginTop: height * 0.049, marginRight: index !== leagueReq.data.teamList.length - 1 ? width * 0.074 : width * 0.012, marginLeft: width * 0.012}]}>
+          {leagueRes?.data?.teamList?.map((team: teamDto, index: number) => (
+            <View key={index} style={[styles.box, {width: width * 0.13, height: width * 0.1, marginTop: height * 0.049, marginRight: index !== leagueRes.data.teamList.length - 1 ? width * 0.074 : width * 0.012, marginLeft: width * 0.012}]}>
               <TouchableOpacity
                 style={{alignItems: 'center'}}
                 onPress={()=>{navigateTeam(team.teamId);}}
@@ -78,3 +79,5 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
   },
 });
+
+export default React.memo(LeageTeamListBar);

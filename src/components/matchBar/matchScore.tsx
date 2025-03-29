@@ -8,7 +8,7 @@ interface MatchScorePros {
     type: string;
 }
 
-export const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
+const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
   const { width, height } = Dimensions.get('window');
   let req;
   const size = type === 'small'
@@ -33,7 +33,7 @@ export const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
     <ImageBackground
       resizeMode="contain"
       source={req}
-      style={[styles.scoreContainer, { width: size, height:size, marginLeft: -width*0.013, marginRight: -width*0.013}]}
+      style={[styles.scoreContainer, { width: size, height:size, marginLeft: -width * 0.013, marginRight: -width * 0.013}]}
     >
       <Text style={[styles.scoreBox, {color: color === 'white' ? '#ffffff' : '#30397A',
         fontSize: type === 'small' ? width * 0.08 : width * 0.22,
@@ -56,3 +56,5 @@ const styles = StyleSheet.create({
     fontFamily: 'built titling sb it',
   },
 });
+
+export default React.memo(MatchScore);

@@ -4,21 +4,21 @@ import { commonPostHook } from './common.hook';
 import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 
 export const useIsSelected = (method: string, data: patchIsSelected | null = null) => {
-    const { setMainReq } = useContext(ApiContext);
+    const { setMainRes } = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;
         }
         const url = 'http://10.0.2.2:3000/isSelected';
         const fetchIsSelected = async () => {
-            setMainReq({ type: 'LOADING' });
+            setMainRes({ type: 'LOADING' });
             if (method === 'PATCH'){
                 const query = new URLSearchParams();
                 if (data) {
                     Object.entries(data as unknown as patchIsTeamSelected).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setMainReq);
+                await commonPostHook(method, getUrl, null, setMainRes);
             }
         };
         fetchIsSelected();

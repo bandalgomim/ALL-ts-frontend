@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '../../model/main.dto';
-import { MatchScore } from './matchScore';
-import { IsSelected } from '../isSelected';
-import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import MatchScore  from './matchScore';
+import IsSelected from '../isSelected';
+import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
+import { useNavigation } from '@react-navigation/native';
 import { MatchPageParamList } from '../../model/navigation.dto';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface MatchBarPros {
     match: matchDto;  // Assuming match is your interface from earlier
@@ -14,21 +15,22 @@ interface MatchBarPros {
     setIsVisible: ((isVisible: boolean) => void) | null
 }
 
-export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible}) => {
+const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible}) => {
+  
   const { width, height } = Dimensions.get('window');
   const [score, setScore] = useState(false);
-  const style = color === "white"
+  const style = color === 'white'
     ? [styles.stateTextWhite, styles.teamNameWhite]
     : [styles.stateTextBlue, styles.teamNameBlue];
   const onPressScore = () => {
     setScore(!score);
   };
-  const navigationMatch = useNavigation<NavigationProp<MatchPageParamList>>();
+  const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
   const navigateMatch = (matchId: number) => {
     if(isVisible !== null) {
-      setIsVisible(false)
+      setIsVisible(false);
     }
-    navigationMatch.navigate('MatchScreen', { matchId: matchId });
+    navigationMatch.replace('MatchScreen', { matchId: matchId });
   };
   return (
     <TouchableOpacity
@@ -37,8 +39,8 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIs
     >
       <View style={[styles.matchBarContainer, {height:height * 0.1, width: width * 0.93 + 6}]}>
         <ImageBackground
-          resizeMode='contain'
-          source={color === "white"
+          resizeMode="contain"
+          source={color === 'white'
             ? require('../../assets/match/bar/matchBar_w.png')
             : require('../../assets/match/bar/matchBar_b.png')}
           style={[styles.matchBar, { height:height * 0.1, width:width * 0.93}]}
@@ -48,38 +50,38 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIs
               <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.05, marginLeft:width * 0.02, marginBottom:-height * 0.005, marginTop:-height * 0.007}]}>
                 {match.matchDate ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}` : '0000'}
               </Text>
-              <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.075}, {color : match.matchState === "live" ? "#EA5579" : style[0].color} ]}>{`${match.matchState}`}</Text>
+              <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.075}, {color : match.matchState === 'live' ? '#EA5579' : style[0].color} ]}>{`${match.matchState}`}</Text>
             </View>
             <View style={{marginRight: width * 0.01, width: width * 0.132, borderWidth: 0 }}>
-              <Text style={[style[1], {fontSize: width * 0.08, textAlign: "right",}]}>
+              <Text style={[style[1], {fontSize: width * 0.08, textAlign: 'right'}]}>
                 {`${match.homeTeamInit}`}
               </Text>
             </View>
             <TeamOrLeagueLogo
               logo={match.hometeamLogo}
-              type={"small"}
+              type={'small'}
             />
             <TouchableOpacity
               style={[styles.matchBar, {marginLeft: width * 0.015, marginRight: width * 0.015}]}
               onPress={onPressScore}
             >
               <MatchScore
-                score={score === true ? match.homeTeamScore : "?"}
+                score={score === true ? match.homeTeamScore : '?'}
                 color={color}
                 type={'small'}
               />
               <Text style={[style[1], {fontSize:width * 0.0745, margin: -width * 0.01, marginTop: -height * 0.01}]}> : </Text>
               <MatchScore
-                score={score === true ? match.awayTeamScore : "?"}
+                score={score === true ? match.awayTeamScore : '?'}
                 color={color}
                 type={'small'}
               />
             </TouchableOpacity>
             <TeamOrLeagueLogo
               logo={match.awayteamLogo}
-              type={"small"}
+              type={'small'}
             />
-            <View style={{marginRight: -width * 0.015, marginLeft: width * 0.01, width: width * 0.132,  }}>
+            <View style={{marginRight: -width * 0.015, marginLeft: width * 0.01, width: width * 0.132  }}>
               <Text style={[style[1], {fontSize:width * 0.08, textAlign: 'left'}]}>
                 {`${match.awayTeamInit}`}
               </Text>
@@ -94,8 +96,8 @@ export const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIs
         </ImageBackground>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   matchBarContainer: {
@@ -139,5 +141,7 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 10.5, // 그림자 반경
-  }
+  },
 });
+
+export default React.memo(MatchBar);

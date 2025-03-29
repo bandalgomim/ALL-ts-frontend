@@ -1,8 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Dimensions, View, Text, Button, ScrollView, StyleSheet } from "react-native";
-import { matchDto } from "../../../model/main.dto";
+import { Dimensions, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { matchDto } from '../../../model/main.dto';
 import Modal from 'react-native-modal';
-import { MatchBar } from "../../matchBar/matchBar";
+import MatchList from '../../matchBar/matchList';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface  MatchModalProps {
     isVisible: boolean;
@@ -10,7 +11,7 @@ interface  MatchModalProps {
     matchList: matchDto[] | null
   }
 
-export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
+const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
   const { width, height } = Dimensions.get('window');
   return (
     <Modal
@@ -20,32 +21,36 @@ export const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible
       animationOut="slideOutDown"
       style={styles.modal}
     >
-      <View style={[styles.modalView, { width: width * 1, height: height * 0.5, }]}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          {matchList?.map((match: matchDto, index: number) => {
-            return (
-              <MatchBar
-                key={index}
-                match={match}
-                color={'blue'}
-                isVisible={isVisible}
-                setIsVisible={setIsVisible}
-              />
-            );
-          })}
-        </ScrollView>
-        <Button title="닫기" onPress={() => setIsVisible(false)} />
+      <View style={[styles.modalView, { width: width * 1, height: height * 0.5 }]}>
+      <TouchableOpacity
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#DDDDDD',
+      }}
+      onPress={() => setIsVisible(false)} // 버튼 클릭 시 실행되는 함수
+    >
+      <Icon
+        name="close"  // 아이콘 이름 (Ionicons의 close 아이콘)
+        size={width * 0.1}
+        color="black"
+      />
+    </TouchableOpacity>
+        <MatchList
+          matchList={matchList as matchDto[]}
+          color={'blue'}
+        />
       </View>
-    </Modal>)
-}
+    </Modal>);
+};
 const styles = StyleSheet.create({
     modal: {
       alignItems: 'center',
       justifyContent: 'center',
-      margin: 0
+      margin: 0,
     },
     modalView: {
-      backgroundColor: "white",
+      backgroundColor: 'white',
       borderRadius: 20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -54,5 +59,7 @@ const styles = StyleSheet.create({
       paddingTop: 10,
       alignItems: 'center',
       justifyContent: 'center',
-    }
-})
+    },
+});
+
+export default MatchModal;

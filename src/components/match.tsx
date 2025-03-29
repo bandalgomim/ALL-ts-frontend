@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { getMatchResDto } from '../model/match.dto';
-import { SerchBar } from './serchBar/serchBar';
-import { TeamOrLeagueLogo } from './teamOrLeagueLogo';
-import { MatchScore } from './matchBar/matchScore';
-import { IsSelected } from './isSelected';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { getMatchReqDto } from '../model/match.dto';
+import SearchBar from './searchBar/serchBar';
+import TeamOrLeagueLogo  from './teamOrLeagueLogo';
+import MatchScore  from './matchBar/matchScore';
+import IsSelected from './isSelected';
+import { useNavigation } from '@react-navigation/native';
 import { TeamPageParamList } from '../model/navigation.dto';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface MatchPros {
-    match: getMatchResDto
+    match: getMatchReqDto
 }
 
-export const Match: React.FC<MatchPros> = ({ match }) => {
+const Match: React.FC<MatchPros> = ({ match }) => {
   const { width, height } = Dimensions.get('window');
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
-  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
+  const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
-    navigationTeam.navigate('TeamScreen', { teamId: teamId });
+    navigationTeam.replace('TeamScreen', { teamId: teamId });
   };
 
   const onPressHomeTeamScore = () => {
@@ -30,7 +31,7 @@ export const Match: React.FC<MatchPros> = ({ match }) => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.middleContainer, {}]}>
-        <SerchBar
+        <SearchBar
           type="match"
         />
         <View style={{width: width * 0.07, height: width * 0.07, marginTop: -height * 0.03, marginLeft: width * 0.77}}>
@@ -224,3 +225,4 @@ const styles = StyleSheet.create({
   },
 
 });
+export default React.memo(Match);

@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
-import { SerchBar } from '../serchBar/serchBar';
+import SearchBar from '../searchBar/serchBar';
 import { leagueDto, teamDto } from '../../model/main.dto';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
-import { TeamOrLeagueLogo } from '../teamOrLeagueLogo';
+import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface ContentsProps {
     mode: 'm' | 'w',
     teamAndLeagueList: (teamDto | leagueDto)[]
   }
 
-export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {
+const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {
   const { width, height } = Dimensions.get('window');
-
   const [list, setList] = useState<(teamDto | leagueDto)[]>([]);
-  const navigationTeam = useNavigation<NavigationProp<TeamPageParamList>>();
-  const navigationLeague = useNavigation<NavigationProp<LeaguePageParamList>>();
+  
+  const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
+  const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
-    navigationTeam.navigate('TeamScreen', { teamId: teamId });
+    navigationTeam.replace('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
-    navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
+    navigationLeague.replace('LeagueScreen', { leagueId: leagueId });
   };
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLe
             /> : null}
           </View>
           <View style={[styles.serchBarContainer, {height: height * 0.05, marginLeft: width * 0.37, marginTop:height * -0.009}]}>
-            <SerchBar
+            <SearchBar
               type="blue"
             />
           </View>
@@ -115,3 +116,4 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '7deg' }],
   },
 });
+export default React.memo(TeamAndLeagueListBar);

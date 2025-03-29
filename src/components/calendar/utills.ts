@@ -82,3 +82,45 @@ export function groupMatchesByDate(matches: matchDto[] | null): Record<string, m
   }
   return groupedMatches;
 }
+
+export const goToPrevious = (currentDate: Date, mode: 'm' | 'w'): Date => {
+  const newDate = new Date(currentDate); // currentDate 복사
+  const month = currentDate.getMonth(); // 현재 월 계산
+  const year = currentDate.getFullYear(); // 현재 연도 계산
+  if (mode === 'm') {
+    newDate.setMonth(month - 1); // 한 달 전으로 설정
+  } else {
+    newDate.setDate(newDate.getDate() - 7); // 7일 전으로 설정
+  }
+
+  // 새로운 달로 넘어간 경우, month 값이 증가하는 경우 자동으로 달 +1 해주기
+  if (newDate.getMonth() !== month) {
+    if (newDate.getMonth() === 11) { // 12월에서 1월로 넘어가는 경우
+      newDate.setFullYear(year - 1); // 연도를 하나 감소
+    } else {
+      newDate.setMonth(month - 1);
+    }
+  }
+  return newDate; // 계산된 새로운 날짜 반환
+};
+
+export const goToNext = (currentDate: Date, mode: 'm' | 'w'): Date => {
+  const newDate = new Date(currentDate);
+  const month = currentDate.getMonth(); // 현재 월 계산
+  const year = currentDate.getFullYear(); // 현재 연도 계산
+  if (mode === 'm') {
+    newDate.setMonth(month + 1); // 한 달 후로 설정
+  } else {
+    newDate.setDate(newDate.getDate() + 7); // 7일 후로 설정
+  }
+
+  // 새로운 달로 넘어간 경우, month 값이 증가하는 경우 자동으로 달 +1 해주기
+  if (newDate.getMonth() !== month) {
+    if (newDate.getMonth() === 0) { // 1월에서 12월로 넘어가는 경우
+      newDate.setFullYear(year + 1); // 연도를 하나 증가
+    } else {
+      newDate.setMonth(month + 1);
+    }
+  }
+  return newDate; // 계산된 새로운 날짜 반환
+};

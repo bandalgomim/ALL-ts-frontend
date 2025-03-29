@@ -1,26 +1,33 @@
 import React, { createContext, useReducer, useState } from 'react';
-import { PostReducer, initialmainReq, initialteamReq, initialLeagueReq, initialmatchReq, initialIsSelectedReq, initialRes } from '../reducsers/apiReducer';
+import { PostReducer, initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes, initialRes } from '../reducsers/apiReducer';
 
 export const ApiContext = createContext();
 
 
 export function ApiProvider({ children }) {
-  const [mainReq, setMainReq] = useReducer(PostReducer, initialmainReq);
-  const [teamReq, setTeamReq] = useReducer(PostReducer, initialteamReq);
-  const [leagueReq, setLeagueReq] = useReducer(PostReducer, initialLeagueReq);
-  const [matchReq, setMatchReq] = useReducer(PostReducer, initialmatchReq);
-  const [isSelectedReq, setIsSelectedReq] = useReducer(PostReducer, initialIsSelectedReq);
+  const [mainRes, setMainRes] = useReducer(PostReducer, initialmainRes);
+  const [teamRes, setTeamRes] = useReducer(PostReducer, initialteamRes);
+  const [leagueRes, setLeagueRes] = useReducer(PostReducer, initialLeagueRes);
+  const [matchRes, setMatchRes] = useReducer(PostReducer, initialmatchRes);
 
-  const [mainRes, setMainRes] = useState(initialRes);
-  const [teamRes, setTeamRes] = useState(initialRes);
-  const [leagueRes, setLeagueRes] = useState(initialRes);
-  const [matchRes, setMatchRes] = useState(initialRes);
-  const [isSelectedRes, setIsSelectedRes] = useState(initialRes);
+  const [mainReq, setMainReq] = useState(initialRes);
+  const [teamReq, setTeamReq] = useState(initialRes);
+  const [leagueReq, setLeagueReq] = useState(initialRes);
+  const [matchReq, setMatchReq] = useState(initialRes);
+  const [isSelectedReq, setIsSelectedReq] = useState(initialRes);
 
 
 
   return (
     <ApiContext.Provider value={{
+      mainRes,
+      setMainRes,
+      teamRes,
+      setTeamRes,
+      leagueRes,
+      setLeagueRes,
+      matchRes,
+      setMatchRes,
       mainReq,
       setMainReq,
       teamReq,
@@ -31,16 +38,6 @@ export function ApiProvider({ children }) {
       setMatchReq,
       isSelectedReq,
       setIsSelectedReq,
-      mainRes,
-      setMainRes,
-      teamRes,
-      setTeamRes,
-      leagueRes,
-      setLeagueRes,
-      matchRes,
-      setMatchRes,
-      isSelectedRes,
-      setIsSelectedRes,
       }}>
       {children}
     </ApiContext.Provider>

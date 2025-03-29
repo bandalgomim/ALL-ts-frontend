@@ -13,20 +13,20 @@ const Header: React.FC<TeamHeaderProps> = ({ year, month, type, goToPrevious, go
   const { width, height } = Dimensions.get('window');
   let typeStyle: StyleProp<ViewStyle | TextStyle> = [];
 
-  if (type === "team") {
-    typeStyle = [styles.TeamHeader, styles.TeamArrow, styles.TeamDate, {left: width*0.2}]
+  if (type === 'team') {
+    typeStyle = [styles.TeamHeader, styles.TeamArrow, styles.TeamDate, {left: width * 0.2}];
   } else {
-    typeStyle = [styles.LeagueHeader, styles.LeagueArrow, styles.LeagueDate, {right: width*0.2}]
+    typeStyle = [styles.LeagueHeader, styles.LeagueArrow, styles.LeagueDate, {right: width * 0.2}];
   }
 
   return (
-    <View style={[typeStyle[0], {height:height*0.05, marginTop: height*0.023}, typeStyle[3]]}>
+    <View style={[typeStyle[0], {height:height * 0.05, marginTop: height * 0.023}, typeStyle[3]]}>
       <TouchableOpacity onPress={goToPrevious}>
-        <Text style={[typeStyle[1], {height: height*0.05, width: width*0.1, fontSize: width*0.067}]}>{'〈'}</Text>
+        <Text style={[typeStyle[1], {height: height * 0.05, width: width * 0.1, fontSize: width * 0.067}]}>{'〈'}</Text>
       </TouchableOpacity>
-      <Text style={[typeStyle[2], {height: height*0.05, width: width*0.22, fontSize: width*0.09}]}>{`${year}/${month+1 > 9 ? month+1 : '0' + (month+1) }`}</Text>
+      <Text style={[typeStyle[2], {height: height * 0.05, width: width * 0.22, fontSize: width * 0.09}]}>{`${year}/${month + 1 > 9 ? month + 1 : '0' + (month + 1) }`}</Text>
       <TouchableOpacity onPress={goToNext}>
-        <Text style={[typeStyle[1], {height: height*0.05, width: width*0.1, fontSize: width*0.067}]}>{'〉'}</Text>
+        <Text style={[typeStyle[1], {height: height * 0.05, width: width * 0.1, fontSize: width * 0.067}]}>{'〉'}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default React.memo(Header);

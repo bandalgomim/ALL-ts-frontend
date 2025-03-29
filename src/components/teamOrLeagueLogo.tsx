@@ -6,7 +6,7 @@ interface TeamOrLogoPros {
     type: string;
 }
 
-export const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
+const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
   const { width } = Dimensions.get('window');
   let size;
   let req;
@@ -43,3 +43,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default React.memo(TeamOrLeagueLogo);

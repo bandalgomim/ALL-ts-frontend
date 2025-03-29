@@ -12,7 +12,7 @@ const imageMap = {
   match: require('./../../assets/searchBar/serchBar.png'),
 };
 
-export const SerchBar: React.FC<SerchBarPros> = ({ type }) => {
+const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
   const { width, height } = Dimensions.get('window');
   const src = imageMap[type as keyof typeof imageMap];
   const [isVisible, setIsVisible] = useState(false);
@@ -42,3 +42,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
+
+export default React.memo(SearchBar);

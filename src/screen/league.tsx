@@ -1,68 +1,54 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
-import { MatchBar } from '../components/matchBar/matchBar';
 import LeagueHeader from '../components/league/leagueHeader';
-import { LeageTeamListBar } from '../components/league/leageTeamList';
-import { Logo } from '../components/logo';
+import LeageTeamListBar from '../components/league/leageTeamList';
+import Logo from '../components/logo';
 import { ApiContext } from '../context/context';
 import { useLeague } from '../hooks/league.hook';
-import { matchDto } from '../model/main.dto';
 import { useRoute } from '@react-navigation/native';
-import { LoadingScreen } from '../components/loadingPage';
+import LoadingScreen  from '../components/loadingPage';
+import MatchList from '../components/matchBar/matchList';
+import { getLeagueReqQueryDto } from '../model/league.dto';
+import MainTabBar from '../components/main/mainTabBar';
 
 
-export const LeagueScreen = () => {
+const LeagueScreen = () => {
   const { height } = Dimensions.get('window');
-  const {leagueRes, setLeagueRes, leagueReq} = useContext(ApiContext);
-  const route = useRoute();
-  useEffect(() => {
-    if (route.params && 'leagueId' in route.params) {
-      setLeagueRes({
-        method: 'GET',
-        data: {leagueId: Number(route.params.leagueId)},
-      });
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route.params]);
-  useLeague(leagueRes.method as string, leagueRes.data);
-
+  const {leagueRes} = useContext(ApiContext);
+  const { leagueId } = useRoute().params as getLeagueReqQueryDto;
+  useLeague('GET' as string, {leagueId : leagueId});
+  console.log('렌더링 시작 LeagueScreen');
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   useEffect(() => {
-    if (prevLoading === true && leagueReq.loading === false) {
+    if (prevLoading === true && leagueRes.loading === false) {
       setRender(true);
     }
-    setPrevLoading(leagueReq.loading); // 이전 상태 업데이트
+    setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leagueReq.loading]);
+  }, [leagueRes.loading]);
 
   return !render ? (
     <LoadingScreen
-      color='blue'
+      color="blue"
     />
   ) : (
     <View style={styles.Container}>
       <LeagueHeader/>
       <LeageTeamListBar/>
       <LeagueCalendar/>
-      <ScrollView style={{marginTop: -height * 0.01}}>
-        {leagueReq?.data?.matchList?.map((match: matchDto, index: number) => {
-          return (
-            <MatchBar
-              isVisible={null}
-              setIsVisible={null}
-              key={index}
-              match={match}
-              color={'blue'}
-            />
-          );
-        })}
-      </ScrollView>
-      <View style={[styles.logo, {bottom: -height * 0.03}]}>
+      <MatchList
+        matchList={leagueRes.data.matchList}
+        color={'blue'}
+      />
+      <View style={[styles.logo, {bottom: height * 0.06}]}>
         <Logo
           color="blue"
         />
+      </View>
+      <View style={[styles.tabBar]}>
+        <MainTabBar/>
       </View>
     </View>
   );
@@ -83,4 +69,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     zIndex: -1, // B 요소 뒤로 보냄
   },
+  tabBar: {
+    zIndex: -1
+  }
 });
+
+export default LeagueScreen;

@@ -8,8 +8,8 @@ import { ApiContext } from '../../context/context';
 export default function TeamCalendar() {
   const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('m');
-  const {teamReq} = useContext(ApiContext);
+  const [mode, setMode] = useState<'m' |'w'>('w');
+  const {teamRes} = useContext(ApiContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
@@ -63,10 +63,10 @@ export default function TeamCalendar() {
           <Contents
             month={month}
             year={year}
-            today={currentDate}
+            indicatorDay={currentDate}
             color={'blue'}
             mode={mode}
-            matchList={teamReq.data.matchList}
+            matchList={teamRes.data.matchList}
           />
         </View>
     </View>

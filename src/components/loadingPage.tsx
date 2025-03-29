@@ -1,20 +1,15 @@
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Dimensions, ActivityIndicator } from 'react-native';
-import * as Progress from 'react-native-progress';
-import { ApiContext } from '../context/context';
 
 interface logoProps {
   color: 'blue' | 'white';
 }
 
-export const LoadingScreen : React.FC<logoProps>  = ({ color }) => {
+const LoadingScreen : React.FC<logoProps>  = ({ color }) => {
   const { width, height } = Dimensions.get('window');
   const [loading, setLoading] = useState(0);
-  const len = width * 0.75;
-  const hei =  height * 0.01;
   const style = color === 'blue' ? styles.textBlue : styles.textWhite;
-
   useEffect(() => {
     const interval = setInterval(() => {
       setLoading((prev) => Math.min(prev + 0.2, 1));
@@ -51,7 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',  // 가로 방향 중�� 정��
     alignItems: 'flex-end',
-    // 
   },
   text1: {
     textAlign: 'center',
@@ -80,3 +74,5 @@ const styles = StyleSheet.create({
     textShadowRadius: 10.5, // 그림자 반경
   },
 });
+
+export default React.memo(LoadingScreen);

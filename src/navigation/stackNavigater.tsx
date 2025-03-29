@@ -4,8 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './bottomNavigation';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
-import { LeagueScreen } from '../screen/league';
-import { MatchScreen } from '../screen/match';
+import LeagueScreen from '../screen/league';
+import MatchScreen  from '../screen/match';
 
 const Stack = createStackNavigator();
 
@@ -17,11 +17,7 @@ const StackNavigator = () => {
           animation: 'none',  // 페이지 전환 애니메이션 제거
         }}
       >
-        <Stack.Screen
-          name="MainTabs"
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="MainScreen"
           component={MainScreen}

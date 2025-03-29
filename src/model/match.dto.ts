@@ -7,7 +7,7 @@ export interface platform {
     platformUrl: string | null
 }
 
-export interface getMatchResDto {
+export interface getMatchReqDto {
     matchId: number | null,
     matchDate: string | null,
     homeTeamId: number | null,
@@ -30,8 +30,8 @@ export interface getMatchResDto {
     platform: platform[] | null
 }
 
-export interface getMatchReqQueryDto {
+export interface getMatchResQueryDto {
     matchId: number
 }
 
-export type getMatchReqDto = StateDto<getMatchReqQueryDto>
+export type getMatchResDto = StateDto<getMatchResQueryDto>

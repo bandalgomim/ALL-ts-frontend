@@ -30,11 +30,12 @@ export interface leagueDto {
     index: number
 }
 
-export interface getMainResDto {
+export interface getmainReqDto {
     matchList: matchDto[] | null,
     teamAndLeagueList: (teamDto | leagueDto)[] | null,
 }
 
-export interface getMainReqQueryDto {}
+export interface getMainResQueryDto {}
 
-export type getMainReqDto = StateDto<null>
+export type getMainResDto = StateDto<null>
+export type patchMainReqDto = Omit<teamDto, 'teamName' | 'teamLogo'> | Omit<leagueDto, 'leagueName' | 'leagueLogo'>;
