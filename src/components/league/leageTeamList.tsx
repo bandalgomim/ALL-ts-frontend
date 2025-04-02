@@ -16,7 +16,7 @@ const LeageTeamListBar = () => {
   };
   
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: width * 0.320, marginTop: height * 0.005, marginBottom: -height * 0.036}]}>
+    <View style={[styles.CalendarContainer, {width: width, height: width * 0.320, marginTop: height * 0.01, marginBottom: -height * 0.036}]}>
       <ImageBackground
         resizeMode="contain"
         style={[styles.ImageBackground, {width:width, height: width * 0.32 }]}

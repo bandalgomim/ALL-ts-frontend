@@ -18,7 +18,6 @@ const LeagueScreen = () => {
   const {leagueRes} = useContext(ApiContext);
   const { leagueId } = useRoute().params as getLeagueReqQueryDto;
   useLeague('GET' as string, {leagueId : leagueId});
-  console.log('렌더링 시작 LeagueScreen');
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   useEffect(() => {
@@ -48,7 +47,9 @@ const LeagueScreen = () => {
         />
       </View>
       <View style={[styles.tabBar]}>
-        <MainTabBar/>
+        <MainTabBar
+          color='blue'
+        />
       </View>
     </View>
   );
@@ -74,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LeagueScreen;
+export default React.memo(LeagueScreen);

@@ -20,12 +20,15 @@ const LoadingScreen : React.FC<logoProps>  = ({ color }) => {
 
   return (
     <View style={[styles.LoadingContainer, {backgroundColor: color === 'blue' ? '#ffffff' : '#30397A'}]}>
-      <View style={[styles.logo, {width: width * 0.8, height: height * 0.24}]}>
+      <View style={[styles.logo, {width: width * 0.8, height: height * 0.24, marginTop:-height * 0.04}]}>
         <Text style={[styles.text1, {width: width * 0.5, fontSize: width * 0.43}, style]}>ALL</Text>
         <Text style={[styles.text2, {width:width * 0.15, fontSize: width * 0.43, marginLeft: -width * 0.1}]}>’</Text>
         <Text style={[styles.text3, {width:width * 0.15, fontSize: width * 0.15, marginLeft: -width * 0.08, marginBottom: height * 0.03}, style]}>ts</Text>
       </View>
-      <ActivityIndicator size="large" color={color === 'blue' ? '#30397A' : '#ffffff'} />
+      <View>
+        <Text style={[styles.text4, {width: width, fontSize: width * 0.0885, marginTop:-height * 0.04}, style]}>All  Sports  Scheduler</Text>
+      </View>
+      <ActivityIndicator size="large" color={color === 'blue' ? '#30397A' : '#ffffff'} style={{marginTop: height*0.03}}/>
         <Text style={[styles.textContainser, {fontSize: width * 0.1}, style]}>{Math.round(loading * 99)}%</Text>
     </View>
   );
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
   text3: {
     textAlign: 'center',
     fontFamily: 'built titling lt it',
+  },
+  text4: {
+    color: '#EA5579',
+    textAlign: 'center',
+    fontFamily: 'built titling rg it',
   },
   textWhite: {
     color: '#ffffff',

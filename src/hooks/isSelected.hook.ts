@@ -5,6 +5,7 @@ import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 
 export const useIsSelected = (method: string, data: patchIsSelected | null = null) => {
     const { setMainRes } = useContext(ApiContext);
+    //console.log(data)
     useEffect(() => {
         if (data === null) {
             return;

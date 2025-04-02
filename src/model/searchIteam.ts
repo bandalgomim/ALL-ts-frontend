@@ -5,7 +5,7 @@ export const searchItem = [
     },
     {
         leagueId: 2,
-        keyword: ['k league', '케이리그'],
+        keyword: ['KBO', '한국리그', '케이비오', '한국야구'],
     },
     {
         teamId: 1,

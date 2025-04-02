@@ -15,7 +15,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
     size = width * 0.1;
     req = require('../assets/teamLogo/teamLogo_s.png');
   } else if(type === 'big') {
-    size = width * 0.295;
+    size = width * 0.25;
     req = require('../assets/teamLogo/teamLogo_b.png');
   } else {
     size = width * 0.16;

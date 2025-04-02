@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { getMatchReqDto } from '../model/match.dto';
-import SearchBar from './searchBar/serchBar';
-import TeamOrLeagueLogo  from './teamOrLeagueLogo';
-import MatchScore  from './matchBar/matchScore';
-import IsSelected from './isSelected';
+import { getMatchReqDto, platform } from '../../model/match.dto';
+import SearchBar from '../searchBar/serchBar';
+import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
+import MatchScore  from '../matchBar/matchScore';
+import IsSelected from '../isSelected';
 import { useNavigation } from '@react-navigation/native';
-import { TeamPageParamList } from '../model/navigation.dto';
+import { TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
+import PlatformList from './platformList';
 
 interface MatchPros {
     match: getMatchReqDto
@@ -44,8 +45,8 @@ const Match: React.FC<MatchPros> = ({ match }) => {
         </View>
         <Image
           resizeMode="contain"
-          style={{width: width * 0.3, marginTop: height * 0.25}}
-          source={require('./../assets/match/score.png')}
+          style={{width: width * 0.3, marginTop: height * 0.23}}
+          source={require('./../../assets/match/score.png')}
         />
 
       </View>
@@ -60,19 +61,19 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
                 {match?.homeTeamName && match.homeTeamName.length < 6
-                  ? <Text style ={[styles.fontWhite, {fontSize: height * 0.1, width: width * 0.5}]}>
+                  ? <Text style ={[styles.fontWhite, {fontSize: height * 0.07, width: width * 0.5}]}>
                       {match.homeTeamName}
                     </Text>
                   : <View>
-                      <Text style ={[styles.fontWhite, {fontSize: height * 0.045, marginTop: height * 0.01}]}>
+                      <Text style ={[styles.fontWhite, {fontSize: height * 0.031, marginTop: height * 0.01}]}>
                       {match.homeTeamName?.split(' ')[0]}
                       </Text>
-                      <Text style ={[styles.fontWhite, {fontSize: height * 0.045, marginTop: -height * 0.01}]}>
+                      <Text style ={[styles.fontWhite, {fontSize: height * 0.031, marginTop: -height * 0.01}]}>
                       {match.homeTeamName?.split(' ')[1]}
                       </Text>
                     </View>}
                 </View>
-                <Text style ={[styles.fontWhite, {fontSize: height * 0.024}]}>
+                <Text style ={[styles.fontWhite, {fontSize: height * 0.024, marginTop: -height * 0.03}]}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`}
                 </Text>
               </View>
@@ -112,19 +113,19 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
                 {match?.awayTeamName && match.awayTeamName.length < 6
-                  ? <Text style ={[styles.fontBlue, {fontSize: height * 0.1, width: width * 0.5}]}>
+                  ? <Text style ={[styles.fontBlue, {fontSize: height * 0.07, width: width * 0.5}]}>
                       {match.awayTeamName}
                     </Text>
                   : <View>
-                      <Text style ={[styles.fontBlue, {fontSize: height * 0.045, marginTop: height * 0.01}]}>
+                      <Text style ={[styles.fontBlue, {fontSize: height * 0.031, marginTop: height * 0.01}]}>
                       {match.awayTeamName?.split(' ')[0]}
                       </Text>
-                      <Text style ={[styles.fontBlue, {fontSize: height * 0.045, marginTop: -height * 0.01}]}>
+                      <Text style ={[styles.fontBlue, {fontSize: height * 0.031, marginTop: -height * 0.01}]}>
                       {match.awayTeamName?.split(' ')[1]}
                       </Text>
                     </View>}
               </View>
-              <Text style ={[styles.fontBlue, {fontSize: height * 0.024}]}>
+              <Text style ={[styles.fontBlue, {fontSize: height * 0.024,  marginTop: -height * 0.03}]}>
               {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`}
               </Text>
             </View>
@@ -142,18 +143,13 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               </TouchableOpacity>
           </View>
           <View style={{alignItems:'center', width:width * 0.5, marginTop: height * 0.012}}>
-            <Text style ={[styles.fontBlue, {fontSize: width * 0.16}]}>
+            <Text style ={[styles.fontBlue, {fontSize: width * 0.16}, {color: "#EA5579"}]}>
               ON-AIR
             </Text>
           </View>
-          <View style={[styles.platformContainer, {width: width * 0.4, marginTop: height * 0.03}]}>
-            <TeamOrLeagueLogo
-              logo={null}
-              type={'middle'}
-            />
-            <TeamOrLeagueLogo
-              logo={null}
-              type={'middle'}
+          <View style={[styles.platformContainer, {width: width * 0.5, marginTop: height * 0.03}]}>
+            <PlatformList
+              platformList={match.platform as platform[]}
             />
           </View>
         </View>

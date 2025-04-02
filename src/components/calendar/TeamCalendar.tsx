@@ -8,7 +8,7 @@ import { ApiContext } from '../../context/context';
 export default function TeamCalendar() {
   const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('w');
+  const [mode, setMode] = useState<'m' |'w'>('m');
   const {teamRes} = useContext(ApiContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();

@@ -14,6 +14,6 @@ export type PostAction<P> =
 // 기본 rest api 타입 정의
 
 export interface StateDto<T> {
-    method: 'GET' | 'POST' | 'PATCH' | 'DELETE' | null,
+    method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
     data: T | null
 }

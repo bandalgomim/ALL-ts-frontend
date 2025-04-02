@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { teamDto, leagueDto, patchMainReqDto } from '../../model/main.dto';
+import { teamDto, leagueDto, patchMainReqBodyDto } from '../../model/main.dto';
 
-const transformToPatchMainReqDto = (list: (teamDto | leagueDto)[]): patchMainReqDto[] => {
+export const transformToPatchMainReqDto = (list: (teamDto | leagueDto)[]): patchMainReqBodyDto[] => {
     return list.map(item => {
         if ('teamName' in item) {
             // team 타입인 경우 teamName과 teamLogo를 제외

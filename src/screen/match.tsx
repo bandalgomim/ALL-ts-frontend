@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Match  from '../components/match';
+import Match  from '../components/match/match';
 import { useRoute } from '@react-navigation/native';
 import { ApiContext } from '../context/context';
 import { useMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import MainTabBar from '../components/main/mainTabBar';
+import { getMatchResQueryDto } from '../model/match.dto';
 
 
 const MatchScreen = () => {
 
   const {matchRes} = useContext(ApiContext);
-  const route = useRoute();
-  const matchId = route.params && 'matchId' in route.params ? route.params.matchId : null;
-  useMatch('GET', {matchId : matchId as number});
-  const memoizedMatchData = useMemo(() => matchRes.data, [matchRes.data]);
+  const { matchId } = useRoute().params as getMatchResQueryDto;
+  useMatch('GET', {matchId : matchId});
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
@@ -32,14 +31,33 @@ const MatchScreen = () => {
     />
   ) : (
     <>
+    <View style={[styles.logo]}>
     <Match
-      match={memoizedMatchData}
+      match={matchRes.data}
     />
-    <View>
-      <MainTabBar/>
+    </View>
+    <View style={[styles.container]}>
+      <MainTabBar
+        color='white'
+      />
     </View>
     </>
     );
   };
   export default MatchScreen;
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,  // MainTabBar가 화면에 꽉 차게 확장
+      position: 'absolute', // 절대 위치를 사용하여 화면 상단에 배치
+      bottom: 0, // 화면 하단에 고정
+      left: 0,
+      right: 0,
+      zIndex: 1,  // MainTabBar가 다른 요소 위에 표시되도록 설정
+      backgroundColor: 'transparent', // 배경색을 투명으로 설정하여 위에 요소들이 보이게
+    },
+    logo: {
+      flex: 1,  // Match 컴포넌트가 화면의 나머지 공간을 차지하도록 설정
+      zIndex: 0, // 다른 요소보다 뒤에 표시되도록 설정
+    },
+  });

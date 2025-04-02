@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+
 // global.js
 export const colors = {
     primary: '#30397A',
@@ -9,3 +11,4 @@ export const colors = {
     icon: '#222222',
   };
 
+export const { width, height } = Dimensions.get('window');

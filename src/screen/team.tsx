@@ -46,7 +46,9 @@ export const TeamScreen = () => {
         />
       </View>
       <View>
-        <MainTabBar/>
+        <MainTabBar
+          color="white"
+        />
       </View>
     </View>
   );

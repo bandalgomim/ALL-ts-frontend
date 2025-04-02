@@ -11,5 +11,5 @@ export type MatchPageParamList = {
 };
 
 export type MainPageParamList = {
-  MainScreen: null; // MyPostScreen에 전달될 파라미터 타입 정의
+  MainScreen: object | undefined; // MyPostScreen에 전달될 파라미터 타입 정의
 };

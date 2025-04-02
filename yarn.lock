@@ -5373,6 +5373,7 @@ __metadata:
     react-native: 0.76.5
     react-native-calendars: ^1.1307.0
     react-native-draggable-flatlist: latest
+    react-native-encrypted-storage: ^4.0.3
     react-native-gesture-handler: ^2.24.0
     react-native-get-random-values: ^1.11.0
     react-native-modal: ^14.0.0-rc.1
@@ -8507,6 +8508,16 @@ __metadata:
     react-native-gesture-handler: ">=2.0.0"
     react-native-reanimated: ">=2.8.0"
   checksum: f904e3f30737a883b683e12e119856188e81d7b6cd8811e38124353630391326385bec040a3c200a06535bcd4bbbe973e504c2e0546f7aa4cc96aa573787813d
+  languageName: node
+  linkType: hard
+
+"react-native-encrypted-storage@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "react-native-encrypted-storage@npm:4.0.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 9d2999c58559f1e4f66d1baf2c3edeff96cf42027900850d94c6bbea24ac9715047ce69bf6e8a73b68aff4508cf35dd88ac494ad5905933286ef3b75cd123e30
   languageName: node
   linkType: hard
 

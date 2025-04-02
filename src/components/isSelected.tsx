@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { patchIsSelectedReqDto } from '../model/isSelected.dto';
 import { useIsSelected } from '../hooks/isSelected.hook';
+import { ApiContext } from '../context/context';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { TeamPageParamList } from '../model/navigation.dto';
 
 interface IsSelectedPros {
     isSelected: boolean | null;
@@ -11,11 +15,16 @@ interface IsSelectedPros {
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
+  const { mainRes } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
   const { width } = Dimensions.get('window');
-  // 원래 컴포넌트 코드...
+  const prevMain = useRef(mainRes)
+  const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
+  const navigateTeam = (teamId: number) => {
 
+    navigationTeam.replace('TeamScreen', { teamId: teamId });
+  };
   const [isSelectedState, setIsSelectedState] = useState<patchIsSelectedReqDto>({
     method: 'PATCH',
     data: null,
@@ -24,7 +33,14 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
     setState(isSelected);
     setIndicator(isSelected as boolean);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isSelected]);
+
+  useEffect(() => {
+    if (prevMain.current !== mainRes && teamId) {
+      console.log(teamId)
+      navigateTeam(teamId);
+    }
+  }, [mainRes]);
 
   useEffect(() => {
     if (indicator !== state) {
@@ -32,26 +48,26 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
         setIsSelectedState({
           method: 'PATCH',
           data: {teamId: teamId},
-      });
+        });
       } else if (leagueId) {
         setIsSelectedState({
           method: 'PATCH',
           data: {leagueId: leagueId},
-      });
+        });
       } else if (matchId) {
         setIsSelectedState({
           method: 'PATCH',
           data: {matchId: matchId},
-      });
+        });
       } setState(indicator);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ indicator ]);
   useIsSelected(isSelectedState.method as string, isSelectedState.data);
 
-  const onPressStart = ()=>{
-    setIndicator(!state);
-  };
+  const onPressStart = useCallback(() => {
+    setIndicator((prev) => !prev);
+  }, []);
   return (
     <TouchableOpacity
       onPress={onPressStart}
