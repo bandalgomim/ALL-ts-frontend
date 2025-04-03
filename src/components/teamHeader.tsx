@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from './searchBar/serchBar';
 import TeamOrLeagueLogo  from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
 import { ApiContext } from '../context/context';
-
+import { width, height } from '../global';
 
 const TeamHeader = () => {
-  const { width, height } = Dimensions.get('window');
   const {teamRes} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>

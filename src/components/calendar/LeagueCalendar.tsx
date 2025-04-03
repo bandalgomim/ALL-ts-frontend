@@ -1,13 +1,13 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { View, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
 import { ApiContext } from '../../context/context';
 import { goToPrevious, goToNext } from './utills';
+import { width, height } from '../../global';
 
 export default function LeagueCalendar() {
-  const { width, height } = Dimensions.get('window');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('w');
   const {leagueRes} = useContext(ApiContext);

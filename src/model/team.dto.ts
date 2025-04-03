@@ -14,13 +14,13 @@ export interface teamDto {
     isTeamSelected: boolean
 }
 
-export interface getTeamReqDto {
+export interface getTeamResDto {
     team: teamDto | null,
     matchList: matchDto[] | null
 }
 
-export interface getTeamResQueryDto {
+export interface getTeamReqQueryDto {
     teamId: number
 }
 
-export type getTeamResDto = StateDto<getTeamResQueryDto>
+export type getTeamReqDto = StateDto<getTeamReqQueryDto>

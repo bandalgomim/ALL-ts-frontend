@@ -1,27 +1,39 @@
 import axios from 'axios';
+import { localData } from '../IAM/localData';
 
 export const commonPostHook = async (
     method: string,
     url: string,
     data: Object | null = null,
-    dispatch: Function | null) => {
+    dispatch: Function | null,
+    loginState: Function) => {
     try {
+        const authToken = await localData.get('Authorization');
+        const refreshToken = await localData.get('RefreshToken');
         const response = await axios({
             method: method,
             url: url,  // 올바른 URL 설정
             data: data ? data : {},  // POST, PUT, DELETE일 경우 payload
             headers: {
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwaS5iYWxsb2cuc3RvcmUiLCJzdWIiOiJwb3BpMTIwMSIsImlhdCI6MTc0MzYxMDU2OCwiZXhwIjoxNzQzNjEwNjI4fQ.V4dEICgS05h0XGzt-90KDOLqgB_DWvHJlYtbPRqSRVY',
+              'Authorization': authToken,
+              'RefreshToken': refreshToken,
               'Content-Type': 'application/json',
             },
           });
-        let resultKeys = null;
-        if (response.data.result) {resultKeys = Object.keys(response.data.result);}
-        if (dispatch !== null) {
-        dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});}
+        if (!response.headers.authorization) {
+            let resultKeys = null;
+            if (response.data.result) {resultKeys = Object.keys(response.data.result);}
+            if (dispatch !== null) {
+            dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});}
+        } else {
+            await localData.set('Authorization', response.headers.authorization);
+            await commonPostHook(method, url, data, dispatch, loginState);
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.error('📌 응답 데이터:', error.response?.data);
+            if (error.response?.data.includes('refresh token unmatched')) {
+                loginState(false);
+            }
             if (dispatch !== null) {
             dispatch({ type: 'ERROR', payload: error.message + '!!' });}
         } else {

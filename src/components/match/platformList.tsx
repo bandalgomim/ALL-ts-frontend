@@ -1,7 +1,8 @@
 import React, { useCallback  } from 'react';
-import { Dimensions, FlatList, TouchableOpacity, StyleSheet, Linking  } from 'react-native';
+import {  FlatList, TouchableOpacity, StyleSheet, Linking  } from 'react-native';
 import { platform } from '../../model/match.dto';
 import TeamOrLeagueLogo from '../teamOrLeagueLogo';
+import { width, height } from '../../global';
 
 interface ContentsProps {
   platformList: platform[],
@@ -17,7 +18,6 @@ const openUrlHandle = async (url: string) => {
 };
 
 const PlatformList: React.FC<ContentsProps> = ( { platformList } ) => {
-  const { width, height } = Dimensions.get('window');
   const renderItem = useCallback(( {item, index}: { item: platform, index: number } ) => {
     return (
       <TouchableOpacity style={[
@@ -34,7 +34,7 @@ const PlatformList: React.FC<ContentsProps> = ( { platformList } ) => {
   return (
     <>
     <FlatList
-      style={{ width: width*0.5, marginTop: -height * 0.015}}
+      style={{ width: width * 0.5, marginTop: -height * 0.015}}
       data={platformList}
       horizontal={true}
       keyExtractor={(item, index) => index.toString()}

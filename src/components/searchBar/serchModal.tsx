@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, FlatList, StyleSheet,  ImageBackground, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { searchItem } from '../../model/searchIteam';
 import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { width, height } from '../../global';
 
 interface  searchModalProps {
     isVisible: boolean;
@@ -21,7 +22,7 @@ const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) =
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
-  const { width, height } = Dimensions.get('window');
+  
 
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();

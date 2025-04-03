@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
 import { ApiContext } from '../../context/context';
 import { goToPrevious, goToNext } from './utills';
+import { width, height } from '../../global';
 
 export default function MainCalendar() {
-  const { width, height } = Dimensions.get('window');
   const {mainRes} = useContext(ApiContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m');
@@ -43,7 +43,7 @@ export default function MainCalendar() {
           indicatorDay={currentDate}
           color={'white'}
           mode={mode}
-          matchList={mainRes.data.matchList}
+          matchList={mainRes.data.matchList ? mainRes.data.matchList : null}
         />
       </View>
       <TeamAndLeagueListBar

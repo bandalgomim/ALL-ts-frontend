@@ -1,10 +1,11 @@
 // Contents.tsx
 import React, { useCallback, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
 import { matchDto } from '../../../model/main.dto';
 import MatchModal from './modal';
 import DayRow from './dayRow';
+import { width, height } from '../../../global';
 
 interface ContentsProps {
   month: number,
@@ -16,7 +17,6 @@ interface ContentsProps {
 }
 
 const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, mode, matchList }) => {
-  const { width, height } = useMemo(() => Dimensions.get('window'), []);
   const [isVisible, setIsVisible] = useState(false);
   const [modalMatch, setModalMatch] = useState<matchDto[] | null>(null);
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);

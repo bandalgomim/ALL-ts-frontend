@@ -1,19 +1,32 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ApiContext } from '../context/context';
 import { useMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
 import MainTabBar from '../components/main/mainTabBar';
 import { getMatchResQueryDto } from '../model/match.dto';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { IAMPageParamList } from '../model/navigation.dto';
 
 
 const MatchScreen = () => {
 
-  const {matchRes} = useContext(ApiContext);
+  const {matchRes, login} = useContext(ApiContext);
   const { matchId } = useRoute().params as getMatchResQueryDto;
   useMatch('GET', {matchId : matchId});
+
+  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+  const navigateIAM = useCallback(() => {
+    navigationIAM.replace('IAMScreen', undefined);
+  }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  useEffect(() => {
+    if (login === false) {
+      navigateIAM();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [login]);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
@@ -38,7 +51,7 @@ const MatchScreen = () => {
     </View>
     <View style={[styles.container]}>
       <MainTabBar
-        color='white'
+        color="white"
       />
     </View>
     </>

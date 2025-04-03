@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,  StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { width, height } from '../../../global';
 
 interface TeamHeaderProps {
   year: number;
@@ -10,7 +11,7 @@ interface TeamHeaderProps {
 }
 
 const Header: React.FC<TeamHeaderProps> = ({ year, month, type, goToPrevious, goToNext }) => {
-  const { width, height } = Dimensions.get('window');
+  
   let typeStyle: StyleProp<ViewStyle | TextStyle> = [];
 
   if (type === 'team') {

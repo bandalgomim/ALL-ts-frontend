@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet,  Image } from 'react-native';
 import SearchModal from './serchModal';
+import { width, height } from '../../global';
 
 interface SerchBarPros {
     type: string;
@@ -13,7 +14,7 @@ const imageMap = {
 };
 
 const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
-  const { width, height } = Dimensions.get('window');
+  
   const src = imageMap[type as keyof typeof imageMap];
   const [isVisible, setIsVisible] = useState(false);
 

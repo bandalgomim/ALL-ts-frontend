@@ -1,18 +1,17 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Dimensions, ActivityIndicator } from 'react-native';
-
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import { width, height } from '../global';
 interface logoProps {
   color: 'blue' | 'white';
 }
 
 const LoadingScreen : React.FC<logoProps>  = ({ color }) => {
-  const { width, height } = Dimensions.get('window');
   const [loading, setLoading] = useState(0);
   const style = color === 'blue' ? styles.textBlue : styles.textWhite;
   useEffect(() => {
     const interval = setInterval(() => {
-      setLoading((prev) => Math.min(prev + 0.2, 1));
+      setLoading((prev) => Math.min(prev + 0.1, 1));
 
     }, 10); // 0.1초(100ms)마다 실행
     return () => clearInterval(interval);

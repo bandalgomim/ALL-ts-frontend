@@ -1,10 +1,12 @@
-import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useContext } from 'react';
+import {  Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
+import { width, height } from '../../global';
+import { ApiContext } from '../../context/context';
 
 export const MainHeader = () => {
-  const { width, height } = Dimensions.get('window');
+  const {setLogin} = useContext(ApiContext);
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>
@@ -23,7 +25,7 @@ export const MainHeader = () => {
           </View>
         </Shadow>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]}>
+      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>{setLogin(false);}}>
         <Icon name={'person'} size={30} color={'white'} />
         <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
       </TouchableOpacity>
@@ -53,3 +55,4 @@ const styles = StyleSheet.create({
     fontFamily: '',
   },
 });
+

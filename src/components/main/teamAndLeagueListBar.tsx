@@ -17,7 +17,6 @@ interface ContentsProps {
   }
 
 const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {
-  console.log("render")
   const [list, setList] = useState<(teamDto | leagueDto)[] | null>(null);
   const [patch, setPatch] = useState<patchMainReqDto>({
     method: 'PATCH',
@@ -48,7 +47,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
     setPatch({
       method: 'PATCH',
       data: transformToPatchMainReqDto(updatedData),
-    })
+    });
     setList(updatedData);
   };
   const renderItem = useCallback(

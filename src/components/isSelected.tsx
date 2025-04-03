@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { patchIsSelectedReqDto } from '../model/isSelected.dto';
 import { useIsSelected } from '../hooks/isSelected.hook';
 import { ApiContext } from '../context/context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../model/navigation.dto';
-
+import { width } from '../global';
 interface IsSelectedPros {
     isSelected: boolean | null;
     teamId: number | null;
@@ -18,7 +18,6 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   const { mainRes } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
-  const { width } = Dimensions.get('window');
   const prevMain = useRef(mainRes)
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
@@ -37,9 +36,9 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
 
   useEffect(() => {
     if (prevMain.current !== mainRes && teamId) {
-      console.log(teamId)
       navigateTeam(teamId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainRes]);
 
   useEffect(() => {

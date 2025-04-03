@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,  ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '../../model/main.dto';
 import MatchScore  from './matchScore';
 import IsSelected from '../isSelected';
@@ -7,6 +7,7 @@ import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import { useNavigation } from '@react-navigation/native';
 import { MatchPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { width, height } from '../../global';
 
 interface MatchBarPros {
     match: matchDto;  // Assuming match is your interface from earlier
@@ -17,7 +18,7 @@ interface MatchBarPros {
 
 const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible}) => {
   
-  const { width, height } = Dimensions.get('window');
+  
   const [score, setScore] = useState(false);
   const style = color === 'white'
     ? [styles.stateTextWhite, styles.teamNameWhite]

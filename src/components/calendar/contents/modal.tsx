@@ -1,9 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Dimensions, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import {  View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { matchDto } from '../../../model/main.dto';
 import Modal from 'react-native-modal';
 import MatchList from '../../matchBar/matchList';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { width, height } from '../../../global';
 
 interface  MatchModalProps {
     isVisible: boolean;
@@ -12,7 +13,7 @@ interface  MatchModalProps {
   }
 
 const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
-  const { width, height } = Dimensions.get('window');
+  
   return (
     <Modal
       isVisible={isVisible}

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Dimensions, StyleProp, ViewStyle, TextStyle } from 'react-native';
-
+import { View, TouchableOpacity, Text, StyleSheet,  StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { width } from '../../../global';
 
 interface ModeProps {
   type: string;
@@ -10,7 +10,6 @@ interface ModeProps {
 
 
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
-  const { width } = Dimensions.get('window');
   let typeColor: StyleProp<ViewStyle | TextStyle> = [];
 
   if(type === 'white') {

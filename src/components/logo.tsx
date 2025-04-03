@@ -1,14 +1,12 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-
+import { StyleSheet, Text, View } from 'react-native';
+import { width, height } from '../global'
 interface logoProps {
   color: 'blue' | 'white';
 }
 
 const Logo: React.FC<logoProps>  = ({ color }) => {
   const style = color === 'blue' ? styles.textBlue : styles.textWhite;
-
-  const { width, height } = Dimensions.get('window');
     return (
       <View style={[styles.logo, {width: width * 0.8, height: height * 0.24}]}>
         <Text style={[styles.text1, {width: width * 0.5, fontSize: width * 0.43}, style]}>ALL</Text>

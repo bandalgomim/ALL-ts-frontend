@@ -4,12 +4,12 @@ import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '../model/main.dto';
 
 export const useMain = (method: string, data: getMainResQueryDto | null = null) => {
-    const {setMainRes} = useContext(ApiContext);
+    const {setMainRes, setLogin } = useContext(ApiContext);
     useEffect(() => {
         if (method !== 'GET' && data === null) {
             return;
         }
-        const url = 'http://10.0.2.2:3000/main';
+        const url = 'https://all-ts-backend-production.up.railway.app/main';
         const fetchMyPage = async () => {
             setMainRes({ type: 'LOADING' });
             const query = new URLSearchParams();
@@ -18,9 +18,9 @@ export const useMain = (method: string, data: getMainResQueryDto | null = null) 
                     Object.entries(data as unknown as getMainResQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setMainRes);
+                await commonPostHook(method, getUrl, null, setMainRes, setLogin );
             } else if (method === 'PATCH') {
-                await commonPostHook(method, url, data, null);
+                await commonPostHook(method, url, data, null, setLogin );
             }
         };
         fetchMyPage();

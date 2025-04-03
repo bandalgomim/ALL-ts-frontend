@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {  StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MainPageParamList } from '../../model/navigation.dto';
+import { width, height } from '../../global';
 
 interface MainTabBarProps {
   color: 'blue' | 'white';
@@ -15,7 +16,7 @@ const MainTabBar : React.FC<MainTabBarProps>  = ({ color }) => {
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
   };
-  const { width, height } = Dimensions.get('window');
+  
   return (
     <TouchableOpacity onPress={()=>{navigateMain();}}>
         <View style={[styles.tabBar, {width: width, height: height * 0.07}, {backgroundColor: color === 'blue' ? '#30397A' : 'white'}]}>

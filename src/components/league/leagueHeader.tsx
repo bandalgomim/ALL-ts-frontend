@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from '../searchBar/serchBar';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import IsSelected from './../isSelected';
 import { ApiContext } from '../../context/context';
-
+import { width, height } from '../../global';
 
 const LeagueHeader = () => {
-  const { width, height } = Dimensions.get('window');
+  
 
   const {leagueRes} = useContext(ApiContext);
   return (

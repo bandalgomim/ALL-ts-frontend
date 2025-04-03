@@ -12,3 +12,5 @@ export const colors = {
   };
 
 export const { width, height } = Dimensions.get('window');
+
+export const domain = 'all-ts-backend-production.up.railway.app';

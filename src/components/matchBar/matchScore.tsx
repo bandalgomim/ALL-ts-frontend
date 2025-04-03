@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { Text, StyleSheet,  ImageBackground } from 'react-native';
+import { width, height } from '../../global';
 
 interface MatchScorePros {
     score: string | number;
@@ -9,7 +10,7 @@ interface MatchScorePros {
 }
 
 const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
-  const { width, height } = Dimensions.get('window');
+  
   let req;
   const size = type === 'small'
     ? width * 0.1

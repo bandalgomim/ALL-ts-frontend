@@ -1,10 +1,10 @@
 export interface postSignUpReqDto {
-    userId: string,
+    id: string,
     email: string,
-    name: string,
-    iconUrl: string
+    nickname: string,
+    icon: string
 }
 
 export interface getLoginReqDto {
-    userId: string,
+    id: string,
 }

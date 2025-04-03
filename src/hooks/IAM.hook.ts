@@ -1,28 +1,59 @@
-import { useEffect } from 'react';
-import { postSignUpReqDto } from '../model/IAM.dto';
+import { useContext, useEffect } from 'react';
+import { getLoginReqDto, postSignUpReqDto } from '../model/IAM.dto';
 import axios from 'axios';
 import { localData } from '../IAM/localData';
+import { ApiContext } from '../context/context';
+import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
 
-export const useSignUp = (method: string, data: postSignUpReqDto | null = null) => {
+export const useSignUp = (data: postSignUpReqDto) => {
     useEffect(() => {
         if (data === null) {
             return;
         }
-        const url = 'http://10.0.2.2:3000/auth/IAM/signUp';
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/signUpTest';
         const fetchMyPage = async () => {
-            if (method === 'POST'){
-                await commonIAMHook(method, url, data);
-            }
+            await commonIAMHook('POST', url, data);
         };
         fetchMyPage();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 };
 
+export const useLogIn = (data: getLoginReqDto) => {
+    const {setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin} = useContext(ApiContext);
+    useEffect(() => {
+        if (data.id === null || data.id === "") {
+            return;
+        }
+        setMainRes(initialmainRes);
+        setTeamRes(initialteamRes);
+        setLeagueRes(initialLeagueRes);
+        setMatchRes(initialmatchRes);
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/loginTest';
+        const fetchMyPage = async () => {
+            await commonIAMHook('post', url, data, setLogin);
+        };
+        fetchMyPage();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [data]);
+};
+export const useRefreshToken = () => {
+    const {setLogin} = useContext(ApiContext);
+    useEffect(() => {
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
+        const fetchMyPage = async () => {
+            await commonIAMHook('GET', url, null, setLogin);
+        };
+        fetchMyPage();
+      }, []);
+};
+
+
 export const commonIAMHook = async (
     method: string,
     url: string,
-    data: Object | null = null) => {
+    data: Object | null = null,
+    loginState: Function) => {
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
@@ -31,19 +62,25 @@ export const commonIAMHook = async (
             url: url,  // 올바른 URL 설정
             data: data ? data : {},  // POST, PUT, DELETE일 경우 payload
             headers: {
-                'Authorization': authToken ? authToken : '',
-                'RefreshToken': refreshToken ? refreshToken : '',
-                'Content-Type': 'application/json',
+                'Authorization': authToken,
+                'RefreshToken': refreshToken,
             },
           });
-          console.log(response.headers);
+          if (response.headers.authorization) {
+            await localData.set('Authorization', response.headers.authorization);
+            await localData.set('RefreshToken', response.headers.refreshtoken);
+            loginState(true);
+          } else {
+            loginState(false);
+          }
+
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            console.error('📌 응답 데이터:', error.response?.data);
-
+            if (error.response?.data.includes('refresh token unmatched')) {
+                loginState(false);
+            }
         } else {
             console.log('Error:', error);
-
         }
     }
 };

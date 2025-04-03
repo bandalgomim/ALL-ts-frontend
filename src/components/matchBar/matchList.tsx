@@ -1,8 +1,9 @@
 import React, { useCallback  } from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import {  FlatList } from 'react-native';
 import MatchBar  from './matchBar';
 import { matchDto } from '../../model/main.dto';
 import { binarySearchClosestMatch } from './utils';
+import { height } from '../../global';
 
 interface ContentsProps {
   matchList: matchDto[],
@@ -10,7 +11,6 @@ interface ContentsProps {
 }
 
 const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
-  const { height } = Dimensions.get('window');
   const ITEM_HEIGHT = height * 0.1;
   const initIndex = matchList.length >= 3 ? binarySearchClosestMatch(matchList) : 0;
   const renderItem = useCallback(( {item}: { item: matchDto } ) => {

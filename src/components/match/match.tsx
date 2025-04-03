@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { getMatchReqDto, platform } from '../../model/match.dto';
 import SearchBar from '../searchBar/serchBar';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
@@ -9,13 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import { TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
+import { width, height } from '../../global';
 
 interface MatchPros {
     match: getMatchReqDto
 }
 
 const Match: React.FC<MatchPros> = ({ match }) => {
-  const { width, height } = Dimensions.get('window');
+  
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();

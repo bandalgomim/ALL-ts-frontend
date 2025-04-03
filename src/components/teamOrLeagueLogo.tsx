@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Image, ImageBackground } from 'react-native';
+import { StyleSheet,  Image, ImageBackground } from 'react-native';
+import { width } from '../global';
 
 interface TeamOrLogoPros {
     logo: string | null;
@@ -7,7 +8,6 @@ interface TeamOrLogoPros {
 }
 
 const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
-  const { width } = Dimensions.get('window');
   let size;
   let req;
 

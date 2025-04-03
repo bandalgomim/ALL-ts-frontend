@@ -4,13 +4,12 @@ import { commonPostHook } from './common.hook';
 import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 
 export const useIsSelected = (method: string, data: patchIsSelected | null = null) => {
-    const { setMainRes } = useContext(ApiContext);
-    //console.log(data)
+    const { setMainRes, setLogin } = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;
         }
-        const url = 'http://10.0.2.2:3000/isSelected';
+        const url = 'https://all-ts-backend-production.up.railway.app/isSelected';
         const fetchIsSelected = async () => {
             setMainRes({ type: 'LOADING' });
             if (method === 'PATCH'){
@@ -19,7 +18,7 @@ export const useIsSelected = (method: string, data: patchIsSelected | null = nul
                     Object.entries(data as unknown as patchIsTeamSelected).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, getUrl, null, setMainRes);
+                await commonPostHook(method, getUrl, null, setMainRes, setLogin);
             }
         };
         fetchIsSelected();
