@@ -2432,9 +2432,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/debugger-frontend@npm:0.76.5":
+"@react-native/debugger-Allts@npm:0.76.5":
   version: 0.76.5
-  resolution: "@react-native/debugger-frontend@npm:0.76.5"
+  resolution: "@react-native/debugger-Allts@npm:0.76.5"
   checksum: 4f8529ea55f9f1668feb6ff764bcd3917fd38f53fc3b79ec2790b5a741d6746a9534922f22f5366720cea2b78d344c15d43c0439d94cb39970ccae5d1fd24a82
   languageName: node
   linkType: hard
@@ -2444,7 +2444,7 @@ __metadata:
   resolution: "@react-native/dev-middleware@npm:0.76.5"
   dependencies:
     "@isaacs/ttlcache": ^1.4.1
-    "@react-native/debugger-frontend": 0.76.5
+    "@react-native/debugger-Allts": 0.76.5
     chrome-launcher: ^0.15.2
     chromium-edge-launcher: ^0.2.0
     connect: ^3.6.5
@@ -5337,9 +5337,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"frontend@workspace:.":
+"Allts@workspace:.":
   version: 0.0.0-use.local
-  resolution: "frontend@workspace:."
+  resolution: "Allts@workspace:."
   dependencies:
     "@babel/core": ^7.25.2
     "@babel/preset-env": ^7.25.3
@@ -5372,7 +5372,7 @@ __metadata:
     react-dom: ^18.3.1
     react-native: 0.76.5
     react-native-calendars: ^1.1307.0
-    react-native-draggable-flatlist: latest
+    react-native-draggable-flatlist: "github:computerjazz/react-native-draggable-flatlist"
     react-native-encrypted-storage: ^4.0.3
     react-native-gesture-handler: ^2.24.0
     react-native-get-random-values: ^1.11.0
@@ -8498,16 +8498,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-draggable-flatlist@npm:latest":
-  version: 4.0.1
-  resolution: "react-native-draggable-flatlist@npm:4.0.1"
+"react-native-draggable-flatlist@github:computerjazz/react-native-draggable-flatlist":
+  version: 4.0.2
+  resolution: "react-native-draggable-flatlist@https://github.com/computerjazz/react-native-draggable-flatlist.git#commit=d73339177648c1a72cbf5da4b488e37457afec1f"
   dependencies:
     "@babel/preset-typescript": ^7.17.12
   peerDependencies:
     react-native: ">=0.64.0"
     react-native-gesture-handler: ">=2.0.0"
     react-native-reanimated: ">=2.8.0"
-  checksum: f904e3f30737a883b683e12e119856188e81d7b6cd8811e38124353630391326385bec040a3c200a06535bcd4bbbe973e504c2e0546f7aa4cc96aa573787813d
+  checksum: 224fb4fff01766c4455f4080fd2fe740b6a360a6a0615b783e6d01bbf3842043afdc298f811a40ffc07cd76e5ae937af5bb83afcc4ab5ecae06666c7ae9fb882
   languageName: node
   linkType: hard
 
