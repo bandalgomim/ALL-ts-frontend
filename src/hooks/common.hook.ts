@@ -7,19 +7,20 @@ export const commonPostHook = async (
     data: Object | null = null,
     dispatch: Function | null,
     loginState: Function) => {
+    const authToken = await localData.get('Authorization');
+    const refreshToken = await localData.get('RefreshToken');
+    const req = {
+        method,
+        url,
+        headers: {
+          'Authorization': authToken ?? '',
+          'RefreshToken': refreshToken ?? '',
+          'Content-Type': 'application/json',
+        },
+        ...(data && { data }) // ⬅️ data가 있을 때만 포함
+      };
     try {
-        const authToken = await localData.get('Authorization');
-        const refreshToken = await localData.get('RefreshToken');
-        const response = await axios({
-            method: method,
-            url: url,  // 올바른 URL 설정
-            data: data ? data : {},  // POST, PUT, DELETE일 경우 payload
-            headers: {
-              'Authorization': authToken,
-              'RefreshToken': refreshToken,
-              'Content-Type': 'application/json',
-            },
-          });
+        const response = await axios(req);
         if (!response.headers.authorization) {
             let resultKeys = null;
             if (response.data.result) {resultKeys = Object.keys(response.data.result);}

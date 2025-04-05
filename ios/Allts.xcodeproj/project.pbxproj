@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0756FCF018474561989C856F /* built titling el it.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3ABD63405362494199A37CBB /* built titling el it.otf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Allts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Allts.a */; };
+		0CC2A7F4D6C5933929FB3A38 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		242A8DE6B52149E7ABA20C14 /* built titling rg.otf in Resources */ = {isa = PBXBuildFile; fileRef = FBEF87859F79471C9A735211 /* built titling rg.otf */; };
+		38F2075EA26D41B381DE9025 /* built titling sb.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9D06B9BBC47745369B753C74 /* built titling sb.otf */; };
+		4769BA62DC214516B38E83F6 /* built titling rg it.otf in Resources */ = {isa = PBXBuildFile; fileRef = B21964EC95074344BAD0693A /* built titling rg it.otf */; };
+		527789F77E3441198F5C4C2E /* built titling bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = C088D48FFB854E51960336FC /* built titling bd.otf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A7598295C4661F96D181423B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,12 +24,17 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Allts/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Allts/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Allts/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3ABD63405362494199A37CBB /* built titling el it.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "built titling el it.otf"; path = "../src/assets/fonts/built titling el it.otf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Allts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Allts.debug.xcconfig"; path = "Target Support Files/Pods-Allts/Pods-Allts.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Allts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Allts.release.xcconfig"; path = "Target Support Files/Pods-Allts/Pods-Allts.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Allts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Allts.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Allts/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Allts/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9D06B9BBC47745369B753C74 /* built titling sb.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "built titling sb.otf"; path = "../src/assets/fonts/built titling sb.otf"; sourceTree = "<group>"; };
+		B21964EC95074344BAD0693A /* built titling rg it.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "built titling rg it.otf"; path = "../src/assets/fonts/built titling rg it.otf"; sourceTree = "<group>"; };
+		C088D48FFB854E51960336FC /* built titling bd.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "built titling bd.otf"; path = "../src/assets/fonts/built titling bd.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FBEF87859F79471C9A735211 /* built titling rg.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "built titling rg.otf"; path = "../src/assets/fonts/built titling rg.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,7 +170,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				A7598295C4661F96D181423B /* PrivacyInfo.xcprivacy in Resources */,
+				0CC2A7F4D6C5933929FB3A38 /* PrivacyInfo.xcprivacy in Resources */,
+				527789F77E3441198F5C4C2E /* built titling bd.otf in Resources */,
+				0756FCF018474561989C856F /* built titling el it.otf in Resources */,
+				4769BA62DC214516B38E83F6 /* built titling rg it.otf in Resources */,
+				242A8DE6B52149E7ABA20C14 /* built titling rg.otf in Resources */,
+				38F2075EA26D41B381DE9025 /* built titling sb.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

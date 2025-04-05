@@ -6,13 +6,14 @@ import { ApiContext } from '../context/context';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
 
 export const useSignUp = (data: postSignUpReqDto) => {
+    const {setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin} = useContext(ApiContext);
     useEffect(() => {
         if (data === null) {
             return;
         }
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/signUpTest';
+        const url = 'http://192.168.1.20:3000/auth/IAM/signUpTest';
         const fetchMyPage = async () => {
-            await commonIAMHook('POST', url, data);
+            await commonIAMHook('POST', url, data, setLogin);
         };
         fetchMyPage();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,7 +30,7 @@ export const useLogIn = (data: getLoginReqDto) => {
         setTeamRes(initialteamRes);
         setLeagueRes(initialLeagueRes);
         setMatchRes(initialmatchRes);
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/loginTest';
+        const url = 'http://192.168.1.20:3000/auth/IAM/loginTest';
         const fetchMyPage = async () => {
             await commonIAMHook('post', url, data, setLogin);
         };
@@ -40,7 +41,7 @@ export const useLogIn = (data: getLoginReqDto) => {
 export const useRefreshToken = () => {
     const {setLogin} = useContext(ApiContext);
     useEffect(() => {
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
+        const url = 'http://192.168.1.20:3000/auth/IAM/refreshToken';
         const fetchMyPage = async () => {
             await commonIAMHook('GET', url, null, setLogin);
         };
