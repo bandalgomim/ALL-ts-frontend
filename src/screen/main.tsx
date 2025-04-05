@@ -12,6 +12,7 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 
 export const MainScreen = () => {
+  console.log("main")
   const {mainRes, login} = useContext(ApiContext);
   useMain('GET', null);
 

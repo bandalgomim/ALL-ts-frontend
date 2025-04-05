@@ -9,7 +9,7 @@ export const useIsSelected = (method: string, data: patchIsSelected | null = nul
         if (data === null) {
             return;
         }
-        const url = 'https://all-ts-backend-production.up.railway.app/isSelected';
+        const url = 'http://10.0.2.2:3000/isSelected';
         const fetchIsSelected = async () => {
             setMainRes({ type: 'LOADING' });
             if (method === 'PATCH'){
