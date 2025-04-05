@@ -48,5 +48,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+		<array>
+		<string>built titling sb it.otf</string>
+		<string>built titling sb.otf</string>
+		<string>built titling rg.otf</string>
+		<string>built titling rg it.otf</string>
+		<string>built titling bd.otf</string>
+		<string>built titling bd it.otf</string>
+		<string>built titling el.otf</string>
+		<string>built titling el it.otf</string>
+		<string>built titling lt.otf</string>
+		<string>built titling lt it.otf</string>
+		</array>
 </dict>
 </plist>

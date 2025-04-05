@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   LeagueInfoName: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   LeagueInfoEtc: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋

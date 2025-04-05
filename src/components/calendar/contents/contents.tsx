@@ -105,17 +105,17 @@ const styles = StyleSheet.create({
   },
   currentMonthDayWhite: {
     color: '#F5CEDF',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
   otherMonthDayWhite: {
     color: '#62689a',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
   },
   currentMonthDayBlue: {
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   otherMonthDayBlue: {
     color: '#cbcbcb',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
   },
   underBar: {
     position: 'absolute',

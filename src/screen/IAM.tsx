@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   textContainser: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
   },
   logo: {
     flexDirection: 'row',
@@ -92,21 +92,21 @@ const styles = StyleSheet.create({
   },
   text1: {
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
   text2: {
     color: '#EA5579',
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
   text3: {
     textAlign: 'center',
-    fontFamily: 'built titling lt it',
+    fontFamily: 'BuiltTitlingLt-Italic',
   },
   text4: {
     color: '#EA5579',
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
   textWhite: {
     color: '#ffffff',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 10.5, // 그림자 반경
   },
   textInput: {
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     alignItems: 'center',
     textAlign: 'center',
     backgroundColor: 'gray',

@@ -23,16 +23,16 @@ const styles = StyleSheet.create({
   },
   text1: {
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
   text2: {
     color: '#EA5579',
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
   text3: {
     textAlign: 'center',
-    fontFamily: 'built titling lt it',
+    fontFamily: 'BuiltTitlingLt-Italic',
   },
   textWhite: {
     color: '#ffffff',

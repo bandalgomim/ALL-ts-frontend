@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
   fontWhite: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   fontBlue: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋

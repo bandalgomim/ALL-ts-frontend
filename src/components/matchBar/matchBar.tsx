@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
   },
   stateTextBlue: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
   teamNameBlue: {
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
   },
   stateTextWhite: {
     textAlign: 'center',
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 10.5, // 그림자 반경
   },
   teamNameWhite: {
-    fontFamily: 'built titling sb it',
+    fontFamily: 'BuiltTitlingSb-Italic',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋

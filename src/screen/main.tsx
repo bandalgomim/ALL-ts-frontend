@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
   },
   bannerText: {
     textAlign: 'center',
-    fontFamily: 'built titling rg it',
+    fontFamily: 'BuiltTitlingRg-Italic',
   },
 });
