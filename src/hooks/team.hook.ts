@@ -9,7 +9,7 @@ export const useTeam = (method: string, data: getTeamReqQueryDto | null = null) 
         if (data === null) {
             return;
         }
-        const url = 'http://192.168.1.20:3000/team';
+        const url = 'https://all-ts-backend-production.up.railway.app/team';
         const fetchMyPage = async () => {
             setTeamRes({ type: 'LOADING' });
             if (method === 'GET'){

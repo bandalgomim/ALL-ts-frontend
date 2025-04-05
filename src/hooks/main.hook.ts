@@ -9,7 +9,7 @@ export const useMain = (method: string, data: getMainResQueryDto | null = null) 
         if (method !== 'GET' && data === null) {
             return;
         }
-        const url = 'http://192.168.1.20:3000/main';
+        const url = 'https://all-ts-backend-production.up.railway.app/main';
         const fetchMyPage = async () => {
             setMainRes({ type: 'LOADING' });
             const query = new URLSearchParams();

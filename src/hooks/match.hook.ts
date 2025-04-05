@@ -9,7 +9,7 @@ export const useMatch = (method: string, data: getMatchResQueryDto | null = null
         if (data === null) {
             return;
         }
-        const url = 'http://192.168.1.20:3000/match';
+        const url = 'https://all-ts-backend-production.up.railway.app/match';
         const fetchMyPage = async () => {
             setMatchRes({ type: 'LOADING' });
             if (method === 'GET'){

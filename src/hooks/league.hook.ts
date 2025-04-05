@@ -9,7 +9,7 @@ export const useLeague = (method: string, data: getLeagueReqQueryDto | null = nu
         if (data === null || data.leagueId === null) {
             return;
         }
-        const url = 'http://192.168.1.20:3000/league';
+        const url = 'https://all-ts-backend-production.up.railway.app/league';
         const fetchMyPage = async () => {
             setLeagueRes({ type: 'LOADING' });
             if (method === 'GET'){
