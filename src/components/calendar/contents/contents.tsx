@@ -46,7 +46,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
     }
   }, [groupedMatches, setModalMatch, setIsVisible]);
   return (
-    
     <View style={[styles.calendarContainer, {width: width * 0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
       <View style={styles.weekRow}>
         {DAYS_OF_WEEK.map((day, index) => (
@@ -67,7 +66,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
           fontColor={fontColor}
           width={width}
           height={height}
-          indicatorDay={indicatorDay}
         />
       )) : (
       <DayRow
@@ -78,7 +76,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
         fontColor={fontColor}
         width={width}
         height={height}
-        indicatorDay={indicatorDay}
       />)}
       <View style={styles.modalContainer}>
         <MatchModal
@@ -94,7 +91,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
 const styles = StyleSheet.create({
   calendarContainer: {
     flexDirection: 'column',
-    //
   },
   dayContainer: {
     flex: 1,
@@ -137,7 +133,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
 
 export default React.memo(Contents);
 

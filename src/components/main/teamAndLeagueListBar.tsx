@@ -53,7 +53,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
   const renderItem = useCallback(
     ({ item, drag, isActive, getIndex }: RenderItemParams<teamDto | leagueDto>) => {
       const index = getIndex();
-      return (
+      return teamAndLeagueList ? (
         <ScaleDecorator>
           <View
             key={item.index}
@@ -84,9 +84,9 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
             </TouchableOpacity>
           </View>
         </ScaleDecorator>
-      );
+      ) : null;
     },
-    [navigateTeam, navigateLeague, teamAndLeagueList.length] // 필요한 의존성만 추가
+    [navigateTeam, navigateLeague, teamAndLeagueList] // 필요한 의존성만 추가
   );
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width}]}>
@@ -99,7 +99,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
             {list ? <DraggableFlatList
               data={list}
               onDragEnd={handleDragEnd} // 위치가 바뀔 때마다 position 업데이트
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={(item: teamDto | leagueDto, index: number) => index.toString()}
               renderItem={renderItem}
               horizontal={true} // 가로 스크롤로 변경
               showsHorizontalScrollIndicator={false} // 수평 스크롤바 숨기기
