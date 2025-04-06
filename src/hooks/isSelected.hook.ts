@@ -8,6 +8,8 @@ export const useIsSelected = (method: string, data: patchIsSelected | null = nul
     useEffect(() => {
         if (data === null) {
             return;
+        } else {
+            console.log("eff 4", data)
         }
         const url = 'http://10.0.2.2:3000/isSelected';
         const fetchIsSelected = async () => {

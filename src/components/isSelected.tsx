@@ -18,7 +18,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   const { mainRes } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
-  const prevMain = useRef(mainRes)
+  const prevMain = useRef(mainRes);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
 
@@ -29,6 +29,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
     data: null,
   });
   useEffect(() => {
+    console.log("eff 1", teamId)
     setState(isSelected);
     setIndicator(isSelected as boolean);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,6 +37,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
 
   useEffect(() => {
     if (prevMain.current !== mainRes && teamId) {
+      console.log("eff 2", teamId)
       navigateTeam(teamId);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +45,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
 
   useEffect(() => {
     if (indicator !== state) {
+      console.log("eff 3", teamId)
       if (teamId) {
         setIsSelectedState({
           method: 'PATCH',
@@ -65,6 +68,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   useIsSelected(isSelectedState.method as string, isSelectedState.data);
 
   const onPressStart = useCallback(() => {
+    console.log("set 1")
     setIndicator((prev) => !prev);
   }, []);
   return (
