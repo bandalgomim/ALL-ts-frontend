@@ -29,6 +29,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   }, [isSelected]);
 
   const onPressStart = useCallback(async () => {
+    setState(!state);
     if (teamId) {
       await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
       navigateTeam(teamId);
@@ -37,7 +38,6 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
     } else if (matchId) {
       await hookIsSelected('PATCH', {matchId: matchId}, setMainRes, setLogin);
     }
-    setState(!state);
   }, [leagueId, matchId, navigateTeam, setLogin, setMainRes, state, teamId]);
   return (
     <TouchableOpacity
