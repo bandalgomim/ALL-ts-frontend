@@ -15,7 +15,7 @@ interface IsSelectedPros {
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
   console.log("re")
-  const { setMainRes, setLogin, mainRes, teamRes, leagueLes } = useContext(ApiContext);
+  const { setMainRes, setLogin } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
