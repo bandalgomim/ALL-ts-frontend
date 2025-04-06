@@ -12,7 +12,6 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 
 export const MainScreen = () => {
-  console.log("main")
   const {mainRes, login} = useContext(ApiContext);
   useMain('GET', null);
 
@@ -45,7 +44,9 @@ export const MainScreen = () => {
   ) : (
     <View style={styles.Container}>
       <MainHeader/>
-      <MainCalendar/>
+      <MainCalendar
+        data={mainRes.data}
+      />
       <View style={[styles.logo, {bottom: height * 0.06}]}>
         <Logo
           color="white"

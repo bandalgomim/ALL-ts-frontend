@@ -7,8 +7,6 @@ import { ApiContext } from '../../context/context';
 import { width, height } from '../../global';
 
 const LeagueHeader = () => {
-  
-
   const {leagueRes} = useContext(ApiContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>

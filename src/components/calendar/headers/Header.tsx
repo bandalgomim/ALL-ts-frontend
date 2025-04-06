@@ -11,7 +11,6 @@ interface TeamHeaderProps {
 }
 
 const Header: React.FC<TeamHeaderProps> = ({ year, month, type, goToPrevious, goToNext }) => {
-  
   let typeStyle: StyleProp<ViewStyle | TextStyle> = [];
 
   if (type === 'team') {

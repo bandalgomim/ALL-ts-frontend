@@ -13,7 +13,7 @@ import { useMain } from '../../hooks/main.hook';
 
 interface ContentsProps {
     mode: 'm' | 'w',
-    teamAndLeagueList: (teamDto | leagueDto)[]
+    teamAndLeagueList: (teamDto | leagueDto)[] | null
   }
 
 const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {

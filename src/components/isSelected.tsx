@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
-import { patchIsSelectedReqDto } from '../model/isSelected.dto';
-import { useIsSelected } from '../hooks/isSelected.hook';
+import { hookIsSelected } from '../hooks/isSelected.hook';
 import { ApiContext } from '../context/context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,61 +14,34 @@ interface IsSelectedPros {
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
-  const { mainRes } = useContext(ApiContext);
+  const { setMainRes, setLogin } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
   const [indicator, setIndicator] = useState<boolean>(false);
-  const prevMain = useRef(mainRes);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
-  const navigateTeam = (teamId: number) => {
+  const navigateTeam = useCallback(
+    (teamIdNav: number) => {
+      navigationTeam.replace('TeamScreen', { teamId: teamIdNav });
+    },
+    [navigationTeam] // 의존성 추가 (useNavigation 결과)
+  );
 
-    navigationTeam.replace('TeamScreen', { teamId: teamId });
-  };
-  const [isSelectedState, setIsSelectedState] = useState<patchIsSelectedReqDto>({
-    method: 'PATCH',
-    data: null,
-  });
   useEffect(() => {
-    console.log("eff 1", teamId)
     setState(isSelected);
     setIndicator(isSelected as boolean);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSelected]);
 
-  useEffect(() => {
-    if (prevMain.current !== mainRes && teamId) {
-      console.log("eff 2", teamId)
-      navigateTeam(teamId);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainRes]);
-
-  useEffect(() => {
-    if (indicator !== state) {
-      console.log("eff 3", teamId)
-      if (teamId) {
-        setIsSelectedState({
-          method: 'PATCH',
-          data: {teamId: teamId},
-        });
-      } else if (leagueId) {
-        setIsSelectedState({
-          method: 'PATCH',
-          data: {leagueId: leagueId},
-        });
-      } else if (matchId) {
-        setIsSelectedState({
-          method: 'PATCH',
-          data: {matchId: matchId},
-        });
-      } setState(indicator);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ indicator ]);
-  useIsSelected(isSelectedState.method as string, isSelectedState.data);
-
-  const onPressStart = useCallback(() => {
-    console.log("set 1")
+  const onPressStart = useCallback(async () => {
     setIndicator((prev) => !prev);
+    if (teamId) {
+      await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
+      navigateTeam(teamId);
+    } else if (leagueId) {
+      await hookIsSelected('PATCH', {leagueId: leagueId}, setMainRes, setLogin);
+      setState(indicator);
+    } else if (matchId) {
+      await hookIsSelected('PATCH', {matchId: matchId}, setMainRes, setLogin);
+      setState(indicator);
+    }
   }, []);
   return (
     <TouchableOpacity
