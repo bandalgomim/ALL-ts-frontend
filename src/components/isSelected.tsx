@@ -14,10 +14,8 @@ interface IsSelectedPros {
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
-  console.log("re")
   const { setMainRes, setLogin } = useContext(ApiContext);
   const [state, setState] = useState<boolean | null>(false);
-  const [indicator, setIndicator] = useState<boolean>(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = useCallback(
     (teamIdNav: number) => {
@@ -28,22 +26,19 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
 
   useEffect(() => {
     setState(isSelected);
-    setIndicator(isSelected as boolean);
   }, [isSelected]);
 
   const onPressStart = useCallback(async () => {
-    setIndicator((prev) => !prev);
     if (teamId) {
       await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
       navigateTeam(teamId);
     } else if (leagueId) {
       await hookIsSelected('PATCH', {leagueId: leagueId}, setMainRes, setLogin);
-      setState(indicator);
     } else if (matchId) {
       await hookIsSelected('PATCH', {matchId: matchId}, setMainRes, setLogin);
-      setState(indicator);
     }
-  }, []);
+    setState(!state);
+  }, [leagueId, matchId, navigateTeam, setLogin, setMainRes, state, teamId]);
   return (
     <TouchableOpacity
       onPress={onPressStart}
