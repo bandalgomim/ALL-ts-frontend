@@ -8,7 +8,7 @@ export const hookIsSelected = async (
     setLogin: (login: any) => void
   ) => {
 
-    const url = 'http://10.0.2.2:3000/isSelected';
+    const url = 'https://all-ts-backend-production.up.railway.app/isSelected';
     const query = new URLSearchParams();
     Object.entries(data as unknown as patchIsTeamSelected).forEach(([key, value]) => {
       if (value !== null) {query.append(key, String(value));}

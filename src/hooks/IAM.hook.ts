@@ -10,7 +10,7 @@ export const useSignUp = (data: postSignUpReqDto) => {
         if (data === null) {
             return;
         }
-        const url = 'http://10.0.2.2:3000/auth/IAM/signUpTest';
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/signUpTest';
         const fetchMyPage = async () => {
             await commonIAMHook('POST', url, data);
         };
@@ -29,7 +29,7 @@ export const useLogIn = (data: getLoginReqDto) => {
         setTeamRes(initialteamRes);
         setLeagueRes(initialLeagueRes);
         setMatchRes(initialmatchRes);
-        const url = 'http://10.0.2.2:3000/auth/IAM/loginTest';
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/loginTest';
         const fetchMyPage = async () => {
             await commonIAMHook('post', url, data, setLogin);
         };
@@ -40,7 +40,7 @@ export const useLogIn = (data: getLoginReqDto) => {
 export const useRefreshToken = () => {
     const {setLogin} = useContext(ApiContext);
     useEffect(() => {
-        const url = 'http://10.0.2.2:3000/auth/IAM/refreshToken';
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
         const fetchMyPage = async () => {
             await commonIAMHook('GET', url, null, setLogin);
         };
