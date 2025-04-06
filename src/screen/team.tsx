@@ -15,7 +15,6 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { height } from '../global';
 
 export const TeamScreen = () => {
-  console.log("렌더링");
   const {teamRes, login} = useContext(ApiContext);
   const { teamId } = useRoute().params as getTeamReqQueryDto;
   useTeam('GET' as string, {teamId: teamId});
