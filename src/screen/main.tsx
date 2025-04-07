@@ -44,7 +44,9 @@ export const MainScreen = () => {
   ) : (
     <View style={styles.Container}>
       <MainHeader/>
-      <MainCalendar/>
+      <MainCalendar
+        data={mainRes.data}
+      />
       <View style={[styles.logo, {bottom: height * 0.06}]}>
         <Logo
           color="white"

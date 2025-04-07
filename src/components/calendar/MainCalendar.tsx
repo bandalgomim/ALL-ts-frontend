@@ -1,15 +1,18 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { ApiContext } from '../../context/context';
 import { goToPrevious, goToNext } from './utills';
 import { width, height } from '../../global';
+import { getmainResDto } from '../../model/main.dto';
 
-export default function MainCalendar() {
-  const {mainRes} = useContext(ApiContext);
+interface MainCalendarProps {
+  data: getmainResDto
+}
+
+const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m');
 
@@ -43,12 +46,12 @@ export default function MainCalendar() {
           indicatorDay={currentDate}
           color={'white'}
           mode={mode}
-          matchList={mainRes.data.matchList ? mainRes.data.matchList : null}
+          matchList={data.matchList ? data.matchList : null}
         />
       </View>
       <TeamAndLeagueListBar
         mode={mode}
-        teamAndLeagueList={mainRes.data.teamAndLeagueList}
+        teamAndLeagueList={data.teamAndLeagueList}
       />
     </View>
   );
@@ -60,3 +63,5 @@ const styles = StyleSheet.create({
     //backgroundColor: 'yellow',
   },
 });
+
+export default React.memo(MainCalendar)

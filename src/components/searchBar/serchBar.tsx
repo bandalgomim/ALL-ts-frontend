@@ -14,7 +14,6 @@ const imageMap = {
 };
 
 const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
-  
   const src = imageMap[type as keyof typeof imageMap];
   const [isVisible, setIsVisible] = useState(false);
 
