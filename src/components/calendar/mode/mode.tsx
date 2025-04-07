@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   selectedWhite: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Bold',
+    fontFamily: 'rg-bd-ver5',
     color: '#FFFFFF',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 0.5, height: 3 }, // 그림자의 오프셋
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   noSelectedWhite: {
     color: '#878cb2',
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Bold',
+    fontFamily: 'rg-bd-ver5',
   },
   selectViewBlue: {
     flexDirection: 'row',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   selectedBlue: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Bold',
+    fontFamily: 'rg-bd-ver5',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   noSelectedBlue: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Bold',
+    fontFamily: 'rg-bd-ver5',
     color: '#cbcbcb',
   },
 });

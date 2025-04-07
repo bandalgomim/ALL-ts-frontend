@@ -16,7 +16,7 @@ const LeagueHeader = () => {
       <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
-            <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league.leagueName}</Text>
+            <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>
             <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   LeagueInfoName: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Italic',
+    fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   LeagueInfoEtc: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Italic',
+    fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋

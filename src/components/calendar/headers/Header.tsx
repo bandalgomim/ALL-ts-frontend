@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   TeamArrow: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Regular',
+    fontFamily: 'sb-rg-ver4',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   TeamDate: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   LeagueArrow: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Regular',
+    fontFamily: 'sb-rg-ver4',
     color: '#FFFFFF',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 0.5, height: 3 }, // 그림자의 오프셋
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   LeagueDate: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
     color: '#FFFFFF',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 0.5, height: 3 }, // 그림자의 오프셋

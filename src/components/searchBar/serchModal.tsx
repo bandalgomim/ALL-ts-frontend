@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     textInput: {
-      fontFamily: 'BuiltTitlingSb-Italic',
+      fontFamily: 'sb-it-ver1',
       alignItems: 'center',
       textAlign: 'center',
       color: '#30397A',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     serchText:{
-      fontFamily: 'BuiltTitlingSb-Italic',
+      fontFamily: 'sb-it-ver1',
       color: '#30397A',
     },
 });

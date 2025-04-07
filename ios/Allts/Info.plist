@@ -50,16 +50,27 @@
 	<false/>
 	<key>UIAppFonts</key>
 		<array>
-		<string>built titling sb it.otf</string>
-		<string>built titling sb.otf</string>
-		<string>built titling rg.otf</string>
-		<string>built titling rg it.otf</string>
-		<string>built titling bd.otf</string>
-		<string>built titling bd it.otf</string>
-		<string>built titling el.otf</string>
-		<string>built titling el it.otf</string>
-		<string>built titling lt.otf</string>
-		<string>built titling lt it.otf</string>
+		<string>lt-it-ver3.ttf</string>
+		<string>rg-bd-ver5.ttf</string>
+		<string>rg-it-ver2.ttf</string>
+		<string>sb-rg-ver4.ttf</string>
+		<string>sb-it-ver1.ttf</string>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
 		</array>
 </dict>
 </plist>

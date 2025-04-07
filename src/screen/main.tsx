@@ -12,7 +12,7 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 
 export const MainScreen = () => {
-  const {mainRes, login} = useContext(ApiContext);
+  const {mainRes, login, setLogin} = useContext(ApiContext);
   useMain('GET', null);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
   },
   bannerText: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
   },
 });

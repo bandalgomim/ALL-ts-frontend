@@ -46,7 +46,7 @@ const MatchScreen = () => {
     <>
     <View style={[styles.logo]}>
     <Match
-      match={matchRes.data}
+      match={matchRes.data ?? {}}
     />
     </View>
     <View style={[styles.container]}>

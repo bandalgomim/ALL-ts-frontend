@@ -19,15 +19,16 @@ const StackNavigator = () => {
         }}
       >
         <Stack.Screen
-          name="StartScreen"
-          component={StartScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="MainScreen"
           component={MainScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="StartScreen"
+          component={StartScreen}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="TeamScreen"
           component={TeamScreen}

@@ -49,7 +49,7 @@ export const TeamScreen = () => {
       <TeamHeader/>
       <TeamCalendar/>
       <MatchList
-        matchList={teamRes.data.matchList}
+        matchList={teamRes.data.matchList ?? {}}
         color={'white'}
       />
       <View style={[styles.logo, {bottom: height * 0.06}]}>

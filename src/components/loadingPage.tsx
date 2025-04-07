@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   textContainser: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Italic',
+    fontFamily: 'sb-it-ver1',
   },
   logo: {
     flexDirection: 'row',
@@ -51,21 +51,21 @@ const styles = StyleSheet.create({
   },
   text1: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
   },
   text2: {
     color: '#EA5579',
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
   },
   text3: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingLt-Italic',
+    fontFamily: 'lt-it-ver3',
   },
   text4: {
     color: '#EA5579',
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingRg-Italic',
+    fontFamily: 'rg-it-ver2',
   },
   textWhite: {
     color: '#ffffff',

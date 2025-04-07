@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   teamName: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Italic',
+    fontFamily: 'sb-it-ver1',
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋

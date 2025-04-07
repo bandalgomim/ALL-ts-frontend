@@ -51,7 +51,7 @@ const LeagueScreen = () => {
       <LeageTeamListBar/>
       <LeagueCalendar/>
       <MatchList
-        matchList={leagueRes.data.matchList}
+        matchList={leagueRes.data.matchList ?? {}}
         color={'blue'}
       />
       <View style={[styles.logo, {bottom: height * 0.06}]}>

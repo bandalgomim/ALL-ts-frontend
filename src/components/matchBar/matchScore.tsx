@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   scoreBox: {
     textAlign: 'center',
-    fontFamily: 'BuiltTitlingSb-Italic',
+    fontFamily: 'sb-it-ver1',
   },
 });
 
