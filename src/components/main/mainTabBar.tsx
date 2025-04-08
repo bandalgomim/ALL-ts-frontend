@@ -21,7 +21,6 @@ const MainTabBar : React.FC<MainTabBarProps>  = ({ color }) => {
     <TouchableOpacity onPress={()=>{navigateMain();}}>
         <View style={[styles.tabBar, {width: width, height: height * 0.07}, {backgroundColor: color === 'blue' ? '#30397A' : 'white'}]}>
                 <Icon name={'home'} size={30} color={color === 'blue' ? 'white' : '#30397A'} />
-                <Text style={[{color: color === 'blue' ? 'white' : '#30397A'}]}>HOME</Text>
         </View>
     </TouchableOpacity>
   );

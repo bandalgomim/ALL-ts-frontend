@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     fontFamily: 'sb-rg-ver4',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 1, height: 5 }, // 그림자의 오프셋
-    textShadowRadius: 10.5, // 그림자 반경
+    textShadowRadius: 3, // 그림자 반경
 
   },
   year: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 1, height: 5 }, // 그림자의 오프셋
-    textShadowRadius: 10.5, // 그림자 반경
+    textShadowRadius: 3, // 그림자 반경
   },
   month: {
     textAlign: 'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
     textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 1, height: 5 }, // 그림자의 오프셋
-    textShadowRadius: 10.5, // 그림자 반경
+    textShadowRadius: 3, // 그림자 반경
   },
 });
 

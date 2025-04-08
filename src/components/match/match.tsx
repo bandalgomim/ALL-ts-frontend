@@ -10,6 +10,7 @@ import { TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '../../global';
+import { HeadNotch } from '../notch';
 
 interface MatchPros {
     match: getMatchReqDto
@@ -32,6 +33,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
   };
   return (
     <View style={[styles.container]}>
+      <HeadNotch/>
       <View style={[styles.middleContainer, {}]}>
         <SearchBar
           type="match"
@@ -218,7 +220,7 @@ const styles = StyleSheet.create({
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
-    textShadowRadius: 10.5, // 그림자 반경
+    textShadowRadius: 3, // 그림자 반경
   },
 
 });

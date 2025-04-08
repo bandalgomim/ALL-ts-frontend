@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
+import { HeadNotch } from '../components/notch';
 
 export const MainScreen = () => {
   const {mainRes, login, setLogin} = useContext(ApiContext);
@@ -43,6 +44,7 @@ export const MainScreen = () => {
     />
   ) : (
     <View style={styles.Container}>
+      <HeadNotch/>
       <MainHeader/>
       <MainCalendar
         data={mainRes.data}

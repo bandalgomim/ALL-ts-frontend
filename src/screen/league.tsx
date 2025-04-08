@@ -14,6 +14,7 @@ import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { height } from '../global';
+import { HeadNotch } from '../components/notch';
 
 const LeagueScreen = () => {
   const {leagueRes, login} = useContext(ApiContext);
@@ -47,6 +48,7 @@ const LeagueScreen = () => {
     />
   ) : (
     <View style={styles.Container}>
+      <HeadNotch/>
       <LeagueHeader/>
       <LeageTeamListBar/>
       <LeagueCalendar/>

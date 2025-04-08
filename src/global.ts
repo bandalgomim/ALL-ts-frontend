@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
 
 // global.js
 export const colors = {

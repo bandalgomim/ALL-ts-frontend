@@ -13,6 +13,7 @@ import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { height } from '../global';
+import { HeadNotch } from '../components/notch';
 
 export const TeamScreen = () => {
   const {teamRes, login} = useContext(ApiContext);
@@ -46,6 +47,7 @@ export const TeamScreen = () => {
     />
   ) : (
     <View style={styles.Container}>
+      <HeadNotch/>
       <TeamHeader/>
       <TeamCalendar/>
       <MatchList
