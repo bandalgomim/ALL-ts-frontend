@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import SearchBar from '../searchBar/serchBar';
 import { leagueDto, patchMainReqDto, teamDto } from '../../model/main.dto';
 import { useNavigation } from '@react-navigation/native';
@@ -15,9 +15,12 @@ interface ContentsProps {
     mode: 'm' | 'w',
     teamAndLeagueList: (teamDto | leagueDto)[] | null
   }
+interface emptyProps {
+  box: null
+}
 
 const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueList }) => {
-  const [list, setList] = useState<(teamDto | leagueDto)[] | null>(null);
+  const [list, setList] = useState<(teamDto | leagueDto | emptyProps)[] | null>(null);
   const [patch, setPatch] = useState<patchMainReqDto>({
     method: 'PATCH',
     data: null,
@@ -33,7 +36,15 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
   }, [navigationLeague]); // navigationLeague를 의존성 배열에 추가
 
   useEffect(() => {
-    if (teamAndLeagueList) {
+    if (!teamAndLeagueList) {
+      setList(Array(4).fill({ box: null }));
+    } else if (teamAndLeagueList.length < 4) {
+      const filled = [
+        ...teamAndLeagueList,
+        ...Array.from({ length: 4 - teamAndLeagueList.length }, () => ({ box: null }))
+      ];
+      setList(filled);
+    } else {
       setList(teamAndLeagueList);
     }
   }, [teamAndLeagueList]);
@@ -50,10 +61,38 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
     });
     setList(updatedData);
   };
+
   const renderItem = useCallback(
     ({ item, drag, isActive, getIndex }: RenderItemParams<teamDto | leagueDto>) => {
       const index = getIndex();
-      return teamAndLeagueList ? (
+
+      if ('box' in item && item.box === null) {
+        return (
+          <View
+            key={item.index}
+            style={[
+              styles.box,
+              {
+                width: width * 0.125,
+                height: width * 0.2,
+                marginTop: height * 0.035,
+                marginRight: index !== list?.length - 1 ? width * 0.079 : width * 0.012,
+                marginLeft: width * 0.012,
+              },
+            ]}
+          >
+            <TouchableOpacity>
+          <Image
+            resizeMode="contain"
+            source={require('../../assets/main/botton.png')}
+            style={{ width: width * 0.16, height: width * 0.18 }}
+          />
+          </TouchableOpacity>
+          </View>
+        )
+      }
+
+      return (
         <ScaleDecorator>
           <View
             key={item.index}
@@ -63,7 +102,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
                 width: width * 0.125,
                 height: width * 0.2,
                 marginTop: height * 0.035,
-                marginRight: index !== teamAndLeagueList?.length - 1 ? width * 0.079 : width * 0.012,
+                marginRight: index !== list?.length - 1 ? width * 0.079 : width * 0.012,
                 marginLeft: width * 0.012,
               },
             ]}
@@ -84,9 +123,9 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
             </TouchableOpacity>
           </View>
         </ScaleDecorator>
-      ) : null;
+      );
     },
-    [navigateTeam, navigateLeague, teamAndLeagueList] // 필요한 의존성만 추가
+    [list, navigateTeam, navigateLeague] // 필요한 의존성만 추가
   );
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width}]}>
