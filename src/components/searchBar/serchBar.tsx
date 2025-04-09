@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet,  Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet,  Image, ImageBackground } from 'react-native';
 import SearchModal from './serchModal';
 import { width, height } from '../../global';
+import TeamOrLeagueLogo from '../teamOrLeagueLogo';
 
 interface SerchBarPros {
-    type: string;
+    type: string | null;
 }
 
 const imageMap = {
@@ -14,10 +15,10 @@ const imageMap = {
 };
 
 const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
-  const src = imageMap[type as keyof typeof imageMap];
+  const src = type ? imageMap[type as keyof typeof imageMap] : null;
   const [isVisible, setIsVisible] = useState(false);
 
-  return (
+  return type ? (
     <View style={[styles.Container, { width: width * 0.7, height: height * 0.1, marginTop: height * 0.015, marginBottom: -height * 0.015}]}>
       <TouchableOpacity onPress={()=>{setIsVisible(true);}}>
         <Image
@@ -33,13 +34,40 @@ const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
         />
       </View>
     </View>
-  );
+  ) : (
+    <>
+    <TouchableOpacity onPress={()=>{setIsVisible(true);}}>
+    <ImageBackground
+            source={require('../../assets/teamLogo/teamLogo_m.png')}
+            style={[styles.logoView, { width:width*0.16 }]}
+          >
+            <Image
+              resizeMode="contain"
+              source={require('../../assets/main/botton.png')}
+              style={{ width: width * 0.16 * 0.8, height: width * 0.16 * 0.8 }}
+            />
+          </ImageBackground>
+    </TouchableOpacity>
+    <View>
+    <SearchModal
+      isVisible={isVisible}
+      setIsVisible={setIsVisible}
+    />
+  </View>
+  </>
+    
+  )
 };
 
 const styles = StyleSheet.create({
   Container: {
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  logoView: {
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
