@@ -10,7 +10,6 @@ interface MatchScorePros {
 }
 
 const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
-  
   let req;
   const size = type === 'small'
     ? width * 0.1
@@ -38,7 +37,7 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
     >
       <Text style={[styles.scoreBox, {color: color === 'white' ? '#ffffff' : '#30397A',
         fontSize: type === 'small' ? width * 0.08 : width * 0.22,
-        marginTop: type === 'small' ? -height * 0.0037 : height * 0.001,
+        marginTop: type === 'small' ? height * 0.001 : height * 0.001,
         width: size * 1.2}]}
       >
         {score}
