@@ -17,7 +17,6 @@ interface MatchPros {
 }
 
 const Match: React.FC<MatchPros> = ({ match }) => {
-  console.log(match)
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
@@ -63,18 +62,9 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             />
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
-                {match?.homeTeamName && match.homeTeamName.length < 6
-                  ? <Text style ={[styles.fontWhite, {fontSize: height * 0.07, width: width * 0.5}]}>
+                  <Text style ={[styles.fontWhite, {fontSize: height * 0.07, width: width * 0.5}]}>
                       {match.homeTeamInit}
                     </Text>
-                  : <View>
-                      <Text style ={[styles.fontWhite, {fontSize: height * 0.031, marginTop: height * 0.01}]}>
-                      {match.homeTeamName?.split(' ')[0]}
-                      </Text>
-                      <Text style ={[styles.fontWhite, {fontSize: height * 0.031, marginTop: -height * 0.01}]}>
-                      {match.homeTeamName?.split(' ')[1]}
-                      </Text>
-                    </View>}
                 </View>
                 <Text style ={[styles.fontWhite, {fontSize: height * 0.024, marginTop: -height * 0.03}]}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`}
@@ -115,18 +105,9 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             />
             <View style={[styles.teamInfoContainer, {height: height * 0.124}]}>
               <View style={{height: height * 0.1, alignItems: 'center'}}>
-                {match?.awayTeamName && match.awayTeamName.length < 6
-                  ? <Text style ={[styles.fontBlue, {fontSize: height * 0.07, width: width * 0.5}]}>
-                      {match.awayTeamName}
-                    </Text>
-                  : <View>
-                      <Text style ={[styles.fontBlue, {fontSize: height * 0.031, marginTop: height * 0.01}]}>
-                      {match.awayTeamName?.split(' ')[0]}
-                      </Text>
-                      <Text style ={[styles.fontBlue, {fontSize: height * 0.031, marginTop: -height * 0.01}]}>
-                      {match.awayTeamName?.split(' ')[1]}
-                      </Text>
-                    </View>}
+                  <Text style ={[styles.fontBlue, {fontSize: height * 0.07, width: width * 0.5}]}>
+                    {match.awayTeamInit}
+                  </Text>
               </View>
               <Text style ={[styles.fontBlue, {fontSize: height * 0.024,  marginTop: -height * 0.03}]}>
               {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`}
