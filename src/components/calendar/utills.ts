@@ -75,11 +75,13 @@ export function groupMatchesByDate(matches: matchDto[] | null): Record<string, m
       const dateString = match.matchDate.split(' ')[0];
       // 날짜별 그룹화
       if (!groupedMatches[dateString]) {
+          console.log(dateString)
           groupedMatches[dateString] = [];
       }
       groupedMatches[dateString].push(match);
     }
   }
+  
   return groupedMatches;
 }
 

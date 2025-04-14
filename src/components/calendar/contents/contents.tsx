@@ -21,30 +21,37 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
   const [modalMatch, setModalMatch] = useState<matchDto[] | null>(null);
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);
   const weekDates = useMemo(() => getWeekDates(indicatorDay), [indicatorDay]);
+  
   const groupedMatches = useMemo(() =>
     groupMatchesByDate(matchList),[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
+  
   const fontColor = useMemo(() => {
     return color === 'white'
       ? [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
       : [styles.currentMonthDayBlue, styles.otherMonthDayBlue];
   }, [color]);
+
   const weekViewDays = useMemo(() => {
     return weekDates.slice(0, 7);
   }, [weekDates]);
+
   const monthViewDaysRows = useMemo(() => {
     return [...Array(5)].map((_, rowIndex) => {
       return monthDates.slice(rowIndex * 7, rowIndex * 7 + 7);
     });
   }, [monthDates]);
+
   const onPressDate = useCallback((day: Date) => {
+    console.log(day.toISOString())
     if (day instanceof Date) {
-      const matchInfo = groupedMatches[day.toISOString().split('T')[0]];
+      const matchInfo = groupedMatches[day.toLocaleDateString('sv-SE')];
       if (matchInfo) {
-        setModalMatch(groupedMatches[day.toISOString().split('T')[0]]);
+        setModalMatch(groupedMatches[day.toLocaleDateString('sv-SE')]);
         setIsVisible(true);
       }
     }
   }, [groupedMatches, setModalMatch, setIsVisible]);
+  
   return (
     <View style={[styles.calendarContainer, {width: width * 0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
       <View style={styles.weekRow}>

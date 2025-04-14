@@ -41,7 +41,7 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
               resizeMode="contain"
               style={[styles.underBar, { height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.013 }]}
               source={(() => {
-                const dateString = day.toISOString().split('T')[0]; // "2025-02-28" 형태로 추출
+                const dateString = day.toLocaleDateString('sv-SE'); // "2025-02-28" 형태로 추출
                 const matchesForDay = groupedMatches[dateString];
                 const matchCount = matchesForDay ? matchesForDay.length : 0;
                 switch (matchCount) {
