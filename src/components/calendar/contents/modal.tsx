@@ -13,15 +13,28 @@ interface  MatchModalProps {
 
 const MatchModal: React.FC< MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
   
+  const handleBackdropPress = () => {
+    if (isVisible) {
+      setIsVisible(false);
+    }
+  };
+
   return (
     <Modal
       isVisible={isVisible}
-      onBackdropPress={() => setIsVisible(false)} // 바깥 터치 시 닫기
+      onBackdropPress={handleBackdropPress}
       animationIn="slideInUp"
       animationOut="slideOutDown"
       style={styles.modal}
+      animationInTiming={300} // 애니메이션 시간 설정
+      animationOutTiming={300}
+      backdropTransitionInTiming={300} // 백드롭 애니메이션 시간
+      backdropTransitionOutTiming={300}
       backdropOpacity={0.5}
       backdropColor="black"
+      useNativeDriver={true}
+      hideModalContentWhileAnimating={true}
+      avoidKeyboard={true} // 키보드 피하기
     >
       <View style={[styles.modalView, { width: width * 1, height: height * 0.5 }]}>
         <View>
