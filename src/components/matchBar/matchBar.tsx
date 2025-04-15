@@ -28,9 +28,6 @@ const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible
   };
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
   const navigateMatch = (matchId: number) => {
-    if(isVisible !== null) {
-      setIsVisible(false);
-    }
     navigationMatch.replace('MatchScreen', { matchId: matchId });
   };
   return (
