@@ -25,13 +25,13 @@ const MatchModal: React.FC<MatchModalProps> = ({ isVisible, setIsVisible, matchL
     if (isVisible) {
       Animated.timing(slideAnim, {
         toValue: height * 0.25, // 원하는 위치로 슬라이드
-        duration: 300,
+        duration: 1,
         useNativeDriver: false,
       }).start();
     } else {
       Animated.timing(slideAnim, {
         toValue: height, // 다시 아래로
-        duration: 300,
+        duration: 1,
         useNativeDriver: false,
       }).start();
     }

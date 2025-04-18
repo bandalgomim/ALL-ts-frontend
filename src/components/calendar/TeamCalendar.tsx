@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { View, StyleSheet,  Image } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
 import { ApiContext } from '../../context/context';
 import { width, height } from '../../global';
+import { goToPrevious, goToNext } from './utills';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -13,33 +14,16 @@ export default function TeamCalendar() {
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
-  const goToPrevious = () => {
-    const newDate = new Date(currentDate);  // currentDate 복사
-    if (mode === 'm') {
-      newDate.setMonth(month - 1);  // 한 달 전으로 설정
-    } else {
-      newDate.setDate(newDate.getDate() - 7);  // 7일 전으로 설정
-    }
-    // 새로운 달로 넘어간 경우, month 값이 증가하는 경우 자동으로 달 +1 해주기
-    if (newDate.getMonth() !== month) {
-      newDate.setMonth(month - 1);
-    }
+  // Handlers for changing the month
+  const handlePrevious = useCallback(() => {
+    const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
-  };
+  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
 
-  const goToNext = () => {
-    const newDate = new Date(currentDate);  // currentDate 복사
-    if (mode === 'm') {
-      newDate.setMonth(month + 1);  // 한 달 후로 설정
-    } else {
-      newDate.setDate(newDate.getDate() + 7);  // 7일 후로 설정
-    }
-    // 새로운 달로 넘어간 경우, month 값이 증가하는 경우 자동으로 달 +1 해주기
-    if (newDate.getMonth() !== month) {
-      newDate.setMonth(month + 1);
-    }
+  const handleNext = useCallback(() => {
+    const newDate = goToNext(currentDate, mode);
     setCurrentDate(newDate);
-  };
+  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
 
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
@@ -51,8 +35,8 @@ export default function TeamCalendar() {
           year={year}
           month={month}
           type={'team'}
-          goToPrevious={goToPrevious}
-          goToNext={goToNext}
+          goToPrevious={handlePrevious}
+          goToNext={handleNext}
         />
         <View style={[styles.teamCalendar, {top: -height * 0.015}]}>
           <Mode

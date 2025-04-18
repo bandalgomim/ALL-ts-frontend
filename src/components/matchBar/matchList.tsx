@@ -12,7 +12,7 @@ interface ContentsProps {
 
 const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
   const ITEM_HEIGHT = height * 0.1;
-  const initIndex = matchList.length >= 3 ? binarySearchClosestMatch(matchList) : 0;
+  const initIndex = matchList.length >= 5 ? binarySearchClosestMatch(matchList) : 0;
   const renderItem = useCallback(( {item}: { item: matchDto } ) => {
     return (
       <MatchBar

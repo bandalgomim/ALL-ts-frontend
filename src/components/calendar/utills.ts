@@ -72,7 +72,7 @@ export function groupMatchesByDate(matches: matchDto[] | null): Record<string, m
   if (matches) {
     for (const match of matches) {
       // "YYYY-MM-DD HH:mm:ss" → "YYYY-MM-DD" 추출
-      const dateString = match.matchDate.split(' ')[0];
+      const dateString = match.matchDate.split('T')[0];
       // 날짜별 그룹화
       if (!groupedMatches[dateString]) {
           console.log(dateString)
