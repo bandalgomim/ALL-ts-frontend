@@ -11,7 +11,7 @@ interface MainHeaderProps {
 
 const MainHeader: React.FC<MainHeaderProps> = ({ year, month, goToPrevious, goToNext }) => {
   return (
-    <View style={[styles.Mainheader, {height:height * 0.11, marginTop: -height * 0.03, }]}>
+    <View style={[styles.Mainheader, {height:height * 0.11, marginTop: -height * 0.00, }]}>
       <TouchableOpacity onPress={goToPrevious}>
         <Text style={[styles.arrow, {height: height * 0.06, width: width * 0.1, fontSize: height * 0.036}]}>{'〈'}</Text>
       </TouchableOpacity>

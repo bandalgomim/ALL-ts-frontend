@@ -29,11 +29,11 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = useCallback((teamId: number) => {
-    navigationTeam.replace('TeamScreen', { teamId: teamId });
+    navigationTeam.navigate('TeamScreen', { teamId: teamId });
   }, [navigationTeam]); // navigationTeam을 의존성 배열에 추가
 
   const navigateLeague = useCallback((leagueId: number) => {
-    navigationLeague.replace('LeagueScreen', { leagueId: leagueId });
+    navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
   }, [navigationLeague]); // navigationLeague를 의존성 배열에 추가
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
     [list, navigateTeam, navigateLeague] // 필요한 의존성만 추가
   );
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width, marginTop: -width * 0.03 }]}>
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width, marginTop: -width * 0.0 }]}>
         <ImageBackground
           resizeMode="contain"
           style={[styles.ImageBackground, {width:width, height: mode === 'm' ? width * 0.42 : width * 0.42}]}

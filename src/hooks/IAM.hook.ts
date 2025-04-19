@@ -26,6 +26,7 @@ export const useLogIn = (data: getLoginReqDto) => {
         if (data.id === null || data.id === "") {
             return;
         }
+        
         setMainRes(initialmainRes);
         setTeamRes(initialteamRes);
         setLeagueRes(initialLeagueRes);
@@ -58,6 +59,7 @@ export const commonIAMHook = async (
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
+        
         const response = await axios({
             method: method,
             url: url,  // 올바른 URL 설정
@@ -68,6 +70,7 @@ export const commonIAMHook = async (
             },
           });
           if (response.headers.authorization) {
+            console.log('data', data);
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
             loginState(true);

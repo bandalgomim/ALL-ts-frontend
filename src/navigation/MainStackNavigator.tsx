@@ -4,6 +4,8 @@ import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
 import LeagueScreen from '../screen/league';
 import MatchScreen from '../screen/match';
+import StartScreen from '../screen/start';
+import IAMScreen from '../screen/IAM';
 
 const MainStack = createStackNavigator();
 

@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 
 const IAMScreen = () => {
-  const {login} = useContext(ApiContext);
+  const {login, setLogin} = useContext(ApiContext);
   const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [id, setId] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
@@ -23,7 +23,16 @@ const IAMScreen = () => {
   };
 
   useEffect(() => {
+    console.log(login)
+    if (login === true) {   
+      setLogin(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log('login', login);
     if (login === true) {
+      
       navigateMain();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -17,19 +17,16 @@ import { HeadNotch } from '../components/notch';
 
 export const TeamScreen = () => {
   const {teamRes, login, setTeamRes, setLogin} = useContext(ApiContext);
+  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
+  const [render, setRender] = useState(false);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
   useEffect(() => {
-      console.log('teamId', teamId);
+      setRender(false);
       hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
   }, [teamId, key]);
-
-  useEffect(() => {
-    console.log(key)
-  }, [key]);
-
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', undefined);
+    navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   useEffect(() => {
     if (login === false) {
@@ -38,8 +35,7 @@ export const TeamScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
 
-  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
-  const [render, setRender] = useState(false);
+  
   useEffect(() => {
     if (prevLoading === true && teamRes.loading === false) {
       setRender(true);

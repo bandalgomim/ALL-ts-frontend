@@ -26,6 +26,7 @@ const StartScreen = () => {
 
   useEffect(() => {
     if (login === true) {
+      console.log('login', login);
       navigateMain();
     } else {
         navigateIAM();

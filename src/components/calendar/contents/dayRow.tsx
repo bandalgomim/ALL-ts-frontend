@@ -13,7 +13,9 @@ interface DayRowProps {
 
 const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches, fontColor, width, height }) => {
   const today = new Date();
-  today.setHours(today.getHours() + 9);
+  console.log('today', today.toUTCString());
+  console.log('days', days);
+  //today.setHours(today.getHours() + 9);
   return (
     <View style={styles.weekRow}>
       {days.map((day, index) => (
