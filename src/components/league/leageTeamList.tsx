@@ -12,7 +12,7 @@ const LeageTeamListBar = () => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const {leagueRes} = useContext(ApiContext);
   const navigateTeam = (teamId: number) => {
-    navigation.replace('TeamScreen', { teamId: teamId });
+    navigation.navigate('TeamScreen', { teamId: teamId });
   };
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
     return (

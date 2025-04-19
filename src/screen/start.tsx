@@ -13,8 +13,8 @@ const StartScreen = () => {
 
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
-  const navigateMain = () => { navigationMain.replace('MainScreen', undefined); };
-  const navigateIAM = () => { navigationIAM.replace('IAMScreen', undefined); };
+  const navigateMain = () => { navigationMain.navigate('MainScreen', undefined); };
+  const navigateIAM = () => { navigationIAM.navigate('IAMScreen', undefined); };
 
   const [loading, setLoading] = useState(0);
   useEffect(() => {

@@ -125,7 +125,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps>  = ({ mode, teamAndLeagueLis
     [list, navigateTeam, navigateLeague] // 필요한 의존성만 추가
   );
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width}]}>
+    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.42 : width, marginTop: -width * 0.03 }]}>
         <ImageBackground
           resizeMode="contain"
           style={[styles.ImageBackground, {width:width, height: mode === 'm' ? width * 0.42 : width * 0.42}]}

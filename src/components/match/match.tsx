@@ -21,7 +21,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
-    navigationTeam.replace('TeamScreen', { teamId: teamId });
+    navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
 
   const onPressHomeTeamScore = () => {

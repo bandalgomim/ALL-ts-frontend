@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet,  ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '../../model/main.dto';
 import MatchScore  from './matchScore';
@@ -8,17 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 import { MatchPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
+import { ApiContext } from '../../context/context';
 
 interface MatchBarPros {
     match: matchDto;  // Assuming match is your interface from earlier
     color: string;
-    isVisible: boolean | null;
-    setIsVisible: ((isVisible: boolean) => void) | null
 }
 
-const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible}) => {
+const MatchBar: React.FC<MatchBarPros> = ({match, color }) => {
   
-  
+  const {setModalVisible} = useContext(ApiContext);
   const [score, setScore] = useState(false);
   const style = color === 'white'
     ? [styles.stateTextWhite, styles.teamNameWhite]
@@ -28,7 +27,11 @@ const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible
   };
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
   const navigateMatch = (matchId: number) => {
-    navigationMatch.replace('MatchScreen', { matchId: matchId });
+    // navigate 대신 navigate 사용
+    setModalVisible(false); // 모달 닫기
+    navigationMatch.navigate('MatchScreen', { matchId: matchId });
+    
+    // 모달이 열려있다면 닫기
   };
   return (
     <TouchableOpacity
@@ -45,7 +48,7 @@ const MatchBar: React.FC<MatchBarPros> = ({match, color, isVisible, setIsVisible
         >
           <View style={[styles.matchBar, {width:width * 0.93, marginTop: -height * 0.007}]}>
             <View style={[styles.state, { width:width * 0.22, height:height * 0.054, marginRight: -width * 0.05, marginLeft: -width * 0.01}]}>
-              <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.05, marginLeft:width * 0.02, marginBottom:-height * 0.005, marginTop:-height * 0.007}]}>
+              <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.049, marginLeft:width * 0.016, marginBottom:-height * 0.005, marginTop:-height * 0.0045}]}>
                 {match.matchDate ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}` : '0000'}
               </Text>
               <Text style={[style[0], {width: width * 0.21, fontSize: width * 0.075}, {color : match.matchState === 'live' ? '#EA5579' : style[0].color} ]}>{`${match.matchState}`}</Text>

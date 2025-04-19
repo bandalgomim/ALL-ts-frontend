@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { MainScreen } from '../screen/main';
 import { TeamScreen } from '../screen/team';
 import LeagueScreen from '../screen/league';
@@ -15,7 +15,11 @@ const StackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          animation: 'none',  // 페이지 전환 애니메이션 제거
+          // animation: 'none' 제거 (애니메이션 활성화)
+          headerShown: false,
+          gestureEnabled: true,           // 스와이프 활성화
+          gestureDirection: 'horizontal', // 가로 방향 스와이프
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, // iOS 스타일 전환
         }}
       >
         <Stack.Screen

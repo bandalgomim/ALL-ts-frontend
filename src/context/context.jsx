@@ -10,6 +10,7 @@ export function ApiProvider({ children }) {
   const [leagueRes, setLeagueRes] = useReducer(PostReducer, initialLeagueRes);
   const [matchRes, setMatchRes] = useReducer(PostReducer, initialmatchRes);
   const [login, setLogin] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
 
 
 
@@ -25,6 +26,8 @@ export function ApiProvider({ children }) {
       setMatchRes,
       login,
       setLogin,
+      modalVisible,
+      setModalVisible
       }}>
       {children}
     </ApiContext.Provider>

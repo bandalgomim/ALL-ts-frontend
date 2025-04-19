@@ -21,7 +21,7 @@ export const MainScreen = () => {
 
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', undefined);
+    navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   useEffect(() => {
     if (login === false) {
@@ -54,7 +54,7 @@ export const MainScreen = () => {
           color="white"
         />
       </View>
-      <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.16}]}>
+      <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.173}]}>
         <Text style={[styles.bannerText,{fontSize: width * 0.07}]}>advertisement banner</Text>
       </View>
     </View>

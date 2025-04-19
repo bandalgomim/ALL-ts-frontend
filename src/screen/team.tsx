@@ -4,7 +4,7 @@ import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
 import Logo from '../components/logo';
 import { ApiContext } from '../context/context';
-import { useTeam } from '../hooks/team.hook';
+import { hookTeam } from '../hooks/team.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import MatchList from '../components/matchBar/matchList';
@@ -16,9 +16,16 @@ import { height } from '../global';
 import { HeadNotch } from '../components/notch';
 
 export const TeamScreen = () => {
-  const {teamRes, login} = useContext(ApiContext);
-  const { teamId } = useRoute().params as getTeamReqQueryDto;
-  useTeam('GET' as string, {teamId: teamId});
+  const {teamRes, login, setTeamRes, setLogin} = useContext(ApiContext);
+  const { teamId, key } = useRoute().params as getTeamReqQueryDto;
+  useEffect(() => {
+      console.log('teamId', teamId);
+      hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
+  }, [teamId, key]);
+
+  useEffect(() => {
+    console.log(key)
+  }, [key]);
 
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {

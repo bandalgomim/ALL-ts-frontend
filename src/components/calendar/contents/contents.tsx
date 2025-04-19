@@ -1,11 +1,12 @@
 // Contents.tsx
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
 import { matchDto } from '../../../model/main.dto';
 import MatchModal from './modal';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
+import { ApiContext } from '../../../context/context';
 
 interface ContentsProps {
   month: number,
@@ -17,7 +18,7 @@ interface ContentsProps {
 }
 
 const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, mode, matchList }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const {modalVisible, setModalVisible} = useContext(ApiContext);
   const [modalMatch, setModalMatch] = useState<matchDto[] | null>(null);
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);
   const weekDates = useMemo(() => getWeekDates(indicatorDay), [indicatorDay]);
@@ -42,15 +43,14 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
   }, [monthDates]);
 
   const onPressDate = useCallback((day: Date) => {
-    console.log(day.toISOString())
     if (day instanceof Date) {
       const matchInfo = groupedMatches[day.toLocaleDateString('sv-SE')];
       if (matchInfo) {
         setModalMatch(groupedMatches[day.toLocaleDateString('sv-SE')]);
-        setIsVisible(true);
+        setModalVisible(true);
       }
     }
-  }, [groupedMatches, setModalMatch, setIsVisible]);
+  }, [groupedMatches, setModalMatch, setModalVisible]);
   
   return (
     <View style={[styles.calendarContainer, {width: width * 0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
@@ -86,8 +86,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
       />)}
       <View style={styles.modalContainer}>
         <MatchModal
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
           matchList={modalMatch}
         />
       </View>

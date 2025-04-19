@@ -14,7 +14,7 @@ const MainTabBar : React.FC<MainTabBarProps>  = ({ color }) => {
 
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
-    navigationMain.replace('MainScreen', undefined);
+    navigationMain.navigate('MainScreen', undefined);
   };
   
   return (

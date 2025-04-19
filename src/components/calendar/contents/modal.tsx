@@ -1,72 +1,75 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import {
   View,
-  Modal,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
-  Animated,
 } from 'react-native';
+import Modal from 'react-native-modal'; // react-native-modal 임포트
 import { matchDto } from '../../../model/main.dto';
 import MatchList from '../../matchBar/matchList';
 import { width, height } from '../../../global';
+import { ApiContext } from '../../../context/context';
 
 interface MatchModalProps {
-  isVisible: boolean;
-  setIsVisible: (isVisible: boolean) => void;
   matchList: matchDto[] | null;
 }
 
-const MatchModal: React.FC<MatchModalProps> = ({ isVisible, setIsVisible, matchList }) => {
-  const slideAnim = useRef(new Animated.Value(height)).current; // 처음에는 화면 아래쪽
-
-  useEffect(() => {
-    if (isVisible) {
-      Animated.timing(slideAnim, {
-        toValue: height * 0.25, // 원하는 위치로 슬라이드
-        duration: 1,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      Animated.timing(slideAnim, {
-        toValue: height, // 다시 아래로
-        duration: 1,
-        useNativeDriver: false,
-      }).start();
-    }
-  }, [isVisible]);
-
+const MatchModal: React.FC<MatchModalProps> = ({ matchList }) => {
+  // 안전한 matchList 생성 (null 처리)
+  const safeMatchList = matchList || [];
+  const {modalVisible, setModalVisible} = useContext(ApiContext);
   return (
-    <Modal visible={isVisible} transparent animationType="fade" onRequestClose={() => setIsVisible(false)}>
-      <TouchableWithoutFeedback onPress={() => setIsVisible(false)}>
-        <View style={styles.backdrop}>
-          <TouchableWithoutFeedback>
-            <Animated.View style={[styles.modalView, { top: slideAnim }]}>
-              <Text style={styles.text}>matchs of day</Text>
-              <MatchList matchList={matchList as matchDto[]} color="blue" />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </View>
-      </TouchableWithoutFeedback>
+    <Modal
+      isVisible={modalVisible}
+      onBackdropPress={() => setModalVisible(false)}
+      onBackButtonPress={() => setModalVisible(false)}
+      onSwipeComplete={() => setModalVisible(false)}
+
+      useNativeDriver={true} // 명시적 true 설정
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      animationInTiming={300}
+      animationOutTiming={300}
+      backdropTransitionInTiming={300}
+      backdropTransitionOutTiming={300}
+      style={styles.modal}
+      backdropOpacity={0.5}
+      hideModalContentWhileAnimating={true} // 명시적 true 설정
+      propagateSwipe={true} // 스와이프 제스처 전파 추가
+    >
+      <View style={styles.modalContent}>
+        <View style={styles.handleBar} />
+        <Text style={styles.text}>matchs of day</Text>
+        {safeMatchList.length > 0 ? (
+          <MatchList matchList={safeMatchList} color="blue" />
+        ) : (
+          <View style={styles.emptyContainer} />
+        )}
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)', // fade로 자연스럽게
-    justifyContent: 'flex-end', // 아래에서 슬라이드되도록
+  modal: {
+    justifyContent: 'center',
+    margin: 0,
   },
-  modalView: {
-    position: 'absolute',
+  modalContent: {
     width: width,
     height: height * 0.5,
     backgroundColor: 'white',
     borderRadius: 20,
+    paddingTop: 10,
     alignItems: 'center',
-    paddingTop: height * 0.01,
+  },
+  handleBar: {
+    width: 40,
+    height: 5,
+    backgroundColor: '#DDDDDD',
+    borderRadius: 3,
+    marginBottom: 10,
   },
   text: {
     fontSize: width * 0.09,
@@ -77,6 +80,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     marginBottom: height * 0.01,
     textAlign: 'center',
+  },
+  emptyContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

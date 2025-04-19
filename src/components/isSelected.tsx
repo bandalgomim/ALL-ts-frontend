@@ -19,7 +19,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = useCallback(
     (teamIdNav: number) => {
-      navigationTeam.replace('TeamScreen', { teamId: teamIdNav });
+      navigationTeam.navigate('TeamScreen', { teamId: teamIdNav, key: `TeamScreen-${teamIdNav}-${Date.now()}` });
     },
     [navigationTeam] // 의존성 추가 (useNavigation 결과)
   );

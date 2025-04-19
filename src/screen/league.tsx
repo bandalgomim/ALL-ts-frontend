@@ -23,7 +23,7 @@ const LeagueScreen = () => {
 
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', undefined);
+    navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   useEffect(() => {
     if (login === false) {

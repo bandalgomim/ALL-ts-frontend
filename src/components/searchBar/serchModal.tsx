@@ -31,14 +31,14 @@ const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) =
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
-    navigationTeam.replace('TeamScreen', { teamId: teamId });
+    navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
     setIsVisible(false);
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
-    navigationLeague.replace('LeagueScreen', { leagueId: leagueId });
+    navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
   };
 
   // 검색 실행 함수

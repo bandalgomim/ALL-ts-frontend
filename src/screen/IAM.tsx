@@ -19,7 +19,7 @@ const IAMScreen = () => {
 
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
-    navigationMain.replace('MainScreen', undefined);
+    navigationMain.navigate('MainScreen', undefined);
   };
 
   useEffect(() => {

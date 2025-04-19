@@ -10,20 +10,7 @@ export const MainHeader = () => {
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>
-        <Shadow
-          startColor={'#242b5c'}
-          endColor={'#30397A'}
-          distance={6}
-          offset={[0, 8]}
-          style={[{width: (width * 0.1) - 3, height: (width * 0.09) - 6}, styles.ShadowContainer]}
-        >
-          <View style={[styles.menu, {width: width * 0.1, height: width * 0.09}]}>
-            <Image
-            resizeMode="contain"
-            style={[{width: width * 0.07, height: width * 0.09}]}
-            source={require('./../../assets/main/three.png')} />
-          </View>
-        </Shadow>
+
       </TouchableOpacity>
       <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>{setLogin(false);}}>
         <Icon name={'person'} size={30} color={'white'} />
