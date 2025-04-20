@@ -16,8 +16,6 @@ const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
   const renderItem = useCallback(( {item}: { item: matchDto } ) => {
     return (
       <MatchBar
-        isVisible={null}
-        setIsVisible={null}
         match={item}
         color={color}
       />

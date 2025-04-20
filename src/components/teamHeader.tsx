@@ -3,11 +3,12 @@ import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from './searchBar/serchBar';
 import TeamOrLeagueLogo  from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
-import { ApiContext } from '../context/context';
+
 import { width, height } from '../global';
+import { TeamContext } from '../context/team.context';
 
 const TeamHeader = () => {
-  const {teamRes} = useContext(ApiContext);
+  const {teamRes} = useContext(TeamContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar
@@ -25,8 +26,15 @@ const TeamHeader = () => {
             {teamRes?.data?.team?.teamName && teamRes?.data?.team?.teamName.length < 10
               ? <Text style={[styles.teamInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{teamRes.data?.team.teamName}</Text>
               : <View>
-                  <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                  <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
+                  {teamRes.data?.team?.teamName?.split(' ').length > 1
+                  ? <>
+                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
+                    </>
+                  : <>
+                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{null}</Text>
+                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                    </>}
                 </View>}
 
             <Text style={[styles.teamInfoEtc, {fontSize: width * 0.055, width: width * 0.5}]}>{`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}</Text>

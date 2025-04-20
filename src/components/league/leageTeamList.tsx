@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext } from 'react';
 import { View, StyleSheet,  ImageBackground, ScrollView, Text, TouchableOpacity, FlatList } from 'react-native';
-import { ApiContext } from '../../context/context';
 import { TeamPageParamList } from '../../model/navigation.dto';
 import { teamDto } from '../../model/league.dto';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
+import { LeagueContext } from '../../context/league.context';
 
 const LeageTeamListBar = () => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
-  const {leagueRes} = useContext(ApiContext);
+  const {leagueRes} = useContext(LeagueContext);
   const navigateTeam = (teamId: number) => {
     navigation.navigate('TeamScreen', { teamId: teamId });
   };

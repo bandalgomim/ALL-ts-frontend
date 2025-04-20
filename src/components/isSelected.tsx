@@ -1,11 +1,12 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { hookIsSelected } from '../hooks/isSelected.hook';
-import { ApiContext } from '../context/context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../model/navigation.dto';
 import { width } from '../global';
+import { MainContext } from '../context/main.context';
+import { AuthContext } from '../context/auth.context';
 interface IsSelectedPros {
     isSelected: boolean | null;
     teamId: number | null;
@@ -14,7 +15,8 @@ interface IsSelectedPros {
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
-  const { setMainRes, setLogin } = useContext(ApiContext);
+  const { setMainRes } = useContext(MainContext);
+  const { setLogin } = useContext(AuthContext);
   const [state, setState] = useState<boolean | null>(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = useCallback(

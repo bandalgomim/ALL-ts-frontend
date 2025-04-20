@@ -6,7 +6,7 @@ import { matchDto } from '../../../model/main.dto';
 import MatchModal from './modal';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
-import { ApiContext } from '../../../context/context';
+import { ModalContext } from '../../../context/modal.context';
 
 interface ContentsProps {
   month: number,
@@ -18,14 +18,11 @@ interface ContentsProps {
 }
 
 const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, mode, matchList }) => {
-  const {modalVisible, setModalVisible} = useContext(ApiContext);
-  const [modalMatch, setModalMatch] = useState<matchDto[] | null>(null);
+  const {setModalVisible, setModalContents} = useContext(ModalContext);
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);
   const weekDates = useMemo(() => getWeekDates(indicatorDay), [indicatorDay]);
-  
   const groupedMatches = useMemo(() =>
     groupMatchesByDate(matchList),[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
-  
   const fontColor = useMemo(() => {
     return color === 'white'
       ? [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
@@ -46,12 +43,11 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
     if (day instanceof Date) {
       const matchInfo = groupedMatches[day.toLocaleDateString('sv-SE')];
       if (matchInfo) {
-        setModalMatch(groupedMatches[day.toLocaleDateString('sv-SE')]);
+        setModalContents(groupedMatches[day.toLocaleDateString('sv-SE')]);
         setModalVisible(true);
       }
     }
-  }, [groupedMatches, setModalMatch, setModalVisible]);
-  
+  }, [groupedMatches, setModalContents, setModalVisible]);
   return (
     <View style={[styles.calendarContainer, {width: width * 0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
       <View style={styles.weekRow}>
@@ -84,11 +80,6 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
         width={width}
         height={height}
       />)}
-      <View style={styles.modalContainer}>
-        <MatchModal
-          matchList={modalMatch}
-        />
-      </View>
     </View>
   );
 };
@@ -132,10 +123,6 @@ const styles = StyleSheet.create({
   },
   underBar: {
     position: 'absolute',
-  },
-  modalContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

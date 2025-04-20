@@ -3,14 +3,14 @@ import { View, StyleSheet, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
-import { ApiContext } from '../../context/context';
 import { goToPrevious, goToNext } from './utills';
 import { width, height } from '../../global';
+import { LeagueContext } from '../../context/league.context';
 
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('w');
-  const {leagueRes} = useContext(ApiContext);
+  const {leagueRes} = useContext(LeagueContext);
 
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {

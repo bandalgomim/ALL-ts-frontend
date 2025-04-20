@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ApiContext } from '../context/context';
 import { useMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
@@ -10,11 +9,14 @@ import { getMatchResQueryDto } from '../model/match.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
+import { AuthContext } from '../context/auth.context';
+import { MatchContext } from '../context/match.context';
 
 
 const MatchScreen = () => {
 
-  const {matchRes, login} = useContext(ApiContext);
+  const {matchRes} = useContext(MatchContext);
+  const {login } = useContext(AuthContext);
   const { matchId } = useRoute().params as getMatchResQueryDto;
   useMatch('GET', {matchId : matchId});
 
@@ -59,6 +61,8 @@ const MatchScreen = () => {
     </>
     );
   };
+  
+  MatchScreen.whyDidYouRender = true;
   export default MatchScreen;
 
   const styles = StyleSheet.create({

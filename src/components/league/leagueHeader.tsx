@@ -3,11 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from '../searchBar/serchBar';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import IsSelected from './../isSelected';
-import { ApiContext } from '../../context/context';
 import { width, height } from '../../global';
+import { LeagueContext } from '../../context/league.context';
 
 const LeagueHeader = () => {
-  const {leagueRes} = useContext(ApiContext);
+  const {leagueRes} = useContext(LeagueContext);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar

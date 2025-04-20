@@ -3,14 +3,14 @@ import { View, StyleSheet,  Image } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
-import { ApiContext } from '../../context/context';
 import { width, height } from '../../global';
 import { goToPrevious, goToNext } from './utills';
+import { TeamContext } from '../../context/team.context';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' |'w'>('m');
-  const {teamRes} = useContext(ApiContext);
+  const {teamRes} = useContext(TeamContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 

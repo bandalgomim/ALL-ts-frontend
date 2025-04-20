@@ -174,4 +174,6 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '7deg' }],
   },
 });
+
+TeamAndLeagueListBar.whyDidYouRender = true;
 export default React.memo(TeamAndLeagueListBar);

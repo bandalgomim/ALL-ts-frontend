@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
 import Logo from '../components/logo';
-import { ApiContext } from '../context/context';
 import { hookTeam } from '../hooks/team.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
@@ -14,9 +13,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { height } from '../global';
 import { HeadNotch } from '../components/notch';
+import { TeamContext } from '../context/team.context';
+import { AuthContext } from '../context/auth.context';
 
-export const TeamScreen = () => {
-  const {teamRes, login, setTeamRes, setLogin} = useContext(ApiContext);
+const TeamScreen = () => {
+  const {teamRes, setTeamRes } = useContext(TeamContext);
+  const {login, setLogin} = useContext(AuthContext);
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
@@ -35,7 +37,7 @@ export const TeamScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
 
-  
+
   useEffect(() => {
     if (prevLoading === true && teamRes.loading === false) {
       setRender(true);
@@ -88,3 +90,5 @@ const styles = StyleSheet.create({
     zIndex: -1, // B 요소 뒤로 보냄
   },
 });
+TeamScreen.whyDidYouRender = true;
+export default React.memo(TeamScreen);

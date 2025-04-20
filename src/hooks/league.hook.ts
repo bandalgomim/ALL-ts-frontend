@@ -1,10 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { ApiContext } from '../context/context';
 import { commonPostHook } from './common.hook';
 import { getLeagueReqQueryDto } from '../model/league.dto';
+import { AuthContext } from '../context/auth.context';
+import { LeagueContext } from '../context/league.context';
 
 export const useLeague = (method: string, data: getLeagueReqQueryDto | null = null) => {
-    const {setLeagueRes, setLogin } = useContext(ApiContext);
+    const {setLeagueRes } = useContext(LeagueContext);
+    const {setLogin } = useContext(AuthContext);
     useEffect(() => {
         if (data === null || data.leagueId === null) {
             return;

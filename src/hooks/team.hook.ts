@@ -1,5 +1,3 @@
-import { useContext, useEffect } from 'react';
-import { ApiContext } from '../context/context';
 import { commonPostHook } from './common.hook';
 import { getTeamReqQueryDto } from '../model/team.dto';
 

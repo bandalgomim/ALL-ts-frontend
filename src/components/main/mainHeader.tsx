@@ -3,10 +3,10 @@ import {  Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
 import { width, height } from '../../global';
-import { ApiContext } from '../../context/context';
+import { AuthContext } from '../../context/auth.context';
 
 export const MainHeader = () => {
-  const {setLogin} = useContext(ApiContext);
+  const {setLogin} = useContext(AuthContext);
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>

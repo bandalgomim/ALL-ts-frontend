@@ -2,11 +2,15 @@ import { useContext, useEffect } from 'react';
 import { getLoginReqDto, postSignUpReqDto } from '../model/IAM.dto';
 import axios from 'axios';
 import { localData } from '../IAM/localData';
-import { ApiContext } from '../context/context';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
+import { AuthContext } from '../context/auth.context';
+import { MainContext } from '../context/main.context';
+import { TeamContext } from '../context/team.context';
+import { LeagueContext } from '../context/league.context';
+import { MatchContext } from '../context/match.context';
 
 export const useSignUp = (data: postSignUpReqDto) => {
-    const {setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin} = useContext(ApiContext);
+    const {setLogin} = useContext(AuthContext);
     useEffect(() => {
         if (data === null) {
             return;
@@ -21,12 +25,15 @@ export const useSignUp = (data: postSignUpReqDto) => {
 };
 
 export const useLogIn = (data: getLoginReqDto) => {
-    const {setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin} = useContext(ApiContext);
+    const {setMainRes} = useContext(MainContext);
+    const {setTeamRes} = useContext(TeamContext);
+    const {setLeagueRes} = useContext(LeagueContext);
+    const {setMatchRes} = useContext(MatchContext);
+    const {setLogin} = useContext(AuthContext);
     useEffect(() => {
         if (data.id === null || data.id === "") {
             return;
         }
-        
         setMainRes(initialmainRes);
         setTeamRes(initialteamRes);
         setLeagueRes(initialLeagueRes);
@@ -40,7 +47,7 @@ export const useLogIn = (data: getLoginReqDto) => {
       }, [data]);
 };
 export const useRefreshToken = () => {
-    const {setLogin} = useContext(ApiContext);
+    const {setLogin} = useContext(AuthContext);
     useEffect(() => {
         const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
         const fetchMyPage = async () => {
@@ -59,7 +66,6 @@ export const commonIAMHook = async (
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
-        
         const response = await axios({
             method: method,
             url: url,  // 올바른 URL 설정
@@ -70,7 +76,6 @@ export const commonIAMHook = async (
             },
           });
           if (response.headers.authorization) {
-            console.log('data', data);
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
             loginState(true);

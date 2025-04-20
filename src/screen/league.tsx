@@ -4,7 +4,6 @@ import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
 import LeageTeamListBar from '../components/league/leageTeamList';
 import Logo from '../components/logo';
-import { ApiContext } from '../context/context';
 import { useLeague } from '../hooks/league.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
@@ -15,9 +14,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { height } from '../global';
 import { HeadNotch } from '../components/notch';
+import { AuthContext } from '../context/auth.context';
+import { LeagueContext } from '../context/league.context';
 
 const LeagueScreen = () => {
-  const {leagueRes, login} = useContext(ApiContext);
+  const {leagueRes, } = useContext(LeagueContext);
+  const {login } = useContext(AuthContext);
   const { leagueId } = useRoute().params as getLeagueReqQueryDto;
   useLeague('GET' as string, {leagueId : leagueId});
 

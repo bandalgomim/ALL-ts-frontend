@@ -8,6 +8,10 @@ export const searchItem = [
         keyword: ['KBO', '한국리그', '케이비오', '한국야구'],
     },
     {
+        leagueId: 3,
+        keyword: ['EPL', '이피엘', 'england', '영국축구'],
+    },
+    {
         teamId: 1,
         keyword: ['T1', '티원', 'lck'],
     },

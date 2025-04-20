@@ -13,8 +13,6 @@ interface DayRowProps {
 
 const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches, fontColor, width, height }) => {
   const today = new Date();
-  console.log('today', today.toUTCString());
-  console.log('days', days);
   //today.setHours(today.getHours() + 9);
   return (
     <View style={styles.weekRow}>
@@ -85,5 +83,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-
+DayRow.whyDidYouRender = true;
 export default React.memo(DayRow);

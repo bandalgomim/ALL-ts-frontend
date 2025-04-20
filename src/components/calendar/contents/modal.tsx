@@ -1,30 +1,29 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { useContext, useEffect } from 'react';
+
+import { useContext } from 'react';
 import {
   View,
   StyleSheet,
   Text,
 } from 'react-native';
 import Modal from 'react-native-modal'; // react-native-modal 임포트
-import { matchDto } from '../../../model/main.dto';
-import MatchList from '../../matchBar/matchList';
+
 import { width, height } from '../../../global';
-import { ApiContext } from '../../../context/context';
+import { ModalContext } from '../../../context/modal.context';
+import React from 'react';
+import MatchList from '../../matchBar/matchList';
 
-interface MatchModalProps {
-  matchList: matchDto[] | null;
-}
 
-const MatchModal: React.FC<MatchModalProps> = ({ matchList }) => {
-  // 안전한 matchList 생성 (null 처리)
-  const safeMatchList = matchList || [];
-  const {modalVisible, setModalVisible} = useContext(ApiContext);
+const MatchModal: React.FC = () => {
+  // 안전한 modalContents 생성 (null 처리)
+  const {modalVisible, setModalVisible, modalContents, setModalContents } = useContext(ModalContext);
+  const safemodalContents = modalContents || [];
   return (
     <Modal
       isVisible={modalVisible}
-      onBackdropPress={() => setModalVisible(false)}
-      onBackButtonPress={() => setModalVisible(false)}
-      onSwipeComplete={() => setModalVisible(false)}
+      onBackdropPress={() => {setModalVisible(false); setModalContents(null);}}
+      onModalHide={() => {setModalVisible(false); setModalContents(null);}}
+      onBackButtonPress={() => {setModalVisible(false); setModalContents(null);}}
+      onSwipeComplete={() => {setModalVisible(false); setModalContents(null);}}
 
       useNativeDriver={true} // 명시적 true 설정
       animationIn="slideInUp"
@@ -41,8 +40,8 @@ const MatchModal: React.FC<MatchModalProps> = ({ matchList }) => {
       <View style={styles.modalContent}>
         <View style={styles.handleBar} />
         <Text style={styles.text}>matchs of day</Text>
-        {safeMatchList.length > 0 ? (
-          <MatchList matchList={safeMatchList} color="blue" />
+        {safemodalContents.length > 0 ? (
+          <MatchList matchList={safemodalContents} color="blue" />
         ) : (
           <View style={styles.emptyContainer} />
         )}
@@ -53,8 +52,9 @@ const MatchModal: React.FC<MatchModalProps> = ({ matchList }) => {
 
 const styles = StyleSheet.create({
   modal: {
+    flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-    margin: 0,
   },
   modalContent: {
     width: width,
@@ -88,5 +88,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default MatchModal;
+MatchModal.whyDidYouRender = true;
+export default React.memo(MatchModal);

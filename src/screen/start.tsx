@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text,  ActivityIndicator } from 'react-native';
 import { useRefreshToken } from '../hooks/IAM.hook';
 import { width, height } from '../global';
-import { ApiContext } from '../context/context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList, MainPageParamList } from '../model/navigation.dto';
+import { AuthContext } from '../context/auth.context';
 
 const StartScreen = () => {
-  const {login} = useContext(ApiContext);
+  const {login} = useContext(AuthContext);
   useRefreshToken();
 
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
@@ -26,7 +26,6 @@ const StartScreen = () => {
 
   useEffect(() => {
     if (login === true) {
-      console.log('login', login);
       navigateMain();
     } else {
         navigateIAM();

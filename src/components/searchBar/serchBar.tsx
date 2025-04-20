@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet,  Image, ImageBackground } from 'react-native';
-import SearchModal from './serchModal';
 import { width, height } from '../../global';
-import TeamOrLeagueLogo from '../teamOrLeagueLogo';
+import { ModalContext } from '../../context/modal.context';
 
 interface SerchBarPros {
     type: string | null;
@@ -16,47 +15,34 @@ const imageMap = {
 
 const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
   const src = type ? imageMap[type as keyof typeof imageMap] : null;
-  const [isVisible, setIsVisible] = useState(false);
+  const{setSearchVisible} = useContext(ModalContext);
 
   return type ? (
     <View style={[styles.Container, { width: width * 0.7, height: height * 0.1, marginTop: height * 0.015, marginBottom: -height * 0.015}]}>
-      <TouchableOpacity onPress={()=>{setIsVisible(true);}}>
+      <TouchableOpacity onPress={()=>{setSearchVisible(true);}}>
         <Image
           resizeMode="contain"
           style={{ width: width * 0.45, height: width * 0.1 }}
           source={src}
         />
       </TouchableOpacity>
-      <View>
-        <SearchModal
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
-        />
-      </View>
     </View>
   ) : (
     <>
-    <TouchableOpacity onPress={()=>{setIsVisible(true);}}>
-    <ImageBackground
-            source={require('../../assets/teamLogo/teamLogo_m.png')}
-            style={[styles.logoView, { width:width*0.16 }]}
-          >
-            <Image
-              resizeMode="contain"
-              source={require('../../assets/main/botton.png')}
-              style={{ width: width * 0.16 * 0.8, height: width * 0.16 * 0.8 }}
-            />
-          </ImageBackground>
+    <TouchableOpacity onPress={()=>{setSearchVisible(true);}}>
+      <ImageBackground
+        source={require('../../assets/teamLogo/teamLogo_m.png')}
+        style={[styles.logoView, { width:width * 0.16 }]}
+      >
+        <Image
+          resizeMode="contain"
+          source={require('../../assets/main/botton.png')}
+          style={{ width: width * 0.16 * 0.8, height: width * 0.16 * 0.8 }}
+        />
+      </ImageBackground>
     </TouchableOpacity>
-    <View>
-    <SearchModal
-      isVisible={isVisible}
-      setIsVisible={setIsVisible}
-    />
-  </View>
   </>
-    
-  )
+  );
 };
 
 const styles = StyleSheet.create({

@@ -1,10 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { ApiContext } from '../context/context';
 import { commonPostHook } from './common.hook';
 import { getMatchResQueryDto } from '../model/match.dto';
+import { MatchContext } from '../context/match.context';
+import { AuthContext } from '../context/auth.context';
 
 export const useMatch = (method: string, data: getMatchResQueryDto | null = null) => {
-    const {setMatchRes, setLogin } = useContext(ApiContext);
+    const {setMatchRes } = useContext(MatchContext);
+    const {setLogin } = useContext(AuthContext);
     useEffect(() => {
         if (data === null) {
             return;

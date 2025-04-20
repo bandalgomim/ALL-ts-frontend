@@ -3,7 +3,7 @@ import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
 import { useMain } from '../hooks/main.hook';
-import { ApiContext } from '../context/context';
+
 import { MainHeader } from '../components/main/mainHeader';
 import LoadingScreen  from '../components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
@@ -11,9 +11,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 import { HeadNotch } from '../components/notch';
+import { MainContext } from '../context/main.context';
+import { AuthContext } from '../context/auth.context';
 
-export const MainScreen = () => {
-  const {mainRes, login, setLogin} = useContext(ApiContext);
+const MainScreen = () => {
+  const {mainRes} = useContext(MainContext);
+  const {login } = useContext(AuthContext);
   useMain('GET', null);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
@@ -85,3 +88,6 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
   },
 });
+
+MainScreen.whyDidYouRender = true;
+export default React.memo(MainScreen);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, TextInput, Text, FlatList, StyleSheet,  ImageBackground, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { searchItem } from '../../model/searchIteam';
@@ -6,11 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
-
-interface  searchModalProps {
-    isVisible: boolean;
-    setIsVisible: (isVisible: boolean) => void;
-  }
+import { ModalContext } from '../../context/modal.context';
 
 interface filteredItems {
   name: string;
@@ -18,23 +14,23 @@ interface filteredItems {
   leagueId: number | undefined;
 }
 
-const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) => {
+const SearchModal: React.FC = () => {
+  const{searchVisible, setSearchVisible} = useContext(ModalContext);
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
-  
 
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
-    setIsVisible(false);
+    setSearchVisible(false);
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
-    setIsVisible(false);
+    setSearchVisible(false);
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
@@ -66,29 +62,32 @@ const SearchModal: React.FC< searchModalProps> = ({ isVisible, setIsVisible }) =
   };
 
   const handleBackdropPress = () => {
-    if (isVisible) {
-      setIsVisible(false);
-      setQuery(''); 
-      setFilteredTeams([]); 
+    if (searchVisible) {
+      setSearchVisible(false);
+      setQuery('');
+      setFilteredTeams([]);
       setIsFocused(false);
     }
   };
 
   return (
     <Modal
-      isVisible={isVisible}
+      isVisible={searchVisible}
+      onModalHide={handleBackdropPress}
+      onBackButtonPress={handleBackdropPress}
+      onSwipeComplete={handleBackdropPress}
       onBackdropPress={handleBackdropPress}
+      useNativeDriver={true} // 명시적 true 설정
       animationIn="slideInUp"
       animationOut="slideOutDown"
-      style={styles.modal}
-      animationInTiming={300} // 애니메이션 시간 설정
+      animationInTiming={300}
       animationOutTiming={300}
-      backdropTransitionInTiming={300} // 백드롭 애니메이션 시간
+      backdropTransitionInTiming={300}
       backdropTransitionOutTiming={300}
+      style={styles.modal}
       backdropOpacity={0.5}
-      backdropColor="black"
-      useNativeDriver={true}
-      hideModalContentWhileAnimating={true}
+      hideModalContentWhileAnimating={true} // 명시적 true 설정
+      propagateSwipe={true} // 스와이프 제스처 전파 추가
       avoidKeyboard={true} // 키보드 피하기
       >
       <View style={[styles.modalView, { width: width * 0.85, height: height * 0.5 }]}>
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     modal: {
       alignItems: 'center',
       justifyContent: 'center',
-      margin: 0,
+      margin: 0, // 반드시 추가!
     },
     modalView: {
       backgroundColor: 'white',

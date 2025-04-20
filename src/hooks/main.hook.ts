@@ -1,10 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { ApiContext } from '../context/context';
 import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '../model/main.dto';
+import { MainContext } from '../context/main.context';
+import { AuthContext } from '../context/auth.context';
 
 export const useMain = (method: string, data: getMainResQueryDto | null = null) => {
-    const {setMainRes, setLogin } = useContext(ApiContext);
+    const {setMainRes } = useContext(MainContext);
+    const {setLogin } = useContext(AuthContext);
     useEffect(() => {
         if (method !== 'GET' && data === null) {
             return;

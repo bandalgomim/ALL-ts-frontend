@@ -5,7 +5,7 @@ import {  StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MainPageParamList } from '../../model/navigation.dto';
 import { width, height } from '../../global';
-
+import whyDidYouRender from '@welldone-software/why-did-you-render';
 interface MainTabBarProps {
   color: 'blue' | 'white';
 }
@@ -38,4 +38,12 @@ const styles = StyleSheet.create({
   },
 });
 
+
+if (process.env.NODE_ENV === 'development') {
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
+  });
+}
+
+MainTabBar.whyDidYouRender = true;
 export default MainTabBar;
