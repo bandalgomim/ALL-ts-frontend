@@ -8,6 +8,7 @@ import {
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import { width, height } from '../../../global';
 import { ModalContext } from '../../../context/modal.context';
@@ -117,9 +118,10 @@ const MatchModal: React.FC = () => {
           { transform: [{ translateY }] },
         ]}
       >
-        <View
+        <TouchableOpacity
+          activeOpacity={1}
           style={styles.handleBar}
-          ref={handleBarRef}
+          onPress={closeModal}
           {...handleBarPanResponder.panHandlers}
         />
         <Text style={styles.text}>matchs of day</Text>

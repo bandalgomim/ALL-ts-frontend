@@ -173,7 +173,12 @@ const SearchModal: React.FC = () => {
           { transform: [{ translateY }] },
         ]}
       >
-        <View style={styles.handleBar} {...handleBarPanResponder.panHandlers} />
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.handleBar}
+          onPress={closeModal}
+          {...handleBarPanResponder.panHandlers}
+        />
         <View style={[styles.modalView]}>
           <ImageBackground
             resizeMode="contain"
