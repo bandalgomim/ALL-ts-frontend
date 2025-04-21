@@ -89,7 +89,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             </Text>
             <Text style={[
               styles.fontWhiteState,
-              match.matchState === 'live' && styles.fontLive
+              match.matchState === 'live' && styles.fontLive,
             ]}>
               {match?.matchState}
             </Text>
@@ -134,9 +134,6 @@ const Match: React.FC<MatchPros> = ({ match }) => {
           </Text>
           </View>
           <View style={styles.platformContainer}>
-            <PlatformList
-              platformList={match.platform as platform[]}
-            />
             <PlatformList
               platformList={match.platform as platform[]}
             />

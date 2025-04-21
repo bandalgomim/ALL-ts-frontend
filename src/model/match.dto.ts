@@ -1,10 +1,12 @@
-import { StateDto } from "./config"
+import { StateDto } from './config';
 
 export interface platform {
     platformId: number | null,
     platformName: string | null,
     platformlogo: string | null,
-    platformUrl: string | null
+    platformLeagueUrl: string | null,
+    platformMatchUrl: string | null,
+    platfromMatchUrlType: string | null
 }
 
 export interface getMatchReqDto {

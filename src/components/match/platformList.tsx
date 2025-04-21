@@ -22,7 +22,7 @@ const PlatformList: React.FC<ContentsProps> = ( { platformList } ) => {
     return (
       <TouchableOpacity style={[
         styles.box, {width: width * 0.25 }]}
-        onPress={()=>{openUrlHandle(item.platformUrl as string);}}
+        onPress={()=>{openUrlHandle(item.platformMatchUrl as string);}}
       >
         <TeamOrLeagueLogo
           logo={item.platformlogo}
