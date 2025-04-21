@@ -62,6 +62,32 @@ const MatchModal: React.FC = () => {
     })
   ).current;
 
+  // 아래로 스와이프 시 닫기 (handleBar에서만 동작)
+  const handleBarRef = useRef<View>(null);
+
+  // handleBar 영역 내에서만 panResponder 동작
+  const handleBarPanResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
+      onPanResponderMove: (_, gestureState) => {
+        if (gestureState.dy > 0) {
+          translateY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 100) {
+          closeModal();
+        } else {
+          Animated.timing(translateY, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    })
+  ).current;
+
   const closeModal = () => {
     Animated.timing(translateY, {
       toValue: SCREEN_HEIGHT,
@@ -90,9 +116,12 @@ const MatchModal: React.FC = () => {
           styles.animatedContainer,
           { transform: [{ translateY }] },
         ]}
-        {...panResponder.panHandlers}
       >
-        <View style={styles.handleBar} />
+        <View
+          style={styles.handleBar}
+          ref={handleBarRef}
+          {...handleBarPanResponder.panHandlers}
+        />
         <Text style={styles.text}>matchs of day</Text>
         {safemodalContents.length > 0 ? (
           <MatchList matchList={safemodalContents} color="blue" />
