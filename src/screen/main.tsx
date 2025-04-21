@@ -3,7 +3,6 @@ import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
 import { useMain } from '../hooks/main.hook';
-
 import { MainHeader } from '../components/main/mainHeader';
 import LoadingScreen  from '../components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +12,7 @@ import { width, height } from '../global';
 import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
+import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
 
 const MainScreen = () => {
   const {mainRes} = useContext(MainContext);
@@ -49,17 +49,24 @@ const MainScreen = () => {
     <View style={styles.Container}>
       <HeadNotch/>
       <MainHeader/>
-      <MainCalendar
-        data={mainRes.data}
-      />
-      <View style={[styles.logo, {bottom: height * 0.06}]}>
-        <Logo
-          color="white"
+      <View style={[styles.logo]}>
+        <View style={{marginLeft: width * 0.18}}>
+          <Logo
+            color="white"
+          />
+        </View>
+        <View>
+          <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
+        </View>
+      </View>
+      <View style={{marginTop: height * 0.02}}>
+        <TeamAndLeagueListBar
+          teamAndLeagueList={mainRes?.data?.teamAndLeagueList}
         />
       </View>
-      <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.173}]}>
-        <Text style={[styles.bannerText,{fontSize: width * 0.07}]}>advertisement banner</Text>
-      </View>
+      <MainCalendar
+        data={mainRes?.data}
+      />
     </View>
   );
 };
@@ -73,10 +80,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width,
+
+    marginTop: height * -0.04,
   },
   banner: {
     backgroundColor: '#b1b4cc',
@@ -84,6 +93,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bannerText: {
+    textAlign: 'center',
+    fontFamily: 'rg-it-ver2',
+  },
+  sloganText: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginTop: -height * 0.03,
+    color: '#EA5579',
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
   },

@@ -51,6 +51,8 @@ export default function TeamCalendar() {
             color={'blue'}
             mode={mode}
             matchList={teamRes.data.matchList}
+            goToPrevious={handlePrevious}
+            goToNext={handleNext}
           />
         </View>
     </View>

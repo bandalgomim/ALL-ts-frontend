@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { width, height } from '../../../global';
 
 interface DayRowProps {
   days: (string | Date)[];
@@ -11,7 +12,7 @@ interface DayRowProps {
   height: number;
 }
 
-const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches, fontColor, width, height }) => {
+const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches, fontColor }) => {
   const today = new Date();
   //today.setHours(today.getHours() + 9);
   return (
@@ -69,9 +70,10 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
 
 const styles = StyleSheet.create({
   weekRow: {
-    flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: width * 0.85,
+    height: height * 0.05,
   },
   dayContainer: {
     flex: 1,

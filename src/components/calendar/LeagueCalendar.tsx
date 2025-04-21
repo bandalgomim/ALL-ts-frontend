@@ -49,6 +49,8 @@ export default function LeagueCalendar() {
           color={'white'}
           mode={mode}
           matchList={leagueRes.data.matchList}
+          goToPrevious={handlePrevious}
+          goToNext={handleNext}
         />
       </View>
     </View>
@@ -65,4 +67,5 @@ const styles = StyleSheet.create({
   leagueCalendar: {
     alignItems: 'center',
   },
+
 });

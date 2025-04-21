@@ -1,12 +1,12 @@
 // Contents.tsx
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useCallback, useContext, useMemo } from 'react';
+import { View, Text, StyleSheet, PanResponder } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
 import { matchDto } from '../../../model/main.dto';
-import MatchModal from './modal';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
 import { ModalContext } from '../../../context/modal.context';
+import MatchList from '../../matchBar/matchList';
 
 interface ContentsProps {
   month: number,
@@ -14,10 +14,14 @@ interface ContentsProps {
   indicatorDay: Date,
   color: string,
   mode: 'm' | 'w',
-  matchList: matchDto[] | null
+  matchList: matchDto[] | null,
+  goToPrevious: () => void,
+  goToNext: () => void,
 }
 
-const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, mode, matchList }) => {
+const Contents: React.FC<ContentsProps> = ({
+  month, year, color, indicatorDay, mode, matchList, goToPrevious, goToNext
+}) => {
   const {setModalVisible, setModalContents} = useContext(ModalContext);
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);
   const weekDates = useMemo(() => getWeekDates(indicatorDay), [indicatorDay]);
@@ -48,14 +52,39 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
       }
     }
   }, [groupedMatches, setModalContents, setModalVisible]);
+
+  // PanResponder로 좌우 스와이프 감지
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (evt, gestureState) => {
+          return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dy) < 20;
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+          if (gestureState.dx > 40) {
+            goToPrevious();
+          } else if (gestureState.dx < -40) {
+            goToNext();
+          }
+        },
+      }),
+    [goToPrevious, goToNext]
+  );
+
   return (
-    <View style={[styles.calendarContainer, {width: width * 0.85, height: mode === 'm' ? height * 0.30 : height * 0.10 }]}>
+    <View
+      {...panResponder.panHandlers}
+      style={[
+        styles.calendarContainer,
+        mode === 'm' ? styles.monthModeContainer : styles.weekModeContainer
+      ]}
+    >
       <View style={styles.weekRow}>
         {DAYS_OF_WEEK.map((day, index) => (
           <View key={index} style={styles.dayContainer}>
             {day === 'S'
-            ? <Text style={[fontColor[0], {fontSize: width * 0.067, color: '#DB3D3D'}]}>{day}</Text> :
-            <Text style={[fontColor[0], {fontSize: width * 0.067}]}>{day}</Text>}
+              ? <Text style={[fontColor[0], styles.dayText, styles.sunday]}>{day}</Text>
+              : <Text style={[fontColor[0], styles.dayText]}>{day}</Text>}
           </View>
         ))}
       </View>
@@ -71,15 +100,18 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
           height={height}
         />
       )) : (
-      <DayRow
-        days={weekViewDays}
-        month={month}
-        onPressDate={onPressDate}
-        groupedMatches={groupedMatches}
-        fontColor={fontColor}
-        width={width}
-        height={height}
-      />)}
+        <>
+          <DayRow
+            days={weekViewDays}
+            month={month}
+            onPressDate={onPressDate}
+            groupedMatches={groupedMatches}
+            fontColor={fontColor}
+            width={width}
+            height={height}
+          />
+        </>
+      )}
     </View>
   );
 };
@@ -87,24 +119,40 @@ const Contents: React.FC<ContentsProps> = ({ month, year, color, indicatorDay, m
 const styles = StyleSheet.create({
   calendarContainer: {
     flexDirection: 'column',
+    alignItems: 'center',
+  },
+  monthModeContainer: {
+    width: width,
+    height: height * 0.30,
+  },
+  weekModeContainer: {
+    width: width,
+    height: height * 0.10,
   },
   dayContainer: {
     flex: 1,
+    width: width * 0.85,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
   },
   weekRow: {
-    flex:1,
+    width: width * 0.85,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  dayText: {
+    fontSize: width * 0.067,
+  },
+  sunday: {
+    color: '#DB3D3D',
   },
   currentMonthDayWhite: {
     color: '#F5CEDF',
     fontFamily: 'sb-it-ver1',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#242b5c',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
   },
   otherMonthDayWhite: {
     color: '#62689a',
@@ -113,9 +161,9 @@ const styles = StyleSheet.create({
   currentMonthDayBlue: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
   },
   otherMonthDayBlue: {
     color: '#cbcbcb',
