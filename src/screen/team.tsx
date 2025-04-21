@@ -90,5 +90,4 @@ const styles = StyleSheet.create({
     zIndex: -1, // B 요소 뒤로 보냄
   },
 });
-TeamScreen.whyDidYouRender = true;
 export default React.memo(TeamScreen);

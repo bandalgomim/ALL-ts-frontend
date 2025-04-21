@@ -62,7 +62,6 @@ const MatchScreen = () => {
     );
   };
   
-  MatchScreen.whyDidYouRender = true;
   export default MatchScreen;
 
   const styles = StyleSheet.create({

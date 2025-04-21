@@ -191,6 +191,4 @@ const styles = StyleSheet.create({
     marginTop: height * -0.009,
   },
 });
-
-TeamAndLeagueListBar.whyDidYouRender = true;
 export default React.memo(TeamAndLeagueListBar);

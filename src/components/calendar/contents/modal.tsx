@@ -88,5 +88,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-MatchModal.whyDidYouRender = true;
 export default React.memo(MatchModal);

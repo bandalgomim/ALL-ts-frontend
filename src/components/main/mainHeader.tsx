@@ -8,9 +8,8 @@ import { AuthContext } from '../../context/auth.context';
 export const MainHeader = () => {
   const {setLogin} = useContext(AuthContext);
   return (
-    <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginTop: height * 0.02}]}>
+    <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginBottom: height * 0.01}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>
-
       </TouchableOpacity>
       <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>{setLogin(false);}}>
         <Icon name={'person'} size={30} color={'white'} />

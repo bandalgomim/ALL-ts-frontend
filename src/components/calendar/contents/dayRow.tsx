@@ -85,5 +85,4 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-DayRow.whyDidYouRender = true;
 export default React.memo(DayRow);

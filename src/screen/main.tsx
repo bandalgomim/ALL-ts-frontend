@@ -59,7 +59,7 @@ const MainScreen = () => {
           <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
         </View>
       </View>
-      <View style={{marginTop: height * 0.02}}>
+      <View style={{marginTop: height * 0.005}}>
         <TeamAndLeagueListBar
           teamAndLeagueList={mainRes?.data?.teamAndLeagueList}
         />
@@ -99,12 +99,10 @@ const styles = StyleSheet.create({
   sloganText: {
     width: width,
     fontSize: width * 0.0885,
-    marginTop: -height * 0.03,
+    marginTop: -height * 0.045,
     color: '#EA5579',
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
   },
 });
-
-MainScreen.whyDidYouRender = true;
 export default React.memo(MainScreen);

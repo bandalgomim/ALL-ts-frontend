@@ -57,7 +57,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
             />
           </View>
           :
-          <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.04}]}>
+          <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.02}]}>
             <Text style={[styles.bannerText,{fontSize: width * 0.07}]}>advertisement banner</Text>
           </View>}
       </View>
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
     height: height * 0.44,
-    marginTop: -height * 0.02, // -height * 0.0은 0과 동일하므로 0으로 변경
+    marginTop: -height * 0.03, // -height * 0.0은 0과 동일하므로 0으로 변경
   },
   matchListContainer: {
     width: width,
     height: height * 0.28,
     alignItems: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * 0.01,
   },
   banner: {
     backgroundColor: '#b1b4cc',
