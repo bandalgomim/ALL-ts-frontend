@@ -25,10 +25,23 @@ export default function LeagueCalendar() {
 
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
+      {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
       <Image
         resizeMode="contain"
-        style={[styles.leagueBackground, {width:width * 1, height: mode === 'm' ? width * 0.92 : width * 0.495}]}
-        source={ mode === 'm' ? require('./../../assets/calendar/leagueBackground.png') : require('./../../assets/calendar/leagueBackground_s.png')} />
+        style={[
+          styles.leagueBackground,
+          {width: width * 1, height: width * 0.92, opacity: mode === 'm' ? 1 : 0, position: 'absolute'}
+        ]}
+        source={require('./../../assets/calendar/leagueBackground.png')}
+      />
+      <Image
+        resizeMode="contain"
+        style={[
+          styles.leagueBackground,
+          {width: width * 1, height: width * 0.495, opacity: mode === 'w' ? 1 : 0, position: 'absolute'}
+        ]}
+        source={require('./../../assets/calendar/leagueBackground_s.png')}
+      />
       <Header
         year={currentDate.getFullYear()}
         month={currentDate.getMonth()}
