@@ -175,10 +175,12 @@ const SearchModal: React.FC = () => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.handleBar}
+          style={styles.handleContainer}
           onPress={closeModal}
           {...handleBarPanResponder.panHandlers}
-        />
+        >
+          <View style={styles.handleBar} />
+        </TouchableOpacity>
         <View style={[styles.modalView]}>
           <ImageBackground
             resizeMode="contain"
@@ -228,13 +230,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  handleContainer: {
+    width: width * 0.4,
+    height: height * 0.07,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -height * 0.02,
+    marginBottom: -height * 0.02,
+  },
   handleBar: {
-    width: 40,
-    height: 5,
+    width: width * 0.2,
+    height: height * 0.007,
     backgroundColor: '#DDDDDD',
     borderRadius: 3,
-    marginBottom: 10,
-    marginTop: 8,
   },
   modalView: {
     width: width * 0.85,
@@ -249,7 +257,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.5,
     height: height * 0.07,
-    marginTop: height * 0.015,
+    marginTop: -height * 0.015,
     justifyContent: 'center',
   },
   textInput: {

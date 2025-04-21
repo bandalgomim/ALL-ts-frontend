@@ -120,10 +120,14 @@ const MatchModal: React.FC = () => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.handleBar}
+          style={styles.handleContainer}
           onPress={closeModal}
           {...handleBarPanResponder.panHandlers}
-        />
+        >
+          <View
+          style={styles.handleBar}
+          />
+         </TouchableOpacity> 
         <Text style={styles.text}>matchs of day</Text>
         {safemodalContents.length > 0 ? (
           <MatchList matchList={safemodalContents} color="blue" />
@@ -154,13 +158,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  handleContainer:{
+    //borderWidth: 1,
+    width: width * 0.4,
+    height: height * 0.07,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -height * 0.02,
+    marginBottom: -height * 0.02,
+  },
   handleBar: {
-    width: 40,
-    height: 5,
+    width: width * 0.2,
+    height: height * 0.007,
     backgroundColor: '#DDDDDD',
     borderRadius: 3,
-    marginBottom: 10,
-    marginTop: 8,
   },
   text: {
     fontSize: width * 0.09,
