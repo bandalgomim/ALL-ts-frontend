@@ -40,8 +40,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
           resizeMode="contain"
           source={
             color === 'white'
-              ? require('../../assets/match/bar/matchBar_w.png')
-              : require('../../assets/match/bar/matchBar_b.png')
+              ? require('../../assets/match/bar/matchBar_w-TEST.png')
+              : require('../../assets/match/bar/matchBar_b-TEST.png')
           }
           style={[styles.matchBar, { height: height * 0.1, width: width * 0.93 }]}
         >
@@ -70,7 +70,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                 ]}
               >
                 {match.matchDate
-                  ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}`
+                  ? `${match.matchDate.slice(5, 7)}-${match.matchDate.slice(8, 10)}`
                   : '0000'}
               </Text>
               <Text
