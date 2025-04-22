@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
@@ -8,6 +8,7 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { TeamContext } from '../../context/team.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
+import Logo from '../logo';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -33,24 +34,21 @@ export default function TeamCalendar() {
   const splitMatchList = useMemo(() => {
     const weekResult: { [key: string]: matchDto[] } = {};
     const monthResult: { [key: string]: matchDto[] } = {};
-  
     weekDates.forEach((date) => {
       const key = date.toISOString().split('T')[0];
       if (teamRes.data.matchList[key]) {
         weekResult[key] = teamRes.data.matchList[key];
       }
     });
-  
     monthDates.forEach((date) => {
       const key = date.toISOString().split('T')[0];
       if (teamRes.data.matchList[key]) {
         monthResult[key] = teamRes.data.matchList[key];
       }
     });
-  
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
-
+  console.log(Object.keys(splitMatchList.week).length);
   return (
     <View style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}>
       {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
@@ -94,15 +92,23 @@ export default function TeamCalendar() {
           goToNext={handleNext}
         />
       </View>
-        <View style={
-          {
-            marginTop: mode === 'w' ? height * 0.04 : height * 0.03,
-            height: mode === 'w' ? height * 0.417 : height * 0.228}}>
-          <MatchList
-            matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
-            color={'white'}
-          />
+
+      <View style={
+        {
+          marginTop: mode === 'w' ? height * 0.04 : height * 0.03,
+          height: mode === 'w' ? height * 0.417 : height * 0.228}}>
+        <MatchList
+          matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
+          color={'white'}
+        />
+      </View>
+      {mode === 'w' ? 
+      <View style={[styles.logo, {opacity: Object.keys(splitMatchList.week).length > 2 ? 0 : 1}]}>
+        <Logo color={'white'}/>
+        <View>
+          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>
+      </View> : null}
     </View>
   );
 }
@@ -116,5 +122,19 @@ const styles = StyleSheet.create({
   },
   teamCalendar: {
     alignItems: 'center',
+  },
+  logo: {
+    position: 'absolute',
+    zIndex: -1,
+    bottom: -height * 0.427,
+    left: width * 0.05,
+  },
+  sloganText: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginLeft: width * 0.025,
+    marginTop: -height * 0.045,
+    color: '#EA5579',
+    fontFamily: 'rg-it-ver2',
   },
 });

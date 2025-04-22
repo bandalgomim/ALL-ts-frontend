@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
@@ -8,6 +8,7 @@ import { width, height } from '../../global';
 import { LeagueContext } from '../../context/league.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
+import Logo from '../logo';
 
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -88,6 +89,13 @@ export default function LeagueCalendar() {
           color={'blue'}
         />
       </View>
+      {mode === 'm' ?
+      <View style={[styles.logo]}>
+        <Logo color={'blue'}/>
+        <View>
+          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+        </View>
+      </View> : null}
     </View>
   );
 }
@@ -101,6 +109,20 @@ const styles = StyleSheet.create({
   },
   leagueCalendar: {
     alignItems: 'center',
+  },
+  logo: {
+    position: 'absolute',
+    zIndex: -1,
+    bottom: -height * 0.107,
+    left: width * 0.05,
+  },
+  sloganText: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginLeft: width * 0.025,
+    marginTop: -height * 0.045,
+    color: '#EA5579',
+    fontFamily: 'rg-it-ver2',
   },
 
 });
