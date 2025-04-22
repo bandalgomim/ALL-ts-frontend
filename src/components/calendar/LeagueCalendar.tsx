@@ -12,19 +12,19 @@ import Logo from '../logo';
 
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' |'w'>('w');
-  const {leagueRes} = useContext(LeagueContext);
+  const [mode, setMode] = useState<'m' | 'w'>('w');
+  const { leagueRes } = useContext(LeagueContext);
 
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
-  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+  }, [currentDate, mode]);
 
   const handleNext = useCallback(() => {
     const newDate = goToNext(currentDate, mode);
     setCurrentDate(newDate);
-  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+  }, [currentDate, mode]);
 
   const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
   const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
@@ -41,13 +41,21 @@ export default function LeagueCalendar() {
   }, [weekDates, leagueRes.data.matchList]);
 
   return (
-    <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
+    <View
+      style={[
+        styles.CalendarContainer,
+        mode === 'm'
+          ? styles.calendarMonth
+          : styles.calendarWeek,
+      ]}
+    >
       {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
       <Image
         resizeMode="contain"
         style={[
           styles.leagueBackground,
-          {width: width * 1, height: width * 0.92, opacity: mode === 'm' ? 1 : 0, position: 'absolute'}
+          styles.leagueBackgroundMonth,
+          { opacity: mode === 'm' ? 1 : 0 }
         ]}
         source={require('./../../assets/calendar/leagueBackground.png')}
       />
@@ -55,7 +63,8 @@ export default function LeagueCalendar() {
         resizeMode="contain"
         style={[
           styles.leagueBackground,
-          {width: width * 1, height: width * 0.495, opacity: mode === 'w' ? 1 : 0, position: 'absolute'}
+          styles.leagueBackgroundWeek,
+          { opacity: mode === 'w' ? 1 : 0 }
         ]}
         source={require('./../../assets/calendar/leagueBackground_s.png')}
       />
@@ -66,15 +75,15 @@ export default function LeagueCalendar() {
         goToPrevious={handlePrevious}
         goToNext={handleNext}
       />
-      <View style={[styles.leagueCalendar, {top: -height * 0.015}]}>
+      <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
         <Mode
-          type={'white'}
+          type={'league'}
           mode={mode}
           setMode={setMode}
         />
         <Contents
-          monthDates = {monthDates}
-          weekDates= {weekDates}
+          monthDates={monthDates}
+          weekDates={weekDates}
           month={currentDate.getMonth()}
           color={'white'}
           mode={mode}
@@ -83,32 +92,56 @@ export default function LeagueCalendar() {
           goToNext={handleNext}
         />
       </View>
-      <View style={{marginTop: height * 0.03, height: height * 0.31}}>
+      <View style={styles.matchListContainer}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList : {}}
           color={'blue'}
         />
       </View>
-      {mode === 'm' ?
-      <View style={[styles.logo]}>
-        <Logo color={'blue'}/>
-        <View>
-          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+      {mode === 'm' ? (
+        <View style={styles.logo}>
+          <Logo color={'blue'} />
+          <View>
+            <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+          </View>
         </View>
-      </View> : null}
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    CalendarContainer: {
+  CalendarContainer: {
     alignItems: 'center',
+  },
+  calendarMonth: {
+    width: width,
+    height: width * 0.94,
+  },
+  calendarWeek: {
+    width: width,
+    height: width * 0.52,
   },
   leagueBackground: {
     position: 'absolute',
   },
+  leagueBackgroundMonth: {
+    width: width * 1,
+    height: width * 0.92,
+  },
+  leagueBackgroundWeek: {
+    width: width * 1,
+    height: width * 0.495,
+  },
   leagueCalendar: {
     alignItems: 'center',
+  },
+  leagueCalendarTop: {
+    top: -height * 0.015,
+  },
+  matchListContainer: {
+    marginTop: height * 0.03,
+    height: height * 0.31,
   },
   logo: {
     position: 'absolute',
@@ -124,5 +157,4 @@ const styles = StyleSheet.create({
     color: '#EA5579',
     fontFamily: 'rg-it-ver2',
   },
-
 });

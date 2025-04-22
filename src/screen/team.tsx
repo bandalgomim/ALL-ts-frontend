@@ -48,7 +48,7 @@ const TeamScreen = () => {
 
   return !render ? (
     <LoadingScreen
-      color="white"
+      color="blue"
     />
   ) : (
     <View style={styles.Container}>
@@ -57,7 +57,7 @@ const TeamScreen = () => {
       <TeamCalendar/>
       <View style={[styles.tabBar]}>
         <MainTabBar
-          color="white"
+          color="blue"
         />
       </View>
     </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#30397A',
+    backgroundColor: '#ffffff',
     zIndex:1,
   },
   tabBar: {

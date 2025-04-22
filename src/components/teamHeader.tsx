@@ -12,7 +12,7 @@ const TeamHeader = () => {
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar
-        type="white"
+        type="blue"
       />
       <View style={[styles.teamInfoContainer, {width: width * 0.8}]}>
         <View style={[styles.teamLogo, {marginBottom:-height * 0.01 }]}>
@@ -79,16 +79,16 @@ const styles = StyleSheet.create({
   teamInfoName: {
     textAlign: 'right',
     fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
   teamInfoEtc: {
     textAlign: 'right',
     fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },

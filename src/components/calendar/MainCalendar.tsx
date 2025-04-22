@@ -51,7 +51,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
         <Mode
           mode={mode}
           setMode={setMode}
-          type={'white'}
+          type={'league'}
         />
         <Contents
           monthDates = {monthDates}

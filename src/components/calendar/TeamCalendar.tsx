@@ -58,7 +58,7 @@ export default function TeamCalendar() {
           styles.teamBackground,
           { width: width * 1, height: width * 0.92, opacity: mode === 'm' ? 1 : 0, position: 'absolute' }
         ]}
-        source={require('./../../assets/calendar/teamBackground.png')}
+        source={require('./../../assets/calendar/teamBackground-test.png')}
       />
       <Image
         resizeMode="contain"
@@ -66,7 +66,7 @@ export default function TeamCalendar() {
           styles.teamBackground,
           { width: width * 1, height: width * 0.495, opacity: mode === 'w' ? 1 : 0, position: 'absolute' }
         ]}
-        source={require('./../../assets/calendar/teamBackground_s.png')}
+        source={require('./../../assets/calendar/teamBackground_s-test.png')}
       />
       <Header
         year={year}
@@ -77,7 +77,7 @@ export default function TeamCalendar() {
       />
       <View style={[styles.teamCalendar, { top: -height * 0.015 }]}>
         <Mode
-          type={'blue'}
+          type={'white'}
           mode={mode}
           setMode={setMode}
         />
@@ -85,7 +85,7 @@ export default function TeamCalendar() {
           monthDates = {monthDates}
           weekDates= {weekDates}
           month={currentDate.getMonth()}
-          color={'blue'}
+          color={'white'}
           mode={mode}
           matchList={teamRes.data.matchList}
           goToPrevious={handlePrevious}
@@ -99,12 +99,12 @@ export default function TeamCalendar() {
           height: mode === 'w' ? height * 0.417 : height * 0.228}}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
-          color={'white'}
+          color={'blue'}
         />
       </View>
       {mode === 'w' ? 
       <View style={[styles.logo, {opacity: Object.keys(splitMatchList.week).length > 2 ? 0 : 1}]}>
-        <Logo color={'white'}/>
+        <Logo color={'blue'}/>
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>

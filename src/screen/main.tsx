@@ -43,7 +43,7 @@ const MainScreen = () => {
 
   return !render ? (
     <LoadingScreen
-    color="blue"
+    color="white"
     />
   ) : (
     <View style={styles.Container}>
