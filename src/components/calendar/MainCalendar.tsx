@@ -51,10 +51,10 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
         />
         {mode === 'w' ?
           <View style={styles.matchListContainer}>
-            <MatchList
+            {<MatchList
               matchList={data.matchList}
               color={'white'}
-            />
+            />}
           </View>
           :
           <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.02}]}>

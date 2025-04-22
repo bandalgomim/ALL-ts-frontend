@@ -35,7 +35,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
 
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={() => navigateMatch(match.matchId)}>
-      <View style={[styles.matchBarContainer, { height: height * 0.1, width: width * 0.93 + 6 }]}>
+      <View style={[styles.matchBarContainer, { height: height * 0.075, width: width * 0.93 + 6 }]}>
         <ImageBackground
           resizeMode="contain"
           source={
@@ -43,7 +43,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               ? require('../../assets/match/bar/matchBar_w-TEST.png')
               : require('../../assets/match/bar/matchBar_b-TEST.png')
           }
-          style={[styles.matchBar, { height: height * 0.1, width: width * 0.93 }]}
+          style={[styles.matchBar, { height: height * 0.075, width: width * 0.93 }]}
         >
           <View style={[styles.matchBar, { width: width * 0.93, marginTop: -height * 0.007 }]}>
             <View
@@ -70,8 +70,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                 ]}
               >
                 {match.matchDate
-                  ? `${match.matchDate.slice(5, 7)}-${match.matchDate.slice(8, 10)}`
-                  : '0000'}
+                  ? `${match.matchTime.slice(0, 5)}`
+                  : '00:00'}
               </Text>
               <Text
                 style={[
@@ -139,11 +139,12 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
 const styles = StyleSheet.create({
   matchBarContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    //justifyContent: 'flex-start',
   },
   matchBar: {
     flexDirection: 'row',
     alignItems: 'center',
+    //borderWidth: 1
     //justifyContent: 'center',
   },
   state: {

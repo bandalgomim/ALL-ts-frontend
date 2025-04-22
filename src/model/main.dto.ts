@@ -3,6 +3,7 @@ import { StateDto } from './config';
 export interface matchDto {
     matchId: number,
     matchDate: string,
+    matchTime: string,
     homeTeamId: number,
     awayTeamId: number,
     homeTeamName: string,
@@ -30,8 +31,10 @@ export interface leagueDto {
     index: number
 }
 
+export type matchListDto = Record<string, matchDto[]>;
+
 export interface getmainResDto {
-    matchList: matchDto[] | null,
+    matchList: matchListDto | null,
     teamAndLeagueList: (teamDto | leagueDto)[] | null,
 }
 

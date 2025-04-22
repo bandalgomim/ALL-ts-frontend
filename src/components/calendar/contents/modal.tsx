@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { use, useContext, useEffect, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -39,6 +39,11 @@ const MatchModal: React.FC = () => {
       }).start();
     }
   }, [modalVisible, translateY]);
+
+  useEffect(() => {
+    console.log('Modal contents updated:', modalContents, safemodalContents.length);
+  }, [modalContents]);
+
 
   // 아래로 스와이프 시 닫기
   const panResponder = useRef(
@@ -127,9 +132,9 @@ const MatchModal: React.FC = () => {
           <View
           style={styles.handleBar}
           />
-         </TouchableOpacity> 
+         </TouchableOpacity>
         <Text style={styles.text}>matchs of day</Text>
-        {safemodalContents.length > 0 ? (
+        {safemodalContents ? (
           <MatchList matchList={safemodalContents} color="blue" />
         ) : (
           <View style={styles.emptyContainer} />

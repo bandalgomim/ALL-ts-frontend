@@ -59,11 +59,6 @@ const TeamScreen = () => {
         matchList={teamRes.data.matchList ?? {}}
         color={'white'}
       />
-      <View style={[styles.logo, {bottom: height * 0.06}]}>
-        <Logo
-          color="white"
-        />
-      </View>
       <View>
         <MainTabBar
           color="white"

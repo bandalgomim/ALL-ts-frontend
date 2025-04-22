@@ -2,11 +2,10 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { View, Text, StyleSheet, PanResponder } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates, groupMatchesByDate } from '../utills';
-import { matchDto } from '../../../model/main.dto';
+import { matchListDto } from '../../../model/main.dto';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
 import { ModalContext } from '../../../context/modal.context';
-import MatchList from '../../matchBar/matchList';
 
 interface ContentsProps {
   month: number,
@@ -14,7 +13,7 @@ interface ContentsProps {
   indicatorDay: Date,
   color: string,
   mode: 'm' | 'w',
-  matchList: matchDto[] | null,
+  matchList: matchListDto | null,
   goToPrevious: () => void,
   goToNext: () => void,
 }
@@ -26,13 +25,14 @@ const Contents: React.FC<ContentsProps> = ({
   const monthDates = useMemo(() => getMonthDates(month, year), [month, year]);
   const weekDates = useMemo(() => getWeekDates(indicatorDay), [indicatorDay]);
   const groupedMatches = useMemo(() =>
-    groupMatchesByDate(matchList),[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
+    matchList,[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
   const fontColor = useMemo(() => {
     return color === 'white'
       ? [styles.currentMonthDayWhite, styles.otherMonthDayWhite]
       : [styles.currentMonthDayBlue, styles.otherMonthDayBlue];
   }, [color]);
 
+  
   const weekViewDays = useMemo(() => {
     return weekDates.slice(0, 7);
   }, [weekDates]);
@@ -44,10 +44,11 @@ const Contents: React.FC<ContentsProps> = ({
   }, [monthDates]);
 
   const onPressDate = useCallback((day: Date) => {
+    const date = day.toISOString().split('T')[0];
     if (day instanceof Date) {
-      const matchInfo = groupedMatches[day.toLocaleDateString('sv-SE')];
+      const matchInfo = groupedMatches[date];
       if (matchInfo) {
-        setModalContents(groupedMatches[day.toLocaleDateString('sv-SE')]);
+        setModalContents({"test":matchInfo});
         setModalVisible(true);
       }
     }

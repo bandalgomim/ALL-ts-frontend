@@ -58,11 +58,6 @@ const LeagueScreen = () => {
         matchList={leagueRes.data.matchList ?? {}}
         color={'blue'}
       />
-      <View style={[styles.logo, {bottom: height * 0.06}]}>
-        <Logo
-          color="blue"
-        />
-      </View>
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
