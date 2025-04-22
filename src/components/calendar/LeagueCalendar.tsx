@@ -1,11 +1,13 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
-import { goToPrevious, goToNext } from './utills';
+import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
 import { LeagueContext } from '../../context/league.context';
+import { matchDto } from '../../model/main.dto';
+import MatchList from '../matchBar/matchList';
 
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -22,6 +24,20 @@ export default function LeagueCalendar() {
     const newDate = goToNext(currentDate, mode);
     setCurrentDate(newDate);
   }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+
+  const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
+  const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
+
+  const splitMatchList = useMemo(() => {
+    const weekResult: { [key: string]: matchDto[] } = {};
+    weekDates.forEach((date) => {
+      const key = date.toISOString().split('T')[0];
+      if (leagueRes.data.matchList[key]) {
+        weekResult[key] = leagueRes.data.matchList[key];
+      }
+    });
+    return weekResult;
+  }, [weekDates, leagueRes.data.matchList]);
 
   return (
     <View style={[styles.CalendarContainer, {width: width, height: mode === 'm' ? width * 0.94 : width * 0.52}]}>
@@ -56,14 +72,20 @@ export default function LeagueCalendar() {
           setMode={setMode}
         />
         <Contents
-          year={currentDate.getFullYear()}
+          monthDates = {monthDates}
+          weekDates= {weekDates}
           month={currentDate.getMonth()}
-          indicatorDay={currentDate}
           color={'white'}
           mode={mode}
           matchList={leagueRes.data.matchList}
           goToPrevious={handlePrevious}
           goToNext={handleNext}
+        />
+      </View>
+      <View style={{marginTop: height * 0.03, height: height * 0.31}}>
+        <MatchList
+          matchList={mode === 'w' ? splitMatchList : {}}
+          color={'blue'}
         />
       </View>
     </View>

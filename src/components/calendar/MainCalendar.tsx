@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { goToPrevious, goToNext } from './utills';
+import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
-import { getmainResDto } from '../../model/main.dto';
+import { getmainResDto, matchDto, matchListDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 
 interface MainCalendarProps {
@@ -27,6 +27,20 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     setCurrentDate(newDate);
   }, [currentDate, mode]);
 
+  const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
+  const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
+
+  const splitMatchList = useMemo(() => {
+    const result: { [key: string]: matchDto[] } = {};
+    weekDates.forEach((date) => {
+      const key = date.toISOString().split('T')[0];
+      if (data.matchList[key]) {
+        result[key] = data.matchList[key];
+      }
+    });
+    return result;
+  }, [weekDates, data.matchList]);
+
   return (
     <View>
       <View style={styles.CalendarContainer}>
@@ -40,9 +54,9 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           type={'white'}
         />
         <Contents
+          monthDates = {monthDates}
+          weekDates= {weekDates}
           month={currentDate.getMonth()}
-          year={currentDate.getFullYear()}
-          indicatorDay={currentDate}
           color={'white'}
           mode={mode}
           matchList={data.matchList ? data.matchList : null}
@@ -52,7 +66,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
         {mode === 'w' ?
           <View style={styles.matchListContainer}>
             {<MatchList
-              matchList={data.matchList}
+              matchList={splitMatchList}
               color={'white'}
             />}
           </View>
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     width: width,
-    height: height * 0.28,
+    height: height * 0.32,
     alignItems: 'center',
     marginTop: height * 0.01,
   },

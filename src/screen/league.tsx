@@ -54,10 +54,7 @@ const LeagueScreen = () => {
       <LeagueHeader/>
       <LeageTeamListBar/>
       <LeagueCalendar/>
-      <MatchList
-        matchList={leagueRes.data.matchList ?? {}}
-        color={'blue'}
-      />
+
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
@@ -75,15 +72,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     zIndex:1,
   },
-  logo: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    zIndex: -1, // B 요소 뒤로 보냄
-  },
   tabBar: {
-    zIndex: -1,
+    position: 'absolute', // 하단 고정
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
   },
 });
 

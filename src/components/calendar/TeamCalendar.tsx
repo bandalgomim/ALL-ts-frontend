@@ -1,11 +1,13 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
 import { width, height } from '../../global';
-import { goToPrevious, goToNext } from './utills';
+import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { TeamContext } from '../../context/team.context';
+import { matchDto } from '../../model/main.dto';
+import MatchList from '../matchBar/matchList';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -24,6 +26,30 @@ export default function TeamCalendar() {
     const newDate = goToNext(currentDate, mode);
     setCurrentDate(newDate);
   }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+
+  const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
+  const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
+
+  const splitMatchList = useMemo(() => {
+    const weekResult: { [key: string]: matchDto[] } = {};
+    const monthResult: { [key: string]: matchDto[] } = {};
+  
+    weekDates.forEach((date) => {
+      const key = date.toISOString().split('T')[0];
+      if (teamRes.data.matchList[key]) {
+        weekResult[key] = teamRes.data.matchList[key];
+      }
+    });
+  
+    monthDates.forEach((date) => {
+      const key = date.toISOString().split('T')[0];
+      if (teamRes.data.matchList[key]) {
+        monthResult[key] = teamRes.data.matchList[key];
+      }
+    });
+  
+    return { week: weekResult, month: monthResult };
+  }, [weekDates, monthDates, teamRes.data.matchList]);
 
   return (
     <View style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}>
@@ -58,9 +84,9 @@ export default function TeamCalendar() {
           setMode={setMode}
         />
         <Contents
-          month={month}
-          year={year}
-          indicatorDay={currentDate}
+          monthDates = {monthDates}
+          weekDates= {weekDates}
+          month={currentDate.getMonth()}
           color={'blue'}
           mode={mode}
           matchList={teamRes.data.matchList}
@@ -68,6 +94,15 @@ export default function TeamCalendar() {
           goToNext={handleNext}
         />
       </View>
+        <View style={
+          {
+            marginTop: mode === 'w' ? height * 0.04 : height * 0.03,
+            height: mode === 'w' ? height * 0.417 : height * 0.228}}>
+          <MatchList
+            matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
+            color={'white'}
+          />
+        </View>
     </View>
   );
 }

@@ -16,11 +16,15 @@ const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
   //const initIndex = matchList.length >= 5 ? binarySearchClosestMatch(matchList) : 0;
   const renderItem = useCallback(( {item}: { item: matchDto[] } ) => {
     return (
-      <>
-        <View style={{ height: height * 0.027}}>
-          <Text style={[styles.dateText, {color: color === 'white' ? 'white' : '#30397A'}]}>
-            {item[0].matchDate}
-          </Text>
+      <View style={{marginBottom: height * 0.01}}>
+        <View style={{flexDirection: "row", height: height * 0.027}}>
+          <View style={[styles.frontDateBar, {backgroundColor: color === 'white' ? 'white' : '#30397A'}]}/>
+          <View>
+            <Text style={[styles.dateText, {color: color === 'white' ? 'white' : '#30397A'}]}>
+              {item[0].matchDate}
+            </Text>
+          </View>
+          <View style={[styles.backDateBar, {backgroundColor: color === 'white' ? 'white' : '#30397A'}]}/>
         </View>
         {item.map((data: matchDto) => (
           <MatchBar
@@ -29,7 +33,7 @@ const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
             color={color}
           />
         ))}
-      </>
+      </View>
     );
   }, [color]);
   return (
@@ -52,12 +56,25 @@ const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
 };
 
 const styles = StyleSheet.create({
+  frontDateBar: {
+    width: width * 0.12,
+    height: height * 0.005,
+    borderRadius: 10,
+    marginTop: height * 0.011,
+  },
   dateText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-    fontSize: width * 0.055,
-    marginLeft: width * 0.04,
-    marginBottom: -height * 0.005,
+    fontSize: width * 0.05,
+    width: width * 0.21,
+    textAlign: 'center',
+    marginBottom: -height * 0.00,
+  },
+  backDateBar: {
+    width: width * 0.6,
+    height: height * 0.005,
+    borderRadius: 10,
+    marginTop: height * 0.011,
   },
 })
 export default React.memo(MatchList);

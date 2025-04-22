@@ -55,11 +55,7 @@ const TeamScreen = () => {
       <HeadNotch/>
       <TeamHeader/>
       <TeamCalendar/>
-      <MatchList
-        matchList={teamRes.data.matchList ?? {}}
-        color={'white'}
-      />
-      <View>
+      <View style={[styles.tabBar]}>
         <MainTabBar
           color="white"
         />
@@ -77,12 +73,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#30397A',
     zIndex:1,
   },
-  logo: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    zIndex: -1, // B 요소 뒤로 보냄
+  tabBar: {
+    position: 'absolute', // 하단 고정
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
   },
 });
 export default React.memo(TeamScreen);
