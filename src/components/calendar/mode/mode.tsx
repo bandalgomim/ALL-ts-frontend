@@ -12,7 +12,7 @@ interface ModeProps {
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
   let typeColor: StyleProp<ViewStyle | TextStyle> = [];
 
-  if(type === 'white') {
+  if(type === 'league') {
     typeColor = [styles.selectViewWhite, styles.selectedWhite, styles.noSelectedWhite ];
   } else {
     typeColor = [styles.selectViewBlue, styles.selectedBlue, styles.noSelectedBlue ];
@@ -64,15 +64,15 @@ const styles = StyleSheet.create({
   selectedBlue: {
     textAlign: 'center',
     fontFamily: 'rg-bd-ver5',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
+    color: '#FFFFFF',
+    textShadowColor: '#252c5e', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
   noSelectedBlue: {
     textAlign: 'center',
     fontFamily: 'rg-bd-ver5',
-    color: '#cbcbcb',
+    color: '#878cb2',
   },
 });
 
