@@ -41,7 +41,7 @@ const Contents: React.FC<ContentsProps> = ({
   }, [monthDates]);
 
   const onPressDate = useCallback((day: Date) => {
-    const date = day.toISOString().split('T')[0];
+    const date = day.toLocaleDateString('sv-SE');
     if (day instanceof Date) {
       const matchInfo = groupedMatches[date];
       if (matchInfo) {

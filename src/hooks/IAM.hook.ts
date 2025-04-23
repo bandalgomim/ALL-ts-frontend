@@ -86,6 +86,8 @@ export const commonIAMHook = async (
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response?.data.includes('refresh token unmatched')) {
+                await localData.delete('Authorization');
+                await localData.delete('RefreshToken');
                 loginState(false);
             }
         } else {

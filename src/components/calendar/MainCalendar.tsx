@@ -8,6 +8,7 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
 import { getmainResDto, matchDto, matchListDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
+import { startOfDay } from 'date-fns';
 
 interface MainCalendarProps {
   data: getmainResDto;
@@ -29,11 +30,10 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
 
   const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
   const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
-
   const splitMatchList = useMemo(() => {
     const result: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
-      const key = date.toISOString().split('T')[0];
+      const key = date.toLocaleDateString('sv-SE');
       if (data.matchList[key]) {
         result[key] = data.matchList[key];
       }
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     width: width,
-    height: height * 0.32,
+    height: height * 0.27,
     alignItems: 'center',
     marginTop: height * 0.01,
   },

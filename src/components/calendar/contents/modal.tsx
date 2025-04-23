@@ -40,11 +40,6 @@ const MatchModal: React.FC = () => {
     }
   }, [modalVisible, translateY]);
 
-  useEffect(() => {
-    console.log('Modal contents updated:', modalContents, safemodalContents.length);
-  }, [modalContents]);
-
-
   // 아래로 스와이프 시 닫기
   const panResponder = useRef(
     PanResponder.create({

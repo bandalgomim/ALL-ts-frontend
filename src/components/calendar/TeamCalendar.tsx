@@ -35,20 +35,19 @@ export default function TeamCalendar() {
     const weekResult: { [key: string]: matchDto[] } = {};
     const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
-      const key = date.toISOString().split('T')[0];
+      const key = date.toLocaleDateString('sv-SE');
       if (teamRes.data.matchList[key]) {
         weekResult[key] = teamRes.data.matchList[key];
       }
     });
     monthDates.forEach((date) => {
-      const key = date.toISOString().split('T')[0];
+      const key = date.toLocaleDateString('sv-SE');
       if (teamRes.data.matchList[key]) {
         monthResult[key] = teamRes.data.matchList[key];
       }
     });
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
-  console.log(Object.keys(splitMatchList.week).length);
   return (
     <View style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}>
       {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
@@ -103,7 +102,7 @@ export default function TeamCalendar() {
         />
       </View>
       {mode === 'w' ? 
-      <View style={[styles.logo, {opacity: Object.keys(splitMatchList.week).length > 2 ? 0 : 1}]}>
+      <View style={[styles.logo, {opacity: Object.keys(splitMatchList.week).length > 2 ? 0.3 : 0.3}]}>
         <Logo color={'blue'}/>
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>

@@ -6,10 +6,22 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList, MainPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
+import { localData } from '../IAM/localData';
 
 const StartScreen = () => {
-  const {login} = useContext(AuthContext);
-  useRefreshToken();
+  const {login, setLogin} = useContext(AuthContext);
+  
+  useEffect(() => {
+    (async () => {
+      const refreshToken = await localData.get('RefreshToken');
+      if (refreshToken) {
+        setLogin(true);
+      } else {
+        setLogin(false);
+        navigateIAM();
+      }
+    })();
+  }, []);
 
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
@@ -27,8 +39,6 @@ const StartScreen = () => {
   useEffect(() => {
     if (login === true) {
       navigateMain();
-    } else {
-        navigateIAM();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);

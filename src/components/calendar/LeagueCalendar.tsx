@@ -32,7 +32,7 @@ export default function LeagueCalendar() {
   const splitMatchList = useMemo(() => {
     const weekResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
-      const key = date.toISOString().split('T')[0];
+      const key = date.toLocaleDateString('sv-SE');
       if (leagueRes.data.matchList[key]) {
         weekResult[key] = leagueRes.data.matchList[key];
       }
