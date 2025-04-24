@@ -12,7 +12,7 @@ interface ContentsProps {
 const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
   // FlatList 참조 생성
   const flatListRef = useRef<FlatList>(null);
-  
+  console.log("test")
   // matchList가 변경될 때마다 스크롤 위치를 즉시 맨 위로 리셋
   useLayoutEffect(() => {
     // useLayoutEffect를 사용하여 DOM 업데이트 직후, 브라우저가 화면을 그리기 전에 실행
@@ -61,10 +61,6 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
         data={Object.values(matchList)}
         renderItem={renderItem}
         initialScrollIndex={0}
-        onContentSizeChange={() => {
-          // 콘텐츠 크기가 변경될 때도 스크롤 맨 위로
-          flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
-        }}
         // 성능 최적화
         showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={10}

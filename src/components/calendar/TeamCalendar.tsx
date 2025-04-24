@@ -46,6 +46,7 @@ export default function TeamCalendar() {
         monthResult[key] = teamRes.data.matchList[key];
       }
     });
+    console.log('monthResult', monthResult);
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
   
