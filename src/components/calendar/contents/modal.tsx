@@ -50,9 +50,10 @@ const MatchModal: React.FC = () => {
     });
   };
 
-  // 모달 열기 애니메이션
+  // 모달 열기/닫기 애니메이션
   useEffect(() => {
     if (modalVisible) {
+      // 모달 열기 애니메이션 (기존 코드 유지)
       translateY.setValue(SCREEN_HEIGHT);
       backdropOpacity.setValue(0);
       
@@ -68,8 +69,22 @@ const MatchModal: React.FC = () => {
           useNativeDriver: true,
         })
       ]).start();
+    } else if (translateY._value === 0) {
+      // 모달이 열려있는 상태에서 닫힐 때만 애니메이션 실행
+      Animated.parallel([
+        Animated.timing(backdropOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: SCREEN_HEIGHT,
+          duration: 300,
+          useNativeDriver: true,
+        })
+      ]).start();
     }
-  }, [modalVisible]);
+  }, [modalVisible, translateY]);
 
   // 모달 헤더(핸들바 포함)를 위한 PanResponder
   const modalHeaderPanResponder = useRef(
