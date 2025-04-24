@@ -12,23 +12,24 @@ interface DayRowProps {
   height: number;
 }
 
-const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches, fontColor }) => {
+const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches = {}, fontColor }) => {
+  // groupedMatches에 기본값 {}를 할당하여 null 처리
   const today = new Date();
-  //today.setHours(today.getHours() + 9);
+  
   return (
     <View style={styles.weekRow}>
       {days.map((day, index) => (
         <View key={index} style={styles.dayContainer}>
-          <TouchableOpacity onPress={() => day && onPressDate(day as Date)}>
-          <Text
+          <TouchableOpacity onPress={() => day instanceof Date && onPressDate(day as Date)}>
+            {/* 날짜 텍스트 렌더링 (기존 코드) */}
+            <Text
               style={day instanceof Date
                 ? [
                     day.getMonth() === month
                       ? [fontColor[0], { fontSize: width * 0.067 }]
                       : [fontColor[1], { fontSize: width * 0.067 }],
-                    // 오늘 날짜일 때 색상 변경
                     day.getDate() === today.getDate() && day.getMonth() === today.getMonth() && day.getFullYear() === today.getFullYear()
-                      ? { color: '#EA5579' } // 오늘 날짜일 경우, 흰색으로 변경
+                      ? { color: '#EA5579' }
                       : {},
                   ]
                 : {}
@@ -37,26 +38,37 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
               {day instanceof Date ? day.getDate() : ''}
             </Text>
           </TouchableOpacity>
+          
+          {/* 밑줄 이미지 렌더링 - 안전하게 처리 */}
           {day instanceof Date && (
             <Image
               resizeMode="contain"
               style={[styles.underBar, { height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.013 }]}
               source={(() => {
-                const dateString = day.toLocaleDateString('sv-SE'); // "2025-02-28" 형태로 추출
-                const matchesForDay = groupedMatches[dateString];
-                const matchCount = matchesForDay ? matchesForDay.length : 0;
-                switch (matchCount) {
-                  case 1:
-                    return require('./../../../assets/calendar/underBar/1bar.png');
-                  case 2:
-                    return require('./../../../assets/calendar/underBar/2bar.png');
-                  case 3:
-                    return require('./../../../assets/calendar/underBar/3bar.png');
-                  default:
-                    if (matchCount >= 4) {
-                      return require('./../../../assets/calendar/underBar/4bar.png');
-                    }
-                    return null;
+                try {
+                  // 안전한 접근을 위한 처리
+                  if (!groupedMatches) return null;
+                  
+                  const dateString = day.toLocaleDateString('sv-SE');
+                  const matchesForDay = groupedMatches[dateString] || [];
+                  const matchCount = matchesForDay.length;
+                  
+                  switch (matchCount) {
+                    case 1:
+                      return require('./../../../assets/calendar/underBar/1bar.png');
+                    case 2:
+                      return require('./../../../assets/calendar/underBar/2bar.png');
+                    case 3:
+                      return require('./../../../assets/calendar/underBar/3bar.png');
+                    default:
+                      if (matchCount >= 4) {
+                        return require('./../../../assets/calendar/underBar/4bar.png');
+                      }
+                      return null;
+                  }
+                } catch (error) {
+                  console.warn('날짜 밑줄 처리 중 오류:', error);
+                  return null;
                 }
               })()}
             />

@@ -1,6 +1,6 @@
 // Contents.tsx
 import React, { useCallback, useContext, useMemo } from 'react';
-import { View, Text, StyleSheet, PanResponder } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { DAYS_OF_WEEK, getMonthDates, getWeekDates } from '../utills';
 import { matchListDto } from '../../../model/main.dto';
 import DayRow from './dayRow';
@@ -43,7 +43,7 @@ const Contents: React.FC<ContentsProps> = ({
   const onPressDate = useCallback((day: Date) => {
     const date = day.toLocaleDateString('sv-SE');
     if (day instanceof Date) {
-      const matchInfo = groupedMatches[date];
+      const matchInfo = groupedMatches ? groupedMatches[date] : null;
       if (matchInfo) {
         setModalContents({'modalContents':matchInfo});
         setModalVisible(true);
@@ -51,27 +51,8 @@ const Contents: React.FC<ContentsProps> = ({
     }
   }, [groupedMatches, setModalContents, setModalVisible]);
 
-  // PanResponder로 좌우 스와이프 감지
-  const panResponder = useMemo(
-    () =>
-      PanResponder.create({
-        onMoveShouldSetPanResponder: (evt, gestureState) => {
-          return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dy) < 20;
-        },
-        onPanResponderRelease: (evt, gestureState) => {
-          if (gestureState.dx > 40) {
-            goToPrevious();
-          } else if (gestureState.dx < -40) {
-            goToNext();
-          }
-        },
-      }),
-    [goToPrevious, goToNext]
-  );
-
   return (
     <View
-      {...panResponder.panHandlers}
       style={[
         styles.calendarContainer,
         mode === 'm' ? styles.monthModeContainer : styles.weekModeContainer
@@ -92,7 +73,7 @@ const Contents: React.FC<ContentsProps> = ({
           days={rowDays}
           month={month}
           onPressDate={onPressDate}
-          groupedMatches={groupedMatches}
+          groupedMatches={groupedMatches || {}}
           fontColor={fontColor}
           width={width}
           height={height}
@@ -103,7 +84,7 @@ const Contents: React.FC<ContentsProps> = ({
             days={weekViewDays}
             month={month}
             onPressDate={onPressDate}
-            groupedMatches={groupedMatches}
+            groupedMatches={groupedMatches || {}}
             fontColor={fontColor}
             width={width}
             height={height}

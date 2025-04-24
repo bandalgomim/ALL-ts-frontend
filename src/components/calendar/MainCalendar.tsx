@@ -1,14 +1,13 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, PanResponder } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
-import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
+
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
 import { getmainResDto, matchDto, matchListDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
-import { startOfDay } from 'date-fns';
 
 interface MainCalendarProps {
   data: getmainResDto;
@@ -16,6 +15,7 @@ interface MainCalendarProps {
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  console.log(currentDate.toLocaleDateString('sv-SE'))
   const [mode, setMode] = useState<'m' | 'w'>('w');
 
   const handlePrevious = useCallback(() => {
@@ -41,9 +41,29 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     return result;
   }, [weekDates, data.matchList]);
 
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (evt, gestureState) => {
+          return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dy) < 20;
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+          if (gestureState.dx > 40) {
+            handlePrevious();
+          } else if (gestureState.dx < -40) {
+            handleNext();
+          }
+        },
+      }),
+    [handlePrevious, handleNext]
+  );
+
   return (
     <View>
-      <View style={styles.CalendarContainer}>
+      <View 
+        style={styles.CalendarContainer}
+        {...panResponder.panHandlers}
+      >
         <MainHeader
           year={currentDate.getFullYear()}
           month={currentDate.getMonth()}
@@ -63,17 +83,18 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           goToPrevious={handlePrevious}
           goToNext={handleNext}
         />
-        {mode === 'w' ?
+        {mode === 'w' ? (
           <View style={styles.matchListContainer}>
             {<MatchList
               matchList={splitMatchList}
               color={'white'}
             />}
           </View>
-          :
+        ) : (
           <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.02}]}>
             <Text style={[styles.bannerText,{fontSize: width * 0.07}]}>advertisement banner</Text>
-          </View>}
+          </View>
+        )}
       </View>
     </View>
   );

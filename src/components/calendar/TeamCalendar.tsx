@@ -95,19 +95,18 @@ export default function TeamCalendar() {
       <View style={
         {
           marginTop: mode === 'w' ? height * 0.04 : height * 0.03,
-          height: mode === 'w' ? height * 0.417 : height * 0.228}}>
+          height: mode === 'w' ? height * 0.431 : height * 0.241}}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
         />
       </View>
-      {mode === 'w' ? 
-      <View style={[styles.logo, {opacity: Object.keys(splitMatchList.week).length > 2 ? 0.3 : 0.3}]}>
+      <View style={[styles.logo, {bottom: mode=== 'w' ? -height * 0.427 : -height * 0.233}]}>
         <Logo color={'blue'}/>
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>
-      </View> : null}
+      </View>
     </View>
   );
 }
@@ -127,6 +126,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
     bottom: -height * 0.427,
     left: width * 0.05,
+    opacity: 0.25
   },
   sloganText: {
     width: width,

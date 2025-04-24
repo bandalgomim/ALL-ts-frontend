@@ -75,25 +75,65 @@ const SearchModal: React.FC = () => {
     );
   };
 
-  // 애니메이션 값
+  // 애니메이션 값 - 모달과 백드롭 분리
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
+  const backdropOpacity = useRef(new Animated.Value(0)).current; // 백드롭 투명도 추가
 
-  // 모달 오픈/닫힘 애니메이션
+  // 모달 오픈/닫힘 애니메이션 - 백드롭 통합
   useEffect(() => {
     if (searchVisible) {
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
+      // 백드롭과 모달 동시에 애니메이션 - 백드롭은 더 천천히
+      Animated.parallel([
+        Animated.timing(backdropOpacity, {
+          toValue: 0.5,
+          duration: 350, // 백드롭 천천히 나타남 (모달보다 조금 더 길게)
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start();
     } else {
-      Animated.timing(translateY, {
-        toValue: SCREEN_HEIGHT,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
+      // 모달 닫힐 때는 현재와 동일하게 유지
+      Animated.parallel([
+        Animated.timing(backdropOpacity, {
+          toValue: 0,
+          duration: 150, // 백드롭 빠르게 사라짐
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: SCREEN_HEIGHT,
+          duration: 300, // 모달은 정상 속도로 사라짐
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
-  }, [searchVisible, translateY]);
+  }, [searchVisible, translateY, backdropOpacity]);
+
+  // 닫기 함수 수정 - 백드롭 애니메이션 추가
+  const closeModal = () => {
+    // 백드롭 빠르게 사라지게 함
+    Animated.timing(backdropOpacity, {
+      toValue: 0,
+      duration: 150, // 백드롭 빠르게 사라짐
+      useNativeDriver: true,
+    }).start();
+
+    // 모달은 정상 속도로 사라짐
+    Animated.timing(translateY, {
+      toValue: SCREEN_HEIGHT,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setSearchVisible(false);
+      setQuery('');
+      setFilteredTeams([]);
+      setIsFocused(false);
+      Keyboard.dismiss();
+    });
+  };
 
   // 아래로 스와이프 시 닫기
   const panResponder = useRef(
@@ -141,20 +181,6 @@ const SearchModal: React.FC = () => {
     })
   ).current;
 
-  const closeModal = () => {
-    Animated.timing(translateY, {
-      toValue: SCREEN_HEIGHT,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      setSearchVisible(false);
-      setQuery('');
-      setFilteredTeams([]);
-      setIsFocused(false);
-      Keyboard.dismiss();
-    });
-  };
-
   return (
     <Modal
       visible={searchVisible}
@@ -162,10 +188,18 @@ const SearchModal: React.FC = () => {
       animationType="none"
       onRequestClose={closeModal}
     >
-      {/* 백드롭 */}
-      <TouchableWithoutFeedback onPress={closeModal}>
-        <View style={styles.backdrop} />
-      </TouchableWithoutFeedback>
+      {/* 백드롭 - Animated.View로 변경 */}
+      <Animated.View
+        style={[
+          styles.backdrop,
+          { opacity: backdropOpacity }, // 애니메이션 적용된 투명도
+        ]}
+      >
+        <TouchableWithoutFeedback onPress={closeModal}>
+          <View style={{ width: '100%', height: '100%' }} />
+        </TouchableWithoutFeedback>
+      </Animated.View>
+      
       {/* 슬라이드 모달 */}
       <Animated.View
         style={[
@@ -216,7 +250,6 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
-    opacity: 0.5,
   },
   animatedContainer: {
     position: 'absolute',

@@ -11,7 +11,6 @@ interface ContentsProps {
 }
 
 const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
-  const ITEM_HEIGHT = height * 0.1;
   //const initIndex = matchList.length >= 5 ? binarySearchClosestMatch(matchList) : 0;
   const renderItem = useCallback(( {item}: { item: matchDto[] } ) => {
     return (
@@ -43,11 +42,6 @@ const MatchList: React.FC<ContentsProps> = ( { matchList, color } ) => {
       //keyExtractor={(item) => item[0].matchId.toString()}
       renderItem={renderItem}
       initialScrollIndex={0}
-      getItemLayout={(data, index) => ({
-        length: ITEM_HEIGHT, // 아이템 높이 (고정값이 필요함)
-        offset: ITEM_HEIGHT * index,
-        index,
-      })}
       showsVerticalScrollIndicator={true} // 수직 스크롤바 숨기기 (필요한 경우)
     />
     </>

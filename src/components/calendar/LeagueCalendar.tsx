@@ -98,14 +98,12 @@ export default function LeagueCalendar() {
           color={'blue'}
         />
       </View>
-      {mode === 'm' ? (
-        <View style={styles.logo}>
+        <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 1}]}>
           <Logo color={'blue'} />
           <View>
             <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
           </View>
         </View>
-      ) : null}
     </View>
   );
 }
@@ -146,7 +144,6 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     zIndex: -1,
-    bottom: -height * 0.107,
     left: width * 0.05,
   },
   sloganText: {
