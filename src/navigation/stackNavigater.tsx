@@ -6,7 +6,6 @@ import TeamScreen from '../screen/team';
 import LeagueScreen from '../screen/league';
 import MatchScreen  from '../screen/match';
 import IAMScreen  from '../screen/IAM';
-import StartScreen from '../screen/start';
 import CustomHeader from '../components/customHeader';
 const Stack = createStackNavigator();
 
@@ -23,10 +22,6 @@ const StackNavigator = () => {
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, // iOS 스타일 전환
           }}
         >
-          <Stack.Screen
-            name="StartScreen"
-            component={StartScreen}
-          />
           <Stack.Screen
             name="MainScreen"
             component={MainScreen}

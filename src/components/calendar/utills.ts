@@ -1,3 +1,6 @@
+import React from "react";
+import { useEffect } from "react";
+
 export const DAYS_OF_WEEK = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 export const getDaysInMonth = (month: number, year: number): Date[] => {

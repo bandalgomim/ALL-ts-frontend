@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import {  Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Shadow } from 'react-native-shadow-2';
 import { width, height } from '../../global';
-import { AuthContext } from '../../context/auth.context';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { IAMPageParamList } from '../../model/navigation.dto';
 
 export const MainHeader = () => {
-  const {setLogin} = useContext(AuthContext);
+  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginBottom: height * 0.01}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>{setLogin(false);}}>
+      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>navigationIAM.navigate('IAMScreen', undefined)}>
         <Icon name={'person'} size={30} color={'white'} />
         <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
       </TouchableOpacity>
@@ -41,4 +42,3 @@ const styles = StyleSheet.create({
     fontFamily: '',
   },
 });
-

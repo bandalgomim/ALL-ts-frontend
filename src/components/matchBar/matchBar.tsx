@@ -29,7 +29,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
 
   const navigateMatch = (matchId: number) => {
     setModalVisible(false); // 모달 닫기
-    setModalContents(null); // 모달 내용 초기화
+    //setModalContents(null); // 모달 내용 초기화
     navigationMatch.navigate('MatchScreen', { matchId: matchId });
   };
 

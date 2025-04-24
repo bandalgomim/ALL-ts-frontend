@@ -14,7 +14,7 @@ export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const { leagueRes } = useContext(LeagueContext);
-
+  
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -143,11 +143,11 @@ const styles = StyleSheet.create({
   },
   leagueBackgroundMonth: {
     width: width * 1,
-    height: width * 0.92,
+    height: width * 0.9202,
   },
   leagueBackgroundWeek: {
     width: width * 1,
-    height: width * 0.495,
+    height: width * 0.4953,
   },
   leagueCalendar: {
     alignItems: 'center',

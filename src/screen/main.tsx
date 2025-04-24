@@ -13,25 +13,33 @@ import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
+import { localData } from '../IAM/localData';
 
 const MainScreen = () => {
   const {mainRes} = useContext(MainContext);
-  const {login } = useContext(AuthContext);
+  const {setLogin} = useContext(AuthContext);
   useMain('GET', null);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
-
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+
   useEffect(() => {
-    if (login === false) {
-      navigateIAM();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
+    (async () => {
+      const refreshToken = await localData.get('RefreshToken');
+      if (refreshToken) {
+        setLogin(true);
+      } else {
+        setLogin(false);
+        navigateIAM();
+      }
+    })();
+  }, []);
+
+
 
   useEffect(() => {
     if (prevLoading === true && mainRes.loading === false) {

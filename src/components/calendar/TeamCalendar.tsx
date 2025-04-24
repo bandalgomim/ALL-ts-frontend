@@ -76,7 +76,7 @@ export default function TeamCalendar() {
         resizeMode="contain"
         style={[
           styles.teamBackground,
-          { width: width * 1, height: width * 0.92, opacity: mode === 'm' ? 1 : 0, position: 'absolute' }
+          { width: width * 1, height: width * 0.926, opacity: mode === 'm' ? 1 : 0, position: 'absolute' }
         ]}
         source={require('./../../assets/calendar/teamBackground-test.png')}
       />
@@ -84,7 +84,7 @@ export default function TeamCalendar() {
         resizeMode="contain"
         style={[
           styles.teamBackground,
-          { width: width * 1, height: width * 0.495, opacity: mode === 'w' ? 1 : 0, position: 'absolute' }
+          { width: width * 1, height: width * 0.4999, opacity: mode === 'w' ? 1 : 0, position: 'absolute' }
         ]}
         source={require('./../../assets/calendar/teamBackground_s-test.png')}
       />

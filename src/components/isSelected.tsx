@@ -33,6 +33,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   const onPressStart = useCallback(async () => {
     setState(!state);
     if (teamId) {
+      
       await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
       navigateTeam(teamId);
     } else if (leagueId) {
