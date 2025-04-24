@@ -125,18 +125,26 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.onAirContainer}>
-          <Text style={styles.onAirText}>
-            {match?.matchState === 'live'
-              ? 'ON-AIR'
-              : match?.matchState === 'end'
-              ? 're-air'
-              : 'soon'}
-          </Text>
+            <Text style={styles.onAirText}>
+              replay
+            </Text>
+            <View style={styles.platformContainer}>
+              <PlatformList
+                platformList={match.platform as platform[]}
+                type ="replay"
+              />
+            </View>
           </View>
-          <View style={styles.platformContainer}>
-            <PlatformList
-              platformList={match.platform as platform[]}
-            />
+          <View style={styles.onAirContainer}>
+            <Text style={styles.onAirText}>
+              highlight
+            </Text>
+            <View style={styles.platformContainer}>
+              <PlatformList
+                platformList={match.platform as platform[]}
+                type ="highlight"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -291,10 +299,11 @@ const styles = StyleSheet.create({
     marginTop: height * 0.012,
   },
   onAirText: {
+    width: width * 0.4,
     fontFamily: 'sb-it-ver1',
     color: '#EA5579',
-    textAlign: 'center',
-    fontSize: width * 0.16,
+    textAlign: 'left',
+    fontSize: width * 0.06,
   },
   platformContainer: {
     flexDirection: 'column',
