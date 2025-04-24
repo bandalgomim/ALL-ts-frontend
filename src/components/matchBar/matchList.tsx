@@ -61,7 +61,6 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
         data={Object.values(matchList)}
         renderItem={renderItem}
         initialScrollIndex={0}
-        showsVerticalScrollIndicator={true}
         onContentSizeChange={() => {
           // 콘텐츠 크기가 변경될 때도 스크롤 맨 위로
           flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
