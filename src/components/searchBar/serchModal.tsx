@@ -267,6 +267,9 @@ const SearchModal: React.FC = () => {
                 onMoveShouldSetResponderCapture={(evt, gestureState) => {
                   return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
                 }}
+                style={styles.flatList}
+                contentContainerStyle={styles.flatListContent}
+                showsVerticalScrollIndicator={false} 
               />
             ) : (
               query ? (
@@ -298,11 +301,11 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     position: 'absolute',
-    left: 0,
+    left: width*0.05,
     right: 0,
-    top: height * 0.25,
-    width: width,
-    height: height * 0.5,
+    top: height * 0.2,
+    width: width*0.9,
+    height: height * 0.65, // 0.6 → 0.65로 증가
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
@@ -325,7 +328,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: width * 0.85,
-    height: height * 0.42,
+    height: height * 0.55, // 0.42 → 0.55로 증가
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
@@ -342,13 +345,22 @@ const styles = StyleSheet.create({
     zIndex: 15,
   },
   resultsContainer: {
-    flex: 1,
+    flex: 1, // flex: 1 유지
     width: '100%',
     alignItems: 'center',
+    // height 속성 제거 (flex: 1과 충돌)
+    borderWidth: 0, // 경계선 제거 (디버깅용이었다면)
   },
   dragBackground: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 1,
+  },
+  flatList: {
+    width: width * 0.5,
+  },
+  flatListContent: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
   textInput: {
     fontFamily: 'sb-it-ver1',
@@ -366,9 +378,9 @@ const styles = StyleSheet.create({
   },
   resultText: {
     fontSize: width * 0.07,
-    width: width * 0.50,
+    width: width * 0.70, // 0.50 → 0.70으로 증가하여 더 넓게
     textAlign: 'left',
-    marginVertical: 6,
+    marginVertical: 8, // 약간 더 넓게
   },
   noResultText: {
     fontFamily: 'sb-it-ver1',

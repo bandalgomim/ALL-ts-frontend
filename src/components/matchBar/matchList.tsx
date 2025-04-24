@@ -67,6 +67,7 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
           flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
         }}
         // 성능 최적화
+        showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={10}
         windowSize={10}
         removeClippedSubviews={true}
