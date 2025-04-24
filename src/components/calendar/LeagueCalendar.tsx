@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, PanResponder } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
@@ -40,6 +40,24 @@ export default function LeagueCalendar() {
     return weekResult;
   }, [weekDates, leagueRes.data.matchList]);
 
+  // 스와이프 기능 추가
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (evt, gestureState) => {
+          return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dy) < 20;
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+          if (gestureState.dx > 40) {
+            handlePrevious();
+          } else if (gestureState.dx < -40) {
+            handleNext();
+          }
+        },
+      }),
+    [handlePrevious, handleNext]
+  );
+
   return (
     <View
       style={[
@@ -48,8 +66,8 @@ export default function LeagueCalendar() {
           ? styles.calendarMonth
           : styles.calendarWeek,
       ]}
+      {...panResponder.panHandlers} // 스와이프 핸들러 추가
     >
-      {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
       <Image
         resizeMode="contain"
         style={[
@@ -98,12 +116,12 @@ export default function LeagueCalendar() {
           color={'blue'}
         />
       </View>
-        <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 1}]}>
-          <Logo color={'blue'} />
-          <View>
-            <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
-          </View>
+      <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 1}]}>
+        <Logo color={'blue'} />
+        <View>
+          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>
+      </View>
     </View>
   );
 }

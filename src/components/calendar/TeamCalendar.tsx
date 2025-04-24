@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, PanResponder } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
@@ -21,12 +21,12 @@ export default function TeamCalendar() {
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
-  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+  }, [currentDate, mode]);
 
   const handleNext = useCallback(() => {
     const newDate = goToNext(currentDate, mode);
     setCurrentDate(newDate);
-  }, [currentDate, mode]); // 의존성 배열에 currentDate, month, mode 추가
+  }, [currentDate, mode]);
 
   const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
   const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
@@ -35,7 +35,7 @@ export default function TeamCalendar() {
     const weekResult: { [key: string]: matchDto[] } = {};
     const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
-      const key = date.toLocaleDateString('sv-SE');
+      const key = (date instanceof Date ? date : new Date(date)).toLocaleDateString('sv-SE');
       if (teamRes.data.matchList[key]) {
         weekResult[key] = teamRes.data.matchList[key];
       }
@@ -48,9 +48,30 @@ export default function TeamCalendar() {
     });
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
+  
+  // 스와이프 기능 추가
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (evt, gestureState) => {
+          return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dy) < 20;
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+          if (gestureState.dx > 40) {
+            handlePrevious();
+          } else if (gestureState.dx < -40) {
+            handleNext();
+          }
+        },
+      }),
+    [handlePrevious, handleNext]
+  );
+
   return (
-    <View style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}>
-      {/* 두 이미지를 모두 렌더링하고, opacity로 전환 */}
+    <View 
+      style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}
+      {...panResponder.panHandlers} // 스와이프 핸들러 추가
+    >
       <Image
         resizeMode="contain"
         style={[

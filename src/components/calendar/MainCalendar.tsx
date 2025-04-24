@@ -34,7 +34,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     const result: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
       const key = date.toLocaleDateString('sv-SE');
-      if (data.matchList[key]) {
+      if (data.matchList && data.matchList[key]) {
         result[key] = data.matchList[key];
       }
     });
