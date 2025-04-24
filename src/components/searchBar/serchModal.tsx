@@ -27,12 +27,16 @@ interface filteredItems {
 }
 
 const SCREEN_HEIGHT = height;
+const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const SearchModal: React.FC = () => {
   const { searchVisible, setSearchVisible } = useContext(ModalContext);
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
+  
+  // 드래그 중인지 상태 추가
+  const [isDragging, setIsDragging] = useState(false);
 
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
@@ -58,35 +62,48 @@ const SearchModal: React.FC = () => {
       setFilteredTeams([]);
       return;
     }
+
     const lowerQuery = input.toLowerCase();
+    
     const results = searchItem
-      .filter(t => t.keyword.some(k => k.toLowerCase().includes(lowerQuery)))
+      .filter(t => t.keyword.some(k => {
+        const lowerK = k.toLowerCase();
+        
+        // 첫 글자가 같은 경우
+        const startsWithQuery = lowerK.startsWith(lowerQuery);
+        
+        // 연속된 3글자 이상 일치하는 경우
+        const hasThreeConsecutiveChars = lowerQuery.length >= 3 && lowerK.includes(lowerQuery);
+        
+        return startsWithQuery || hasThreeConsecutiveChars;
+      }))
       .map(t => ({ name: t.keyword[0], teamId: t.teamId, leagueId: t.leagueId }));
+      
     setFilteredTeams(results);
   };
+
   const renderItem = ({ item }: { item: filteredItems }) => {
     return (
       <TouchableOpacity onPress={() => {
         if (item.teamId) { navigateTeam(item.teamId); }
         else if (item.leagueId) { navigateLeague(item.leagueId); }
       }}>
-        <Text style={[styles.serchText, styles.resultText]}>{item.name}</Text>
+        <Text style={[styles.serchText, styles.resultText]} numberOfLines={1}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
 
-  // 애니메이션 값 - 모달과 백드롭 분리
+  // 애니메이션 값
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
-  const backdropOpacity = useRef(new Animated.Value(0)).current; // 백드롭 투명도 추가
+  const backdropOpacity = useRef(new Animated.Value(0)).current;
 
-  // 모달 오픈/닫힘 애니메이션 - 백드롭 통합
+  // 모달 오픈/닫힘 애니메이션
   useEffect(() => {
     if (searchVisible) {
-      // 백드롭과 모달 동시에 애니메이션 - 백드롭은 더 천천히
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0.5,
-          duration: 350, // 백드롭 천천히 나타남 (모달보다 조금 더 길게)
+          duration: 350,
           useNativeDriver: true,
         }),
         Animated.timing(translateY, {
@@ -96,16 +113,15 @@ const SearchModal: React.FC = () => {
         }),
       ]).start();
     } else {
-      // 모달 닫힐 때는 현재와 동일하게 유지
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0,
-          duration: 150, // 백드롭 빠르게 사라짐
+          duration: 150,
           useNativeDriver: true,
         }),
         Animated.timing(translateY, {
           toValue: SCREEN_HEIGHT,
-          duration: 300, // 모달은 정상 속도로 사라짐
+          duration: 300,
           useNativeDriver: true,
         }),
       ]).start();
@@ -114,14 +130,12 @@ const SearchModal: React.FC = () => {
 
   // 닫기 함수 수정 - 백드롭 애니메이션 추가
   const closeModal = () => {
-    // 백드롭 빠르게 사라지게 함
     Animated.timing(backdropOpacity, {
       toValue: 0,
-      duration: 150, // 백드롭 빠르게 사라짐
+      duration: 150,
       useNativeDriver: true,
     }).start();
 
-    // 모달은 정상 속도로 사라짐
     Animated.timing(translateY, {
       toValue: SCREEN_HEIGHT,
       duration: 300,
@@ -135,48 +149,60 @@ const SearchModal: React.FC = () => {
     });
   };
 
-  // 아래로 스와이프 시 닫기
-  const panResponder = useRef(
+  // 드래그 핸들러 개선
+  const modalPanResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return Math.abs(gestureState.dy) > 10 && Math.abs(gestureState.dx) < 20;
+      },
+      onPanResponderGrant: () => {
+        setIsDragging(true);
+        translateY.setOffset(0);
+        translateY.setValue(0);
+      },
       onPanResponderMove: (_, gestureState) => {
         if (gestureState.dy > 0) {
           translateY.setValue(gestureState.dy);
+          const newOpacity = Math.max(0, 0.5 - (gestureState.dy / 300));
+          backdropOpacity.setValue(newOpacity);
         }
       },
       onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dy > 100) {
+        setIsDragging(false);
+        if (gestureState.dy > DISMISS_THRESHOLD) {
           closeModal();
         } else {
-          Animated.timing(translateY, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }).start();
+          Animated.parallel([
+            Animated.spring(translateY, {
+              toValue: 0,
+              tension: 70,
+              friction: 12,
+              useNativeDriver: true,
+            }),
+            Animated.timing(backdropOpacity, {
+              toValue: 0.5,
+              duration: 200,
+              useNativeDriver: true,
+            }),
+          ]).start();
         }
       },
-    })
-  ).current;
-
-  // handleBar 영역 내에서만 panResponder 동작
-  const handleBarPanResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dy > 0) {
-          translateY.setValue(gestureState.dy);
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dy > 100) {
-          closeModal();
-        } else {
-          Animated.timing(translateY, {
+      onPanResponderTerminate: () => {
+        setIsDragging(false);
+        Animated.parallel([
+          Animated.spring(translateY, {
             toValue: 0,
+            tension: 70,
+            friction: 12,
+            useNativeDriver: true,
+          }),
+          Animated.timing(backdropOpacity, {
+            toValue: 0.5,
             duration: 200,
             useNativeDriver: true,
-          }).start();
-        }
+          }),
+        ]).start();
       },
     })
   ).current;
@@ -188,11 +214,10 @@ const SearchModal: React.FC = () => {
       animationType="none"
       onRequestClose={closeModal}
     >
-      {/* 백드롭 - Animated.View로 변경 */}
       <Animated.View
         style={[
           styles.backdrop,
-          { opacity: backdropOpacity }, // 애니메이션 적용된 투명도
+          { opacity: backdropOpacity },
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
@@ -200,22 +225,20 @@ const SearchModal: React.FC = () => {
         </TouchableWithoutFeedback>
       </Animated.View>
       
-      {/* 슬라이드 모달 */}
       <Animated.View
         style={[
           styles.animatedContainer,
           { transform: [{ translateY }] },
         ]}
       >
-        <TouchableOpacity
-          activeOpacity={1}
+        <View
           style={styles.handleContainer}
-          onPress={closeModal}
-          {...handleBarPanResponder.panHandlers}
+          {...modalPanResponder.panHandlers}
         >
           <View style={styles.handleBar} />
-        </TouchableOpacity>
-        <View style={[styles.modalView]}>
+        </View>
+        
+        <View style={styles.modalView}>
           <ImageBackground
             resizeMode="contain"
             style={styles.textBackground}
@@ -230,17 +253,39 @@ const SearchModal: React.FC = () => {
               style={styles.textInput}
             />
           </ImageBackground>
-          {filteredTeams.length > 0 ? (
-            <FlatList
-              data={filteredTeams}
-              keyExtractor={(item) => item.name.toString()}
-              renderItem={renderItem}
-              keyboardShouldPersistTaps="handled"
-            />
-          ) : (
-            query ? <Text style={styles.noResultText}>검색 결과 없음</Text> : null
-          )}
+          
+          <View style={styles.resultsContainer}>
+            {filteredTeams.length > 0 ? (
+              <FlatList
+                data={filteredTeams}
+                keyExtractor={(item) => item.name.toString()}
+                renderItem={renderItem}
+                keyboardShouldPersistTaps="handled"
+                scrollEnabled={true}
+                nestedScrollEnabled={true}
+                onStartShouldSetResponderCapture={() => true}
+                onMoveShouldSetResponderCapture={(evt, gestureState) => {
+                  return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
+                }}
+              />
+            ) : (
+              query ? (
+              <View style={styles.emptyResultContainer} {...modalPanResponder.panHandlers}>
+                <Text style={styles.noResultText}>검색 결과 없음</Text>
+              </View>
+              ) : (
+                <View style={styles.emptyResultContainer} {...modalPanResponder.panHandlers}>
+                  <Text style={styles.noResultText}>팀 또는 리그를 검색해보세요</Text>
+                </View>
+              )
+            )}
+          </View>
         </View>
+        
+        <View 
+          style={styles.dragBackground}
+          {...modalPanResponder.panHandlers}
+        />
       </Animated.View>
     </Modal>
   );
@@ -264,12 +309,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   handleContainer: {
-    width: width * 0.4,
+    width: width,
     height: height * 0.07,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -height * 0.02,
     marginBottom: -height * 0.02,
+    zIndex: 10,
   },
   handleBar: {
     width: width * 0.2,
@@ -285,6 +331,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: height * 0.01,
+    zIndex: 5,
   },
   textBackground: {
     alignItems: 'center',
@@ -292,6 +339,16 @@ const styles = StyleSheet.create({
     height: height * 0.07,
     marginTop: -height * 0.015,
     justifyContent: 'center',
+    zIndex: 15,
+  },
+  resultsContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
+  dragBackground: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1,
   },
   textInput: {
     fontFamily: 'sb-it-ver1',
@@ -301,15 +358,16 @@ const styles = StyleSheet.create({
     fontSize: width * 0.07,
     width: width * 0.3,
     height: height * 0.06,
+    marginBottom: height * 0.015,
   },
   serchText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
   },
   resultText: {
-    fontSize: width * 0.06,
-    width: width * 0.43,
-    textAlign: 'center',
+    fontSize: width * 0.07,
+    width: width * 0.50,
+    textAlign: 'left',
     marginVertical: 6,
   },
   noResultText: {
@@ -319,6 +377,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
   },
+  emptyResultContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  }
 });
 
 export default React.memo(SearchModal);

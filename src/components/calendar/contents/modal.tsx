@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import { width, height } from '../../../global';
 import { ModalContext } from '../../../context/modal.context';
@@ -20,88 +21,101 @@ const MatchModal: React.FC = () => {
   const { modalVisible, setModalVisible, modalContents, setModalContents } = useContext(ModalContext);
   const safemodalContents = modalContents || {};
 
-  // 애니메이션 값 - 모달과 백드롭 분리
+  // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
-  const backdropOpacity = useRef(new Animated.Value(0)).current; // 백드롭 투명도용 별도 값
+  const backdropOpacity = useRef(new Animated.Value(0.5)).current;
+  
+  // 드래그 중인지 여부 상태
+  const [isDragging, setIsDragging] = useState(false);
+  
+  // 마지막 드래그 위치 추적
+  const lastDragPos = useRef(0);
 
-  // 닫기 함수 
+  // 모달 닫기 함수
   const closeModal = () => {
     Animated.parallel([
       Animated.timing(backdropOpacity, {
         toValue: 0,
-        duration: 150,
+        duration: 200,
         useNativeDriver: true,
       }),
       Animated.timing(translateY, {
         toValue: SCREEN_HEIGHT,
         duration: 300,
         useNativeDriver: true,
-      }),
+      })
     ]).start(() => {
       setModalVisible(false);
       setModalContents(null);
     });
   };
 
-  // 모달 오픈/닫힘 애니메이션 
+  // 모달 열기 애니메이션
   useEffect(() => {
     if (modalVisible) {
-      // 백드롭과 모달 동시에 애니메이션
+      translateY.setValue(SCREEN_HEIGHT);
+      backdropOpacity.setValue(0);
+      
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0.5,
-          duration: 350,
+          duration: 300,
           useNativeDriver: true,
         }),
         Animated.timing(translateY, {
           toValue: 0,
           duration: 300,
           useNativeDriver: true,
-        }),
+        })
       ]).start();
-    } 
-  }, [modalVisible, translateY, backdropOpacity]);
+    }
+  }, [modalVisible]);
 
-  // 핸들바만을 위한 PanResponder
-  const handleBarPanResponder = useRef(
+  // 모달 헤더(핸들바 포함)를 위한 PanResponder
+  const modalHeaderPanResponder = useRef(
     PanResponder.create({
-      // 터치 즉시 반응
+      // 터치 시작 시
       onStartShouldSetPanResponder: () => true,
       
-      // 스와이프 시작
+      // 움직임 시작 시
       onMoveShouldSetPanResponder: (_, gestureState) => {
-        // 수직 방향으로 충분히 움직였을 때만 활성화
         return Math.abs(gestureState.dy) > 10;
       },
       
-      // 터치 시작 시
+      // 패널 포착 시 상태 초기화
       onPanResponderGrant: () => {
-        translateY.extractOffset();
+        setIsDragging(true);
+        lastDragPos.current = 0;
+        translateY.setOffset(0);
+        translateY.setValue(0);
       },
       
-      // 드래그 중
+      // 드래그 중 실시간 업데이트
       onPanResponderMove: (_, gestureState) => {
-        // 아래로만 드래그 허용
+        // 아래로만 드래그 가능
         if (gestureState.dy > 0) {
           translateY.setValue(gestureState.dy);
+          lastDragPos.current = gestureState.dy;
           
-          // 백드롭 투명도 조절
+          // 드래그에 따른 백드롭 투명도 조정
           const newOpacity = Math.max(0, 0.5 - (gestureState.dy / 300));
           backdropOpacity.setValue(newOpacity);
         }
       },
       
-      // 드래그 종료
-      onPanResponderRelease: (_, gestureState) => {
-        // 임계값보다 많이 내렸을 때 닫기
-        if (gestureState.dy > DISMISS_THRESHOLD) {
+      // 드래그 종료 시
+      onPanResponderRelease: () => {
+        setIsDragging(false);
+        
+        // 임계값 이상 드래그 시 모달 닫기
+        if (lastDragPos.current > DISMISS_THRESHOLD) {
           closeModal();
         } else {
-          // 원래 위치로 복귀
+          // 아니면 원위치로 복귀
           Animated.parallel([
             Animated.spring(translateY, {
               toValue: 0,
-              tension: 70,
+              tension: 80,
               friction: 12,
               useNativeDriver: true,
             }),
@@ -113,6 +127,24 @@ const MatchModal: React.FC = () => {
           ]).start();
         }
       },
+      
+      // 터치 취소 시
+      onPanResponderTerminate: () => {
+        setIsDragging(false);
+        Animated.parallel([
+          Animated.spring(translateY, {
+            toValue: 0,
+            tension: 80,
+            friction: 12,
+            useNativeDriver: true,
+          }),
+          Animated.timing(backdropOpacity, {
+            toValue: 0.5,
+            duration: 200,
+            useNativeDriver: true,
+          }),
+        ]).start();
+      }
     })
   ).current;
 
@@ -131,7 +163,7 @@ const MatchModal: React.FC = () => {
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={{ width: width, height: height }} />
+          <View style={{ width: '100%', height: '100%' }} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
@@ -142,21 +174,27 @@ const MatchModal: React.FC = () => {
           { transform: [{ translateY }] },
         ]}
       >
-        {/* 핸들바에만 PanResponder 적용 */}
-        <View 
-          style={styles.handleContainer}
-          {...handleBarPanResponder.panHandlers}
+        {/* 모달 헤더 - 핸들바 포함 (드래그 가능) */}
+        <View
+          style={styles.modalHeader}
+          {...modalHeaderPanResponder.panHandlers}
         >
-          <View style={styles.handleBar} />
+          <View style={styles.handleContainer}>
+            <View style={styles.handleBar} />
+          </View>
           <Text style={styles.text}>matchs of day</Text>
         </View>
         
-        {/* 매치리스트는 독립적으로 스크롤 가능 */}
-        <View style={styles.matchListContainer}>
-          {Object.keys(safemodalContents).length > 0 ? (
-            <MatchList matchList={safemodalContents} color="blue" />
+        {/* 컨텐츠 영역 - MatchList (드래그 불가) */}
+        <View style={styles.contentContainer}>
+          {modalContents && Object.keys(safemodalContents).length > 0 ? (
+            <View style={styles.matchListWrapper}>
+              <MatchList matchList={safemodalContents} color="blue" />
+            </View>
           ) : (
-            <View style={styles.emptyContainer} />
+            <View style={styles.emptyContainer}>
+              <Text style={{ color: '#30397A', fontSize: 16 }}>No matches available</Text>
+            </View>
           )}
         </View>
       </Animated.View>
@@ -168,8 +206,6 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   animatedContainer: {
     position: 'absolute',
@@ -180,18 +216,26 @@ const styles = StyleSheet.create({
     height: height * 0.5,
     backgroundColor: 'white',
     borderRadius: 20,
-    paddingTop: 10,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    overflow: 'hidden',
+  },
+  // 모달 헤더 영역 (드래그 가능)
+  modalHeader: {
+    width: '100%',
+    paddingTop: height* 0.005,
+    alignItems: 'center',
+    backgroundColor: 'white', // 배경색 설정
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    // 드래그 영역임을 알리는 약간의 그림자 효과
+    zIndex: 10,
   },
   handleContainer: {
-    width: width,  // 전체 너비로 변경하여 드래그 영역 확장
-    height: height * 0.07,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -height * 0.02,
-    marginBottom: -height * 0.02,
-    zIndex: 10, // 다른 요소보다 위에 위치
+    marginTop: height * 0.005,
+    marginBottom: height * 0.005,
   },
   handleBar: {
     width: width * 0.2,
@@ -209,11 +253,17 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
-  matchListContainer: {
+  // 컨텐츠 영역 (드래그 불가)
+  contentContainer: {
     flex: 1,
     width: '100%',
-    alignContent: 'center',
-    justifyContent: 'center',
+    marginTop: height * 0.01,
+    alignItems: 'center', // 컨텐츠 중앙 정렬 추가
+  },
+  // MatchList를 감싸는 컨테이너 추가
+  matchListWrapper: {
+    width: width * 0.95, // 약간의 여백을 두고 중앙 정렬
+    alignSelf: 'center',
   },
   emptyContainer: {
     flex: 1,
