@@ -8,30 +8,49 @@ import {
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from 'react-native';
 import { width, height } from '../../../global';
 import { ModalContext } from '../../../context/modal.context';
 import MatchList from '../../matchBar/matchList';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const MatchModal: React.FC = () => {
   const { modalVisible, setModalVisible, modalContents, setModalContents } = useContext(ModalContext);
-  const safemodalContents = modalContents || [];
+  const safemodalContents = modalContents || {};
 
   // 애니메이션 값 - 모달과 백드롭 분리
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0)).current; // 백드롭 투명도용 별도 값
 
+  // 닫기 함수 
+  const closeModal = () => {
+    Animated.parallel([
+      Animated.timing(backdropOpacity, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: SCREEN_HEIGHT,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setModalVisible(false);
+      setModalContents(null);
+    });
+  };
+
   // 모달 오픈/닫힘 애니메이션 
   useEffect(() => {
     if (modalVisible) {
-      // 백드롭과 모달 동시에 애니메이션 - 백드롭은 더 천천히
+      // 백드롭과 모달 동시에 애니메이션
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0.5,
-          duration: 350, // 백드롭 천천히 나타남 (모달보다 조금 더 길게)
+          duration: 350,
           useNativeDriver: true,
         }),
         Animated.timing(translateY, {
@@ -40,92 +59,58 @@ const MatchModal: React.FC = () => {
           useNativeDriver: true,
         }),
       ]).start();
-    } else {
-      // 모달 닫힐 때는 현재와 동일하게 유지
-      Animated.parallel([
-        Animated.timing(backdropOpacity, {
-          toValue: 0,
-          duration: 150, // 백드롭 빠르게 사라짐
-          useNativeDriver: true,
-        }),
-        Animated.timing(translateY, {
-          toValue: SCREEN_HEIGHT,
-          duration: 300, // 모달은 정상 속도로 사라짐
-          useNativeDriver: true,
-        }),
-      ]).start(({ finished }) => {
-        if (finished) {
-          setModalVisible(false);
-          setModalContents(null);
-        }
-      });
-    }
+    } 
   }, [modalVisible, translateY, backdropOpacity]);
 
-  // 닫기 함수 수정
-  const closeModal = () => {
-    // 백드롭 빠르게 사라지게 함
-    Animated.timing(backdropOpacity, {
-      toValue: 0,
-      duration: 150, // 백드롭 빠르게 사라짐
-      useNativeDriver: true,
-    }).start();
-
-    // 모달은 정상 속도로 사라짐
-    Animated.timing(translateY, {
-      toValue: SCREEN_HEIGHT,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      setModalVisible(false);
-      setModalContents(null);
-    });
-  };
-
-  // 아래로 스와이프 시 닫기
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dy > 0) {
-          translateY.setValue(gestureState.dy);
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dy > 100) {
-          closeModal();
-        } else {
-          Animated.timing(translateY, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
-  // 아래로 스와이프 시 닫기 (handleBar에서만 동작)
-  const handleBarRef = useRef<View>(null);
-
-  // handleBar 영역 내에서만 panResponder 동작
+  // 핸들바만을 위한 PanResponder
   const handleBarPanResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
+      // 터치 즉시 반응
+      onStartShouldSetPanResponder: () => true,
+      
+      // 스와이프 시작
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        // 수직 방향으로 충분히 움직였을 때만 활성화
+        return Math.abs(gestureState.dy) > 10;
+      },
+      
+      // 터치 시작 시
+      onPanResponderGrant: () => {
+        translateY.extractOffset();
+      },
+      
+      // 드래그 중
       onPanResponderMove: (_, gestureState) => {
+        // 아래로만 드래그 허용
         if (gestureState.dy > 0) {
           translateY.setValue(gestureState.dy);
+          
+          // 백드롭 투명도 조절
+          const newOpacity = Math.max(0, 0.5 - (gestureState.dy / 300));
+          backdropOpacity.setValue(newOpacity);
         }
       },
+      
+      // 드래그 종료
       onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dy > 100) {
+        // 임계값보다 많이 내렸을 때 닫기
+        if (gestureState.dy > DISMISS_THRESHOLD) {
           closeModal();
         } else {
-          Animated.timing(translateY, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }).start();
+          // 원래 위치로 복귀
+          Animated.parallel([
+            Animated.spring(translateY, {
+              toValue: 0,
+              tension: 70,
+              friction: 12,
+              useNativeDriver: true,
+            }),
+            Animated.timing(backdropOpacity, {
+              toValue: 0.5,
+              duration: 200,
+              useNativeDriver: true,
+            }),
+          ]).start();
         }
       },
     })
@@ -138,15 +123,15 @@ const MatchModal: React.FC = () => {
       animationType="none"
       onRequestClose={closeModal}
     >
-      {/* 백드롭에 애니메이션 적용 */}
+      {/* 백드롭 */}
       <Animated.View
         style={[
           styles.backdrop,
-          { opacity: backdropOpacity }, // 애니메이션 적용된 투명도
+          { opacity: backdropOpacity },
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={{ width: '100%', height: '100%' }} />
+          <View style={{ width: width, height: height }} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
@@ -157,20 +142,23 @@ const MatchModal: React.FC = () => {
           { transform: [{ translateY }] },
         ]}
       >
-        <TouchableOpacity
-          activeOpacity={1}
+        {/* 핸들바에만 PanResponder 적용 */}
+        <View 
           style={styles.handleContainer}
-          onPress={closeModal}
           {...handleBarPanResponder.panHandlers}
         >
           <View style={styles.handleBar} />
-        </TouchableOpacity>
-        <Text style={styles.text}>matchs of day</Text>
-        {safemodalContents ? (
-          <MatchList matchList={safemodalContents} color="blue" />
-        ) : (
-          <View style={styles.emptyContainer} />
-        )}
+          <Text style={styles.text}>matchs of day</Text>
+        </View>
+        
+        {/* 매치리스트는 독립적으로 스크롤 가능 */}
+        <View style={styles.matchListContainer}>
+          {Object.keys(safemodalContents).length > 0 ? (
+            <MatchList matchList={safemodalContents} color="blue" />
+          ) : (
+            <View style={styles.emptyContainer} />
+          )}
+        </View>
       </Animated.View>
     </Modal>
   );
@@ -180,13 +168,14 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
-    // opacity는 애니메이션으로 제어
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   animatedContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
-    top: height * 0.25, // 화면 중간에 위치하도록 추가 (0.25~0.5는 필요에 따라 조정)
+    top: height * 0.25,
     width: width,
     height: height * 0.5,
     backgroundColor: 'white',
@@ -196,13 +185,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   handleContainer: {
-    //borderWidth: 1,
-    width: width * 0.4,
+    width: width,  // 전체 너비로 변경하여 드래그 영역 확장
     height: height * 0.07,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -height * 0.02,
     marginBottom: -height * 0.02,
+    zIndex: 10, // 다른 요소보다 위에 위치
   },
   handleBar: {
     width: width * 0.2,
@@ -219,6 +208,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     marginBottom: height * 0.01,
     textAlign: 'center',
+  },
+  matchListContainer: {
+    flex: 1,
+    width: '100%',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   emptyContainer: {
     flex: 1,
