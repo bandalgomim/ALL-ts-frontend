@@ -9,10 +9,23 @@ import IAMScreen  from '../screen/IAM';
 import CustomHeader from '../components/customHeader';
 const Stack = createStackNavigator();
 
-
 const StackNavigator = () => {
+
+  const linking = {
+    prefixes: ['myapp://'], // 딥 링크의 기본 접두사 설정
+    config: {
+      screens: {
+        MainScreen: '',
+        TeamScreen: 'team/:id',  // 예시: myapp://team/1
+        LeagueScreen: 'league/:id',
+        MatchScreen: 'match/:matchId', // 예시: myapp://match/12345
+        IAMScreen: 'iam', // 예시: myapp://iam
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
         <Stack.Navigator
           screenOptions={{
             // animation: 'none'

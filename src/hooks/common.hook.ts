@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { localData } from '../IAM/localData';
+import { scheduleTodayMatches } from '../notification/scheduleTodayMatches';
 
 export const commonPostHook = async (
     method: string,
@@ -25,6 +26,7 @@ export const commonPostHook = async (
             let resultKeys = null;
             if (response.data.result) {resultKeys = Object.keys(response.data.result);}
             if (dispatch !== null) {
+            scheduleTodayMatches(response.data.result.matchList);
             dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});}
         } else {
             await localData.set('Authorization', response.headers.authorization);

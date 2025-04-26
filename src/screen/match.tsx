@@ -8,7 +8,6 @@ import MainTabBar from '../components/main/mainTabBar';
 import { getMatchResQueryDto } from '../model/match.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
-import { HeadNotch } from '../components/notch';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
 
@@ -48,7 +47,6 @@ const MatchScreen = () => {
   ) : (
     <>
     <View style={[styles.logo]}>
-      
     <Match
       match={matchRes.data ?? {}}
     />
@@ -61,7 +59,6 @@ const MatchScreen = () => {
     </>
     );
   };
-  
   export default MatchScreen;
 
   const styles = StyleSheet.create({
