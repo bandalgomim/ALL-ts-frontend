@@ -12,7 +12,6 @@ interface ContentsProps {
 const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
   // FlatList 참조 생성
   const flatListRef = useRef<FlatList>(null);
-  console.log("test")
   // matchList가 변경될 때마다 스크롤 위치를 즉시 맨 위로 리셋
   useLayoutEffect(() => {
     // useLayoutEffect를 사용하여 DOM 업데이트 직후, 브라우저가 화면을 그리기 전에 실행

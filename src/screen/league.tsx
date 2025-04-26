@@ -4,7 +4,7 @@ import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
 import LeageTeamListBar from '../components/league/leageTeamList';
 import Logo from '../components/logo';
-import { useLeague } from '../hooks/league.hook';
+import { hookLeague, useLeague } from '../hooks/league.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import MatchList from '../components/matchBar/matchList';
@@ -18,10 +18,13 @@ import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 
 const LeagueScreen = () => {
-  const {leagueRes, } = useContext(LeagueContext);
-  const {login } = useContext(AuthContext);
-  const { leagueId } = useRoute().params as getLeagueReqQueryDto;
-  useLeague('GET' as string, {leagueId : leagueId});
+  const {leagueRes, setLeagueRes} = useContext(LeagueContext);
+  const {login, setLogin} = useContext(AuthContext);
+  const { leagueId, key } = useRoute().params as getLeagueReqQueryDto;
+  useEffect(() => {
+      setRender(false);
+      hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
+  }, [leagueId, key]);
 
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {

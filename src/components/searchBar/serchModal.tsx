@@ -45,6 +45,7 @@ const SearchModal: React.FC = () => {
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
+    console.log('teamId', teamId);
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
@@ -52,6 +53,7 @@ const SearchModal: React.FC = () => {
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
+    console.log('leagueId', leagueId);
     navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
   };
 

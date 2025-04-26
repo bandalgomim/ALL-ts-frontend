@@ -15,7 +15,6 @@ interface MainCalendarProps {
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  console.log(currentDate.toLocaleDateString('sv-SE'))
   const [mode, setMode] = useState<'m' | 'w'>('w');
 
   const handlePrevious = useCallback(() => {
