@@ -3,13 +3,11 @@ import { matchDto, matchListDto } from '../model/main.dto';
 
 export async function scheduleTodayMatches(matchList: matchListDto) {
   if (matchList === undefined) {
-    console.log('matchList가 undefined입니다.');
     return;
   }
   const today = new Date().toLocaleDateString('sv-SE'); // '2025-04-27' 형식으로 변환
   const todayMatches = matchList[today];
   if (!todayMatches || todayMatches.length === 0) {
-    console.log('오늘 매치 없음');
     return;
   }
   await notifee.cancelAllNotifications(); // 싹 다 취소
@@ -38,7 +36,7 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
         body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
         data: {
           screen: 'match',
-          params: matchId.toString()
+          matchId: match.matchId.toString() // 반드시 matchId로!
         },
         android: {
           channelId: 'default', // 미리 만들어둔 채널
@@ -73,7 +71,7 @@ async function scheduleTodayMatchesTest(match: matchDto) {
       body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
       data: {
         screen: 'match',
-        params: matchId.toString()
+        matchId: match.matchId.toString() // 반드시 matchId로!
       },
       android: {
         channelId: 'default', // 미리 만들어둔 채널

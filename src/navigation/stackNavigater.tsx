@@ -25,7 +25,9 @@ const StackNavigator = () => {
   };
 
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer
+      linking={linking}
+    >
         <Stack.Navigator
           screenOptions={{
             // animation: 'none'

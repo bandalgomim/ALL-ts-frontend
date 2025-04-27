@@ -61,10 +61,9 @@ export async function initializeNotifications() {
       console.log('[Background] 알림 수신됨:', detail.notification);
     } else if (type === EventType.PRESS) {
       console.log('[Background] 알림 클릭됨:', detail.notification?.data);
-      const { screen, params } = detail.notification?.data || {};
-      if (screen && params) {
-        // 딥링크 형태로 화면 이동
-        const deepLink = `myapp://${screen}/${params}`;
+      const { screen, matchId } = detail.notification?.data || {};
+      if (screen && matchId) {
+        const deepLink = `myapp://${screen}/${matchId}`;
         console.log('딥링크 실행:', deepLink);
         Linking.openURL(deepLink); // iOS에서는 Linking.openURL 대신 notifee.openUrl 사용
       }
@@ -77,10 +76,10 @@ export async function initializeNotifications() {
       console.log('[Foreground] 알림 수신됨:', detail.notification);
     } else if (type === EventType.PRESS) {
       console.log('[Foreground] 알림 클릭됨:', detail.notification?.data);
-      const { screen, params } = detail.notification?.data || {};
-      if (screen && params) {
-        // 딥링크 형태로 화면 이동
-        const deepLink = `myapp://${screen}/${params}`;
+      const { screen, matchId } = detail.notification?.data || {};
+      if (screen && matchId) {
+        console.log('test');
+        const deepLink = `myapp://${screen}/${matchId}`;
         console.log('딥링크 실행:', deepLink);
         Linking.openURL(deepLink);
       }
