@@ -1,5 +1,5 @@
 import notifee, { AndroidImportance, AuthorizationStatus, EventType } from '@notifee/react-native';
-import { Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
 export async function initializeNotifications() {
   try {
@@ -38,8 +38,15 @@ export async function initializeNotifications() {
     console.log('[Background] 이벤트 수신:', type, detail);
     if (type === EventType.DELIVERED) {
       console.log('[Background] 알림 수신됨:', detail.notification);
-    }else if (type === EventType.ACTION_PRESS) {
-      console.log('[Background] 알림 클릭됨:', detail.notification);
+    }else if (type === EventType.PRESS) {
+      console.log('[Background] 알림 클릭됨:', detail.notification?.data);
+      const { screen, params } = detail.notification?.data || {};
+      if (screen && params) {
+        // 딥링크 형태로 화면 이동
+        const deepLink = `myapp://${screen}/${params}`;
+        console.log('딥링크 실행:', deepLink);
+        Linking.openURL(deepLink);
+      }
     }
     return Promise.resolve();
   });
@@ -47,8 +54,15 @@ export async function initializeNotifications() {
       console.log('[Foreground] 이벤트 수신:', type, detail);
       if (type === EventType.DELIVERED) {
         console.log('[Foreground] 알림 수신됨:', detail.notification);
-      } else if (type === EventType.ACTION_PRESS) {
-        console.log('[Foreground] 알림 클릭됨:', detail.notification);
+      } else if (type === EventType.PRESS) {
+        console.log('[Foreground] 알림 클릭됨:', detail.notification?.data);
+        const { screen, params } = detail.notification?.data || {};
+        if (screen && params) {
+          // 딥링크 형태로 화면 이동
+          const deepLink = `myapp://${screen}/${params}`;
+          console.log('딥링크 실행:', deepLink);
+          Linking.openURL(deepLink);
+        }
       }
     });
 }

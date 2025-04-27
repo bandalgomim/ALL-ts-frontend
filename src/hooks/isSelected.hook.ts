@@ -14,5 +14,5 @@ export const hookIsSelected = async (
       if (value !== null) {query.append(key, String(value));}
     });
     const getUrl = `${url}?${query.toString()}`;
-    await commonPostHook(method, getUrl, null, setMainRes, setLogin);
+    await commonPostHook(method, getUrl, null, setMainRes, setLogin, true);
   };

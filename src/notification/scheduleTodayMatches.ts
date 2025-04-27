@@ -2,13 +2,17 @@ import notifee, { TimestampTrigger, TriggerType, AndroidImportance } from '@noti
 import { matchDto, matchListDto } from '../model/main.dto';
 
 export async function scheduleTodayMatches(matchList: matchListDto) {
-  await notifee.cancelAllNotifications(); // 싹 다 취소
+  if (matchList === undefined) {
+    console.log('matchList가 undefined입니다.');
+    return;
+  }
   const today = new Date().toLocaleDateString('sv-SE'); // '2025-04-27' 형식으로 변환
   const todayMatches = matchList[today];
   if (!todayMatches || todayMatches.length === 0) {
     console.log('오늘 매치 없음');
     return;
   }
+  await notifee.cancelAllNotifications(); // 싹 다 취소
   for (const match of todayMatches) {
     const { matchId, matchDate, matchTime } = match;
 
@@ -32,6 +36,10 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
         id: `${matchId}`, // 고유한 ID
         title: '곧 시작하는 경기!',
         body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
+        data: {
+          screen: 'match',
+          params: matchId.toString()
+        },
         android: {
           channelId: 'default', // 미리 만들어둔 채널
           importance: AndroidImportance.HIGH,
@@ -44,14 +52,14 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
     );
     //console.log(`✅ 알림 예약: ${match.homeTeamName} vs ${match.awayTeamName} at ${matchTime}`);
   }
-  await scheduleTodayMatchesTest(todayMatches[0]);
+  //await scheduleTodayMatchesTest(todayMatches[0]);
 }
 
 async function scheduleTodayMatchesTest(match: matchDto) {
   const { matchId } = match;
 
   // matchDate: '2025-04-27', matchTime: '14:30' 이런 식으로 주어졌다고 가정
-  const matchDateTime = Date.now() + 5000;
+  const matchDateTime = Date.now() + 10000;
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
 
@@ -63,6 +71,10 @@ async function scheduleTodayMatchesTest(match: matchDto) {
       id: `${matchId}`, // 고유한 ID
       title: '곧 시작하는 경기!',
       body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
+      data: {
+        screen: 'match',
+        params: matchId.toString()
+      },
       android: {
         channelId: 'default', // 미리 만들어둔 채널
         importance: AndroidImportance.HIGH,

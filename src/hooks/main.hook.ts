@@ -20,7 +20,7 @@ export const useMain = (method: string, data: getMainResQueryDto | null = null) 
                     Object.entries(data as unknown as getMainResQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
                 }
                 const getUrl = url + '?' + query.toString();
-                await commonPostHook(method, url, null, setMainRes, setLogin );
+                await commonPostHook(method, url, null, setMainRes, setLogin, true );
             } else if (method === 'PATCH') {
                 await commonPostHook(method, url, data, null, setLogin );
             }

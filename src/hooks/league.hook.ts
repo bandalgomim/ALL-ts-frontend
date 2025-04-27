@@ -1,8 +1,5 @@
-import { useContext, useEffect } from 'react';
 import { commonPostHook } from './common.hook';
 import { getLeagueReqQueryDto } from '../model/league.dto';
-import { AuthContext } from '../context/auth.context';
-import { LeagueContext } from '../context/league.context';
 
 export const hookLeague = async (
     method: string,
@@ -17,8 +14,8 @@ export const hookLeague = async (
         if (value !== null) {
             query.append(key, String(value));
         }
-    });     
+    });
     const getUrl = url + '?' + query.toString();
     await commonPostHook(method, getUrl, null, setLeagueRes, setLogin);
-    }
+    };
 
