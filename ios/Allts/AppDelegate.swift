@@ -28,3 +28,13 @@ class AppDelegate: RCTAppDelegate {
 #endif
   }
 }
+
+extension AppDelegate {
+  override open func application(
+    _ application: UIApplication,
+    open url: URL,
+    options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+  ) -> Bool {
+    return RCTLinkingManager.application(application, open: url, options: options)
+  }
+}
