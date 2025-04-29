@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet,  Image, ImageBackground } from 'rea
 import { width, height } from '../../global';
 import { ModalContext } from '../../context/modal.context';
 
+
 interface SerchBarPros {
     type: string | null;
 }

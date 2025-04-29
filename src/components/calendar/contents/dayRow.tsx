@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { width, height } from '../../../global';
 
+
 interface DayRowProps {
   days: (string | Date)[];
   month: number;
@@ -15,7 +16,6 @@ interface DayRowProps {
 const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches = {}, fontColor }) => {
   // groupedMatches에 기본값 {}를 할당하여 null 처리
   const today = new Date();
-  
   return (
     <View style={styles.weekRow}>
       {days.map((day, index) => (
@@ -38,7 +38,6 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
               {day instanceof Date ? day.getDate() : ''}
             </Text>
           </TouchableOpacity>
-          
           {/* 밑줄 이미지 렌더링 - 안전하게 처리 */}
           {day instanceof Date && (
             <Image
@@ -47,12 +46,10 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
               source={(() => {
                 try {
                   // 안전한 접근을 위한 처리
-                  if (!groupedMatches) return null;
-                  
+                  if (!groupedMatches) { return null; }
                   const dateString = day.toLocaleDateString('sv-SE');
                   const matchesForDay = groupedMatches[dateString] || [];
                   const matchCount = matchesForDay.length;
-                  
                   switch (matchCount) {
                     case 1:
                       return require('./../../../assets/calendar/underBar/1bar.png');

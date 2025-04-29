@@ -12,6 +12,7 @@ import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
 
+
 interface MatchPros {
   match: getMatchReqDto
 }

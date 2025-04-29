@@ -2,31 +2,35 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text,  TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import { useLogIn, useRefreshToken } from '../hooks/IAM.hook';
+import { hookLogIn, hookRefreshToken, useRefreshToken } from '../hooks/IAM.hook';
 import { width, height } from '../global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
+import { localData } from '../IAM/localData';
+import { LeagueContext } from '../context/league.context';
+import { MainContext } from '../context/main.context';
+import { MatchContext } from '../context/match.context';
+import { TeamContext } from '../context/team.context';
 
 const IAMScreen = () => {
   const {login, setLogin} = useContext(AuthContext);
+  const {setMainRes} = useContext(MainContext);
+  const {setTeamRes} = useContext(TeamContext);
+  const {setLeagueRes} = useContext(LeagueContext);
+  const {setMatchRes} = useContext(MatchContext);
   const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [id, setId] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
-  useRefreshToken();
-  useLogIn({id: loginInfo as string});
-
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
+  setLogin(false);
   const navigateMain = () => {
     navigationMain.navigate('MainScreen', undefined);
   };
-
   useEffect(() => {
-    if (login === true) {
-      setLogin(false);
-    }
-  }, []);
+    hookLogIn({id: loginInfo as string}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin)
+  },[loginInfo, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin]);
 
   useEffect(() => {
     if (login === true) {

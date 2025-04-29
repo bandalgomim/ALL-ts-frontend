@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet,  Image, ImageBackground } from 'react-native';
 import { width } from '../global';
+import FastImage from 'react-native-fast-image';
+
 
 interface TeamOrLogoPros {
     logo: string | null;
@@ -27,7 +29,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type }) => {
         source={req}
         style={[styles.logoView, { width:size }]}
       >
-        <Image
+        <FastImage
           resizeMode="contain"
           source={{ uri: logo as string}}
           style={{ width: size * 0.8, height: size * 0.8 }}

@@ -7,6 +7,7 @@ import { TeamPageParamList } from '../model/navigation.dto';
 import { width } from '../global';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
+
 interface IsSelectedPros {
     isSelected: boolean | null;
     teamId: number | null;
@@ -33,7 +34,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   const onPressStart = useCallback(async () => {
     setState(!state);
     if (teamId) {
-      
+
       await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
       navigateTeam(teamId);
     } else if (leagueId) {

@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { searchItem } from '../../model/searchIteam';
+import { searchTag } from '../../model/search_tag';
 import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -34,7 +34,7 @@ const SearchModal: React.FC = () => {
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
-  
+
   // 드래그 중인지 상태 추가
   const [isDragging, setIsDragging] = useState(false);
 
@@ -64,22 +64,41 @@ const SearchModal: React.FC = () => {
     }
 
     const lowerQuery = input.toLowerCase();
-    
-    const results = searchItem
-      .filter(t => t.keyword.some(k => {
-        const lowerK = k.toLowerCase();
-        
+
+    // 검색 결과 필터링
+    const filteredResults = searchTag
+      .filter(t => {
+        const lowerTag = t.tag.toLowerCase();
+
         // 첫 글자가 같은 경우
-        const startsWithQuery = lowerK.startsWith(lowerQuery);
-        
+        const startsWithQuery = lowerTag.startsWith(lowerQuery);
+
         // 연속된 3글자 이상 일치하는 경우
-        const hasThreeConsecutiveChars = lowerQuery.length >= 3 && lowerK.includes(lowerQuery);
-        
+        const hasThreeConsecutiveChars = lowerQuery.length >= 3 && lowerTag.includes(lowerQuery);
+
         return startsWithQuery || hasThreeConsecutiveChars;
-      }))
-      .map(t => ({ name: t.keyword[0], teamId: t.teamId, leagueId: t.leagueId }));
+      })
+      .map(t => ({ 
+        name: t.item_name, 
+        teamId: t.team_id ?? undefined, 
+        leagueId: t.league_id ?? undefined 
+      }));
+
+    // 중복 제거 로직 추가: item_name이 동일하면서 teamId 또는 leagueId가 같은 항목은 하나만 유지
+    const uniqueResults: filteredItems[] = [];
+    const seenItems = new Set<string>();
+
+    filteredResults.forEach(item => {
+      // teamId 또는 leagueId 기준으로 고유 키 생성
+      const key = `${item.name}_${item.teamId || ''}_${item.leagueId || ''}`;
       
-    setFilteredTeams(results);
+      if (!seenItems.has(key)) {
+        seenItems.add(key);
+        uniqueResults.push(item);
+      }
+    });
+
+    setFilteredTeams(uniqueResults);
   };
 
   const renderItem = ({ item }: { item: filteredItems }) => {
@@ -224,7 +243,7 @@ const SearchModal: React.FC = () => {
           <View style={{ width: '100%', height: '100%' }} />
         </TouchableWithoutFeedback>
       </Animated.View>
-      
+
       <Animated.View
         style={[
           styles.animatedContainer,
@@ -237,7 +256,7 @@ const SearchModal: React.FC = () => {
         >
           <View style={styles.handleBar} />
         </View>
-        
+
         <View style={styles.modalView}>
           <ImageBackground
             resizeMode="contain"
@@ -253,7 +272,7 @@ const SearchModal: React.FC = () => {
               style={styles.textInput}
             />
           </ImageBackground>
-          
+
           <View style={styles.resultsContainer}>
             {filteredTeams.length > 0 ? (
               <FlatList
@@ -269,7 +288,7 @@ const SearchModal: React.FC = () => {
                 }}
                 style={styles.flatList}
                 contentContainerStyle={styles.flatListContent}
-                showsVerticalScrollIndicator={false} 
+                showsVerticalScrollIndicator={false}
               />
             ) : (
               query ? (
@@ -284,8 +303,8 @@ const SearchModal: React.FC = () => {
             )}
           </View>
         </View>
-        
-        <View 
+
+        <View
           style={styles.dragBackground}
           {...modalPanResponder.panHandlers}
         />
@@ -301,10 +320,10 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     position: 'absolute',
-    left: width*0.05,
+    left: width * 0.05,
     right: 0,
     top: height * 0.2,
-    width: width*0.9,
+    width: width * 0.9,
     height: height * 0.65, // 0.6 → 0.65로 증가
     backgroundColor: 'white',
     borderRadius: 20,
@@ -393,7 +412,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-  }
+  },
 });
 
 export default React.memo(SearchModal);
