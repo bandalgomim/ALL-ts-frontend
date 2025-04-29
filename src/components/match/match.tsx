@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { getMatchReqDto, platform } from '../../model/match.dto';
@@ -57,10 +58,16 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             <View style={styles.teamLogoContainer}>
               <TeamOrLeagueLogo logo={match?.hometeamLogo} type={'big'} />
               <View style={styles.teamInfoContainer}>
+                {/* 배경 이미지를 teamInfoContainer 내부로 이동하고 absolute로 설정 */}
+                <Image
+                  resizeMode="contain"
+                  style={styles.whiteBackground}
+                  source={require('../../assets/match/white.png')}
+                />
                 <View style={styles.teamNameContainer}>
-                  <Text style={styles.fontWhiteBig}>{match.homeTeamInit}</Text>
+                  <Text style={styles.fontBlueBig}>{match.homeTeamInit}</Text>
                 </View>
-                <Text style={styles.fontWhiteSmall} numberOfLines={2}>
+                <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`.length > 22
                     ? `${match?.sportName}/${match?.homeLeagueName}`
                     : `${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`}
@@ -77,23 +84,23 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.fontWhiteYear}>
-              {match.matchDate ? match.matchDate.slice(0, 4) : '0000'}
-            </Text>
-            <Text style={styles.fontWhiteMonthDay}>
-              {match.matchDate
-                ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}`
-                : '0000'}
-            </Text>
-            <Text
-              style={[
-                styles.fontWhiteState,
-                match.matchState === 'live' && styles.fontLive,
-              ]}
-            >
-              {match?.matchState}
-            </Text>
+          <View style={styles.onAirContainer}>
+            <Text style={styles.onAirText}>replay</Text>
+            <View style={styles.platformContainer}>
+              <PlatformList
+                platformList={match.platform as platform[]}
+                type="replay"
+              />
+            </View>
+          </View>
+          <View style={styles.onAirContainer}>
+            <Text style={styles.onAirText}>highlight</Text>
+            <View style={styles.platformContainer}>
+              <PlatformList
+                platformList={match.platform as platform[]}
+                type="highlight"
+              />
+            </View>
           </View>
         </View>
         {/* Away Team */}
@@ -123,22 +130,29 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>replay</Text>
-            <View style={styles.platformContainer}>
-              <PlatformList
-                platformList={match.platform as platform[]}
-                type="replay"
-              />
-            </View>
+            <Image
+              resizeMode="contain"
+              style={{width: width * 0.5, height: height * 0.14, position: 'absolute', zIndex: 0, marginTop: -height * 0.026}}
+              source={require('../../assets/match/blue.png')}
+            />
+            <Text
+              style={[
+                styles.fontWhiteState,
+                match.matchState === 'live' && styles.fontLive,
+              ]}
+            >
+            {match?.matchState}
+            </Text>
+            <View style={styles.dateContainer}>
+            <Text style={styles.fontWhiteYear}>
+              {match.matchDate ? match.matchDate.slice(0, 4) : '0000'}
+            </Text>
+            <Text style={styles.fontWhiteMonthDay}>
+              {match.matchDate
+                ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}`
+                : '0000'}
+            </Text>
           </View>
-          <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>highlight</Text>
-            <View style={styles.platformContainer}>
-              <PlatformList
-                platformList={match.platform as platform[]}
-                type="highlight"
-              />
-            </View>
           </View>
         </View>
       </View>
@@ -178,6 +192,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   homeTeamContainer: {
+    borderWidth: 0,
     height: height * 0.86,
     width: '50%',
     backgroundColor: '#30397A',
@@ -226,8 +241,8 @@ const styles = StyleSheet.create({
   },
   fontWhiteYear: {
     fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
     fontSize: width * 0.16,
@@ -236,8 +251,8 @@ const styles = StyleSheet.create({
   },
   fontWhiteMonthDay: {
     fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
     fontSize: width * 0.13,
@@ -253,7 +268,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontSize: width * 0.2,
     width: width * 0.5,
-    marginTop: -height * 0.017,
+    marginTop: -height * 0.0095,
     textAlign: 'center',
   },
   fontLive: {
@@ -304,6 +319,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: width * 0.5,
     marginTop: height * 0.03,
+  },
+  whiteBackground: {
+    width: width * 0.63,
+    height: height * 0.125,
+    position: 'absolute',
+    zIndex: -1,
   },
 });
 
