@@ -89,6 +89,7 @@ export default function TeamCalendar() {
         ]}
         source={require('./../../assets/calendar/teamBackground_s-test.png')}
       />
+      <View style={{marginTop: height * 0.005}}>
       <Header
         year={year}
         month={month}
@@ -102,6 +103,7 @@ export default function TeamCalendar() {
           mode={mode}
           setMode={setMode}
         />
+        
         <Contents
           monthDates = {monthDates}
           weekDates= {weekDates}
@@ -112,6 +114,7 @@ export default function TeamCalendar() {
           goToPrevious={handlePrevious}
           goToNext={handleNext}
         />
+        </View>
       </View>
 
       <View style={

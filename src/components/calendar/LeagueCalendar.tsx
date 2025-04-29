@@ -87,6 +87,7 @@ export default function LeagueCalendar() {
         ]}
         source={require('./../../assets/calendar/leagueBackground_s.png')}
       />
+      <View style={{marginTop: height * 0.005}}>
       <Header
         year={currentDate.getFullYear()}
         month={currentDate.getMonth()}
@@ -110,6 +111,7 @@ export default function LeagueCalendar() {
           goToPrevious={handlePrevious}
           goToNext={handleNext}
         />
+        </View>
       </View>
       <View style={styles.matchListContainer}>
         <MatchList

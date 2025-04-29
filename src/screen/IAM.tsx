@@ -24,20 +24,15 @@ const IAMScreen = () => {
   const [id, setId] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
-  setLogin(false);
   const navigateMain = () => {
     navigationMain.navigate('MainScreen', undefined);
   };
-  useEffect(() => {
-    hookLogIn({id: loginInfo as string}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin)
-  },[loginInfo, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin]);
 
-  useEffect(() => {
-    if (login === true) {
-      navigateMain();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
+  const handlePress = () => {
+    hookLogIn({id: id}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin);
+    navigateMain()
+  }
+
   const handleSearch = useCallback((input: string) => {
     setId(input);
   }, [setId]);
@@ -62,7 +57,7 @@ const IAMScreen = () => {
           onChangeText={handleSearch}
           style={[styles.textInput, { fontSize: width * 0.07, width:width * 0.5, height:height * 0.06 }]}
         />
-        <TouchableOpacity onPress={() => { setLoginInfo(id); }} // 버튼 클릭 시 실행되는 함수
+        <TouchableOpacity onPress={handlePress} // 버튼 클릭 시 실행되는 함수
         >
           <Icon
             name="login"  // 아이콘 이름 (Ionicons의 close 아이콘)

@@ -12,9 +12,8 @@ import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
 
-
 interface MatchPros {
-  match: getMatchReqDto
+  match: getMatchReqDto;
 }
 
 const Match: React.FC<MatchPros> = ({ match }) => {
@@ -56,18 +55,15 @@ const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={styles.homeTeamContainer}>
           <TouchableOpacity onPress={() => navigateTeam(match.homeTeamId as number)}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo
-                logo={match?.hometeamLogo}
-                type={'big'}
-              />
+              <TeamOrLeagueLogo logo={match?.hometeamLogo} type={'big'} />
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
-                  <Text style={styles.fontWhiteBig}>
-                    {match.homeTeamInit}
-                  </Text>
+                  <Text style={styles.fontWhiteBig}>{match.homeTeamInit}</Text>
                 </View>
-                <Text style={styles.fontWhiteSmall}>
-                  {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`}
+                <Text style={styles.fontWhiteSmall} numberOfLines={2}>
+                  {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`.length > 22
+                    ? `${match?.sportName}/${match?.homeLeagueName}`
+                    : `${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`}
                 </Text>
               </View>
             </View>
@@ -75,7 +71,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
           <View style={styles.scoreContainer}>
             <TouchableOpacity onPress={onPressHomeTeamScore}>
               <MatchScore
-                score={homeTeamScore === true ? match.homeTeamScore as number : '?'}
+                score={homeTeamScore === true ? (match.homeTeamScore as number) : '?'}
                 color={'blue'}
                 type={'big'}
               />
@@ -86,12 +82,16 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               {match.matchDate ? match.matchDate.slice(0, 4) : '0000'}
             </Text>
             <Text style={styles.fontWhiteMonthDay}>
-              {match.matchDate ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}` : '0000'}
+              {match.matchDate
+                ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}`
+                : '0000'}
             </Text>
-            <Text style={[
-              styles.fontWhiteState,
-              match.matchState === 'live' && styles.fontLive,
-            ]}>
+            <Text
+              style={[
+                styles.fontWhiteState,
+                match.matchState === 'live' && styles.fontLive,
+              ]}
+            >
               {match?.matchState}
             </Text>
           </View>
@@ -100,18 +100,15 @@ const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={styles.awayTeamContainer}>
           <TouchableOpacity onPress={() => navigateTeam(match.awayTeamId as number)}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo
-                logo={match?.awayteamLogo}
-                type={'big'}
-              />
+              <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} />
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
-                  <Text style={styles.fontBlueBig}>
-                    {match.awayTeamInit}
-                  </Text>
+                  <Text style={styles.fontBlueBig}>{match.awayTeamInit}</Text>
                 </View>
-                <Text style={styles.fontBlueSmall}>
-                  {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`}
+                <Text style={styles.fontBlueSmall} numberOfLines={2}>
+                  {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`.length > 22
+                    ? `${match?.sportName}/${match?.awayLeagueName}`
+                    : `${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`}
                 </Text>
               </View>
             </View>
@@ -119,31 +116,27 @@ const Match: React.FC<MatchPros> = ({ match }) => {
           <View style={styles.scoreContainer}>
             <TouchableOpacity onPress={onPressAwayTeamScore}>
               <MatchScore
-                score={awayTeamScore === true ? match.awayTeamScore as number : '?'}
+                score={awayTeamScore === true ? (match.awayTeamScore as number) : '?'}
                 color={'white'}
                 type={'big'}
               />
             </TouchableOpacity>
           </View>
           <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>
-              replay
-            </Text>
+            <Text style={styles.onAirText}>replay</Text>
             <View style={styles.platformContainer}>
               <PlatformList
                 platformList={match.platform as platform[]}
-                type ="replay"
+                type="replay"
               />
             </View>
           </View>
           <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>
-              highlight
-            </Text>
+            <Text style={styles.onAirText}>highlight</Text>
             <View style={styles.platformContainer}>
               <PlatformList
                 platformList={match.platform as platform[]}
-                type ="highlight"
+                type="highlight"
               />
             </View>
           </View>
@@ -185,14 +178,14 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   homeTeamContainer: {
-    height: '100%',
+    height: height * 0.86,
     width: '50%',
     backgroundColor: '#30397A',
     flexDirection: 'column',
     alignItems: 'center',
   },
   awayTeamContainer: {
-    height: '100%',
+    height: height * 0.86,
     width: '50%',
     backgroundColor: 'white',
     flexDirection: 'column',

@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   },
   resultText: {
     fontSize: width * 0.07,
-    width: width * 0.70, // 0.50 → 0.70으로 증가하여 더 넓게
+    width: width * 0.7, // 0.50 → 0.70으로 증가하여 더 넓게
     textAlign: 'left',
     marginVertical: 8, // 약간 더 넓게
   },
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     fontFamily: 'sb-it-ver1',
     color: '#999',
     fontSize: width * 0.05,
-    marginTop: 10,
+    marginTop: height * 0.03,
     textAlign: 'center',
   },
   emptyResultContainer: {

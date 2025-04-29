@@ -13,11 +13,11 @@ import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
-import { localData } from '../IAM/localData';
+import { hookRefreshToken } from '../hooks/IAM.hook';
 
 const MainScreen = () => {
   const {mainRes} = useContext(MainContext);
-  const {setLogin} = useContext(AuthContext);
+  const {login, setLogin} = useContext(AuthContext);
   useMain('GET', null);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
@@ -28,15 +28,10 @@ const MainScreen = () => {
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
 
   useEffect(() => {
-    (async () => {
-      const refreshToken = await localData.get('RefreshToken');
-      if (refreshToken) {
-        setLogin(true);
-      } else {
-        setLogin(false);
-        navigateIAM();
-      }
-    })();
+    hookRefreshToken(setLogin);
+    if (login === false) {
+      navigateIAM();
+    }
   }, []);
 
 

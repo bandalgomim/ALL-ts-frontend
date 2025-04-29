@@ -23,28 +23,53 @@ const TeamHeader = () => {
         </View>
         <View style={[styles.teamInfo, {marginRight: -width * 0.07}]}>
           <View style={[styles.teamInfoTextContainer ]}>
-            {teamRes?.data?.team?.teamName && teamRes?.data?.team?.teamName.length < 10
+            {teamRes?.data?.team?.teamName && teamRes?.data?.team?.teamName.length < 11
               ? <Text style={[styles.teamInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{teamRes.data?.team.teamName}</Text>
               : <View>
-                  {teamRes.data?.team?.teamName?.split(' ').length > 1
-                  ? <>
-                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
-                    </>
-                  : <>
-                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{null}</Text>
-                      <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                    </>}
+                  {teamRes.data?.team?.teamName?.split(' ').length === 3 ? (() => {
+                    const [a, b, c] = teamRes.data.team.teamName.split(' ');
+                    const first = `${a} ${b}`;
+                    const second = `${b} ${c}`;
+                    // 두 조합의 길이 비교
+                    if (first.length <= second.length) {
+                      return (
+                        <>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{first}</Text>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{c}</Text>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{a}</Text>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{second}</Text>
+                        </>
+                      );
+                    }
+                  })() : (
+                    // 기존 2단어 이하 처리
+                    teamRes.data?.team?.teamName?.split(' ').length > 1
+                      ? <>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
+                        </>
+                      : <>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{null}</Text>
+                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                        </>
+                  )}
                 </View>}
 
-            <Text style={[styles.teamInfoEtc, {fontSize: width * 0.055, width: width * 0.5}]}>{`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}</Text>
+            <Text style={[styles.teamInfoEtc, {fontSize: width * 0.055, width: width * 0.55, marginTop: height*0.005}]}>{`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}</Text>
           </View>
-          <IsSelected
-             isSelected={teamRes.data?.team?.isTeamSelected}
-             teamId={teamRes.data?.team?.teamId}
-             leagueId={null}
-             matchId={null}
-          />
+          <View >
+            <IsSelected
+              isSelected={teamRes.data?.team?.isTeamSelected}
+              teamId={teamRes.data?.team?.teamId}
+              leagueId={null}
+              matchId={null}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -73,6 +98,7 @@ const styles = StyleSheet.create({
   teamInfoTextContainer: {
     alignItems: 'flex-end',
     justifyContent: 'center',
+    marginBottom: -height * 0.015,
     transform: [{ rotate: '-7deg' }],
     //
   },

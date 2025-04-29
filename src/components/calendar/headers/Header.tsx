@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.023,
   },
   arrow: {
-    height: height * 0.05,
+    height: height * 0.043,
     width: width * 0.1,
     fontSize: width * 0.067,
   },
