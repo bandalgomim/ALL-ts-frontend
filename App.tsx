@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StackNavigator from './src/navigation/stackNavigater';
 import { initializeNotifications } from './src/notification/initializeNotifications';
+import { AuthContext } from './src/context/auth.context';
+import { hookRefreshToken } from './src/hooks/IAM.hook';
 
 function App(): React.JSX.Element {
+  const {setLogin} = useContext(AuthContext);
   useEffect(() => {
-    const setup = async () => {
       // 알림 초기화
-      await initializeNotifications();
-
-    };
-    setup();
+      initializeNotifications();
+      hookRefreshToken(setLogin);
   }, []);
   return (
     <>

@@ -46,6 +46,7 @@ const LeageTeamListBar = () => {
           renderItem={renderItem}
           showsVerticalScrollIndicator={false} // 수직 스크롤바 숨기기 (필요한 경우)
           showsHorizontalScrollIndicator={false}
+          directionalLockEnabled={true} // ← 추가: 가로/세로 한 방향만 스크롤 허용
         />
       </ImageBackground>
     </View>

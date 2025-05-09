@@ -25,7 +25,8 @@ export const localData = {
             await EncryptedStorage.removeItem(key);
             console.log('데이터 삭제 완료');
           } catch (error) {
-            console.error('데이터 삭제 실패:', error);
+
+            console.error('데이터 삭제 실패:', key, error);
           }
     },
 };

@@ -144,14 +144,12 @@ const Match: React.FC<MatchPros> = ({ match }) => {
             {match?.matchState}
             </Text>
             <View style={styles.dateContainer}>
-            <Text style={styles.fontWhiteYear}>
-              {match.matchDate ? match.matchDate.slice(0, 4) : '0000'}
-            </Text>
-            <Text style={styles.fontWhiteMonthDay}>
-              {match.matchDate
-                ? `${match.matchDate.slice(5, 7)}/${match.matchDate.slice(8, 10)}`
-                : '0000'}
-            </Text>
+              <Text style={styles.fontDate}>
+                {match.matchDate ? match.matchDate.split("T")[0] : '0000'}
+              </Text>
+              <Text style={styles.fontTime}>
+                {match.matchDate ? match.matchDate.split("T")[1].slice(0, 8) : '0000'}
+              </Text>
           </View>
           </View>
         </View>
@@ -239,17 +237,23 @@ const styles = StyleSheet.create({
     marginTop: -height * 0.03,
     textAlign: 'center',
   },
-  fontWhiteYear: {
+  dateContainer: {
+    alignItems: 'center',
+    width: width * 0.5,
+    marginTop: height * 0.012,
+  },
+  fontDate: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
-    fontSize: width * 0.16,
+    fontSize: width * 0.09,
     width: width * 0.5,
+    marginLeft: width * 0.0125,
     textAlign: 'center',
   },
-  fontWhiteMonthDay: {
+  fontTime: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4',
@@ -257,7 +261,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontSize: width * 0.13,
     width: width * 0.5,
-    marginTop: -height * 0.017,
+    marginTop: -height * 0.014,
+    marginLeft: -width * 0.0125,
     textAlign: 'center',
   },
   fontWhiteState: {
@@ -277,11 +282,7 @@ const styles = StyleSheet.create({
   scoreContainer: {
     marginTop: height * 0.08,
   },
-  dateContainer: {
-    alignItems: 'center',
-    width: width * 0.5,
-    marginTop: height * 0.012,
-  },
+
   fontBlueBig: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',

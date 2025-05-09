@@ -2,13 +2,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text,  TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import { hookLogIn, hookRefreshToken, useRefreshToken } from '../hooks/IAM.hook';
+import { hookLogIn } from '../hooks/IAM.hook';
 import { width, height } from '../global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
-import { localData } from '../IAM/localData';
 import { LeagueContext } from '../context/league.context';
 import { MainContext } from '../context/main.context';
 import { MatchContext } from '../context/match.context';
@@ -25,13 +24,18 @@ const IAMScreen = () => {
   const [isFocused, setIsFocused] = useState(false);
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
-    navigationMain.navigate('MainScreen', undefined);
+    navigationMain.replace('MainScreen', undefined);
   };
 
   const handlePress = () => {
     hookLogIn({id: id}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin);
-    navigateMain()
   }
+
+  useEffect(() => {
+    if (login === true) {
+      navigateMain();
+    }
+  }, [login]);
 
   const handleSearch = useCallback((input: string) => {
     setId(input);

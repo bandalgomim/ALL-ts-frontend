@@ -60,6 +60,14 @@ export const commonIAMHook = async (
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
+        console.log('authToken', authToken);
+        console.log('refreshToken', refreshToken);
+        console.log('data', data);
+        console.log('method', method);
+        console.log('url', url);
+        if (refreshToken === null && data === null) {
+            loginState(false);
+        }
         const response = await axios({
             method: method,
             url: url,  // 올바른 URL 설정
@@ -69,17 +77,21 @@ export const commonIAMHook = async (
                 'RefreshToken': refreshToken,
             },
           });
+          console.log('response', response);
           if (response.headers.authorization) {
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
+            console.log("test1")
             loginState(true);
           } else {
+            console.log("test2")
             loginState(false);
           }
 
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response?.data.includes('refresh token unmatched')) {
+                console.log("test3")
                 await localData.delete('Authorization');
                 await localData.delete('RefreshToken');
                 loginState(false);

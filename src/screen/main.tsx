@@ -13,7 +13,8 @@ import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
-import { hookRefreshToken } from '../hooks/IAM.hook';
+import { getmainResDto, leagueDto, teamDto } from '../model/main.dto';
+
 
 const MainScreen = () => {
   const {mainRes} = useContext(MainContext);
@@ -24,17 +25,17 @@ const MainScreen = () => {
   const [render, setRender] = useState(false);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
-    navigationIAM.navigate('IAMScreen', undefined);
+    navigationIAM.replace('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
 
   useEffect(() => {
-    hookRefreshToken(setLogin);
+    if (login === undefined) {
+      return;
+    }
     if (login === false) {
       navigateIAM();
     }
-  }, []);
-
-
+  }, [login]);
 
   useEffect(() => {
     if (prevLoading === true && mainRes.loading === false) {
@@ -64,11 +65,11 @@ const MainScreen = () => {
       </View>
       <View style={{marginTop: height * 0.005}}>
         <TeamAndLeagueListBar
-          teamAndLeagueList={mainRes?.data?.teamAndLeagueList}
+          teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
         />
       </View>
       <MainCalendar
-        data={mainRes?.data}
+        data={mainRes?.data as getmainResDto}
       />
     </View>
   );

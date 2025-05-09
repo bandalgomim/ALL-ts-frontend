@@ -5,14 +5,23 @@ import { width, height } from '../../global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../../model/navigation.dto';
+import { AuthContext } from '../../context/auth.context';
+import { localData } from '../../IAM/localData';
 
 export const MainHeader = () => {
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+  const {setLogin} = useContext(AuthContext);
+  const onPress = useCallback(async () => {
+    await localData.delete('RefreshToken');
+    await localData.delete('Authorization');
+    setLogin(false);
+    navigationIAM.replace('IAMScreen', undefined);
+  }, []);
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginBottom: height * 0.01}]}>
       <TouchableOpacity style={[styles.myPage,{}]}>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={()=>navigationIAM.navigate('IAMScreen')}>
+      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPress}>
         <Icon name={'person'} size={30} color={'white'} />
         <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
       </TouchableOpacity>
