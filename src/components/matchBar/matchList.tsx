@@ -32,7 +32,7 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
   const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
     return (
       <View style={{ marginBottom: height * 0.01 }}>
-        <View style={{ flexDirection: "row", height: height * 0.027 }}>
+        <View style={{ flexDirection: "row", }}>
           <View style={[styles.frontDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
           <View>
             <Text style={[styles.dateText, { color: color === 'white' ? 'white' : '#30397A' }]}>

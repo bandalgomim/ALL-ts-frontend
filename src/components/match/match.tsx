@@ -84,18 +84,14 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>replay</Text>
-            <View style={styles.platformContainer}>
+          <View style={styles.leftContainer}>
+            <View style={styles.platformListContainer}>
               <PlatformList
                 platformList={match.platform as platform[]}
                 type="replay"
               />
             </View>
-          </View>
-          <View style={styles.onAirContainer}>
-            <Text style={styles.onAirText}>highlight</Text>
-            <View style={styles.platformContainer}>
+            <View style={styles.platformListContainer}>
               <PlatformList
                 platformList={match.platform as platform[]}
                 type="highlight"
@@ -129,7 +125,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.onAirContainer}>
+          <View style={styles.rightContainer}>
             <Image
               resizeMode="contain"
               style={{width: width * 0.5, height: height * 0.14, position: 'absolute', zIndex: 0, marginTop: -height * 0.026}}
@@ -150,7 +146,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               <Text style={styles.fontTime}>
                 {match.matchDate ? match.matchDate.split("T")[1].slice(0, 8) : '0000'}
               </Text>
-          </View>
+            </View>
           </View>
         </View>
       </View>
@@ -303,7 +299,18 @@ const styles = StyleSheet.create({
     marginTop: -height * 0.03,
     textAlign: 'center',
   },
-  onAirContainer: {
+  leftContainer: {
+    alignItems: 'center',
+    width: width * 0.5,
+    height: height * 0.25,
+    marginTop: height * 0.03,
+  },
+  platformListContainer: {
+    alignItems: 'center',
+    width: width * 0.5,
+    height: height * 0.1,
+  },
+  rightContainer: {
     alignItems: 'center',
     width: width * 0.5,
     marginTop: height * 0.012,
