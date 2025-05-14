@@ -5,6 +5,11 @@ export interface postSignUpReqDto {
     icon: string
 }
 
+export interface patchFcmTokenReqDto {
+    token: string
+}
+
+
 export interface getLoginReqDto {
     id: string,
 }

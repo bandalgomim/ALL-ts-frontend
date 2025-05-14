@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { getLoginReqDto, postSignUpReqDto } from '../model/IAM.dto';
+import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '../model/IAM.dto';
 import axios from 'axios';
 import { localData } from '../IAM/localData';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
@@ -51,22 +51,30 @@ export const hookRefreshToken = async (
     }
 };
 
+export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
+    console.log("hookFcmToken", data)
+    try {
+        const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
+        await commonIAMHook('PATCH', url, data, null);
+    } catch (error) {
+        console.error('hookFcmToken 요청 실패:', error);
+    }
+};
+
 
 export const commonIAMHook = async (
     method: string,
     url: string,
     data: Object | null = null,
-    loginState: Function) => {
+    loginState: Function | null) => {
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
-        console.log('authToken', authToken);
-        console.log('refreshToken', refreshToken);
-        console.log('data', data);
-        console.log('method', method);
-        console.log('url', url);
+        console.log("data", data)
         if (refreshToken === null && data === null) {
-            loginState(false);
+            if (loginState) {
+                loginState(false);
+            }
         }
         const response = await axios({
             method: method,
@@ -82,10 +90,14 @@ export const commonIAMHook = async (
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
             console.log("test1")
-            loginState(true);
+            if (loginState) {
+                loginState(true);
+            }
           } else {
             console.log("test2")
-            loginState(false);
+            if (loginState) {
+                loginState(true);
+            }
           }
 
     } catch (error) {
@@ -94,7 +106,9 @@ export const commonIAMHook = async (
                 console.log("test3")
                 await localData.delete('Authorization');
                 await localData.delete('RefreshToken');
-                loginState(false);
+                if (loginState) {
+                    loginState(true);
+                }
             }
         } else {
             console.log('Error:', error);

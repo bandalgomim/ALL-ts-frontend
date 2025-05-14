@@ -26,7 +26,7 @@ export const MainHeader = () => {
         <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
       </TouchableOpacity>
     </View>
-  );
+  );z
 };
 
 const styles = StyleSheet.create({
