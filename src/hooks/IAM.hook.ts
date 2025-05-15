@@ -4,7 +4,8 @@ import axios from 'axios';
 import { localData } from '../IAM/localData';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
 import { AuthContext } from '../context/auth.context';
-import messaging from '@react-native-firebase/messaging';
+import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
+import { getApp } from '@react-native-firebase/app';
 
 export const useSignUp = (data: postSignUpReqDto) => {
     const {setLogin} = useContext(AuthContext);
@@ -39,10 +40,17 @@ export const hookLogIn = async (
     // API 호출
     const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/loginTest';
     await commonIAMHook('post', url, data, setLogin);
-    const fcmToken = await messaging().getToken();
-    await hookFcmToken({'token': fcmToken});
 
+    try {
+        // iOS에서 FCM 등록
+        const fcmToken = await getToken(getMessaging(getApp()));
+        console.log('fcmToken', fcmToken);
+        await hookFcmToken({'token': fcmToken});
+    } catch (e) {
+        console.error('FCM 토큰 에러:', e);
+    }
 };
+
 export const hookRefreshToken = async (
     setLogin: (login: any) => void
 ) => {

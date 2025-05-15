@@ -1,20 +1,10 @@
 import notifee, { AndroidImportance, AuthorizationStatus, EventType } from '@notifee/react-native';
 import { Linking, Platform } from 'react-native';
-import messaging from '@react-native-firebase/messaging';
-import { localData } from '../IAM/localData';
-import { hookFcmToken } from '../hooks/IAM.hook';
+import { getInitialNotification, getMessaging, onNotificationOpenedApp } from '@react-native-firebase/messaging';
+import { getApp } from '@react-native-firebase/app';
 
 export async function initializeNotifications() {
   try {
-    const localFcmToken = await localData.get('fcmToken');
-    const fcmToken = await messaging().getToken();
-    if (!localFcmToken || localFcmToken !== fcmToken) {
-      console.log('FCM 토큰 없음:', fcmToken);
-      await hookFcmToken({'token': fcmToken});
-      localData.set('fcmToken', fcmToken);
-    } else {
-      console.log('FCM 토큰 있음:', localFcmToken);
-    }
 
     // iOS와 Android 모두를 위한 권한 요청
     const settings = await notifee.requestPermission({
@@ -98,13 +88,14 @@ export async function initializeNotifications() {
       }
     }
   });
-  messaging().onNotificationOpenedApp(remoteMessage => {
+  onNotificationOpenedApp(getMessaging(getApp()), remoteMessage => {
     const { screen, matchId } = remoteMessage.data || {};
     const deepLink = `myapp://${screen}/${matchId}`;
     console.log('딥링크 실행:', deepLink);
     Linking.openURL(deepLink);
   });
-  messaging().getInitialNotification().then(remoteMessage => {
+  
+  getInitialNotification(getMessaging(getApp())).then(remoteMessage => {
     if (remoteMessage) {
       const { screen, matchId } = remoteMessage.data || {};
       const deepLink = `myapp://${screen}/${matchId}`;

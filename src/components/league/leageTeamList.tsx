@@ -7,7 +7,7 @@ import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
 import { LeagueContext } from '../../context/league.context';
-
+import DraggableFlatList from 'react-native-draggable-flatlist';
 const LeageTeamListBar = () => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const {leagueRes} = useContext(LeagueContext);
@@ -38,11 +38,11 @@ const LeageTeamListBar = () => {
         style={[styles.ImageBackground, {width:width, height: width * 0.32 }]}
         source={ require('./../../assets/league/teamList.png')}
       >
-        <FlatList
+        <DraggableFlatList
           style={[styles.scrollView, {width: width * 0.8}]}
           data={leagueRes.data.teamList}
           horizontal={true}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item: teamDto, index: number) => index.toString()}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false} // 수직 스크롤바 숨기기 (필요한 경우)
           showsHorizontalScrollIndicator={false}

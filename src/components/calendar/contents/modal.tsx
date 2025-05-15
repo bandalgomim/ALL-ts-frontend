@@ -278,6 +278,7 @@ const styles = StyleSheet.create({
   // MatchList를 감싸는 컨테이너 추가
   matchListWrapper: {
     width: width * 0.95, // 약간의 여백을 두고 중앙 정렬
+    height: height * 0.385,
     alignSelf: 'center',
   },
   emptyContainer: {
