@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, Image, Text, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
@@ -10,12 +10,21 @@ import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import Logo from '../logo';
 
-
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const { leagueRes } = useContext(LeagueContext);
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
+
+  useEffect(() => {
+    const id = animatedHeight.addListener(({ value }) => {
+      // opacity 계산식과 동일하게 로그 출력
+      const opacity = 0.05 + (1 - 0.05) * value; // outputRange: [0.05, 1]
+      console.log('animatedHeight:', value, 'opacity:', opacity);
+    });
+    return () => animatedHeight.removeListener(id);
+  }, [animatedHeight]);
+
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -66,33 +75,25 @@ export default function LeagueCalendar() {
     [handlePrevious, handleNext]
   );
   // MatchList 스크롤 이벤트 핸들러
-    const handleMatchListScroll = Animated.event(
-      [{ nativeEvent: { contentOffset: { y: animatedHeight } } }],
-      {
-        useNativeDriver: false,
-        listener: (event) => {
-          // 스크롤 위치에 따라 애니메이션 값 조정
-          const y = event.nativeEvent.contentOffset.y;
-          // y값을 0~100 사이에서 1~0으로 매핑 (접힘/펼침)
-          animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
-        }
-      }
-    );
-  
-    // calendarView의 높이/스케일 등 애니메이션 스타일
-    const calendarAnimatedStyle = {
-      height: animatedHeight.interpolate({
-        inputRange: [0, 1],
-        outputRange: mode === 'm' ? [height*0.02, 350] : [height*0.02, 170], // 접힘/펼침 높이(px) 원하는 값으로 조정
-        extrapolate: 'clamp',
-      }),
-      opacity: animatedHeight.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-      }),
-      // transform 등 추가 가능
-    };
+  const handleMatchListScroll = (event) => {
+    const y = event.nativeEvent.contentOffset.y;
+    animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
+  };
+
+  // calendarView의 높이/스케일 등 애니메이션 스타일
+  const calendarAnimatedStyle = {
+    height: animatedHeight.interpolate({
+      inputRange: [0, 1],
+      outputRange: mode === 'm' ? [height * 0.02, 350] : [height * 0.02, 170], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      extrapolate: 'clamp',
+    }),
+    opacity: animatedHeight.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.1, 1], // 완전히 사라지지 않게
+      extrapolate: 'clamp',
+    }),
+    // transform 등 추가 가능
+  };
   return (
     <View
       style={[
@@ -103,51 +104,60 @@ export default function LeagueCalendar() {
       ]}
       {...panResponder.panHandlers} // 스와이프 핸들러 추가
     >
-      <Animated.View style={[styles.calendarView, calendarAnimatedStyle]}>
-      <Image
-        resizeMode="contain"
+      <Animated.View
         style={[
-          styles.leagueBackground,
-          styles.leagueBackgroundMonth,
-          { opacity: mode === 'm' ? 1 : 0 }
+          styles.calendarView,
+          calendarAnimatedStyle,
+          // opacity가 0에 가까우면 아예 렌더링하지 않음
+          animatedHeight.__getValue && animatedHeight.__getValue() < 0.01
+            ? { display: 'none' }
+            : {}
         ]}
-        source={require('./../../assets/calendar/leagueBackground.png')}
-      />
-      <Image
-        resizeMode="contain"
-        style={[
-          styles.leagueBackground,
-          styles.leagueBackgroundWeek,
-          { opacity: mode === 'w' ? 1 : 0 }
-        ]}
-        source={require('./../../assets/calendar/leagueBackground_s.png')}
-      />
-      <View style={{marginTop: height * 0.005}}>
-      <Header
-        year={currentDate.getFullYear()}
-        month={currentDate.getMonth()}
-        type={'league'}
-        goToPrevious={handlePrevious}
-        goToNext={handleNext}
-      />
-      <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
-        <Mode
-          type={'league'}
-          mode={mode}
-          setMode={setMode}
+      >
+        <Image
+          resizeMode="contain"
+          style={[
+            styles.leagueBackground,
+            styles.leagueBackgroundMonth,
+            { opacity: mode === 'm' ? 1 : 0 }
+          ]}
+          source={require('./../../assets/calendar/leagueBackground.png')}
         />
-        <Contents
-          monthDates={monthDates}
-          weekDates={weekDates}
-          month={currentDate.getMonth()}
-          color={'white'}
-          mode={mode}
-          matchList={leagueRes.data.matchList}
-          goToPrevious={handlePrevious}
-          goToNext={handleNext}
+        <Image
+          resizeMode="contain"
+          style={[
+            styles.leagueBackground,
+            styles.leagueBackgroundWeek,
+            { opacity: mode === 'w' ? 1 : 0 }
+          ]}
+          source={require('./../../assets/calendar/leagueBackground_s.png')}
         />
+        <View style={{ marginTop: height * 0.005 }}>
+          <Header
+            year={currentDate.getFullYear()}
+            month={currentDate.getMonth()}
+            type={'league'}
+            goToPrevious={handlePrevious}
+            goToNext={handleNext}
+          />
+          <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
+            <Mode
+              type={'league'}
+              mode={mode}
+              setMode={setMode}
+            />
+            <Contents
+              monthDates={monthDates}
+              weekDates={weekDates}
+              month={currentDate.getMonth()}
+              color={'white'}
+              mode={mode}
+              matchList={leagueRes.data.matchList}
+              goToPrevious={handlePrevious}
+              goToNext={handleNext}
+            />
+          </View>
         </View>
-      </View>
       </Animated.View>
       <View style={styles.matchListContainer}>
         <MatchList
@@ -157,7 +167,7 @@ export default function LeagueCalendar() {
           scrollEventThrottle={16}
         />
       </View>
-      <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 0.2}]}>
+      <View style={[styles.logo, { bottom: mode === 'w' ? -height * 0.3013 : -height * 0.107 }, { opacity: mode === 'w' ? 0.2 : 0.2 }]}>
         <Logo color={'blue'} />
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>

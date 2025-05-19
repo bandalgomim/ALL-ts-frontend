@@ -8,8 +8,7 @@ interface ContentsProps {
   matchList: matchListDto,
   color: string;
   onScroll?: (event: any) => void;           // 추가
-  scrollEventThrottle?: number;              // 추가
-  scrollEnabled?: boolean;                   // 추가
+  scrollEventThrottle?: number;              // 추가              // 추가
 }
 
 const MatchList: React.FC<ContentsProps> = ({
@@ -17,7 +16,6 @@ const MatchList: React.FC<ContentsProps> = ({
   color,
   onScroll,
   scrollEventThrottle = 16,                  // 기본값 설정
-  scrollEnabled = true,                      // 기본값 설정
 }) => {
   const flatListRef = useRef<FlatList>(null);
 
@@ -68,7 +66,6 @@ const MatchList: React.FC<ContentsProps> = ({
       keyExtractor={(item, index) => `match-group-${index}-${item[0]?.matchId || index}`}
       onScroll={onScroll}                         // 추가
       scrollEventThrottle={scrollEventThrottle}   // 추가
-      scrollEnabled={scrollEnabled}               // 추가
     />
   );
 };

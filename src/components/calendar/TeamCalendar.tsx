@@ -69,18 +69,10 @@ export default function TeamCalendar() {
   );
 
   // MatchList 스크롤 이벤트 핸들러
-  const handleMatchListScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: animatedHeight } } }],
-    {
-      useNativeDriver: false,
-      listener: (event) => {
-        // 스크롤 위치에 따라 애니메이션 값 조정
-        const y = event.nativeEvent.contentOffset.y;
-        // y값을 0~100 사이에서 1~0으로 매핑 (접힘/펼침)
-        animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 200)));
-      }
-    }
-  );
+  const handleMatchListScroll = (event) => {
+    const y = event.nativeEvent.contentOffset.y;
+    animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
+  };
 
   // calendarView의 높이/스케일 등 애니메이션 스타일
   const calendarAnimatedStyle = {
@@ -90,8 +82,8 @@ export default function TeamCalendar() {
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, 1],
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.1, 1], // 완전히 사라지지 않게
       extrapolate: 'clamp',
     }),
     // transform 등 추가 가능

@@ -21,6 +21,8 @@ interface ContentsProps {
 const Contents: React.FC<ContentsProps> = ({
   monthDates, weekDates, month, color, mode, matchList, goToPrevious, goToNext
 }) => {
+
+  console.log('Contents.tsx');
   const {setModalVisible, setModalContents} = useContext(ModalContext);
   const groupedMatches = useMemo(() =>
     matchList,[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
