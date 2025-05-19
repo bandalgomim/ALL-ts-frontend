@@ -75,53 +75,54 @@ export default function TeamCalendar() {
       ]}
       {...panResponder.panHandlers}
     >
-      <Image
-        resizeMode="contain"
-        style={[
-          styles.teamBackground,
-          mode === 'm'
-            ? styles.teamBackgroundMonth
-            : { opacity: 0 }
-        ]}
-        source={require('./../../assets/calendar/teamBackground-test.png')}
-      />
-      <Image
-        resizeMode="contain"
-        style={[
-          styles.teamBackground,
-          mode === 'w'
-            ? styles.teamBackgroundWeek
-            : { opacity: 0 }
-        ]}
-        source={require('./../../assets/calendar/teamBackground_s-test.png')}
-      />
-      <View style={{marginTop: height * 0.005}}>
-        <Header
-          year={year}
-          month={month}
-          type={'team'}
-          goToPrevious={handlePrevious}
-          goToNext={handleNext}
+      <View>
+        <Image
+          resizeMode="contain"
+          style={[
+            styles.teamBackground,
+            mode === 'm'
+              ? styles.teamBackgroundMonth
+              : { opacity: 0 }
+          ]}
+          source={require('./../../assets/calendar/teamBackground-test.png')}
         />
-        <View style={styles.teamCalendar}>
-          <Mode
-            type={'white'}
-            mode={mode}
-            setMode={setMode}
-          />
-          <Contents
-            monthDates = {monthDates}
-            weekDates= {weekDates}
-            month={currentDate.getMonth()}
-            color={'white'}
-            mode={mode}
-            matchList={teamRes.data.matchList}
+        <Image
+          resizeMode="contain"
+          style={[
+            styles.teamBackground,
+            mode === 'w'
+              ? styles.teamBackgroundWeek
+              : { opacity: 0 }
+          ]}
+          source={require('./../../assets/calendar/teamBackground_s-test.png')}
+        />
+        <View style={{marginTop: height * 0.005}}>
+          <Header
+            year={year}
+            month={month}
+            type={'team'}
             goToPrevious={handlePrevious}
             goToNext={handleNext}
           />
+          <View style={styles.teamCalendar}>
+            <Mode
+              type={'white'}
+              mode={mode}
+              setMode={setMode}
+            />
+            <Contents
+              monthDates = {monthDates}
+              weekDates= {weekDates}
+              month={currentDate.getMonth()}
+              color={'white'}
+              mode={mode}
+              matchList={teamRes.data.matchList}
+              goToPrevious={handlePrevious}
+              goToNext={handleNext}
+            />
+          </View>
         </View>
       </View>
-
       <View style={mode === 'w' ? styles.matchListWeek : styles.matchListMonth}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
