@@ -18,21 +18,21 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     }
-    
+
     // 실행 우선순위를 높이기 위해 requestAnimationFrame 추가
     const rafId = requestAnimationFrame(() => {
       if (flatListRef.current) {
         flatListRef.current.scrollToOffset({ offset: 0, animated: false });
       }
     });
-    
+
     return () => cancelAnimationFrame(rafId);
   }, [matchList]); // matchList가 변경될 때마다 실행
-  
+
   const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
     return (
       <View style={{ marginBottom: height * 0.01 }}>
-        <View style={{ flexDirection: "row", }}>
+        <View style={{ flexDirection: 'row' }}>
           <View style={[styles.frontDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
           <View>
             <Text style={[styles.dateText, { color: color === 'white' ? 'white' : '#30397A' }]}>
@@ -51,7 +51,7 @@ const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
       </View>
     );
   }, [color]);
-  
+
   return (
     <>
       <FlatList
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: 'sb-it-ver1',
-    color: '#30397A', 
+    color: '#30397A',
     fontSize: width * 0.05,
     width: width * 0.21,
     textAlign: 'center',

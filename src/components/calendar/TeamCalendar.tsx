@@ -10,7 +10,6 @@ import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import Logo from '../logo';
 
-
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('m');
@@ -49,7 +48,7 @@ export default function TeamCalendar() {
     });
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
-  
+
   // 스와이프 기능 추가
   const panResponder = useMemo(
     () =>
@@ -69,15 +68,20 @@ export default function TeamCalendar() {
   );
 
   return (
-    <View 
-      style={[styles.CalendarContainer, { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }]}
-      {...panResponder.panHandlers} // 스와이프 핸들러 추가
+    <View
+      style={[
+        styles.CalendarContainer,
+        { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }
+      ]}
+      {...panResponder.panHandlers}
     >
       <Image
         resizeMode="contain"
         style={[
           styles.teamBackground,
-          { width: width * 1, height: width * 0.926, opacity: mode === 'm' ? 1 : 0, position: 'absolute' }
+          mode === 'm'
+            ? styles.teamBackgroundMonth
+            : { opacity: 0 }
         ]}
         source={require('./../../assets/calendar/teamBackground-test.png')}
       />
@@ -85,48 +89,49 @@ export default function TeamCalendar() {
         resizeMode="contain"
         style={[
           styles.teamBackground,
-          { width: width * 1, height: width * 0.4999, opacity: mode === 'w' ? 1 : 0, position: 'absolute' }
+          mode === 'w'
+            ? styles.teamBackgroundWeek
+            : { opacity: 0 }
         ]}
         source={require('./../../assets/calendar/teamBackground_s-test.png')}
       />
       <View style={{marginTop: height * 0.005}}>
-      <Header
-        year={year}
-        month={month}
-        type={'team'}
-        goToPrevious={handlePrevious}
-        goToNext={handleNext}
-      />
-      <View style={[styles.teamCalendar, { top: -height * 0.015 }]}>
-        <Mode
-          type={'white'}
-          mode={mode}
-          setMode={setMode}
-        />
-        
-        <Contents
-          monthDates = {monthDates}
-          weekDates= {weekDates}
-          month={currentDate.getMonth()}
-          color={'white'}
-          mode={mode}
-          matchList={teamRes.data.matchList}
+        <Header
+          year={year}
+          month={month}
+          type={'team'}
           goToPrevious={handlePrevious}
           goToNext={handleNext}
         />
+        <View style={styles.teamCalendar}>
+          <Mode
+            type={'white'}
+            mode={mode}
+            setMode={setMode}
+          />
+          <Contents
+            monthDates = {monthDates}
+            weekDates= {weekDates}
+            month={currentDate.getMonth()}
+            color={'white'}
+            mode={mode}
+            matchList={teamRes.data.matchList}
+            goToPrevious={handlePrevious}
+            goToNext={handleNext}
+          />
         </View>
       </View>
 
-      <View style={
-        {
-          marginTop: mode === 'w' ? height * 0.04 : height * 0.03,
-          height: mode === 'w' ? height * 0.431 : height * 0.241}}>
+      <View style={mode === 'w' ? styles.matchListWeek : styles.matchListMonth}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
         />
       </View>
-      <View style={[styles.logo, {bottom: mode=== 'w' ? -height * 0.427 : -height * 0.233}]}>
+      <View style={[
+        styles.logo,
+        mode === 'w' ? styles.logoWeek : styles.logoMonth
+      ]}>
         <Logo color={'blue'}/>
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
@@ -143,15 +148,33 @@ const styles = StyleSheet.create({
   teamBackground: {
     position: 'absolute',
   },
+  teamBackgroundMonth: {
+    width: width * 1,
+    height: width * 0.926,
+    opacity: 1,
+    position: 'absolute',
+  },
+  teamBackgroundWeek: {
+    width: width * 1,
+    height: width * 0.4999,
+    opacity: 1,
+    position: 'absolute',
+  },
   teamCalendar: {
     alignItems: 'center',
+    top: -height * 0.015,
   },
   logo: {
     position: 'absolute',
     zIndex: -1,
-    bottom: -height * 0.427,
     left: width * 0.05,
-    opacity: 0.25
+    opacity: 0.25,
+  },
+  logoMonth: {
+    bottom: -height * 0.233,
+  },
+  logoWeek: {
+    bottom: -height * 0.427,
   },
   sloganText: {
     width: width,
@@ -160,5 +183,13 @@ const styles = StyleSheet.create({
     marginTop: -height * 0.045,
     color: '#EA5579',
     fontFamily: 'rg-it-ver2',
+  },
+  matchListMonth: {
+    marginTop: height * 0.03,
+    height: height * 0.241,
+  },
+  matchListWeek: {
+    marginTop: height * 0.04,
+    height: height * 0.431,
   },
 });

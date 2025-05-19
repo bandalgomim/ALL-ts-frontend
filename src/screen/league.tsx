@@ -3,16 +3,13 @@ import {  StyleSheet, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
 import LeageTeamListBar from '../components/league/leageTeamList';
-import Logo from '../components/logo';
-import { hookLeague, useLeague } from '../hooks/league.hook';
+import { hookLeague } from '../hooks/league.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
-import MatchList from '../components/matchBar/matchList';
 import { getLeagueReqQueryDto } from '../model/league.dto';
 import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
-import { height } from '../global';
 import { HeadNotch } from '../components/notch';
 import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
@@ -57,7 +54,6 @@ const LeagueScreen = () => {
       <LeagueHeader/>
       <LeageTeamListBar/>
       <LeagueCalendar/>
-
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
