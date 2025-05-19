@@ -7,67 +7,69 @@ import { height, width } from '../../global';
 interface ContentsProps {
   matchList: matchListDto,
   color: string;
+  onScroll?: (event: any) => void;           // 추가
+  scrollEventThrottle?: number;              // 추가
+  scrollEnabled?: boolean;                   // 추가
 }
 
-const MatchList: React.FC<ContentsProps> = ({ matchList, color }) => {
-  // FlatList 참조 생성
+const MatchList: React.FC<ContentsProps> = ({
+  matchList,
+  color,
+  onScroll,
+  scrollEventThrottle = 16,                  // 기본값 설정
+  scrollEnabled = true,                      // 기본값 설정
+}) => {
   const flatListRef = useRef<FlatList>(null);
-  // matchList가 변경될 때마다 스크롤 위치를 즉시 맨 위로 리셋
+
   useLayoutEffect(() => {
-    // useLayoutEffect를 사용하여 DOM 업데이트 직후, 브라우저가 화면을 그리기 전에 실행
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     }
-
-    // 실행 우선순위를 높이기 위해 requestAnimationFrame 추가
     const rafId = requestAnimationFrame(() => {
       if (flatListRef.current) {
         flatListRef.current.scrollToOffset({ offset: 0, animated: false });
       }
     });
-
     return () => cancelAnimationFrame(rafId);
-  }, [matchList]); // matchList가 변경될 때마다 실행
+  }, [matchList]);
 
-  const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
-    return (
-      <View style={{ marginBottom: height * 0.01 }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={[styles.frontDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
-          <View>
-            <Text style={[styles.dateText, { color: color === 'white' ? 'white' : '#30397A' }]}>
-              {item[0].matchDate}
-            </Text>
-          </View>
-          <View style={[styles.backDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
+  const renderItem = useCallback(({ item }: { item: matchDto[] }) => (
+    <View style={{ marginBottom: height * 0.01 }}>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={[styles.frontDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
+        <View>
+          <Text style={[styles.dateText, { color: color === 'white' ? 'white' : '#30397A' }]}>
+            {item[0].matchDate}
+          </Text>
         </View>
-        {item.map((data: matchDto) => (
-          <MatchBar
-            key={data.matchId}
-            match={data}
-            color={color}
-          />
-        ))}
+        <View style={[styles.backDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
       </View>
-    );
-  }, [color]);
+      {item.map((data: matchDto) => (
+        <MatchBar
+          key={data.matchId}
+          match={data}
+          color={color}
+        />
+      ))}
+    </View>
+  ), [color]);
 
   return (
-    <>
-      <FlatList
-        ref={flatListRef}
-        style={{ marginTop: -height * 0.015 }}
-        data={Object.values(matchList)}
-        renderItem={renderItem}
-        initialScrollIndex={0}
-        // 성능 최적화
-        showsVerticalScrollIndicator={false}
-        maxToRenderPerBatch={10}
-        windowSize={10}
-        removeClippedSubviews={true}
-        keyExtractor={(item, index) => `match-group-${index}-${item[0]?.matchId || index}`}
-      />
-    </>
+    <FlatList
+      ref={flatListRef}
+      style={{ marginTop: -height * 0.015 }}
+      data={Object.values(matchList)}
+      renderItem={renderItem}
+      initialScrollIndex={0}
+      showsVerticalScrollIndicator={false}
+      maxToRenderPerBatch={10}
+      windowSize={10}
+      removeClippedSubviews={true}
+      keyExtractor={(item, index) => `match-group-${index}-${item[0]?.matchId || index}`}
+      onScroll={onScroll}                         // 추가
+      scrollEventThrottle={scrollEventThrottle}   // 추가
+      scrollEnabled={scrollEnabled}               // 추가
+    />
   );
 };
 

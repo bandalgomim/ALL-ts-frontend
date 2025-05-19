@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text, PanResponder } from 'react-native';
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, Image, Text, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
@@ -15,7 +15,7 @@ export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const { leagueRes } = useContext(LeagueContext);
-  
+  const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -32,14 +32,21 @@ export default function LeagueCalendar() {
 
   const splitMatchList = useMemo(() => {
     const weekResult: { [key: string]: matchDto[] } = {};
+    const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
       const key = date.toLocaleDateString('sv-SE');
       if (leagueRes.data.matchList[key]) {
         weekResult[key] = leagueRes.data.matchList[key];
       }
     });
-    return weekResult;
-  }, [weekDates, leagueRes.data.matchList]);
+    monthDates.forEach((date) => {
+      const key = date.toLocaleDateString('sv-SE');
+      if (leagueRes.data.matchList[key]) {
+        monthResult[key] = leagueRes.data.matchList[key];
+      }
+    });
+    return { week: weekResult, month: monthResult };
+  }, [weekDates, monthDates, leagueRes.data.matchList]);
 
   // 스와이프 기능 추가
   const panResponder = useMemo(
@@ -58,7 +65,34 @@ export default function LeagueCalendar() {
       }),
     [handlePrevious, handleNext]
   );
-
+  // MatchList 스크롤 이벤트 핸들러
+    const handleMatchListScroll = Animated.event(
+      [{ nativeEvent: { contentOffset: { y: animatedHeight } } }],
+      {
+        useNativeDriver: false,
+        listener: (event) => {
+          // 스크롤 위치에 따라 애니메이션 값 조정
+          const y = event.nativeEvent.contentOffset.y;
+          // y값을 0~100 사이에서 1~0으로 매핑 (접힘/펼침)
+          animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
+        }
+      }
+    );
+  
+    // calendarView의 높이/스케일 등 애니메이션 스타일
+    const calendarAnimatedStyle = {
+      height: animatedHeight.interpolate({
+        inputRange: [0, 1],
+        outputRange: mode === 'm' ? [height*0.02, 350] : [height*0.02, 170], // 접힘/펼침 높이(px) 원하는 값으로 조정
+        extrapolate: 'clamp',
+      }),
+      opacity: animatedHeight.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+      }),
+      // transform 등 추가 가능
+    };
   return (
     <View
       style={[
@@ -69,6 +103,7 @@ export default function LeagueCalendar() {
       ]}
       {...panResponder.panHandlers} // 스와이프 핸들러 추가
     >
+      <Animated.View style={[styles.calendarView, calendarAnimatedStyle]}>
       <Image
         resizeMode="contain"
         style={[
@@ -113,13 +148,16 @@ export default function LeagueCalendar() {
         />
         </View>
       </View>
+      </Animated.View>
       <View style={styles.matchListContainer}>
         <MatchList
-          matchList={mode === 'w' ? splitMatchList : {}}
+          matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
+          onScroll={handleMatchListScroll}
+          scrollEventThrottle={16}
         />
       </View>
-      <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 1}]}>
+      <View style={[styles.logo, {bottom: mode === 'w'? -height * 0.3013 : -height * 0.107}, {opacity: mode === 'w' ? 0.2 : 0.2}]}>
         <Logo color={'blue'} />
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
@@ -160,7 +198,7 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     marginTop: height * 0.03,
-    height: height * 0.31,
+    height: height * 0.485,
   },
   logo: {
     position: 'absolute',
@@ -175,4 +213,5 @@ const styles = StyleSheet.create({
     color: '#EA5579',
     fontFamily: 'rg-it-ver2',
   },
+  calendarView: {}
 });

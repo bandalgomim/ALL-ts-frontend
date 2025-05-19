@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Text, PanResponder } from 'react-native';
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, Image, Text, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
@@ -12,10 +12,11 @@ import Logo from '../logo';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' | 'w'>('m');
+  const [mode, setMode] = useState<'m' | 'w'>('w');
   const { teamRes } = useContext(TeamContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
+  const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
 
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
@@ -67,6 +68,35 @@ export default function TeamCalendar() {
     [handlePrevious, handleNext]
   );
 
+  // MatchList 스크롤 이벤트 핸들러
+  const handleMatchListScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: animatedHeight } } }],
+    {
+      useNativeDriver: false,
+      listener: (event) => {
+        // 스크롤 위치에 따라 애니메이션 값 조정
+        const y = event.nativeEvent.contentOffset.y;
+        // y값을 0~100 사이에서 1~0으로 매핑 (접힘/펼침)
+        animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 200)));
+      }
+    }
+  );
+
+  // calendarView의 높이/스케일 등 애니메이션 스타일
+  const calendarAnimatedStyle = {
+    height: animatedHeight.interpolate({
+      inputRange: [0, 1],
+      outputRange: mode === 'm' ? [height*0.02, 350] : [height*0.02, 170], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      extrapolate: 'clamp',
+    }),
+    opacity: animatedHeight.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    }),
+    // transform 등 추가 가능
+  };
+
   return (
     <View
       style={[
@@ -75,7 +105,7 @@ export default function TeamCalendar() {
       ]}
       {...panResponder.panHandlers}
     >
-      <View>
+      <Animated.View style={[styles.calendarView, calendarAnimatedStyle]}>
         <Image
           resizeMode="contain"
           style={[
@@ -122,11 +152,13 @@ export default function TeamCalendar() {
             />
           </View>
         </View>
-      </View>
+      </Animated.View>
       <View style={mode === 'w' ? styles.matchListWeek : styles.matchListMonth}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
+          onScroll={handleMatchListScroll}
+          scrollEventThrottle={16}
         />
       </View>
       <View style={[
@@ -187,10 +219,11 @@ const styles = StyleSheet.create({
   },
   matchListMonth: {
     marginTop: height * 0.03,
-    height: height * 0.241,
+    height: height * 0.615,
   },
   matchListWeek: {
     marginTop: height * 0.04,
-    height: height * 0.431,
+    height: height * 0.515,
   },
+  calendarView: {}
 });
