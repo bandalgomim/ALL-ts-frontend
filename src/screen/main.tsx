@@ -14,6 +14,7 @@ import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
 import { getmainResDto, leagueDto, teamDto } from '../model/main.dto';
+import MainTabBar from '../components/main/mainTabBar';
 
 
 const MainScreen = () => {
@@ -63,21 +64,19 @@ const MainScreen = () => {
           <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
         </View>
       </View>
-      <View style={{marginTop: height * 0.005}}>
-        <TeamAndLeagueListBar
-          teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
-        />
-      </View>
       <MainCalendar
         data={mainRes?.data as getmainResDto}
       />
+      <View style={[styles.tabBar]}>
+
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   Container: {
-    position: 'relative',
+    //position: 'relative',
     height: '100%',
     width: '100%',
     backgroundColor: '#30397A',
@@ -107,6 +106,15 @@ const styles = StyleSheet.create({
     color: '#EA5579',
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
+  },
+  tabBar: {
+    position: 'absolute', // 하단 고정
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
+    height: height * 0.07,
+    backgroundColor: '#30397A',
   },
 });
 export default React.memo(MainScreen);

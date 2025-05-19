@@ -1,21 +1,24 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { View, StyleSheet, Text, PanResponder } from 'react-native';
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, Text, PanResponder, Animated } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
-
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
-import { getmainResDto, matchDto, matchListDto } from '../../model/main.dto';
+import { getmainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
+import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
+import { MainContext } from '../../context/main.context';
 
 interface MainCalendarProps {
   data: getmainResDto;
 }
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
+  const {mainRes} = useContext(MainContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
+  const animatedHeight = useRef(new Animated.Value(1)).current;
 
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -57,41 +60,70 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     [handlePrevious, handleNext]
   );
 
+  // MatchList 스크롤 이벤트 핸들러
+  const handleMatchListScroll = (event) => {
+    const y = event.nativeEvent.contentOffset.y;
+    animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
+  };
+
+  // calendarView의 높이/투명도 애니메이션 스타일
+  const calendarAnimatedStyle = {
+    height: animatedHeight.interpolate({
+      inputRange: [0, 1],
+      outputRange: [height * 0.02, height*0.32], // 원하는 높이로 조정
+      extrapolate: 'clamp',
+    }),
+    opacity: animatedHeight.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.3, 1],
+      extrapolate: 'clamp',
+    }),
+  };
+
   return (
     <View>
-      <View 
+      <View
         style={styles.CalendarContainer}
         {...panResponder.panHandlers}
       >
-        <MainHeader
-          year={currentDate.getFullYear()}
-          month={currentDate.getMonth()}
-        />
-        <Mode
-          mode={mode}
-          setMode={setMode}
-          type={'league'}
-        />
-        <Contents
-          monthDates = {monthDates}
-          weekDates= {weekDates}
-          month={currentDate.getMonth()}
-          color={'white'}
-          mode={mode}
-          matchList={data.matchList ? data.matchList : null}
-          goToPrevious={handlePrevious}
-          goToNext={handleNext}
-        />
+        <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {alignItems: 'center'}]}>
+          <TeamAndLeagueListBar
+            teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
+          />
+          <View style={{alignItems: 'center', marginTop: -height * 0.035}}>
+          <MainHeader
+            year={currentDate.getFullYear()}
+            month={currentDate.getMonth()}
+          />
+          <Mode
+            mode={mode}
+            setMode={setMode}
+            type={'league'}
+          />
+          <Contents
+            monthDates={monthDates}
+            weekDates={weekDates}
+            month={currentDate.getMonth()}
+            color={'white'}
+            mode={mode}
+            matchList={data.matchList ? data.matchList : null}
+            goToPrevious={handlePrevious}
+            goToNext={handleNext}
+          />
+          </View>
+        </Animated.View>
         {mode === 'w' ? (
           <View style={styles.matchListContainer}>
-            {<MatchList
+            <MatchList
               matchList={splitMatchList}
               color={'white'}
-            />}
+              onScroll={handleMatchListScroll}
+              scrollEventThrottle={16}
+            />
           </View>
         ) : (
-          <View style={[styles.banner,{width: width * 0.85, height: height * 0.06, marginTop: height * 0.02}]}>
-            <Text style={[styles.bannerText,{fontSize: width * 0.07}]}>advertisement banner</Text>
+          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.22 }]}>
+            <Text style={[styles.bannerText, { fontSize: width * 0.07 }]}>advertisement banner</Text>
           </View>
         )}
       </View>
@@ -102,15 +134,14 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
 const styles = StyleSheet.create({
   CalendarContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     width: width,
-    height: height * 0.44,
-    marginTop: -height * 0.03, // -height * 0.0은 0과 동일하므로 0으로 변경
+
   },
   matchListContainer: {
     width: width,
-    height: height * 0.27,
+    height: height * 0.585,
     alignItems: 'center',
-    marginTop: height * 0.01,
   },
   banner: {
     backgroundColor: '#b1b4cc',
@@ -121,6 +152,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
   },
+  calendarView: {
+
+  }
 });
 
 export default React.memo(MainCalendar);
