@@ -84,12 +84,12 @@ export default function LeagueCalendar() {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height * 0.02, 350] : [height * 0.02, 170], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.02, height*0.05] : [height * 0.02, height*0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
       inputRange: [0, 0.5, 1],
-      outputRange: [0, 0.1, 1], // 완전히 사라지지 않게
+      outputRange: [0, 0.3, 1], // 완전히 사라지지 않게
       extrapolate: 'clamp',
     }),
     // transform 등 추가 가능
@@ -165,6 +165,7 @@ export default function LeagueCalendar() {
           color={'blue'}
           onScroll={handleMatchListScroll}
           scrollEventThrottle={16}
+          headerHeight={mode === 'w' ? 0.2 : 0.35} // 헤더 높이 설정
         />
       </View>
       <View style={[styles.logo, { bottom: mode === 'w' ? -height * 0.3013 : -height * 0.107 }, { opacity: mode === 'w' ? 0.2 : 0.2 }]}>
@@ -208,7 +209,8 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     marginTop: height * 0.03,
-    height: height * 0.485,
+    height: height * 0.495,
+    zIndex: 1, // 낮은 z-index 추가
   },
   logo: {
     position: 'absolute',
@@ -223,5 +225,7 @@ const styles = StyleSheet.create({
     color: '#EA5579',
     fontFamily: 'rg-it-ver2',
   },
-  calendarView: {}
+  calendarView: {
+    zIndex: 2, // 높은 z-index 추가
+  }
 });

@@ -7,8 +7,9 @@ import { height, width } from '../../global';
 interface ContentsProps {
   matchList: matchListDto,
   color: string;
-  onScroll?: (event: any) => void;           // 추가
-  scrollEventThrottle?: number;              // 추가              // 추가
+  onScroll?: (event: any) => void;
+  scrollEventThrottle?: number;
+  headerHeight?: number;
 }
 
 const MatchList: React.FC<ContentsProps> = ({
@@ -16,6 +17,7 @@ const MatchList: React.FC<ContentsProps> = ({
   color,
   onScroll,
   scrollEventThrottle = 16,                  // 기본값 설정
+  headerHeight
 }) => {
   const flatListRef = useRef<FlatList>(null);
 
@@ -58,6 +60,11 @@ const MatchList: React.FC<ContentsProps> = ({
       style={{ marginTop: -height * 0.015 }}
       data={Object.values(matchList)}
       renderItem={renderItem}
+      ListHeaderComponent={() => (
+        headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }}>
+          
+        </View> : <></>
+      )}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
       maxToRenderPerBatch={10}
