@@ -212,12 +212,12 @@ const styles = StyleSheet.create({
   },
   matchListMonth: {
     marginTop: height * 0.03,
-    height: height * 0.615,
+    height: height * 0.625,
     zIndex: 1, // 낮은 z-index 추가
   },
   matchListWeek: {
     marginTop: height * 0.04,
-    height: height * 0.6155,
+    height: height * 0.625,
     zIndex: 1, // 낮은 z-index 추가 s
   },
   calendarView: {

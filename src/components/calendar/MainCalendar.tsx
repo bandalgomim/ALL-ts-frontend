@@ -123,7 +123,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
             />
           </View>
         ) : (
-          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.22 }]}>
+          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.53 }]}>
             <Text style={[styles.bannerText, { fontSize: width * 0.07 }]}>advertisement banner</Text>
           </View>
         )}
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     width: width,
-    height: height * 0.585,
+    height: height * 0.62,
     alignItems: 'center',
     zIndex: 1, // 낮은 z-index 추가
   },
