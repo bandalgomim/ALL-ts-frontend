@@ -63,11 +63,7 @@ const MainScreen = () => {
           <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
         </View>
       </View>
-      <View style={{marginTop: height * 0.005}}>
-        <TeamAndLeagueListBar
-          teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
-        />
-      </View>
+
       <MainCalendar
         data={mainRes?.data as getmainResDto}
       />
