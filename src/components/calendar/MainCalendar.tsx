@@ -70,7 +70,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: [height * 0.02, height*0.32], // 원하는 높이로 조정
+      outputRange: [height * 0.02, 0], // 원하는 높이로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -90,7 +90,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           <TeamAndLeagueListBar
             teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
-          <View style={{alignItems: 'center', marginTop: -height * 0.035}}>
+          <View style={{alignItems: 'center', marginTop: -height * 0.025}}>
           <MainHeader
             year={currentDate.getFullYear()}
             month={currentDate.getMonth()}
@@ -119,10 +119,11 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
               color={'white'}
               onScroll={handleMatchListScroll}
               scrollEventThrottle={16}
+              headerHeight={0.35} // 헤더 높이 설정
             />
           </View>
         ) : (
-          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.22 }]}>
+          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.53 }]}>
             <Text style={[styles.bannerText, { fontSize: width * 0.07 }]}>advertisement banner</Text>
           </View>
         )}
@@ -140,8 +141,9 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     width: width,
-    height: height * 0.585,
+    height: height * 0.62,
     alignItems: 'center',
+    zIndex: 1, // 낮은 z-index 추가
   },
   banner: {
     backgroundColor: '#b1b4cc',
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
   },
   calendarView: {
-
+    zIndex: 2, // 높은 z-index 추가
   }
 });
 
