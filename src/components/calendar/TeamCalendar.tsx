@@ -13,6 +13,7 @@ import Logo from '../logo';
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const { teamRes } = useContext(TeamContext);
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -49,7 +50,7 @@ export default function TeamCalendar() {
     });
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
-
+  console.log('splitMatchList', splitMatchList);
   // 스와이프 기능 추가
   const panResponder = useMemo(
     () =>
@@ -71,6 +72,11 @@ export default function TeamCalendar() {
   // MatchList 스크롤 이벤트 핸들러
   const handleMatchListScroll = (event) => {
     const y = event.nativeEvent.contentOffset.y;
+    if (y === 0) {
+      setZIndex(true); // 스크롤이 맨 위에 있을 때 z-index를 true로 설정
+    } else if (y !== 0 && zIndex !== false){
+      setZIndex(false); // 스크롤이 내려가면 z-index를 false로 설정
+    }
     animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
   };
 
@@ -78,7 +84,7 @@ export default function TeamCalendar() {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height*0.02, height*0.05] : [height*0.02, height*0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.02, height * 0.05] : [height * 0.02, height * 0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -97,7 +103,7 @@ export default function TeamCalendar() {
       ]}
       {...panResponder.panHandlers}
     >
-      <Animated.View style={[styles.calendarView, calendarAnimatedStyle]}>
+      <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {zIndex: zIndex ? 2 : 1}]}>
         <Image
           resizeMode="contain"
           style={[
@@ -145,7 +151,7 @@ export default function TeamCalendar() {
           </View>
         </View>
       </Animated.View>
-      <View style={mode === 'w' ? styles.matchListWeek : styles.matchListMonth}>
+      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
@@ -213,14 +219,12 @@ const styles = StyleSheet.create({
   matchListMonth: {
     marginTop: height * 0.03,
     height: height * 0.625,
-    zIndex: 1, // 낮은 z-index 추가
+
   },
   matchListWeek: {
     marginTop: height * 0.04,
     height: height * 0.625,
-    zIndex: 1, // 낮은 z-index 추가 s
+
   },
-  calendarView: {
-    zIndex: 2, // 높은 z-index 추가
-  }
+  calendarView: {}
 });

@@ -1,7 +1,7 @@
 // Contents.tsx
 import React, { useCallback, useContext, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { DAYS_OF_WEEK, getMonthDates, getWeekDates } from '../utills';
+import { DAYS_OF_WEEK } from '../utills';
 import { matchListDto } from '../../../model/main.dto';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
@@ -45,6 +45,7 @@ const Contents: React.FC<ContentsProps> = ({
   const onPressDate = useCallback((day: Date) => {
     const date = day.toLocaleDateString('sv-SE');
     if (day instanceof Date) {
+      console.log('groupedMatches', groupedMatches);
       const matchInfo = groupedMatches ? groupedMatches[date] : null;
       if (matchInfo) {
         setModalContents({'modalContents':matchInfo});

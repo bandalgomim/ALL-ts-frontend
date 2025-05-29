@@ -18,6 +18,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const {mainRes} = useContext(MainContext);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current;
 
   const handlePrevious = useCallback(() => {
@@ -63,6 +64,11 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   // MatchList 스크롤 이벤트 핸들러
   const handleMatchListScroll = (event) => {
     const y = event.nativeEvent.contentOffset.y;
+    if (y === 0) {
+      setZIndex(true); // 스크롤이 맨 위에 있을 때 z-index를 true로 설정
+    } else if (y !== 0 && zIndex !== false){
+      setZIndex(false); // 스크롤이 내려가면 z-index를 false로 설정
+    }
     animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
   };
 
@@ -86,7 +92,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
         style={styles.CalendarContainer}
         {...panResponder.panHandlers}
       >
-        <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {alignItems: 'center'}]}>
+        <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {alignItems: 'center', zIndex: zIndex ? 2 : 1}]}>
           <TeamAndLeagueListBar
             teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
@@ -113,7 +119,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           </View>
         </Animated.View>
         {mode === 'w' ? (
-          <View style={styles.matchListContainer}>
+          <View style={[styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }]}>
             <MatchList
               matchList={splitMatchList}
               color={'white'}
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.62,
     alignItems: 'center',
-    zIndex: 1, // 낮은 z-index 추가
+
   },
   banner: {
     backgroundColor: '#b1b4cc',
@@ -155,7 +161,7 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
   },
   calendarView: {
-    zIndex: 2, // 높은 z-index 추가
+
   }
 });
 

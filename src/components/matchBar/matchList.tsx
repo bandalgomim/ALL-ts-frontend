@@ -20,7 +20,7 @@ const MatchList: React.FC<ContentsProps> = ({
   headerHeight
 }) => {
   const flatListRef = useRef<FlatList>(null);
-
+  console.log('matchList', matchList);
   useLayoutEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });

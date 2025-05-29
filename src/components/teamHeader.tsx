@@ -1,68 +1,85 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import SearchBar from './searchBar/serchBar';
 import TeamOrLeagueLogo  from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
 
 import { width, height } from '../global';
 import { TeamContext } from '../context/team.context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ModalContext } from '../context/modal.context';
+import { findNext } from './calendar/utills';
 
 const TeamHeader = () => {
   const {teamRes} = useContext(TeamContext);
+  const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
+  const [record, setRecord] = useState(false);
+
+  
+
+  const onPressRemain = useCallback(() => {
+    console.log('teamRes', teamRes.data.matchList);
+      const matchInfo = findNext(teamRes.data.matchList)
+      console.log('matchInfo', matchInfo);
+      if (matchInfo) {console.log('matchInfo', matchInfo);
+        setModalNextMatchContents(matchInfo);
+        setModalNextMatchVisible(true)
+      ;}
+
+  }, [setModalNextMatchContents, setModalNextMatchVisible]);
+
+
   return (
-    <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
-      <SearchBar
-        type="blue"
-      />
-      <View style={[styles.teamInfoContainer, {width: width * 0.8}]}>
-        <View style={[styles.teamLogo, {marginBottom:-height * 0.01 }]}>
+    <View style={[styles.container, styles.headerContainer]}>
+      <SearchBar type="blue" />
+      <View style={[styles.teamInfoContainer, styles.headerTeamInfoContainer]}>
+        <View style={[styles.teamLogo, styles.headerTeamLogo]}>
           <TeamOrLeagueLogo
             logo={teamRes?.data?.team?.teamLogo}
             type={'big'}
           />
         </View>
-        <View style={[styles.teamInfo, {marginRight: -width * 0.07}]}>
-          <View style={[styles.teamInfoTextContainer ]}>
+        <View style={[styles.teamInfo, styles.headerTeamInfo]}>
+          <View style={styles.teamInfoTextContainer}>
             {teamRes?.data?.team?.teamName && teamRes?.data?.team?.teamName.length < 11
-              ? <Text style={[styles.teamInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{teamRes.data?.team.teamName}</Text>
+              ? <Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{teamRes.data?.team.teamName}</Text>
               : <View>
                   {teamRes.data?.team?.teamName?.split(' ').length === 3 ? (() => {
                     const [a, b, c] = teamRes.data.team.teamName.split(' ');
                     const first = `${a} ${b}`;
                     const second = `${b} ${c}`;
-                    // 두 조합의 길이 비교
                     if (first.length <= second.length) {
                       return (
                         <>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{first}</Text>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{c}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{first}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{c}</Text>
                         </>
                       );
                     } else {
                       return (
                         <>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{a}</Text>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{second}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{a}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{second}</Text>
                         </>
                       );
                     }
                   })() : (
-                    // 기존 2단어 이하 처리
                     teamRes.data?.team?.teamName?.split(' ').length > 1
                       ? <>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
                         </>
                       : <>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{null}</Text>
-                          <Text style={[styles.teamInfoName, {fontSize: width * 0.083, marginBottom: -height * 0.01}]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
+                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
                         </>
                   )}
                 </View>}
-
-            <Text style={[styles.teamInfoEtc, {fontSize: width * 0.055, width: width * 0.55, marginTop: height*0.005}]}>{`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}</Text>
+            <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
+              {`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}
+            </Text>
           </View>
-          <View >
+          <View>
             <IsSelected
               isSelected={teamRes.data?.team?.isTeamSelected}
               teamId={teamRes.data?.team?.teamId}
@@ -72,51 +89,186 @@ const TeamHeader = () => {
           </View>
         </View>
       </View>
+      <View style={styles.recordButton}>
+        <TouchableOpacity style={{marginLeft:-width*0.55, marginTop:height*0.02, marginBottom:height*-0.02}} onPress={() => setRecord(!record)}>
+          <Icon name={record === false ? 'keyboard-arrow-down' : 'keyboard-arrow-up'} size={30} color={'#30397A'} />
+        </TouchableOpacity>
+        {record && (
+          <View style={styles.record}>
+            <View style={styles.recordRankBox}>
+              <Text style={[styles.recordText, styles.recordRank]}>6</Text>
+              <Text style={[styles.recordText, styles.recordRankSuffix]}>th</Text>
+            </View>
+            <View style={styles.recordItemBox}>
+              <Text style={[styles.recordText, styles.recordItemNum]}>13</Text>
+              <Text style={[styles.recordText, styles.recordItemLabel]}>WIN</Text>
+            </View>
+            <View style={styles.recordItemBox}>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>-</Text>
+              <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
+            </View>
+            <View style={styles.recordItemBox}>
+              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>13</Text>
+              <Text style={[styles.recordText, styles.recordItemLabel]}>ROSE</Text>
+            </View>
+            <View style={styles.recordItemBox}>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>-13</Text>
+              <Text style={[styles.recordText, styles.recordItemLabel, styles.recordPink]}>POINT</Text>
+            </View>
+            <TouchableOpacity onPress={onPressRemain} style={styles.recordImageContainer}>
+              <Image
+                resizeMode="contain"
+                style={styles.recordImage}
+                source={require('../assets/record/record.png')}
+              />
+              <Text style={styles.recordTextOnImage}>
+                remain
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-  flexDirection: 'column',
-  justifyContent: 'center', // 가로 방향 중앙 정렬
-  alignItems: 'center', // 세로 방향 중앙 정렬
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  searchBarContainer: {
-
+  headerContainer: {
+    width: width * 0.8,
+    marginBottom: -height * 0.01,
   },
+  searchBarContainer: {}, 
   teamInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  headerTeamInfoContainer: {
+    width: width * 0.8,
+  },
   teamLogo: {
     justifyContent: 'flex-end',
   },
+  headerTeamLogo: {
+    marginBottom: -height * 0.01,
+  },
   teamInfo: {
     flexDirection: 'row',
+  },
+  headerTeamInfo: {
+    marginRight: -width * 0.07,
   },
   teamInfoTextContainer: {
     alignItems: 'flex-end',
     justifyContent: 'center',
     marginBottom: -height * 0.015,
     transform: [{ rotate: '-7deg' }],
-    //
   },
   teamInfoName: {
     textAlign: 'right',
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
+  },
+  headerTeamInfoNameLarge: {
+    fontSize: width * 0.15,
+    marginBottom: -height * 0.01,
+  },
+  headerTeamInfoNameSmall: {
+    fontSize: width * 0.083,
+    marginBottom: -height * 0.01,
   },
   teamInfoEtc: {
     textAlign: 'right',
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
+  },
+  headerTeamInfoEtc: {
+    fontSize: width * 0.055,
+    width: width * 0.55,
+    marginTop: height * 0.005,
+  },
+  recordButton: {
+    marginTop: -height * 0.015,
+    marginBottom: -height * 0.015,
+    //marginLeft: -width * 0.545,
+    alignItems: 'center',
+  },
+  record: {
+    flexDirection: 'row',
+    width: width * 0.78,
+    alignItems: 'flex-end',
+    transform: [{ rotate: '-7deg' }],
+    marginTop: -height * 0.03,
+  },
+  recordText: {
+    fontFamily: 'sb-it-ver1',
+    color: '#30397A',
+
+  },
+
+  recordRankBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginBottom: -height * 0.02,
+  },
+  recordRank: {
+    fontSize: width * 0.21,
+    width: width * 0.085,
+  },
+  recordRankSuffix: {
+    fontSize: width * 0.13,
+    width: width * 0.11,
+    marginBottom: height * 0.011,
+  },
+  recordItemBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.11,
+  },
+  recordItemNum: {
+    textAlign: 'center',
+    width: width * 0.11,
+    fontSize: width * 0.07,
+  },
+  recordItemLabel: {
+    fontSize: width * 0.042,
+    marginTop: -height * 0.008,
+    marginLeft: -width * 0.012,
+  },
+  recordGray: {
+    color: '#9E9E9E',
+  },
+  recordPink: {
+    color: '#EA5579',
+  },
+  recordImageContainer: {
+    width: width * 0.17,
+    height: width * 0.1,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recordImage: {
+    width: width * 0.17,
+    height: width * 0.1,
+  },
+  recordTextOnImage: {
+    position: 'absolute',
+    color: 'white',
+    fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.046,
+    textAlign: 'center',
   },
 });
 

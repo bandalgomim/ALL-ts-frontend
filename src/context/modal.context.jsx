@@ -7,6 +7,8 @@ export function ModalProvider({ children }) {
   const [modalContents, setModalContents] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchContents, setSearchContents] = useState(false);
+  const [modalNextMatchVisible, setModalNextMatchVisible] = useState(false);
+  const [modalNextMatchContents, setModalNextMatchContents] = useState(false);
 
   const value = useMemo(() => ({
     modalVisible,
@@ -16,7 +18,12 @@ export function ModalProvider({ children }) {
     searchVisible,
     setSearchVisible,
     searchContents,
-    setSearchContents }), [modalVisible, modalContents, searchVisible, searchContents]);
+    setSearchContents,
+    modalNextMatchVisible,
+    setModalNextMatchVisible,
+    modalNextMatchContents,
+    setModalNextMatchContents,
+  }), [modalVisible, modalContents, searchVisible, searchContents, modalNextMatchVisible, modalNextMatchContents]);
 
   return (
     <ModalContext.Provider value={value}>

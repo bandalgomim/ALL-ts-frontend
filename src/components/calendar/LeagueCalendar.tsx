@@ -13,6 +13,7 @@ import Logo from '../logo';
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const { leagueRes } = useContext(LeagueContext);
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
 
@@ -77,6 +78,11 @@ export default function LeagueCalendar() {
   // MatchList 스크롤 이벤트 핸들러
   const handleMatchListScroll = (event) => {
     const y = event.nativeEvent.contentOffset.y;
+    if (y === 0) {
+      setZIndex(true); // 스크롤이 맨 위에 있을 때 z-index를 true로 설정
+    } else if (y !== 0 && zIndex !== false){
+      setZIndex(false); // 스크롤이 내려가면 z-index를 false로 설정
+    }
     animatedHeight.setValue(Math.max(0, Math.min(1, 1 - y / 300)));
   };
 
@@ -108,10 +114,7 @@ export default function LeagueCalendar() {
         style={[
           styles.calendarView,
           calendarAnimatedStyle,
-          // opacity가 0에 가까우면 아예 렌더링하지 않음
-          animatedHeight.__getValue && animatedHeight.__getValue() < 0.01
-            ? { display: 'none' }
-            : {}
+          {zIndex: zIndex ? 2 : 1}
         ]}
       >
         <Image
@@ -159,7 +162,7 @@ export default function LeagueCalendar() {
           </View>
         </View>
       </Animated.View>
-      <View style={styles.matchListContainer}>
+      <View style={styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
@@ -210,7 +213,6 @@ const styles = StyleSheet.create({
   matchListContainer: {
     marginTop: height * 0.03,
     height: height * 0.5,
-    zIndex: 1, // 낮은 z-index 추가
   },
   logo: {
     position: 'absolute',
@@ -225,7 +227,5 @@ const styles = StyleSheet.create({
     color: '#EA5579',
     fontFamily: 'rg-it-ver2',
   },
-  calendarView: {
-    zIndex: 2, // 높은 z-index 추가
-  }
+  calendarView: {}
 });

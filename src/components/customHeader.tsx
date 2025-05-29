@@ -2,12 +2,14 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MatchModal from '../components/calendar/contents/modal';
 import SerchModal from './searchBar/serchModal';
+import NextMatchModal from './nextMatchModal';
 
 const CustomHeader = () => {
   return (
     <View style={styles.container}>
       <MatchModal />
       <SerchModal />
+      <NextMatchModal />
     </View>
   );
 };

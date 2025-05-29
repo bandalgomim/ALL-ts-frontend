@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
+import { matchListDto } from "../../model/main.dto";
 
 export const DAYS_OF_WEEK = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
@@ -11,14 +10,12 @@ export const getDaysInMonth = (month: number, year: number): Date[] => {
     days.push(new Date(date));
     date.setDate(date.getDate() + 1);
   }
-
   return days;
 };
 
 export const getPreviousMonthDays = (month: number, year: number, count: number): Date[] => {
   const date = new Date(year, month, 0);
   const days: Date[] = [];
-
   for (let i = 0; i < count; i++) {
     days.unshift(new Date(date));
     date.setDate(date.getDate() - 1);
@@ -108,4 +105,17 @@ export const goToNext = (currentDate: Date, mode: 'm' | 'w'): Date => {
     }
   }
   return newDate; // 계산된 새로운 날짜 반환
+};
+
+export const findNext = (matchList: matchListDto) => {
+  // 새로운 객체를 만들어 'next' 상태만 남깁니다.
+  const result: matchListDto = {};
+  for (const [date, matches] of Object.entries(matchList)) {
+    // matchState가 'next'인 경기만 필터링
+    const nextMatches = matches.filter(match => match.matchState === 'next');
+    if (nextMatches.length > 0) {
+      result[date] = nextMatches;
+    }
+  }
+  return result;
 };
