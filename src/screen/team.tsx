@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
 import { hookTeam } from '../hooks/team.hook';
@@ -12,6 +12,8 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
 import { TeamContext } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
+import { height, width } from '../global';
+import Logo from '../components/logo';
 
 const TeamScreen = () => {
   const {teamRes, setTeamRes } = useContext(TeamContext);
@@ -59,6 +61,14 @@ const TeamScreen = () => {
           color="blue"
         />
       </View>
+        <View style={[
+          styles.logo,
+        ]}>
+          <Logo color={'blue'}/>
+          <View>
+            <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+          </View>
+        </View>
     </View>
   );
 };
@@ -78,6 +88,22 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 0,
+  },
+  logo: {
+    position: 'absolute',
+    left: width * 0.06,
+    right: 0,
+    bottom: height * 0.07,
+    zIndex: -1,
+    opacity: 0.25,
+  },
+  sloganText: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginLeft: width * 0.025,
+    marginTop: -height * 0.045,
+    color: '#EA5579',
+    fontFamily: 'rg-it-ver2',
   },
 });
 export default React.memo(TeamScreen);

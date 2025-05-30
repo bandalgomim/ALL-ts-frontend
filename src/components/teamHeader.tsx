@@ -15,18 +15,14 @@ const TeamHeader = () => {
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const [record, setRecord] = useState(false);
 
-  
-
   const onPressRemain = useCallback(() => {
     console.log('teamRes', teamRes.data.matchList);
       const matchInfo = findNext(teamRes.data.matchList)
-      console.log('matchInfo', matchInfo);
-      if (matchInfo) {console.log('matchInfo', matchInfo);
+      if (matchInfo) {
         setModalNextMatchContents(matchInfo);
         setModalNextMatchVisible(true)
       ;}
-
-  }, [setModalNextMatchContents, setModalNextMatchVisible]);
+  }, [teamRes, setModalNextMatchVisible, setModalNextMatchContents]);
 
 
   return (
@@ -90,7 +86,7 @@ const TeamHeader = () => {
         </View>
       </View>
       <View style={styles.recordButton}>
-        <TouchableOpacity style={{marginLeft:-width*0.55, marginTop:height*0.02, marginBottom:height*-0.02}} onPress={() => setRecord(!record)}>
+        <TouchableOpacity style={{marginLeft:-width*0.55, marginTop:height*0.02, marginBottom:height*-0.02, zIndex:3}} onPress={() => setRecord(!record)}>
           <Icon name={record === false ? 'keyboard-arrow-down' : 'keyboard-arrow-up'} size={30} color={'#30397A'} />
         </TouchableOpacity>
         {record && (
@@ -215,7 +211,6 @@ const styles = StyleSheet.create({
     color: '#30397A',
 
   },
-
   recordRankBox: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -260,14 +255,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   recordImage: {
-    width: width * 0.17,
-    height: width * 0.1,
+    width: width * 0.14,
+    height: width * 0.09,
   },
   recordTextOnImage: {
     position: 'absolute',
     color: 'white',
     fontFamily: 'sb-it-ver1',
-    fontSize: width * 0.046,
+    fontSize: width * 0.04,
     textAlign: 'center',
   },
 });

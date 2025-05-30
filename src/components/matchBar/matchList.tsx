@@ -20,7 +20,6 @@ const MatchList: React.FC<ContentsProps> = ({
   headerHeight
 }) => {
   const flatListRef = useRef<FlatList>(null);
-  console.log('matchList', matchList);
   useLayoutEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
@@ -60,11 +59,8 @@ const MatchList: React.FC<ContentsProps> = ({
       style={{ marginTop: -height * 0.015 }}
       data={Object.values(matchList)}
       renderItem={renderItem}
-      ListHeaderComponent={() => (
-        headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }}>
-          
-        </View> : <></>
-      )}
+      ListHeaderComponent={() => (headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }} /> : null)}
+      ListFooterComponent={() => (headerHeight ? <View style={{ height: height*0.17, alignItems: 'center' }} /> : null)}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
       maxToRenderPerBatch={10}

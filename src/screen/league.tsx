@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import {  StyleSheet, View } from 'react-native';
+import {  StyleSheet, Text, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
 import LeageTeamListBar from '../components/league/leageTeamList';
@@ -13,6 +13,8 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
 import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
+import { height, width } from '../global';
+import Logo from '../components/logo';
 
 const LeagueScreen = () => {
   const {leagueRes, setLeagueRes} = useContext(LeagueContext);
@@ -52,12 +54,18 @@ const LeagueScreen = () => {
     <View style={styles.Container}>
       <HeadNotch/>
       <LeagueHeader/>
-      <LeageTeamListBar/>
+      
       <LeagueCalendar/>
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
         />
+      </View>
+      <View style={[styles.logo]}>
+        <Logo color={'blue'} />
+        <View>
+          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+        </View>
       </View>
     </View>
   );
@@ -77,6 +85,22 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 0,
+  },
+  logo: {
+    position: 'absolute',
+    zIndex: -1,
+    left: width * 0.05,
+    right: 0,
+    bottom: 0.07 * height,
+    opacity: 0.25,
+  },
+  sloganText: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginLeft: width * 0.025,
+    marginTop: -height * 0.045,
+    color: '#EA5579',
+    fontFamily: 'rg-it-ver2',
   },
 });
 

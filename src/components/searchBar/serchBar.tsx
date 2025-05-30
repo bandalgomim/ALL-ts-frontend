@@ -20,7 +20,7 @@ const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
 
   return type ? (
     <View style={[styles.Container, { width: width * 0.7, height: height * 0.1, marginTop: height * 0.015, marginBottom: -height * 0.015}]}>
-      <TouchableOpacity onPress={()=>{setSearchVisible(true);}}>
+      <TouchableOpacity onPress={()=>{setSearchVisible(true); console.log('searchBar');}}>
         <Image
           resizeMode="contain"
           style={{ width: width * 0.45, height: width * 0.1 }}

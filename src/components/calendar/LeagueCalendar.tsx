@@ -8,7 +8,8 @@ import { width, height } from '../../global';
 import { LeagueContext } from '../../context/league.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
-import Logo from '../logo';
+import LeageTeamListBar from '../league/leageTeamList';
+
 
 export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -16,15 +17,6 @@ export default function LeagueCalendar() {
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const { leagueRes } = useContext(LeagueContext);
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
-
-  useEffect(() => {
-    const id = animatedHeight.addListener(({ value }) => {
-      // opacity 계산식과 동일하게 로그 출력
-      const opacity = 0.05 + (1 - 0.05) * value; // outputRange: [0.05, 1]
-      console.log('animatedHeight:', value, 'opacity:', opacity);
-    });
-    return () => animatedHeight.removeListener(id);
-  }, [animatedHeight]);
 
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
@@ -90,7 +82,7 @@ export default function LeagueCalendar() {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height * 0.02, height*0.05] : [height * 0.02, height*0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.01, height*0.163] : [height * 0.01, height*0.126], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -114,55 +106,59 @@ export default function LeagueCalendar() {
         style={[
           styles.calendarView,
           calendarAnimatedStyle,
+          // opacity가 0에 가까우면 아예 렌더링하지 않음
           {zIndex: zIndex ? 2 : 1}
         ]}
       >
-        <Image
-          resizeMode="contain"
-          style={[
-            styles.leagueBackground,
-            styles.leagueBackgroundMonth,
-            { opacity: mode === 'm' ? 1 : 0 }
-          ]}
-          source={require('./../../assets/calendar/leagueBackground.png')}
-        />
-        <Image
-          resizeMode="contain"
-          style={[
-            styles.leagueBackground,
-            styles.leagueBackgroundWeek,
-            { opacity: mode === 'w' ? 1 : 0 }
-          ]}
-          source={require('./../../assets/calendar/leagueBackground_s.png')}
-        />
-        <View style={{ marginTop: height * 0.005 }}>
-          <Header
-            year={currentDate.getFullYear()}
-            month={currentDate.getMonth()}
-            type={'league'}
-            goToPrevious={handlePrevious}
-            goToNext={handleNext}
+        <LeageTeamListBar/>
+        <View>
+          <Image
+            resizeMode="contain"
+            style={[
+              styles.leagueBackground,
+              styles.leagueBackgroundMonth,
+              { opacity: mode === 'm' ? 1 : 0 }
+            ]}
+            source={require('./../../assets/calendar/leagueBackground.png')}
           />
-          <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
-            <Mode
-              type={'league'}
-              mode={mode}
-              setMode={setMode}
-            />
-            <Contents
-              monthDates={monthDates}
-              weekDates={weekDates}
+          <Image
+            resizeMode="contain"
+            style={[
+              styles.leagueBackground,
+              styles.leagueBackgroundWeek,
+              { opacity: mode === 'w' ? 1 : 0 }
+            ]}
+            source={require('./../../assets/calendar/leagueBackground_s.png')}
+          />
+          <View style={{ marginTop: height * 0.005 }}>
+            <Header
+              year={currentDate.getFullYear()}
               month={currentDate.getMonth()}
-              color={'white'}
-              mode={mode}
-              matchList={leagueRes.data.matchList}
+              type={'league'}
               goToPrevious={handlePrevious}
               goToNext={handleNext}
             />
+            <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
+              <Mode
+                type={'league'}
+                mode={mode}
+                setMode={setMode}
+              />
+              <Contents
+                monthDates={monthDates}
+                weekDates={weekDates}
+                month={currentDate.getMonth()}
+                color={'white'}
+                mode={mode}
+                matchList={leagueRes.data.matchList}
+                goToPrevious={handlePrevious}
+                goToNext={handleNext}
+              />
+            </View>
           </View>
         </View>
       </Animated.View>
-      <View style={styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }}>
+      <View style={[styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }]}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
@@ -170,12 +166,6 @@ export default function LeagueCalendar() {
           scrollEventThrottle={16}
           headerHeight={mode === 'w' ? 0.2 : 0.35} // 헤더 높이 설정
         />
-      </View>
-      <View style={[styles.logo, { bottom: mode === 'w' ? -height * 0.3013 : -height * 0.107 }, { opacity: mode === 'w' ? 0.2 : 0.2 }]}>
-        <Logo color={'blue'} />
-        <View>
-          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
-        </View>
       </View>
     </View>
   );
@@ -202,7 +192,7 @@ const styles = StyleSheet.create({
   },
   leagueBackgroundWeek: {
     width: width * 1,
-    height: width * 0.4953,
+    height: width * 0.51,
   },
   leagueCalendar: {
     alignItems: 'center',
@@ -212,20 +202,10 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     marginTop: height * 0.03,
-    height: height * 0.5,
+    height: height * 0.6,
+    zIndex: 1, // 낮은 z-index 추가
   },
-  logo: {
-    position: 'absolute',
-    zIndex: -1,
-    left: width * 0.05,
-  },
-  sloganText: {
-    width: width,
-    fontSize: width * 0.0885,
-    marginLeft: width * 0.025,
-    marginTop: -height * 0.045,
-    color: '#EA5579',
-    fontFamily: 'rg-it-ver2',
-  },
-  calendarView: {}
+  calendarView: {
+    zIndex: 2, // 높은 z-index 추가
+  }
 });

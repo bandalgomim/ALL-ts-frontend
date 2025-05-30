@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
-import { View, StyleSheet, Image, Text, PanResponder, Animated } from 'react-native';
+import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
@@ -8,7 +8,6 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { TeamContext } from '../../context/team.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
-import Logo from '../logo';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -84,7 +83,7 @@ export default function TeamCalendar() {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height * 0.02, height * 0.05] : [height * 0.02, height * 0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.035, height * 0.05] : [height * 0.035, height * 0.01], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -160,15 +159,7 @@ export default function TeamCalendar() {
           headerHeight={mode === 'w' ? 0.2 : 0.35} // 헤더 높이 설정
         />
       </View>
-      <View style={[
-        styles.logo,
-        mode === 'w' ? styles.logoWeek : styles.logoMonth
-      ]}>
-        <Logo color={'blue'}/>
-        <View>
-          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
-        </View>
-      </View>
+
     </View>
   );
 }
@@ -218,12 +209,12 @@ const styles = StyleSheet.create({
   },
   matchListMonth: {
     marginTop: height * 0.03,
-    height: height * 0.625,
+    height: height * 0.6,
 
   },
   matchListWeek: {
     marginTop: height * 0.04,
-    height: height * 0.625,
+    height: height * 0.6,
 
   },
   calendarView: {}
