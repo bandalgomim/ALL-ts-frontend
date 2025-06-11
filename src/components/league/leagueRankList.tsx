@@ -4,20 +4,23 @@ import { height, width } from '../../global';
 import { teamDto } from '../../model/league.dto';
 import FastImage from 'react-native-fast-image';
 import { ModalContext } from '../../context/modal.context';
+import { matchListDto } from '../../model/main.dto';
+import { findNextInLeague } from '../calendar/utills';
 
 interface LeagueRankListProps {
     teamList: teamDto[]
+    matchList: matchListDto
 }
 
-const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList}) => {
+const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) => {
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
-  const onPressRemain = useCallback(() => {
-      const matchInfo = true
+  const onPressRemain = useCallback((teamId: number) => {
+      const matchInfo = findNextInLeague(matchList, teamId);
       if (matchInfo) {
       setModalNextMatchContents(matchInfo);
       setModalNextMatchVisible(true)
       ;}
-  }, [setModalNextMatchVisible, setModalNextMatchContents]);
+  }, [matchList, setModalNextMatchContents, setModalNextMatchVisible]);
   const renderItem = useCallback(({ item }: { item: teamDto }) => (
     <View style={styles.container}>
         <View style={styles.rankItem}>
@@ -47,7 +50,7 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList}) => {
             <View style={styles.numberTextView}>
                 <Text style={[styles.numberText, {color: "#EA5579"}]}>12</Text>
             </View>
-            <TouchableOpacity onPress={onPressRemain} style={styles.remainView}>
+            <TouchableOpacity onPress={()=>onPressRemain(item.teamId)} style={styles.remainView}>
                 <Image
                     resizeMode="contain"
                     style={styles.recordImage}

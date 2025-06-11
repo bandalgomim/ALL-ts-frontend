@@ -82,7 +82,6 @@ export const commonIAMHook = async (
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
-        console.log("data", data)
         if (refreshToken === null && data === null) {
             if (loginState) {
                 loginState(false);
@@ -97,16 +96,13 @@ export const commonIAMHook = async (
                 'RefreshToken': refreshToken,
             },
           });
-          console.log('response', response);
           if (response.headers.authorization) {
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
-            console.log("test1")
             if (loginState) {
                 loginState(true);
             }
           } else {
-            console.log("test2")
             if (loginState) {
                 loginState(true);
             }
@@ -115,7 +111,6 @@ export const commonIAMHook = async (
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response?.data.includes('refresh token unmatched')) {
-                console.log("test3")
                 await localData.delete('Authorization');
                 await localData.delete('RefreshToken');
                 if (loginState) {

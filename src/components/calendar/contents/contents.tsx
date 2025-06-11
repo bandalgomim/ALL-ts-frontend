@@ -22,7 +22,7 @@ const Contents: React.FC<ContentsProps> = ({
   monthDates, weekDates, month, color, mode, matchList, goToPrevious, goToNext
 }) => {
 
-  console.log('Contents.tsx');
+  ('Contents.tsx');
   const {setModalVisible, setModalContents} = useContext(ModalContext);
   const groupedMatches = useMemo(() =>
     matchList,[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
@@ -45,7 +45,6 @@ const Contents: React.FC<ContentsProps> = ({
   const onPressDate = useCallback((day: Date) => {
     const date = day.toLocaleDateString('sv-SE');
     if (day instanceof Date) {
-      console.log('groupedMatches', groupedMatches);
       const matchInfo = groupedMatches ? groupedMatches[date] : null;
       if (matchInfo) {
         setModalContents({'modalContents':matchInfo});

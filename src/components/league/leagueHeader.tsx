@@ -58,6 +58,7 @@ const LeagueHeader = () => {
             <View style={styles.recordListView}>
               <LeagueRankList
                 teamList={leagueRes.data?.teamList ?? []}
+                matchList={leagueRes.data?.matchList ?? []}
               />
             </View>
           </View>

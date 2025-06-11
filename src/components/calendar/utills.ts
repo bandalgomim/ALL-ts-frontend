@@ -119,3 +119,16 @@ export const findNext = (matchList: matchListDto) => {
   }
   return result;
 };
+
+export const findNextInLeague = (matchList: matchListDto, teamId: number) => {
+  // 새로운 객체를 만들어 'next' 상태만 남깁니다.
+  const result: matchListDto = {};
+  for (const [date, matches] of Object.entries(matchList)) {
+    // matchState가 'next'인 경기만 필터링
+    const nextMatches = matches.filter(match => match.matchState === 'next' && (match.homeTeamId === teamId || match.awayTeamId === teamId));
+    if (nextMatches.length > 0) {
+      result[date] = nextMatches;
+    }
+  }
+  return result;
+};

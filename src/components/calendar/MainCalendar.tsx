@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.62,
     alignItems: 'center',
-
+    zIndex: 1, // 낮은 z-index 추가
   },
   banner: {
     backgroundColor: '#b1b4cc',

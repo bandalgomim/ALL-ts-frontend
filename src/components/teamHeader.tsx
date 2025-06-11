@@ -16,7 +16,6 @@ const TeamHeader = () => {
   const [record, setRecord] = useState(false);
 
   const onPressRemain = useCallback(() => {
-    console.log('teamRes', teamRes.data.matchList);
       const matchInfo = findNext(teamRes.data.matchList)
       if (matchInfo) {
         setModalNextMatchContents(matchInfo);

@@ -49,7 +49,6 @@ export default function TeamCalendar() {
     });
     return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, teamRes.data.matchList]);
-  console.log('splitMatchList', splitMatchList);
   // 스와이프 기능 추가
   const panResponder = useMemo(
     () =>

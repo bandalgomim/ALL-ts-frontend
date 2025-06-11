@@ -81,7 +81,6 @@ export async function initializeNotifications() {
       console.log('딥링크 실행:', detail.notification?.data);
       const { screen, matchId } = detail.notification?.data || {};
       if (screen && matchId) {
-        console.log('test');
         const deepLink = `myapp://${screen}/${matchId}`;
         console.log('딥링크 실행:', deepLink);
         Linking.openURL(deepLink);
