@@ -23,6 +23,13 @@ const TeamHeader = () => {
       ;}
   }, [teamRes, setModalNextMatchVisible, setModalNextMatchContents]);
 
+  const getRankSuffix = (rank: string): string => {
+    if (rank === '1') return 'st';
+    if (rank === '2') return 'nd';
+    if (rank === '3') return 'rd';
+    return 'th';
+  };
+
 
   return (
     <View style={[styles.container, styles.headerContainer]}>
@@ -90,24 +97,27 @@ const TeamHeader = () => {
         </TouchableOpacity>
         {record && (
           <View style={styles.record}>
-            <View style={styles.recordRankBox}>
-              <Text style={[styles.recordText, styles.recordRank]}>6</Text>
-              <Text style={[styles.recordText, styles.recordRankSuffix]}>th</Text>
-            </View>
+            {teamRes.data?.team.rank.length == 1 ? <View style={styles.recordRankBox}>
+              <Text style={[styles.recordText, styles.recordRank]}>{teamRes.data?.team?.rank}</Text>
+              <Text style={[styles.recordText, styles.recordRankSuffix]}>{getRankSuffix(teamRes.data?.team?.rank)}</Text>
+            </View>: <View style={styles.recordRankBox}>
+              <Text style={[styles.recordText, styles.recordRank, {fontSize: width*0.19, width: width*0.16, marginTop: height*0.01}]}>{teamRes.data?.team?.rank}</Text>
+              <Text style={[styles.recordText, styles.recordRankSuffix, {width: width*0.035}]}>{null}</Text>
+            </View>}
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum]}>13</Text>
+              <Text style={[styles.recordText, styles.recordItemNum]}>{teamRes.data?.team?.win}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>WIN</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>-</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>{teamRes.data?.team?.draw}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>13</Text>
-              <Text style={[styles.recordText, styles.recordItemLabel]}>ROSE</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{teamRes.data?.team?.rose}</Text>
+              <Text style={[styles.recordText, styles.recordItemLabel]}>LOSE</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>-13</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>{teamRes.data?.team?.point}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel, styles.recordPink]}>POINT</Text>
             </View>
             <TouchableOpacity onPress={onPressRemain} style={styles.recordImageContainer}>
@@ -219,6 +229,7 @@ const styles = StyleSheet.create({
   recordRank: {
     fontSize: width * 0.21,
     width: width * 0.085,
+    textAlign: 'center',
   },
   recordRankSuffix: {
     fontSize: width * 0.13,

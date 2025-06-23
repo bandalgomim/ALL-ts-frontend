@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { height, width } from '../../global';
 import { teamDto } from '../../model/league.dto';
@@ -13,6 +13,17 @@ interface LeagueRankListProps {
 }
 
 const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) => {
+  const sortedItems = useMemo(() => {
+    return [...teamList].sort((a, b) => {
+      // 먼저 section 기준 정렬
+      const sectionCompare = a.section.localeCompare(b.section);
+      if (sectionCompare !== 0) return sectionCompare;
+  
+      // section이 같으면 rank 기준 정렬
+      return a.rank - b.rank;
+    });
+  }, [teamList]);
+  console.log('LeagueRankList', sortedItems);
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const onPressRemain = useCallback((teamId: number) => {
       const matchInfo = findNextInLeague(matchList, teamId);
@@ -21,12 +32,19 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
       setModalNextMatchVisible(true)
       ;}
   }, [matchList, setModalNextMatchContents, setModalNextMatchVisible]);
+  const getRankSuffix = (rank: string): string => {
+    if (rank === '1') return 'st';
+    if (rank === '2') return 'nd';
+    if (rank === '3') return 'rd';
+    return 'th';
+  };
   const renderItem = useCallback(({ item }: { item: teamDto }) => (
     <View style={styles.container}>
+      {item.section && item.rank === '1' && <Text>{item.section}</Text>}
         <View style={styles.rankItem}>
             <View style={styles.rankView}>
-                <Text style={styles.rankText}>2</Text>
-                <Text style={[styles.rankText, {fontSize: width*0.045, marginBottom:-height*0.0045}]}>st</Text>
+                <Text style={styles.rankText}>{item.rank}</Text>
+                <Text style={[styles.rankText, {fontSize: width*0.045, marginBottom:-height*0.0045}]}>{getRankSuffix(item.rank)}</Text>
             </View>
             <View style={styles.teamLogoView}>
                 <FastImage
@@ -39,16 +57,16 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                 <Text style={styles.teamInit}>{item.teamInit}</Text>
             </View>
             <View style={styles.numberTextView}>
-                <Text style={styles.numberText}>12</Text>
+                <Text style={styles.numberText}>{item.win}</Text>
             </View>
             <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {color: "#9E9E9E"}]}>12</Text>
+                <Text style={[styles.numberText, {color: "#9E9E9E"}]}>{item.draw}</Text>
             </View>
             <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {opacity: 0.3}]}>12</Text>
+                <Text style={[styles.numberText, {opacity: 0.3}]}>{item.rose}</Text>
             </View>
             <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {color: "#EA5579"}]}>12</Text>
+                <Text style={[styles.numberText, {color: "#EA5579"}]}>{item.point}</Text>
             </View>
             <TouchableOpacity onPress={()=>onPressRemain(item.teamId)} style={styles.remainView}>
                 <Image
@@ -67,7 +85,7 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
 
   return (
     <FlatList
-      data={teamList}
+      data={sortedItems}
       renderItem={renderItem}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}

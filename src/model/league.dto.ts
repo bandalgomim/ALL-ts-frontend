@@ -16,7 +16,13 @@ export interface teamDto {
     teamId: number,
     teamName: string,
     teamInit: string,
-    teamLogo: string
+    teamLogo: string,
+    rank: string,
+    win: number,
+    rose: number,
+    draw: number,
+    point: number,
+    section: string,
 }
 
 export interface getLeagueResDto {
