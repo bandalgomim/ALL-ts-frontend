@@ -55,14 +55,7 @@
 		<string>rg-it-ver2.ttf</string>
 		<string>sb-rg-ver4.ttf</string>
 		<string>sb-it-ver1.ttf</string>
-		<string>esamanru OTF Medium.otf</string>
-		<string>VITRO INSPIRE OTF.otf</string>
-		<string>BlackHanSans-Regular.ttf</string>
-		<string>NotoSansKR-Light.ttf</string>
-		<string>NotoSansKR-Medium.ttf</string>
-		<string>NotoSansKR-Regular.ttf</string>
 		<string>NotoSansKR-Bold.ttf</string>
-		<string>NotoSansKR-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
