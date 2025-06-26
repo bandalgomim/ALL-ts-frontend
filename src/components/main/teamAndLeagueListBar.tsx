@@ -123,6 +123,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
+              onStartShouldSetResponderCapture={() => true}
             />
           ) : null}
         </View>

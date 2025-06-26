@@ -20,12 +20,25 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   const [score, setScore] = useState(false);
   const style =
     color === 'white'
-      ? [styles.stateTextWhite, styles.teamNameWhite]
-      : [styles.stateTextBlue, styles.teamNameBlue];
+      ? [styles.stateTextWhite, styles.teamNameWhite, styles.teamNameWhiteKorean]
+      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKorean];
   const onPressScore = () => {
     setScore(!score);
   };
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
+
+  function detectLang(text: string, position: 'left' | 'right') {
+    if (!text) {return;}
+    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEnglish = /[a-zA-Z]/.test(text);
+
+      if (hasKorean && !hasEnglish) {
+        return (<Text style={[style[2], {textAlign: position }]}>{text}</Text>);
+      }
+      else if (!hasKorean && hasEnglish) {
+        return (<Text style={[style[1], {textAlign: position }]}>{text}</Text>);
+      } else {return;}
+  }
 
   const navigateMatch = (matchId: number) => {
     setModalVisible(false); // 모달 닫기
@@ -82,9 +95,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               >{`${match.matchState}`}</Text>
             </View>
             <View style={{ marginRight: width * 0.01, width: width * 0.132, borderWidth: 0 }}>
-              <Text style={[style[1], { fontSize: width * 0.08, textAlign: 'right' }]}>
-                {`${match.homeTeamInit}`}
-              </Text>
+              {detectLang(match.homeTeamInit, 'right')}
             </View>
             <TeamOrLeagueLogo logo={match.hometeamLogo} type={'small'} />
             <TouchableOpacity
@@ -119,9 +130,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                 width: width * 0.132,
               }}
             >
-              <Text style={[style[1], { fontSize: width * 0.08, textAlign: 'left' }]}>
-                {`${match.awayTeamInit}`}
-              </Text>
+              {detectLang(match.awayTeamInit, 'left')}
             </View>
             <IsSelected
               isSelected={match.isMatchSelected}
@@ -158,13 +167,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
-  teamNameBlue: {
-    fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
   stateTextWhite: {
     textAlign: 'center',
     fontFamily: 'sb-it-ver1',
@@ -173,8 +175,33 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
+  teamNameBlue: {
+    fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.08,
+    color: 'white',
+    textShadowColor: '#242b5c', // 그림자 색상
+    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
   teamNameWhite: {
     fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.08,
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
+    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
+  teamNameBlueKorean: {
+    fontFamily: 'NotoSansKR-Bold',
+    fontSize: width * 0.055,
+    transform: [{ scaleY: 1.2 }],
+    color: 'white',
+    textShadowColor: '#242b5c', // 그림자 색상
+    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
+  teamNameWhiteKorean: {
+    fontFamily: 'NotoSansKR-Bold',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋

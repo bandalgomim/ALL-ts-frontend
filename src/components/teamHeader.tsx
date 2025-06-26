@@ -15,6 +15,44 @@ const TeamHeader = () => {
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const [record, setRecord] = useState(false);
 
+  function detectLang(text: string, size: 'big' | 'small') {
+    if (!text) {return;}
+    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEnglish = /[a-zA-Z]/.test(text);
+
+    if (size === 'big') {
+      if (hasKorean && !hasEnglish) {
+        return (<Text style={[styles.teamInfoNameKorean, styles.headerTeamInfoNameLargeKorean] }>{text}</Text>);
+      }
+      if (!hasKorean && hasEnglish) {
+        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
+      }
+    } else if (size === 'small') {
+      if (hasKorean && !hasEnglish) {
+        return (<Text style={[styles.teamInfoNameKorean, styles.headerTeamInfoNameSmallKorean]}>{text}</Text>);
+      }
+      if (!hasKorean && hasEnglish) {
+        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+      }
+    } else {return;}
+  }
+  function detectLangth(text: string) {
+      let textlength = 0;
+      const hasKorean = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
+      const hasEnglish = (text: string) => {return /[a-zA-Z]/.test(text);};
+
+      for (let i = 0; i < text.length; i++) {
+        if (hasKorean(text[i])) {
+          textlength += 2; // 한글은 2로 계산
+        } else if (hasEnglish(text[i])) {
+          textlength += 1; // 영어는 1로 계산
+        } else {
+          textlength += 1; // 기타 문자는 1로 계산
+        }
+      }
+      return textlength;
+    }
+
   const onPressRemain = useCallback(() => {
       const matchInfo = findNext(teamRes.data.matchList)
       if (matchInfo) {
@@ -43,40 +81,82 @@ const TeamHeader = () => {
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>
           <View style={styles.teamInfoTextContainer}>
-            {teamRes?.data?.team?.teamName && teamRes?.data?.team?.teamName.length < 11
-              ? <Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{teamRes.data?.team.teamName}</Text>
-              : <View>
-                  {teamRes.data?.team?.teamName?.split(' ').length === 3 ? (() => {
-                    const [a, b, c] = teamRes.data.team.teamName.split(' ');
-                    const first = `${a} ${b}`;
-                    const second = `${b} ${c}`;
-                    if (first.length <= second.length) {
-                      return (
+            {teamRes?.data?.team?.teamName ? (() => {
+              const teamNameSplit = teamRes.data?.team?.teamName.split(' ');
+              const textLength = detectLangth(teamRes.data?.team?.teamName);
+              if (teamNameSplit.length === 1) {
+                if (textLength < 11) {
+                  return (
+                    <>
+                      {detectLang(teamNameSplit[0], 'big')}
+                    </>
+                  );
+                } else {
+                  return (
+                    <>
+                      <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
+                      {detectLang(teamNameSplit[0], 'small')}
+                    </>
+                  )
+                }
+              } else if (teamNameSplit.length === 2) {
+                if (textLength < 11) {
+                  return (
+                    <View style={{flexDirection: 'row'}}>
+                      {detectLang(teamNameSplit[0], 'big')}
+                      {detectLang(teamNameSplit[1], 'big')}
+                    </View>
+                  );
+                } else{
+                  return (
+                    <>
+                      {detectLang(teamNameSplit[0], 'small')}
+                      {detectLang(teamNameSplit[1], 'small')}
+                    </>
+                  );
+                }
+              } else {
+                if (textLength < 11) {
+                  return (
+                    <View style={{flexDirection: 'row'}}>
+                      {detectLang(teamNameSplit[0], 'big')}
+                      <Text>  </Text>
+                      {detectLang(teamNameSplit[1], 'big')}
+                      <Text>  </Text>
+                      {detectLang(teamNameSplit[2], 'big')}
+                    </View>
+                  );
+                } else {
+                  const first = `${teamNameSplit[0]} ${teamNameSplit[1]}`;
+                  const second = `${teamNameSplit[1]} ${teamNameSplit[2]}`;
+                  if (detectLangth(first) <= detectLangth(second)) {
+                    return (
+                      <>
+                        <View style={{flexDirection: 'row'}}>
+                          {detectLang(teamNameSplit[0], 'small')}
+                          {detectLang(teamNameSplit[1], 'small')}
+                        </View>
                         <>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{first}</Text>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{c}</Text>
+                          {detectLang(teamNameSplit[2], 'small')}
                         </>
-                      );
-                    } else {
-                      return (
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
                         <>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{a}</Text>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{second}</Text>
+                          {detectLang(teamNameSplit[0], 'small')}
                         </>
-                      );
-                    }
-                  })() : (
-                    teamRes.data?.team?.teamName?.split(' ').length > 1
-                      ? <>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ').slice(1).join(' ')}</Text>
-                        </>
-                      : <>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
-                          <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{teamRes.data?.team?.teamName?.split(' ')[0]}</Text>
-                        </>
-                  )}
-                </View>}
+                        <View style={{flexDirection: 'row'}}>
+                          {detectLang(teamNameSplit[1], 'small')}
+                          {detectLang(teamNameSplit[2], 'small')}
+                        </View>
+                      </>
+                    );
+                  }
+                }
+              }
+            })() : null}
             <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
               {`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}
             </Text>
@@ -181,13 +261,42 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
   },
+  teamInfoNameKorean: {
+    textAlign: 'right',
+    fontFamily: 'NotoSansKR-Bold',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 1.5 },
+    textShadowRadius: 3,
+  },
   headerTeamInfoNameLarge: {
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
+    paddingLeft: width * 0.02,
+    paddingRight: width * 0.02,
+  },
+  headerTeamInfoNameLargeKorean: {
+    transform: [{ scaleY: 1.2 }],
+    textAlign: 'center',
+    fontSize: height*0.05,
+    height: width * 0.15,
+    lineHeight: height * 0.05,
+    marginTop: height * 0.01,
   },
   headerTeamInfoNameSmall: {
     fontSize: width * 0.083,
     marginBottom: -height * 0.01,
+    paddingLeft: width * 0.01,
+    paddingRight: width * 0.01,
+  },
+  headerTeamInfoNameSmallKorean: {
+    transform: [{ scaleY: 1.2 }],
+    textAlign: 'center',
+    fontSize: width*0.063,
+    marginTop: height*0.004,
+    lineHeight: height * 0.03,
+    paddingLeft: width * 0.01,
+    paddingRight: width * 0.01,
   },
   teamInfoEtc: {
     textAlign: 'right',

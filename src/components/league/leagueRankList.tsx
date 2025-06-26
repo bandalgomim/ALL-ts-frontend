@@ -6,6 +6,9 @@ import FastImage from 'react-native-fast-image';
 import { ModalContext } from '../../context/modal.context';
 import { matchListDto } from '../../model/main.dto';
 import { findNextInLeague } from '../calendar/utills';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { TeamPageParamList } from '../../model/navigation.dto';
 
 interface LeagueRankListProps {
     teamList: teamDto[]
@@ -13,17 +16,33 @@ interface LeagueRankListProps {
 }
 
 const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) => {
+    const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
+    const navigateTeam = (teamId: number) => {
+      navigation.navigate('TeamScreen', { teamId: teamId });
+    };
   const sortedItems = useMemo(() => {
     return [...teamList].sort((a, b) => {
       // 먼저 section 기준 정렬
       const sectionCompare = a.section.localeCompare(b.section);
-      if (sectionCompare !== 0) return sectionCompare;
-  
+      if (sectionCompare !== 0) {return sectionCompare;}
       // section이 같으면 rank 기준 정렬
       return a.rank - b.rank;
     });
   }, [teamList]);
-  console.log('LeagueRankList', sortedItems);
+
+  function detectLang(text: string) {
+    if (!text) {return;}
+    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEnglish = /[a-zA-Z]/.test(text);
+    if (hasKorean && !hasEnglish) {
+      return (<Text style={{fontFamily: 'esamanru OTF Medium', transform: [{ scaleY: 1.7 }], fontSize: width*0.03, marginTop: height*0.003 } }>{text}</Text>);
+    }
+    if (!hasKorean && hasEnglish) {
+      return (<Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, width: width*0.07}}> {text}</Text>);
+    }
+    return;
+  }
+
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const onPressRemain = useCallback((teamId: number) => {
       const matchInfo = findNextInLeague(matchList, teamId);
@@ -33,29 +52,39 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
       ;}
   }, [matchList, setModalNextMatchContents, setModalNextMatchVisible]);
   const getRankSuffix = (rank: string): string => {
-    if (rank === '1') return 'st';
-    if (rank === '2') return 'nd';
-    if (rank === '3') return 'rd';
+    if (rank === '1') {return 'st';}
+    if (rank === '2') {return 'nd';}
+    if (rank === '3') {return 'rd';}
     return 'th';
   };
   const renderItem = useCallback(({ item }: { item: teamDto }) => (
     <View style={styles.container}>
-      {item.section && item.rank === '1' && <Text>{item.section}</Text>}
+      {item.section && item.rank === '1' ? (()=>{
+        const [a, b] = item.section.split(' ');
+        return (
+          <View style={styles.sectionHeader}>
+            {detectLang(a)}
+            {detectLang(b)}
+          </View>
+        );
+      })() : null}
         <View style={styles.rankItem}>
             <View style={styles.rankView}>
                 <Text style={styles.rankText}>{item.rank}</Text>
                 <Text style={[styles.rankText, {fontSize: width*0.045, marginBottom:-height*0.0045}]}>{getRankSuffix(item.rank)}</Text>
             </View>
-            <View style={styles.teamLogoView}>
-                <FastImage
-                    resizeMode="contain"
-                    source={{ uri: item.teamLogo as string}}
-                    style={{ width: width * 0.05, height: width * 0.05 }}
-                />
-            </View>
-            <View style={styles.teamInitView}>
-                <Text style={styles.teamInit}>{item.teamInit}</Text>
-            </View>
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>{navigateTeam(item.teamId);}}>
+              <View style={styles.teamLogoView}>
+                  <FastImage
+                      resizeMode="contain"
+                      source={{ uri: item.teamLogo as string}}
+                      style={{ width: width * 0.05, height: width * 0.05 }}
+                  />
+              </View>
+              <View style={styles.teamInitView}>
+                  <Text style={styles.teamInit}>{item.teamInit}</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.numberTextView}>
                 <Text style={styles.numberText}>{item.win}</Text>
             </View>
@@ -102,9 +131,18 @@ const styles = StyleSheet.create({
         //borderWidth: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
+        //alignItems: 'center',
         marginBottom: height * 0.01,
     },
+  sectionHeader:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    //borderWidth: 1,
+    height: height * 0.03,
+    marginLeft: width * 0.012,
+    marginTop: height * 0.005,
+    marginBottom: height * 0.002,
+  },
   rankItem: {
     flexDirection: 'row',
     height: height * 0.035,
@@ -128,7 +166,7 @@ const styles = StyleSheet.create({
   teamLogoView: {
     //borderWidth: 1,
     marginRight: width * 0.01,
-    marginBottom: height * 0.005,
+    marginTop: height * 0.005,
   },
   teamLogo: {},
   teamInitView: {

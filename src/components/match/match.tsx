@@ -32,6 +32,20 @@ const Match: React.FC<MatchPros> = ({ match }) => {
     setAwayTeamScore(!awayTeamScore);
   };
 
+  function detectLang(text: string | null) {
+    if (!text) {return;}
+    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEnglish = /[a-zA-Z]/.test(text);
+
+      if (hasKorean && !hasEnglish) {
+        return (<Text style={[styles.fontBlueBigKorean]}>{text}</Text>);
+      }
+      else if (!hasKorean && hasEnglish) {
+        return (<Text style={[styles.fontBlueBig]}>{text}</Text>);
+      } else {return;}
+  }
+  
+
   return (
     <View style={styles.container}>
       <HeadNotch />
@@ -65,7 +79,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
                   source={require('../../assets/match/white.png')}
                 />
                 <View style={styles.teamNameContainer}>
-                  <Text style={styles.fontBlueBig}>{match.homeTeamInit}</Text>
+                  {detectLang(match.homeTeamInit)}
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`.length > 22
@@ -106,7 +120,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} />
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
-                  <Text style={styles.fontBlueBig}>{match.awayTeamInit}</Text>
+                  {detectLang(match.awayTeamInit)}
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`.length > 22
@@ -288,6 +302,18 @@ const styles = StyleSheet.create({
     fontSize: height * 0.07,
     width: width * 0.5,
     textAlign: 'center',
+  },
+  fontBlueBigKorean: {
+    fontFamily: 'NotoSansKR-Bold',
+    transform: [{ scaleY: 1.2 }],
+    color: '#30397A',
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 2 },
+    textShadowRadius: 3,
+    fontSize: height * 0.05,
+    width: width * 0.5,
+    textAlign: 'center',
+    marginTop: -height * 0.034,
   },
   fontBlueSmall: {
     fontFamily: 'sb-it-ver1',

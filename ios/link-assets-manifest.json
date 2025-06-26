@@ -2,124 +2,56 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-      "sha1": "4e77868439280fb434d4697c7b911271406c81f3"
+      "path": "src/assets/fonts/BlackHanSans-Regular.ttf",
+      "sha1": "55df5d052e2830d785bbf6cbf876d4bd760b9f4f"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-      "sha1": "12b5670eb178138f77285d5f2c246d3cc5fa67d6"
+      "path": "src/assets/fonts/esamanru OTF Medium.otf",
+      "sha1": "3b9588656d394666c664fbdb5ba999625894a1fd"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-      "sha1": "91d377ea3cf47490b256c2ed081704a7dabdae0c"
+      "path": "src/assets/fonts/lt-it-ver3.ttf",
+      "sha1": "a71e938f160ee0779a76252545e564bc0e3b7f9e"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-      "sha1": "e6604258b1ced5efd51360875d782fca65381d47"
+      "path": "src/assets/fonts/NotoSansKR-Bold.ttf",
+      "sha1": "5651f33d0ce8918f06c10a48d5a2d599e804c67b"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-      "sha1": "13b1eab65a983c7a73bc7997c479d66943f7c6cb"
+      "path": "src/assets/fonts/NotoSansKR-Light.ttf",
+      "sha1": "fe043bf69c812dcd39a216bc1766936e8d64b254"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-      "sha1": "3fa2d67cef22da5c3f3eb5730c6afbd6fecf0372"
+      "path": "src/assets/fonts/NotoSansKR-Medium.ttf",
+      "sha1": "a434265e4ed09fdb53f76e1f27054b312ae40d80"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-      "sha1": "7d849a3981a716e2ba4a84634bc57d0b8054a6a3"
+      "path": "src/assets/fonts/NotoSansKR-Regular.ttf",
+      "sha1": "a2cd60b37bde07851a2e2a94c51ce0373311eb9c"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-      "sha1": "c1b9fae262f42868c075ac865a8ab34920e20a2c"
+      "path": "src/assets/fonts/NotoSansKR-SemiBold.ttf",
+      "sha1": "ee36377e4b79f61362c43750498b706bc95c1722"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf",
-      "sha1": "7ce89c71d5a51ac65b159c71422783dd86529c66"
+      "path": "src/assets/fonts/rg-bd-ver5.ttf",
+      "sha1": "1204758610cf8f733b9351764bab4f837fd1d483"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf",
-      "sha1": "775e2ecfc18d22b177274453d4c014ca6be63208"
+      "path": "src/assets/fonts/rg-it-ver2.ttf",
+      "sha1": "242f137b05a33827484775d33253b81e5951cf37"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf",
-      "sha1": "2b8e11389d98122399667cf64941eb58497dc128"
+      "path": "src/assets/fonts/sb-it-ver1.ttf",
+      "sha1": "588d60fba09a0984f77f8c4369d5ef9d88450ba2"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-      "sha1": "c090a3ec96a3f1bb9b615c2f3f204ce0dcdcdbc3"
+      "path": "src/assets/fonts/sb-rg-ver4.ttf",
+      "sha1": "b317f1c403b8507e5ee1f75b4a4899b3eb6ef395"
     },
     {
-      "path": "node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-      "sha1": "4b2bce6c792493a4a5716b6fec2dbefe89492c3f"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-      "sha1": "86e07c3d974eb09099e6e5a9b3b8310303cf0feb"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-      "sha1": "4c2a838b00dbb5e8bb1b368fce0de534e8eb241c"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-      "sha1": "7e02c3f005532ff4d24148567c84089756a7848a"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-      "sha1": "56acefc0731f35ee23b195b1c8cb5fa94a0db97b"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-      "sha1": "9ffb81a5a11112e292f2cc323e98486bad597599"
-    },
-    {
-      "path": "node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-      "sha1": "6a48a962b06cc3acbdfd61df0d9a34744eea5e8d"
-    },
-    {
-      "path": "src/assets/fonts/Test-Italic.ttf",
-      "sha1": "93d57aebd5b8d613084899582c7befaf4737e825"
-    },
-    {
-      "path": "src/assets/fonts/built titling bd it.otf",
-      "sha1": "54198f2355b68c8658cc46c6c20aabc98a6d89da"
-    },
-    {
-      "path": "src/assets/fonts/built titling bd.otf",
-      "sha1": "4c6ffaaacb0b4e4740f0a41ae2242ba6e7728240"
-    },
-    {
-      "path": "src/assets/fonts/built titling el it.otf",
-      "sha1": "027987ba9c47b0aec7677d75a913b771a60daac9"
-    },
-    {
-      "path": "src/assets/fonts/built titling el.otf",
-      "sha1": "9c462bfd00561968b21a10c1395116541dcb5a38"
-    },
-    {
-      "path": "src/assets/fonts/built titling lt it.otf",
-      "sha1": "a35500b28a1192beac57101a103f8b704ccccfa9"
-    },
-    {
-      "path": "src/assets/fonts/built titling lt.otf",
-      "sha1": "2de949da5d99fa97dc996fb83ca786aed211ff23"
-    },
-    {
-      "path": "src/assets/fonts/built titling rg it.otf",
-      "sha1": "dd8c44fad2c605edebe44002aba0dd27c116e447"
-    },
-    {
-      "path": "src/assets/fonts/built titling rg.otf",
-      "sha1": "7d8da27f48790d1b6b6ea017bb26c8b4bc0aac7c"
-    },
-    {
-      "path": "src/assets/fonts/built titling sb it.otf",
-      "sha1": "44c2b500d12bcdf4a76354d33b2e0750683e577f"
-    },
-    {
-      "path": "src/assets/fonts/built titling sb.otf",
-      "sha1": "f0df46c1c90f01b756576987dcc6becd2ea2a50d"
+      "path": "src/assets/fonts/VITRO INSPIRE OTF.otf",
+      "sha1": "83e48f4e00970d7082ff5d8f47c1b2610366a32d"
     }
   ]
 }

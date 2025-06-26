@@ -172,13 +172,13 @@ const styles = StyleSheet.create({
   },
   teamBackgroundMonth: {
     width: width * 1,
-    height: width * 0.926,
+    height: width * 0.936,
     opacity: 1,
     position: 'absolute',
   },
   teamBackgroundWeek: {
     width: width * 1,
-    height: width * 0.4999,
+    height: width * 0.51,
     opacity: 1,
     position: 'absolute',
   },
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   matchListWeek: {
     marginTop: height * 0.04,
-    height: height * 0.6,
+    height: height * 0.61,
 
   },
   calendarView: {}

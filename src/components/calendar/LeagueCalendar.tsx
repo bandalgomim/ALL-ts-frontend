@@ -188,7 +188,8 @@ const styles = StyleSheet.create({
   },
   leagueBackgroundMonth: {
     width: width * 1,
-    height: width * 0.9202,
+    height: width * 0.92,
+    marginTop: height * 0.0035, // 위쪽 여백 조정
   },
   leagueBackgroundWeek: {
     width: width * 1,
