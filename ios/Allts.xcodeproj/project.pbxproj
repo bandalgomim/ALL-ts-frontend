@@ -10,8 +10,13 @@
 		0CC2A7F4D6C5933929FB3A38 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		15D9482933BE898570A94F03 /* libPods-ALLts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A697DE8738D5653AD46F8F6 /* libPods-ALLts.a */; };
+		195EEFE1128F4C5484829C64 /* rg-bd-ver5.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */; };
+		5986340EB0934BBD9B6CEF2F /* sb-rg-ver4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		85F6DBA3B31845B49D29108C /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */; };
+		A5F4A0B448364DF480852AED /* rg-it-ver2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1A591AA94974067B342A672 /* rg-it-ver2.ttf */; };
+		C449A6DDB1F249D5B9335173 /* sb-it-ver1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */; };
 		CC0EE2D22DA3F27100FF67D8 /* rg-bd-ver5.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2CD2DA3F27000FF67D8 /* rg-bd-ver5.ttf */; };
 		CC0EE2D32DA3F27100FF67D8 /* lt-it-ver3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2CE2DA3F27000FF67D8 /* lt-it-ver3.ttf */; };
 		CC0EE2D52DA3F27100FF67D8 /* rg-it-ver2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D02DA3F27100FF67D8 /* rg-it-ver2.ttf */; };
@@ -19,25 +24,26 @@
 		CC7B393B2DA49957000E5319 /* sb-rg-ver4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D82DA3F38900FF67D8 /* sb-rg-ver4.ttf */; };
 		CCD0D7822DD5277500FE66F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */; };
 		DCC925DBB59D43B89F99E455 /* lt-it-ver3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88F64F689034105AF930561 /* lt-it-ver3.ttf */; };
-		195EEFE1128F4C5484829C64 /* rg-bd-ver5.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */; };
-		A5F4A0B448364DF480852AED /* rg-it-ver2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1A591AA94974067B342A672 /* rg-it-ver2.ttf */; };
-		C449A6DDB1F249D5B9335173 /* sb-it-ver1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */; };
-		5986340EB0934BBD9B6CEF2F /* sb-rg-ver4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */; };
-		85F6DBA3B31845B49D29108C /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */; };
 		F7DBCAB1573147D58F17709D /* NotoSansKR-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CF42F83D30E421E971CEB29 /* NotoSansKR-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "sb-it-ver1.ttf"; path = "../src/assets/fonts/sb-it-ver1.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ALLts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALLts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ALLts/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ALLts/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = ALLts/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-Bold.ttf"; path = "../src/assets/fonts/NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		1A84206B32FE89D7F8E67F50 /* Pods-ALLts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALLts.debug.xcconfig"; path = "Target Support Files/Pods-ALLts/Pods-ALLts.debug.xcconfig"; sourceTree = "<group>"; };
 		31BA8C4DF63FC5D6655F2A9D /* Pods-ALLts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALLts.release.xcconfig"; path = "Target Support Files/Pods-ALLts/Pods-ALLts.release.xcconfig"; sourceTree = "<group>"; };
+		5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "rg-bd-ver5.ttf"; path = "../src/assets/fonts/rg-bd-ver5.ttf"; sourceTree = "<group>"; };
 		6A697DE8738D5653AD46F8F6 /* libPods-ALLts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ALLts.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ALLts/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ALLts/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8CF42F83D30E421E971CEB29 /* NotoSansKR-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSansKR-ExtraBold.ttf"; sourceTree = "<group>"; };
+		AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "sb-rg-ver4.ttf"; path = "../src/assets/fonts/sb-rg-ver4.ttf"; sourceTree = "<group>"; };
 		B21964EC95074344BAD0693A /* rg-it-ver2.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rg-it-ver2.otf"; path = "../src/assets/fonts/rg-it-ver2.otf"; sourceTree = "<group>"; };
+		C1A591AA94974067B342A672 /* rg-it-ver2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "rg-it-ver2.ttf"; path = "../src/assets/fonts/rg-it-ver2.ttf"; sourceTree = "<group>"; };
 		CC0EE2CD2DA3F27000FF67D8 /* rg-bd-ver5.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "rg-bd-ver5.ttf"; path = "../../src/assets/fonts/rg-bd-ver5.ttf"; sourceTree = "<group>"; };
 		CC0EE2CE2DA3F27000FF67D8 /* lt-it-ver3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "lt-it-ver3.ttf"; path = "../../src/assets/fonts/lt-it-ver3.ttf"; sourceTree = "<group>"; };
 		CC0EE2D02DA3F27100FF67D8 /* rg-it-ver2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "rg-it-ver2.ttf"; path = "../../src/assets/fonts/rg-it-ver2.ttf"; sourceTree = "<group>"; };
@@ -65,13 +71,7 @@
 		CC98A19D2DD533F900F15E58 /* ALLts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ALLts.entitlements; path = ALLts/ALLts.entitlements; sourceTree = "<group>"; };
 		CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F88F64F689034105AF930561 /* lt-it-ver3.ttf */ = {isa = PBXFileReference; name = "lt-it-ver3.ttf"; path = "../src/assets/fonts/lt-it-ver3.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */ = {isa = PBXFileReference; name = "rg-bd-ver5.ttf"; path = "../src/assets/fonts/rg-bd-ver5.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C1A591AA94974067B342A672 /* rg-it-ver2.ttf */ = {isa = PBXFileReference; name = "rg-it-ver2.ttf"; path = "../src/assets/fonts/rg-it-ver2.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */ = {isa = PBXFileReference; name = "sb-it-ver1.ttf"; path = "../src/assets/fonts/sb-it-ver1.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */ = {isa = PBXFileReference; name = "sb-rg-ver4.ttf"; path = "../src/assets/fonts/sb-rg-ver4.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; name = "NotoSansKR-Bold.ttf"; path = "../src/assets/fonts/NotoSansKR-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8CF42F83D30E421E971CEB29 /* NotoSansKR-ExtraBold.ttf */ = {isa = PBXFileReference; name = "NotoSansKR-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSansKR-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F88F64F689034105AF930561 /* lt-it-ver3.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "lt-it-ver3.ttf"; path = "../src/assets/fonts/lt-it-ver3.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +108,21 @@
 				6A697DE8738D5653AD46F8F6 /* libPods-ALLts.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7D1CDD741F7241DE90EEBDA7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F88F64F689034105AF930561 /* lt-it-ver3.ttf */,
+				5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */,
+				C1A591AA94974067B342A672 /* rg-it-ver2.ttf */,
+				0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */,
+				AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */,
+				150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */,
+				8CF42F83D30E421E971CEB29 /* NotoSansKR-ExtraBold.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -184,29 +199,10 @@
 		CC6AE71C2DA1D60B00629B2D /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				C088D48FFB854E51960336FC /* built titling bd.otf */,
-				3ABD63405362494199A37CBB /* built titling el it.otf */,
 				B21964EC95074344BAD0693A /* rg-it-ver2.otf */,
-				FBEF87859F79471C9A735211 /* built titling rg.otf */,
-				9D06B9BBC47745369B753C74 /* built titling sb.otf */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
-		};
-		7D1CDD741F7241DE90EEBDA7 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				F88F64F689034105AF930561 /* lt-it-ver3.ttf */,
-				5F4FCD052CAD48D284EE7395 /* rg-bd-ver5.ttf */,
-				C1A591AA94974067B342A672 /* rg-it-ver2.ttf */,
-				0ADBEB8EBAB84DC985FFB8F3 /* sb-it-ver1.ttf */,
-				AA0A73EADCBE4A5BA5CD550C /* sb-rg-ver4.ttf */,
-				150F47CA0AD84121A2A55FA2 /* NotoSansKR-Bold.ttf */,
-				8CF42F83D30E421E971CEB29 /* NotoSansKR-ExtraBold.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

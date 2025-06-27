@@ -277,9 +277,9 @@ const styles = StyleSheet.create({
     transform: [{ scaleY: 1.2 }],
     textAlign: 'center',
     fontSize: height*0.05,
-    lineHeight: height * 0.045,
-    marginTop: height * 0.014,
-    height: height * 0.055,
+    lineHeight: height * 0.055,
+    marginTop: height * 0.02,
+    height: height * 0.056,
   },
   headerTeamInfoNameSmall: {
     fontSize: width * 0.083,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     fontSize: width*0.063,
     marginTop: height*0.004,
     marginBottom: -height * 0.005,
-    lineHeight: height * 0.03,
+    lineHeight: height * 0.035,
     height: height * 0.035,
   },
   teamInfoEtc: {

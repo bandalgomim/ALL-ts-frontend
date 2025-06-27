@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
-    fontSize:width * 0.034,
-    marginTop: height * -0.0113,
-    marginBottom: -height * 0.008,
+    fontSize:width * 0.039,
+    marginTop: height * -0.002,
+    marginBottom: height * 0.002,
   },
 });
 

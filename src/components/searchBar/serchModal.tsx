@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
     color: '#30397A',
     lineHeight: height * 0.0375,
     fontSize: width * 0.06,
-    marginTop: height * 0.003,
+    marginTop: height * 0.008,
   },
   resultText: {
     fontSize: width * 0.07,
