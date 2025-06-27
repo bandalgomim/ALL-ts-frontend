@@ -34,13 +34,13 @@ const Match: React.FC<MatchPros> = ({ match }) => {
 
   function detectLang(text: string | null) {
     if (!text) {return;}
-    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
-      if (hasKorean && !hasEnglish) {
-        return (<Text style={[styles.fontBlueBigKorean]}>{text}</Text>);
+      if (hasKR && !hasEnglish) {
+        return (<Text style={[styles.fontBlueBigKR]}>{text}</Text>);
       }
-      else if (!hasKorean && hasEnglish) {
+      else if (!hasKR && hasEnglish) {
         return (<Text style={[styles.fontBlueBig]}>{text}</Text>);
       } else {return;}
   }
@@ -303,8 +303,8 @@ const styles = StyleSheet.create({
     width: width * 0.5,
     textAlign: 'center',
   },
-  fontBlueBigKorean: {
-    fontFamily: 'NotoSansKR-Bold',
+  fontBlueBigKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
     transform: [{ scaleY: 1.2 }],
     color: '#30397A',
     textShadowColor: '#bdb4b4',

@@ -17,13 +17,13 @@ const LeageTeamListBar = () => {
 
   function detectLang(text: string) {
     if (!text) {return;}
-    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
-      if (hasKorean && !hasEnglish) {
-        return (<Text style={[styles.teamNameKorean]}>{text}</Text>);
+      if (hasKR && !hasEnglish) {
+        return (<Text style={[styles.teamNameKR]}>{text}</Text>);
       }
-      else if (!hasKorean && hasEnglish) {
+      else if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamName]}>{text}</Text>);
       } else {return;}
   }
@@ -98,17 +98,17 @@ const styles = StyleSheet.create({
     fontSize:width * 0.05,
     marginTop: -height * 0.002,
   },
-  teamNameKorean: {
+  teamNameKR: {
     textAlign: 'center',
-    fontFamily: 'NotoSansKR-Bold',
-    transform: [{ scaleY: 1 }],
+    fontFamily: 'NotoSansKR-ExtraBold',
+    transform: [{ scaleY: 1.2 }],
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
-    fontSize:width * 0.038,
-    marginTop: -height * 0.016,
-    marginBottom: -height * 0.005,
+    fontSize:width * 0.034,
+    marginTop: height * -0.0113,
+    marginBottom: -height * 0.008,
   },
 });
 

@@ -23,8 +23,9 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
   const sortedItems = useMemo(() => {
     return [...teamList].sort((a, b) => {
       // 먼저 section 기준 정렬
+      if (a.section && b.section) {
       const sectionCompare = a.section.localeCompare(b.section);
-      if (sectionCompare !== 0) {return sectionCompare;}
+      if (sectionCompare !== 0) {return sectionCompare;}}
       // section이 같으면 rank 기준 정렬
       return a.rank - b.rank;
     });
@@ -32,13 +33,26 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
 
   function detectLang(text: string) {
     if (!text) {return;}
-    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
-    if (hasKorean && !hasEnglish) {
+    if (hasKR && !hasEnglish) {
       return (<Text style={{fontFamily: 'esamanru OTF Medium', transform: [{ scaleY: 1.7 }], fontSize: width*0.03, marginTop: height*0.003 } }>{text}</Text>);
     }
-    if (!hasKorean && hasEnglish) {
+    if (!hasKR && hasEnglish) {
       return (<Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, width: width*0.07}}> {text}</Text>);
+    }
+    return;
+  }
+
+  function detectLangRank(text: string) {
+    if (!text) {return;}
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEnglish = /[a-zA-Z]/.test(text);
+    if (hasKR && !hasEnglish) {
+      return (<Text style={styles.teamInitKR}>{text}</Text>);
+    }
+    if (!hasKR && hasEnglish) {
+      return (<Text style={styles.teamInit}> {text}</Text>);
     }
     return;
   }
@@ -82,10 +96,10 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                   />
               </View>
               <View style={styles.teamInitView}>
-                  <Text style={styles.teamInit}>{item.teamInit}</Text>
+                  {detectLangRank(item.teamInit)}
               </View>
             </TouchableOpacity>
-            <View style={styles.numberTextView}>
+            <View style={[styles.numberTextView, {marginLeft: width * 0.006}]}>
                 <Text style={styles.numberText}>{item.win}</Text>
             </View>
             <View style={styles.numberTextView}>
@@ -128,16 +142,13 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
 
 const styles = StyleSheet.create({
     container: {
-        //borderWidth: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        //alignItems: 'center',
         marginBottom: height * 0.01,
     },
   sectionHeader:{
     flexDirection: 'row',
     alignItems: 'center',
-    //borderWidth: 1,
     height: height * 0.03,
     marginLeft: width * 0.012,
     marginTop: height * 0.005,
@@ -149,7 +160,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   rankView: {
-    //borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
@@ -164,13 +174,11 @@ const styles = StyleSheet.create({
     color: '#30397A',
   },
   teamLogoView: {
-    //borderWidth: 1,
     marginRight: width * 0.01,
     marginTop: height * 0.005,
   },
   teamLogo: {},
   teamInitView: {
-    //borderWidth: 1,
     width: width * 0.08,
     marginRight: width * 0.03,
   },
@@ -180,14 +188,22 @@ const styles = StyleSheet.create({
     width: width * 0.08,
     color: '#30397A',
   },
+  teamInitKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
+    transform: [{ scaleY: 1.2 }],
+    fontSize: width * 0.045,
+    width: width * 0.1,
+    lineHeight: width * 0.06,
+    color: '#30397A',
+    marginBottom: height * 0.004,
+  },
   numberTextView: {
-
+    width: width * 0.1,
   },
   numberText: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.06,
     width: width * 0.1,
-    //borderWidth: 1,
     textAlign: 'center',
     color: '#30397A',
   },

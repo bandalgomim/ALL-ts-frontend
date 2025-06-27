@@ -17,32 +17,32 @@ const TeamHeader = () => {
 
   function detectLang(text: string, size: 'big' | 'small') {
     if (!text) {return;}
-    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
     if (size === 'big') {
-      if (hasKorean && !hasEnglish) {
-        return (<Text style={[styles.teamInfoNameKorean, styles.headerTeamInfoNameLargeKorean] }>{text}</Text>);
+      if (hasKR && !hasEnglish) {
+        return (<Text style={[styles.teamInfoNameKR, styles.headerTeamInfoNameLargeKR] }>{text}</Text>);
       }
-      if (!hasKorean && hasEnglish) {
+      if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
       }
     } else if (size === 'small') {
-      if (hasKorean && !hasEnglish) {
-        return (<Text style={[styles.teamInfoNameKorean, styles.headerTeamInfoNameSmallKorean]}>{text}</Text>);
+      if (hasKR && !hasEnglish) {
+        return (<Text style={[styles.teamInfoNameKR, styles.headerTeamInfoNameSmallKR]}>{text}</Text>);
       }
-      if (!hasKorean && hasEnglish) {
+      if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
       }
     } else {return;}
   }
   function detectLangth(text: string) {
       let textlength = 0;
-      const hasKorean = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
+      const hasKR = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
       const hasEnglish = (text: string) => {return /[a-zA-Z]/.test(text);};
 
       for (let i = 0; i < text.length; i++) {
-        if (hasKorean(text[i])) {
+        if (hasKR(text[i])) {
           textlength += 2; // 한글은 2로 계산
         } else if (hasEnglish(text[i])) {
           textlength += 1; // 영어는 1로 계산
@@ -120,9 +120,7 @@ const TeamHeader = () => {
                   return (
                     <View style={{flexDirection: 'row'}}>
                       {detectLang(teamNameSplit[0], 'big')}
-                      <Text>  </Text>
                       {detectLang(teamNameSplit[1], 'big')}
-                      <Text>  </Text>
                       {detectLang(teamNameSplit[2], 'big')}
                     </View>
                   );
@@ -260,43 +258,41 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
+    marginLeft: width * 0.015,
   },
-  teamInfoNameKorean: {
+  teamInfoNameKR: {
     textAlign: 'right',
-    fontFamily: 'NotoSansKR-Bold',
+    fontFamily: 'NotoSansKR-ExtraBold',
     color: '#30397A',
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 1.5 },
     textShadowRadius: 3,
+    marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
-    paddingLeft: width * 0.02,
-    paddingRight: width * 0.02,
   },
-  headerTeamInfoNameLargeKorean: {
+  headerTeamInfoNameLargeKR: {
     transform: [{ scaleY: 1.2 }],
     textAlign: 'center',
     fontSize: height*0.05,
-    height: width * 0.15,
-    lineHeight: height * 0.05,
-    marginTop: height * 0.01,
+    lineHeight: height * 0.045,
+    marginTop: height * 0.014,
+    height: height * 0.055,
   },
   headerTeamInfoNameSmall: {
     fontSize: width * 0.083,
     marginBottom: -height * 0.01,
-    paddingLeft: width * 0.01,
-    paddingRight: width * 0.01,
   },
-  headerTeamInfoNameSmallKorean: {
+  headerTeamInfoNameSmallKR: {
     transform: [{ scaleY: 1.2 }],
     textAlign: 'center',
     fontSize: width*0.063,
     marginTop: height*0.004,
+    marginBottom: -height * 0.005,
     lineHeight: height * 0.03,
-    paddingLeft: width * 0.01,
-    paddingRight: width * 0.01,
+    height: height * 0.035,
   },
   teamInfoEtc: {
     textAlign: 'right',
@@ -323,6 +319,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     transform: [{ rotate: '-7deg' }],
     marginTop: -height * 0.03,
+    
   },
   recordText: {
     fontFamily: 'sb-it-ver1',

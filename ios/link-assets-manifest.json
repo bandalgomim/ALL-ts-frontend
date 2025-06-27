@@ -7,7 +7,11 @@
     },
     {
       "path": "src/assets/fonts/NotoSansKR-Bold.ttf",
-      "sha1": "5651f33d0ce8918f06c10a48d5a2d599e804c67b"
+      "sha1": "adce660448f74e802327ce930afdb7492a7c2bd1"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansKR-ExtraBold.ttf",
+      "sha1": "36a5bb9e1e8db5014852e2634128c4063664fccb"
     },
     {
       "path": "src/assets/fonts/rg-bd-ver5.ttf",

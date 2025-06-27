@@ -20,8 +20,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   const [score, setScore] = useState(false);
   const style =
     color === 'white'
-      ? [styles.stateTextWhite, styles.teamNameWhite, styles.teamNameWhiteKorean]
-      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKorean];
+      ? [styles.stateTextWhite, styles.teamNameWhite, styles.teamNameWhiteKR]
+      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKR];
   const onPressScore = () => {
     setScore(!score);
   };
@@ -29,13 +29,13 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
 
   function detectLang(text: string, position: 'left' | 'right') {
     if (!text) {return;}
-    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
-      if (hasKorean && !hasEnglish) {
+      if (hasKR && !hasEnglish) {
         return (<Text style={[style[2], {textAlign: position }]}>{text}</Text>);
       }
-      else if (!hasKorean && hasEnglish) {
+      else if (!hasKR && hasEnglish) {
         return (<Text style={[style[1], {textAlign: position }]}>{text}</Text>);
       } else {return;}
   }
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
-  teamNameBlueKorean: {
-    fontFamily: 'NotoSansKR-Bold',
+  teamNameBlueKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
     fontSize: width * 0.055,
     transform: [{ scaleY: 1.2 }],
     color: 'white',
@@ -200,8 +200,8 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
-  teamNameWhiteKorean: {
-    fontFamily: 'NotoSansKR-Bold',
+  teamNameWhiteKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
