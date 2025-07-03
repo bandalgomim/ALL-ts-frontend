@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   teamNameBlueKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
     fontSize: width * 0.06,
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     marginTop: height * -0.002,
     color: 'white',
     textShadowColor: '#242b5c', // 그림자 색상
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   teamNameWhiteKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
     fontSize: width * 0.06,
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     marginTop: height * -0.002,
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상

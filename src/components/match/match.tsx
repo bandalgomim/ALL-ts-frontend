@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   },
   fontBlueBigKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     color: '#30397A',
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 2 },

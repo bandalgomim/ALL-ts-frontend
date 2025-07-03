@@ -56,8 +56,8 @@
 		<string>sb-rg-ver4.ttf</string>
 		<string>sb-it-ver1.ttf</string>
 		<string>NotoSansKR-Bold.ttf</string>
-		<string>NotoSansKR-ExtraBold.ttf</string>
 		<string>MaterialIcons.ttf</string>
+		<string>NotoSansKR-ExtraBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
