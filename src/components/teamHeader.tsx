@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     marginBottom: -height * 0.01,
   },
   headerTeamInfoNameLargeKR: {
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     textAlign: 'center',
     fontSize: height*0.05,
     lineHeight: height * 0.055,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     marginBottom: -height * 0.01,
   },
   headerTeamInfoNameSmallKR: {
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     textAlign: 'center',
     fontSize: width*0.063,
     marginTop: height*0.004,

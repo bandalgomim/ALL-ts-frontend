@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   teamInitKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
-    transform: [{ scaleY: 1.2 }],
+    transform: [{ scaleY: 1 }],
     fontSize: width * 0.045,
     width: width * 0.1,
     lineHeight: width * 0.06,

@@ -1,7 +1,7 @@
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text,  TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { hookLogIn } from '../hooks/IAM.hook';
 import { width, height } from '../global';
 import { useNavigation } from '@react-navigation/native';
