@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     fontSize: height * 0.05,
     width: width * 0.5,
     textAlign: 'center',
-    marginTop: -height * 0.034,
+    
   },
   fontBlueSmall: {
     fontFamily: 'sb-it-ver1',
