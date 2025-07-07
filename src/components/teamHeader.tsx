@@ -77,6 +77,7 @@ const TeamHeader = () => {
           <TeamOrLeagueLogo
             logo={teamRes?.data?.team?.teamLogo}
             type={'big'}
+            initial={teamRes?.data?.team?.teamInit}
           />
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>

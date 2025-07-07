@@ -70,7 +70,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   const renderItem = useCallback(
     ({ item, drag, isActive, getIndex }: RenderItemParams<teamDto | leagueDto>) => {
       const index = getIndex();
-
+      console.log('renderItem index', index, 'item', item);
       const boxStyle = [
         styles.box,
         styles.itemBox,
@@ -98,7 +98,11 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
               disabled={isActive}
               style={isActive ? styles.touchableActive : styles.touchable}
             >
-              <TeamOrLeagueLogo logo={'teamId' in item ? item.teamLogo : item.leagueLogo} type={'middle'} />
+              <TeamOrLeagueLogo
+                logo={'teamId' in item ? item.teamLogo : item.leagueLogo}
+                type={'middle'}
+                initial={'teamId' in item ? item.teamInit : item.leagueInit}
+              />
             </TouchableOpacity>
           </View>
         </ScaleDecorator>

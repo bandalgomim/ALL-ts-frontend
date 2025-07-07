@@ -11,6 +11,7 @@ import LeagueRankList from './leagueRankList';
 const LeagueHeader = () => {
   const {leagueRes} = useContext(LeagueContext);
   const [record, setRecord] = useState(false);
+  console.log('LeagueHeader leagueRes', leagueRes?.data?.league);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar
@@ -26,6 +27,7 @@ const LeagueHeader = () => {
           <TeamOrLeagueLogo
             logo={leagueRes?.data?.league?.leagueLogo}
             type={'big'}
+            initial={leagueRes?.data?.league?.leagueInit}
           />
           <IsSelected
             isSelected={leagueRes.data?.league?.isSelected}

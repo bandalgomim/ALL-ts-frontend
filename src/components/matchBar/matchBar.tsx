@@ -97,7 +97,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
             <View style={{ marginRight: width * 0.01, width: width * 0.132, borderWidth: 0 }}>
               {detectLang(match.homeTeamInit, 'right')}
             </View>
-            <TeamOrLeagueLogo logo={match.hometeamLogo} type={'small'} />
+            <TeamOrLeagueLogo logo={match.hometeamLogo} type={'small'} initial={match.homeTeamInit}/>
             <TouchableOpacity
               style={[styles.matchBar, { marginLeft: width * 0.015, marginRight: width * 0.015 }]}
               onPress={onPressScore}
@@ -122,7 +122,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                 type={'small'}
               />
             </TouchableOpacity>
-            <TeamOrLeagueLogo logo={match.awayteamLogo} type={'small'} />
+            <TeamOrLeagueLogo logo={match.awayteamLogo} type={'small'} initial={match.awayTeamInit}/>
             <View
               style={{
                 marginRight: -width * 0.015,

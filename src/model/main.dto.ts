@@ -21,12 +21,14 @@ export interface matchDto {
 export interface teamDto {
     teamId: number,
     teamName: string,
+    teamInit: string,
     teamLogo: string,
     index: number
 }
 export interface leagueDto {
     leagueId: number,
     leagueName: string,
+    leagueInit: string,
     leagueLogo: string,
     index: number
 }

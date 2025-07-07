@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { FlatList, TouchableOpacity, StyleSheet, Linking, View, Text, Platform, ImageBackground } from 'react-native';
 import { platform } from '../../model/match.dto';
-import TeamOrLeagueLogo from '../teamOrLeagueLogo';
 import { width, height } from '../../global';
 import { Image } from 'react-native';
 

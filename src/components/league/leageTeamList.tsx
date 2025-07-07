@@ -38,6 +38,7 @@ const LeageTeamListBar = () => {
           <TeamOrLeagueLogo
             logo={item.teamLogo}
             type={'middle'}
+            initial={item.teamInit}
           />
           {detectLang(item.teamInit)}
         </TouchableOpacity>

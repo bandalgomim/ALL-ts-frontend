@@ -70,7 +70,11 @@ const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={styles.homeTeamContainer}>
           <TouchableOpacity onPress={() => navigateTeam(match.homeTeamId as number)}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo logo={match?.hometeamLogo} type={'big'} />
+              <TeamOrLeagueLogo
+                logo={match?.hometeamLogo}
+                type={'big'}
+                initial={match?.homeTeamInit as string}
+              />
               <View style={styles.teamInfoContainer}>
                 {/* 배경 이미지를 teamInfoContainer 내부로 이동하고 absolute로 설정 */}
                 <Image
@@ -117,7 +121,7 @@ const Match: React.FC<MatchPros> = ({ match }) => {
         <View style={styles.awayTeamContainer}>
           <TouchableOpacity onPress={() => navigateTeam(match.awayTeamId as number)}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} />
+              <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} initial={match?.awayTeamInit as string}/>
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
                   {detectLang(match.awayTeamInit)}
