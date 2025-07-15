@@ -57,6 +57,7 @@
 		<string>sb-it-ver1.ttf</string>
 		<string>NotoSansKR-Bold.ttf</string>
 		<string>MaterialIcons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
 		<string>NotoSansKR-ExtraBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
@@ -66,6 +67,8 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진을 선택하기 위해 접근이 필요합니다</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>

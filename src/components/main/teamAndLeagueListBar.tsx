@@ -70,7 +70,6 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   const renderItem = useCallback(
     ({ item, drag, isActive, getIndex }: RenderItemParams<teamDto | leagueDto>) => {
       const index = getIndex();
-      console.log('renderItem index', index, 'item', item);
       const boxStyle = [
         styles.box,
         styles.itemBox,

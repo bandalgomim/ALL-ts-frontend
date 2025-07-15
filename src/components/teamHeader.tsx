@@ -9,6 +9,7 @@ import { TeamContext } from '../context/team.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ModalContext } from '../context/modal.context';
 import { findNext } from './calendar/utills';
+import LogoPicker from './logo/logoPicker';
 
 const TeamHeader = () => {
   const {teamRes} = useContext(TeamContext);
@@ -68,7 +69,6 @@ const TeamHeader = () => {
     return 'th';
   };
 
-
   return (
     <View style={[styles.container, styles.headerContainer]}>
       <SearchBar type="blue" />
@@ -78,6 +78,14 @@ const TeamHeader = () => {
             logo={teamRes?.data?.team?.teamLogo}
             type={'big'}
             initial={teamRes?.data?.team?.teamInit}
+          />
+
+        </View>
+        <View style={{marginLeft: -height * 0.005, marginRight: -height*0.025, marginTop: height * 0.01}}>
+          <LogoPicker
+            type={'team'}
+            id={teamRes?.data?.team?.teamId}
+            uri={''}
           />
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>

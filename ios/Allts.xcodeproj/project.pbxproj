@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B851D7C60BF4C55915D92F0 /* NotoSansKR-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC91914F03BE4E9B9509E1C6 /* NotoSansKR-ExtraBold.ttf */; };
 		0CC2A7F4D6C5933929FB3A38 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		15D9482933BE898570A94F03 /* libPods-ALLts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A697DE8738D5653AD46F8F6 /* libPods-ALLts.a */; };
@@ -24,7 +25,6 @@
 		CC7B393B2DA49957000E5319 /* sb-rg-ver4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D82DA3F38900FF67D8 /* sb-rg-ver4.ttf */; };
 		CCD0D7822DD5277500FE66F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */; };
 		DCC925DBB59D43B89F99E455 /* lt-it-ver3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88F64F689034105AF930561 /* lt-it-ver3.ttf */; };
-		0B851D7C60BF4C55915D92F0 /* NotoSansKR-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC91914F03BE4E9B9509E1C6 /* NotoSansKR-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,9 +69,9 @@
 		CC0EE2EE2DA4718E00FF67D8 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		CC98A19D2DD533F900F15E58 /* ALLts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ALLts.entitlements; path = ALLts/ALLts.entitlements; sourceTree = "<group>"; };
 		CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EC91914F03BE4E9B9509E1C6 /* NotoSansKR-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSansKR-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F88F64F689034105AF930561 /* lt-it-ver3.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "lt-it-ver3.ttf"; path = "../src/assets/fonts/lt-it-ver3.ttf"; sourceTree = "<group>"; };
-		EC91914F03BE4E9B9509E1C6 /* NotoSansKR-ExtraBold.ttf */ = {isa = PBXFileReference; name = "NotoSansKR-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSansKR-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,  Image, ImageBackground, Text } from 'react-native';
+import { StyleSheet,  Image, ImageBackground, Text, View } from 'react-native';
 import { height, width } from '../global';
 import FastImage from 'react-native-fast-image';
 
@@ -13,6 +13,8 @@ interface TeamOrLogoPros {
 const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => {
   let size;
   let req;
+
+
 
   if (type === 'small') {
     size = width * 0.1;
@@ -29,10 +31,10 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
     const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
       if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.fontBlueBigKR, {fontSize: size*0.5}]}>{text}</Text>);
+        return (<Text style={[styles.fontBlueBigKR, {fontSize: size * 0.44}]}>{text}</Text>);
       }
       else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.fontBlueBig, {fontSize: size*0.6}]}>{text}</Text>);
+        return (<Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{text}</Text>);
       } else {return;}
   }
   return (
@@ -42,9 +44,13 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
       >
         {logo !== null ? <FastImage
           resizeMode="contain"
-          source={{ uri: logo as string}}
+          source={{ uri: logo as string }}
           style={{ width: size * 0.8, height: size * 0.8 }}
-        /> : <Text>{detectLang(initial)}</Text>}
+          onLoad={() => console.log('이미지 로드 성공')}
+          onError={(error) => console.log('이미지 로드 실패:', error)}
+        /> : <View>
+          {detectLang(initial)}
+        </View>}
       </ImageBackground>
   );
 };
@@ -61,8 +67,8 @@ const styles = StyleSheet.create({
       textShadowColor: '#bdb4b4',
       textShadowOffset: { width: 1, height: 2 },
       textShadowRadius: 3,
-      width: width * 0.5,
       textAlign: 'center',
+      marginTop: width * 0.005,
     },
     fontBlueBigKR: {
       fontFamily: 'NotoSansKR-ExtraBold',
@@ -70,9 +76,8 @@ const styles = StyleSheet.create({
       textShadowColor: '#bdb4b4',
       textShadowOffset: { width: 1, height: 2 },
       textShadowRadius: 3,
-      width: width * 0.5,
       textAlign: 'center',
-      opacity: 0.8,
+      marginBottom: width * 0.005,
     },
 });
 

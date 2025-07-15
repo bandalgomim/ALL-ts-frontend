@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import MatchModal from '../components/calendar/contents/modal';
 import SerchModal from './searchBar/serchModal';
 import NextMatchModal from './nextMatchModal';
+import LogoModal from './logo/logoModal';
 
 const CustomHeader = () => {
   return (
@@ -10,6 +11,7 @@ const CustomHeader = () => {
       <MatchModal />
       <SerchModal />
       <NextMatchModal />
+      <LogoModal/>
     </View>
   );
 };

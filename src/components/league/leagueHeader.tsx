@@ -7,11 +7,11 @@ import { width, height } from '../../global';
 import { LeagueContext } from '../../context/league.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LeagueRankList from './leagueRankList';
+import LogoPicker from '../logo/logoPicker';
 
 const LeagueHeader = () => {
   const {leagueRes} = useContext(LeagueContext);
   const [record, setRecord] = useState(false);
-  console.log('LeagueHeader leagueRes', leagueRes?.data?.league);
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar
@@ -24,6 +24,13 @@ const LeagueHeader = () => {
             <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
+        <View style={{marginLeft: -height * 0.025, marginRight: -height*0.005, marginTop: height * 0.01}}>
+            <LogoPicker
+              type={'team'}
+              id={leagueRes.data?.league?.leagueId}
+              uri={''}
+            />
+          </View>
           <TeamOrLeagueLogo
             logo={leagueRes?.data?.league?.leagueLogo}
             type={'big'}
@@ -36,6 +43,7 @@ const LeagueHeader = () => {
             matchId={null}
           />
         </View>
+
       </View>
       <View style={styles.recordButton}>
         <TouchableOpacity style={{marginTop:-height*0.02, marginBottom:height*0.01, zIndex:3}} onPress={() => setRecord(!record)}>
