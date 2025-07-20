@@ -26,9 +26,9 @@ const LeagueHeader = () => {
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
         <View style={{marginLeft: -height * 0.025, marginRight: -height*0.005, marginTop: height * 0.01}}>
             <LogoPicker
-              type={'team'}
+              type={'league'}
               id={leagueRes.data?.league?.leagueId}
-              uri={''}
+              uri={leagueRes.data?.league?.leagueLogo || ''}
             />
           </View>
           <TeamOrLeagueLogo

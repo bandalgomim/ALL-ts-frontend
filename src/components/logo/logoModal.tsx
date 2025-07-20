@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { width, height } from '../../global';
 import { ModalContext } from '../../context/modal.context';
+import LogoImgPicker from './logoImgPicker';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
@@ -19,7 +20,6 @@ const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 const LogoModal: React.FC = () => {
   const { logoModalVisible, setLogoModalVisible, logoModalContents, setLogoModalContents } = useContext(ModalContext);
   const safeLogoModalContents = logoModalContents || {};
-
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0.5)).current;
@@ -197,19 +197,12 @@ const LogoModal: React.FC = () => {
             <View style={styles.handleBar} />
           </View>
         </View>
-        
+        <LogoImgPicker
+            type={safeLogoModalContents.type || 'default'}
+            id={safeLogoModalContents.id || 0}
+            uri={safeLogoModalContents.uri || ''}
+        />
         {/* 컨텐츠 영역 - MatchList (드래그 불가) */}
-        <View style={styles.contentContainer}>
-          {logoModalContents && Object.keys(safeLogoModalContents).length > 0 ? (
-            <View style={styles.matchListWrapper}>
-              
-            </View>
-          ) : (
-            <View style={styles.emptyContainer}>
-              <Text style={{ color: '#30397A', fontSize: 16 }}>No matches available</Text>
-            </View>
-          )}
-        </View>
       </Animated.View>
     </Modal>
   );

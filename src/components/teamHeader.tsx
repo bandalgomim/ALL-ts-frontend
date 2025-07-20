@@ -85,7 +85,7 @@ const TeamHeader = () => {
           <LogoPicker
             type={'team'}
             id={teamRes?.data?.team?.teamId}
-            uri={''}
+            uri={teamRes?.data?.team?.teamLogo}
           />
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>
