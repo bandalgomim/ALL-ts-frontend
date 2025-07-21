@@ -6,6 +6,7 @@ import { hookIcon } from '../../hooks/icon.hook';
 import { AuthContext } from '../../context/auth.context';
 import { TeamContext } from '../../context/team.context';
 import { LeagueContext } from '../../context/league.context';
+import { height, width } from '../../global';
 
 interface TeamOrLogoPros {
     type: 'team' | 'league',
@@ -54,67 +55,53 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
         const dispatch = type === 'team' ? setTeamRes : setLeagueRes;
         await hookIcon('PATCH', req, dispatch, setLogin);
         
-        Alert.alert('✅ 이미지 저장 성공', `경로: ${destPath}`);
-        console.log('저장된 경로:', destPath);
+        Alert.alert('이미지 저장 성공');
       } catch (error) {
         console.error('이미지 처리 오류:', error);
-        Alert.alert('❌ 저장 실패', error.message);
+        Alert.alert('저장 실패', error.message);
       }
     } else {
-      Alert.alert('⚠️ 이미지 선택이 취소되었습니다');
+      Alert.alert('이미지 선택이 취소되었습니다');
     }
   };
 
-  const deleteAllSavedImages = async () => {
+  const deleteSavedImages = async (type:TeamOrLogoPros['type'], id: number, uri: string) => {
     try {
-      // DocumentDirectory 내의 모든 파일 목록 가져오기
-      const files = await RNFS.readDir(RNFS.DocumentDirectoryPath);
-      console.log('모든 파일 목록:', files);
-      // 이미지 파일만 필터링 (jpg, png, jpeg 등)
-      const imageFiles = files.filter(file => 
-        file.name.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i)
-      );
-
-      if (imageFiles.length === 0) {
-        Alert.alert('ℹ️ 삭제할 이미지가 없습니다');
-        return;
-      }
-
-      // 확인 대화상자
-      Alert.alert(
-        '⚠️ 모든 이미지 삭제',
-        `${imageFiles.length}개의 이미지를 삭제하시겠습니까?`,
-        [
-          { text: '취소', style: 'cancel' },
-          { 
-            text: '삭제', 
-            style: 'destructive',
-            onPress: async () => {
-              // 모든 이미지 파일 삭제
-              const deletePromises = imageFiles.map(file => RNFS.unlink(file.path));
-              await Promise.all(deletePromises);
-              
-              Alert.alert('✅ 삭제 완료', `${imageFiles.length}개의 이미지가 삭제되었습니다`);
-              console.log('삭제된 파일들:', imageFiles.map(f => f.name));
-            }
+        // 1. 기존 파일이 있다면 삭제
+        if (uri && uri !== '') {
+          console.log('기존 파일 삭제 시도:', uri);
+          const existingFileExists = await RNFS.exists(uri);
+          if (existingFileExists) {
+            await RNFS.unlink(uri);
+            console.log('기존 파일 삭제 완료:', uri);
+          } else {
+            console.log('기존 파일이 존재하지 않음:', uri);
           }
-        ]
-      );
+        }
+        const req = {
+            type: type,
+            id: id,
+            uri: null,
+          }
+          const dispatch = type === 'team' ? setTeamRes : setLeagueRes;
+          await hookIcon('PATCH', req, dispatch, setLogin);
+          
+          Alert.alert('이미지 삭제 성공');
     } catch (error) {
-      Alert.alert('❌ 삭제 실패', error.message);
-      console.error('이미지 삭제 오류:', error);
+        console.error('이미지 처리 오류:', error);
+        Alert.alert('저장 실패', error.message);
     }
   };
 
   return (
-    <>
-        <View style={{ marginTop: 50, borderWidth:1 }}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: height*0.02, width: width*0.5}}>
+        <View style={{ marginTop: height*0.02, borderWidth:1 }}>
             <Button title="로고 변경" onPress={()=>handleSelectAndSaveImage(type, id, uri)} />
         </View>
-        <View style={{ marginTop: 50, borderWidth:1 }}>
-            <Button title="로고 삭제" onPress={deleteAllSavedImages} color="orange" />
+        <View style={{ marginTop: height*0.02, borderWidth:1 }}>
+            <Button title="로고 삭제" onPress={()=>deleteSavedImages(type, id, uri)} color="orange" />
         </View>
-    </>
+    </View>
   );
 };
 

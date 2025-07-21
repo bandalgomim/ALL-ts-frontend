@@ -31,10 +31,18 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
     const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
       if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.fontBlueBigKR, {fontSize: size * 0.44}]}>{text}</Text>);
+        return (
+          <View>
+            <Text style={[styles.fontBlueBigKR, {fontSize: size * 0.44}]}>{text}</Text>
+          </View>
+        );
       }
       else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{text}</Text>);
+        return (
+          <View>
+            <Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{text}</Text>
+          </View>
+        )
       } else {return;}
   }
   return (
@@ -50,6 +58,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
           onError={(error) => console.log('이미지 로드 실패:', error)}
         /> : <View>
           {detectLang(initial)}
+          <View></View>
         </View>}
       </ImageBackground>
   );
