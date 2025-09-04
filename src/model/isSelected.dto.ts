@@ -8,7 +8,7 @@ export interface patchIsLeagueSelected {
 }
 
 export interface patchIsMatchSelected {
-    matchId: number | null
+    matchId: string | null
 }
 
 export type patchIsSelected = patchIsTeamSelected | patchIsLeagueSelected | patchIsMatchSelected

@@ -40,7 +40,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
       } else {return;}
   }
 
-  const navigateMatch = (matchId: number) => {
+  const navigateMatch = (matchId: string) => {
     setModalVisible(false); // 모달 닫기
     setModalNextMatchVisible(false); // 다음 경기 모달 닫기
     navigationMatch.navigate('MatchScreen', { matchId: matchId });

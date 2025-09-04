@@ -7,7 +7,7 @@ export type LeaguePageParamList = {
 };
 
 export type MatchPageParamList = {
-  MatchScreen: { matchId: number }; // MyPostScreen에 전달될 파라미터 타입 정의
+  MatchScreen: { matchId: string }; // MyPostScreen에 전달될 파라미터 타입 정의
 };
 
 export type MainPageParamList = {

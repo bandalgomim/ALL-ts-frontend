@@ -10,6 +10,7 @@ export const hookMatch = async (
     setMatchRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/match';
     const query = new URLSearchParams();
+    
     Object.entries(data as unknown as getMatchResQueryDto).forEach(([key, value]) => {
         if (value !== null) {
             query.append(key, String(value));

@@ -29,7 +29,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
       uri =  require('../../assets/match/platform/soop.png');
     } else if(item.platformName === 'youtube') {
       uri =  require('../../assets/match/platform/youtube.png');
-    } else if(item.platformName === 'TVING') {
+    } else if(item.platformName === 'tving') {
       uri =  require('../../assets/match/platform/tving.png');
     } else if(item.platformName === 'spotv') {
       uri =  require('../../assets/match/platform/spotv.png');

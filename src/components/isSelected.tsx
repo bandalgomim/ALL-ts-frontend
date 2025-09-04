@@ -12,7 +12,7 @@ interface IsSelectedPros {
     isSelected: boolean | null;
     teamId: number | null;
     leagueId: number | null;
-    matchId: number | null;
+    matchId: string | null;
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {

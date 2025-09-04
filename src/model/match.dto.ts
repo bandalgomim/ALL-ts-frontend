@@ -10,7 +10,7 @@ export interface platform {
 }
 
 export interface getMatchReqDto {
-    matchId: number | null,
+    matchId: string | null,
     matchDate: string | null,
     homeTeamId: number | null,
     awayTeamId: number | null,
@@ -33,7 +33,7 @@ export interface getMatchReqDto {
 }
 
 export interface getMatchResQueryDto {
-    matchId: number
+    matchId: string
 }
 
 export type getMatchResDto = StateDto<getMatchResQueryDto>

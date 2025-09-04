@@ -1,7 +1,7 @@
 import { StateDto } from './config';
 
 export interface matchDto {
-    matchId: number,
+    matchId: string,
     matchDate: string,
     matchTime: string,
     homeTeamId: number,
