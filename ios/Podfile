@@ -12,6 +12,7 @@ linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
+  # ⚠️ 가능하면 static 권장: USE_FRAMEWORKS=static
 end
 
 target 'ALLts' do
@@ -19,20 +20,36 @@ target 'ALLts' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
   pod 'FirebaseCore', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
 
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    # RN 기본 후처리
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
     )
-    
+
+    # ---- [추가] Release 빌드에서 dSYM 생성 강제 & strip 방지 ----
+    installer.pods_project.targets.each do |t|
+      t.build_configurations.each do |cfg|
+        next unless cfg.name == 'Release'
+
+        # hermes 포함 모든 Pods 타깃에 dSYM 생성
+        cfg.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf-with-dsym'
+        # 복사 과정에서 심볼 제거 금지
+        cfg.build_settings['STRIP_DEBUG_SYMBOLS_DURING_COPY'] = 'NO'
+        # 혹시 비활성화된 경우 디버깅 심볼 생성 켜기
+        cfg.build_settings['GCC_GENERATE_DEBUGGING_SYMBOLS'] = 'YES'
+        # dSYM이 잘 들어가도록 최적화 레벨/심볼 보전(선택)
+        # cfg.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-O' # Swift가 있다면
+      end
+    end
+    # ----------------------------------------------------------
   end
 end
+

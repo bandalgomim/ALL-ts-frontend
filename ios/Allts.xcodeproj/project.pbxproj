@@ -218,6 +218,7 @@
 				E1022A99D76F3C0661947AEC /* [CP] Embed Pods Frameworks */,
 				0FD09A2BB530261CB2481A5E /* [CP] Copy Pods Resources */,
 				3AD5A65597E2B64F5B9B854D /* [CP-User] [RNFB] Core Configuration */,
+				CC37FBB52E6A630C00F43BEB /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -360,6 +361,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CC37FBB52E6A630C00F43BEB /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name: Ensure Hermes dSYM in Archive\nset -euo pipefail\nif [ \"${CONFIGURATION}\" != \"Release\" ]; then exit 0; fi\n\necho \"==> Ensuring hermes.framework.dSYM is included in the archive...\"\n\nCANDIDATES=()\nCANDIDATES+=(\"${PODS_CONFIGURATION_BUILD_DIR}/hermes-engine/hermes.framework.dSYM\")\nCANDIDATES+=(\"${DWARF_DSYM_FOLDER_PATH}/hermes.framework.dSYM\")\nCANDIDATES+=(\"$(/usr/bin/find \"${PROJECT_TEMP_DIR:-/tmp}\" -type d -name 'hermes.framework.dSYM' -print -quit || true)\")\nCANDIDATES+=(\"$(/usr/bin/find \"${BUILD_DIR:-/tmp}\" -type d -name 'hermes.framework.dSYM' -print -quit || true)\")\n\nSRC=\"\"\nfor c in \"${CANDIDATES[@]}\"; do\n  if [ -n \"$c\" ] && [ -d \"$c\" ]; then SRC=\"$c\"; break; fi\ndone\n\nif [ -z \"$SRC\" ]; then\n  echo \"WARNING: hermes.framework.dSYM not found.\"\n  exit 0\nfi\n\nDST=\"${DWARF_DSYM_FOLDER_PATH}\"\nmkdir -p \"$DST\"\ncp -R \"$SRC\" \"$DST/\"\n\n# 로그용 UUID 확인\nHERMES_BIN_CANDIDATES=()\nHERMES_BIN_CANDIDATES+=(\"${PODS_CONFIGURATION_BUILD_DIR}/hermes-engine/hermes.framework/hermes\")\nHERMES_BIN_CANDIDATES+=(\"$(/usr/bin/find \"${BUILT_PRODUCTS_DIR:-/tmp}\" -type f -name 'hermes' -path '*hermes.framework/*' -print -quit || true)\")\n\nHERMES_BIN=\"\"\nfor b in \"${HERMES_BIN_CANDIDATES[@]}\"; do\n  if [ -n \"$b\" ] && [ -f \"$b\" ]; then HERMES_BIN=\"$b\"; break; fi\ndone\n\nif [ -n \"$HERMES_BIN\" ]; then\n  echo \"Hermes binary UUIDs:\"; /usr/bin/dwarfdump --uuid \"$HERMES_BIN\" || true\n  echo \"Hermes dSYM UUIDs:\"; /usr/bin/dwarfdump --uuid \"$DST/hermes.framework.dSYM/Contents/Resources/DWARF/hermes\" || true\nfi\n\necho \"==> Hermes dSYM copy step finished.\"\n";
+		};
 		E1022A99D76F3C0661947AEC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,7 +421,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ALLts/ALLts.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = N9XZ9SV43R;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ALLts/Info.plist;
@@ -413,7 +433,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -438,7 +458,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ALLts/ALLts.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = N9XZ9SV43R;
 				INFOPLIST_FILE = ALLts/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ALL'ts";
@@ -448,7 +469,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

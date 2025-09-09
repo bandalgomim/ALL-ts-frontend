@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   recordListView: {
-    height: height * 0.15,
+    height: height * 0.47,
   },
   recordText: {
     fontFamily: 'sb-it-ver1',

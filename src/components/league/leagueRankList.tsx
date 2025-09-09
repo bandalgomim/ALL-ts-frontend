@@ -36,10 +36,10 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
     if (hasKR && !hasEnglish) {
-      return (<Text style={{fontFamily: 'NotoSansKR-ExtraBold', fontSize: width*0.042, lineHeight:width*0.055, marginTop: height*0.003 } }>{text}</Text>);
+      return (<Text style={{fontFamily: 'NotoSansKR-ExtraBold', fontSize: width*0.042, lineHeight:width*0.055, marginTop: height*0.003, marginRight: width*0.015 } }>{text}</Text>);
     }
     if (!hasKR && hasEnglish) {
-      return (<Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, width: width*0.07}}> {text}</Text>);
+      return (<Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}> {text}</Text>);
     }
     return;
   }
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   teamInit: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.06,
-    width: width * 0.08,
+    width: width * 0.1,
     color: '#30397A',
   },
   teamInitKR: {
