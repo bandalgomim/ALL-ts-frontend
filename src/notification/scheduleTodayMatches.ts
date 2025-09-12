@@ -5,13 +5,23 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
   if (matchList === undefined) {
     return;
   }
-  const today = new Date().toLocaleDateString('sv-SE'); // '2025-04-27' 형식으로 변환
-  const todayMatches = matchList[today];
-  if (!todayMatches || todayMatches.length === 0) {
-    return;
-  }
-  await notifee.cancelAllNotifications(); // 싹 다 취소
-  for (const match of todayMatches) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // 7일 뒤 자정
+  const weekLater = new Date(today);
+  weekLater.setDate(today.getDate() + 7);
+
+  await notifee.cancelAllNotifications(); // 기존 알림 싹 취소
+
+  // matchList의 key는 'YYYY-MM-DD'
+  for (const [dateKey, matches] of Object.entries(matchList)) {
+    const [year, month, day] = dateKey.split('-').map(Number);
+    const matchDay = new Date(year, month - 1, day);
+
+    // 오늘~7일 사이만 필터링
+    if (matchDay < today || matchDay >= weekLater) continue;
+  for (const match of matches) {
     const { matchId, matchDate, matchTime } = match;
 
     // matchDate: '2025-04-27', matchTime: '14:30' 이런 식으로 주어졌다고 가정
@@ -48,40 +58,6 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
       },
       trigger
     );
-    //console.log(`✅ 알림 예약: ${match.homeTeamName} vs ${match.awayTeamName} at ${matchTime}`);
   }
-  //await scheduleTodayMatchesTest(todayMatches[0]);
-}
+};
 
-async function scheduleTodayMatchesTest(match: matchDto) {
-  const { matchId } = match;
-
-  // matchDate: '2025-04-27', matchTime: '14:30' 이런 식으로 주어졌다고 가정
-  const matchDateTime = Date.now() + 10000;
-  const trigger: TimestampTrigger = {
-    type: TriggerType.TIMESTAMP,
-
-    timestamp: matchDateTime,
-    alarmManager: true, // Android: 더 정확하게 알람 작동
-  };
-  await notifee.createTriggerNotification(
-    {
-      id: `${matchId}`, // 고유한 ID
-      title: '곧 시작하는 경기!',
-      body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
-      data: {
-        screen: 'match',
-        matchId: match.matchId.toString() // 반드시 matchId로!
-      },
-      android: {
-        channelId: 'default', // 미리 만들어둔 채널
-        importance: AndroidImportance.HIGH,
-        pressAction: {
-          id: 'default',
-        },
-      },
-    },
-    trigger
-  );
-  console.log(`✅ 알림 예약: ${match.homeTeamInit} vs ${match.awayTeamInit}`);
-}
