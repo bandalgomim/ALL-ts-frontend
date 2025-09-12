@@ -2,9 +2,9 @@ import notifee, { TimestampTrigger, TriggerType, AndroidImportance } from '@noti
 import { matchDto, matchListDto } from '../model/main.dto';
 
 export async function scheduleTodayMatches(matchList: matchListDto) {
-  if (matchList === undefined) {
-    return;
-  }
+  if (!matchList) return;
+
+  // 오늘 날짜 기준 (자정 0시로 맞춤)
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -21,43 +21,44 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
 
     // 오늘~7일 사이만 필터링
     if (matchDay < today || matchDay >= weekLater) continue;
-  for (const match of matches) {
-    const { matchId, matchDate, matchTime } = match;
 
-    // matchDate: '2025-04-27', matchTime: '14:30' 이런 식으로 주어졌다고 가정
-    const [hour, minute] = matchTime.split(':').map(Number);
-    const [year, month, day] = matchDate.split('-').map(Number);
+    for (const match of matches) {
+      const { matchId, matchDate, matchTime, homeTeamInit, awayTeamInit, homeTeamName, awayTeamName } = match;
+      const [hour, minute] = matchTime.split(':').map(Number);
 
-    const matchDateTime = new Date(year, month - 1, day, hour, minute);
-    if (matchDateTime.getTime() < Date.now()) {
-        console.log(`⏭️ 이미 지난 경기: ${match.homeTeamName} vs ${match.awayTeamName}`);
-        continue; // 지난 경기는 알림 안 잡음
+      const matchDateTime = new Date(year, month - 1, day, hour, minute);
+
+      // 이미 지난 경기면 패스
+      if (matchDateTime.getTime() < Date.now()) {
+        console.log(`⏭️ 이미 지난 경기: ${homeTeamName} vs ${awayTeamName}`);
+        continue;
       }
-    const trigger: TimestampTrigger = {
-      type: TriggerType.TIMESTAMP,
 
-      timestamp: matchDateTime.getTime(),
-      alarmManager: true, // Android: 더 정확하게 알람 작동
-    };
-    await notifee.createTriggerNotification(
-      {
-        id: `${matchId}`, // 고유한 ID
-        title: '곧 시작하는 경기!',
-        body: `${match.homeTeamInit} vs ${match.awayTeamInit}`,
-        data: {
-          screen: 'match',
-          matchId: match.matchId.toString() // 반드시 matchId로!
-        },
-        android: {
-          channelId: 'default', // 미리 만들어둔 채널
-          importance: AndroidImportance.HIGH,
-          pressAction: {
-            id: 'default',
+      const trigger: TimestampTrigger = {
+        type: TriggerType.TIMESTAMP,
+        timestamp: matchDateTime.getTime(),
+        alarmManager: true,
+      };
+
+      await notifee.createTriggerNotification(
+        {
+          id: `${matchId}`, // 고유 ID
+          title: '곧 시작하는 경기!',
+          body: `${homeTeamInit} vs ${awayTeamInit}`,
+          data: {
+            screen: 'match',
+            matchId: match.matchId.toString(),
+          },
+          android: {
+            channelId: 'default',
+            importance: AndroidImportance.HIGH,
+            pressAction: {
+              id: 'default',
+            },
           },
         },
-      },
-      trigger
-    );
+        trigger
+      );
+    }
   }
-};
-
+}
