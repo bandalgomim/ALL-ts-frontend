@@ -165,6 +165,7 @@ const TeamHeader = () => {
               }
             })() : null}
             <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
+
               {`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}
             </Text>
           </View>
@@ -286,9 +287,10 @@ const styles = StyleSheet.create({
     transform: [{ scaleY: 1 }],
     textAlign: 'center',
     fontSize: height*0.05,
-    lineHeight: height * 0.055,
-    marginTop: height * 0.02,
-    height: height * 0.056,
+    lineHeight: height * 0.05,
+    marginTop: height * 0.015,
+    height: height * 0.055,
+    paddingTop: height * 0.01,
   },
   headerTeamInfoNameSmall: {
     fontSize: width * 0.083,

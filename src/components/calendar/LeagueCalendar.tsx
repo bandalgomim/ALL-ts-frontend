@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   matchListContainer: {
     marginTop: height * 0.03,
-    height: height * 0.6,
+    height: height * 0.62,
     zIndex: 1, // 낮은 z-index 추가
   },
   calendarView: {
