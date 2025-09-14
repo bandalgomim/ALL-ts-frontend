@@ -17,11 +17,6 @@ const MatchScreen = () => {
   const {login, setLogin } = useContext(AuthContext);
   const { matchId, key } = useRoute().params as getMatchResQueryDto;
 
-  useEffect(() => {
-      setRender(false);
-      hookMatch('GET' as string, {matchId: matchId}, setMatchRes, setLogin);
-  }, [matchId, key]);
-
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
@@ -42,6 +37,25 @@ const MatchScreen = () => {
     setPrevLoading(matchRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchRes.loading]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (login === false) return;
+
+      setRender(false);
+
+      // (선택) 진행 중 요청 취소용
+      // const controller = new AbortController();
+
+      hookMatch('GET', { matchId }, setMatchRes, setLogin /* , controller.signal */);
+
+      // cleanup: 포커스 잃을 때 실행 (요청 취소가 필요하면 사용)
+      return () => {
+        // controller.abort();
+      };
+      // key도 의존성에 포함 → 같은 matchId라도 key가 바뀌면 다시 fetch
+    }, [login, matchId, key, setMatchRes, setLogin])
+  );
 
   return !render ? (
     <LoadingScreen
@@ -79,3 +93,7 @@ const MatchScreen = () => {
       zIndex: 0, // 다른 요소보다 뒤에 표시되도록 설정
     },
   });
+function useFocusEffect(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+
