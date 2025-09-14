@@ -4,7 +4,7 @@ import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
 import LeageTeamListBar from '../components/league/leageTeamList';
 import { hookLeague } from '../hooks/league.hook';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import { getLeagueReqQueryDto } from '../model/league.dto';
 import MainTabBar from '../components/main/mainTabBar';
@@ -20,11 +20,6 @@ const LeagueScreen = () => {
   const {leagueRes, setLeagueRes} = useContext(LeagueContext);
   const {login, setLogin} = useContext(AuthContext);
   const { leagueId, key } = useRoute().params as getLeagueReqQueryDto;
-  useEffect(() => {
-      setRender(false);
-      hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
-  }, [leagueId, key]);
-
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
@@ -45,6 +40,15 @@ const LeagueScreen = () => {
     setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueRes.loading]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (login === false) return;
+      setRender(false);
+      hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
+      return () => {};
+    }, [login, leagueId, key, setLeagueRes, setLogin])
+  );
 
   return !render ? (
     <LoadingScreen

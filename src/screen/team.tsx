@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
 import { hookTeam } from '../hooks/team.hook';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import { getTeamReqQueryDto } from '../model/team.dto';
 import MainTabBar from '../components/main/mainTabBar';
@@ -46,6 +46,15 @@ const TeamScreen = () => {
     setPrevLoading(teamRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamRes.loading]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (login === false) return;
+      setRender(false);
+      hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
+      return () => {};
+    }, [login, teamId, key, setTeamRes, setLogin])
+  );
 
   return !render ? (
     <LoadingScreen

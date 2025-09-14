@@ -2,10 +2,10 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
-import { useMain } from '../hooks/main.hook';
+import { hookMain, useMain } from '../hooks/main.hook';
 import { MainHeader } from '../components/main/mainHeader';
 import LoadingScreen  from '../components/loadingPage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
@@ -18,10 +18,8 @@ import MainTabBar from '../components/main/mainTabBar';
 
 
 const MainScreen = () => {
-  const {mainRes} = useContext(MainContext);
+  const {setMainRes, mainRes} = useContext(MainContext);
   const {login, setLogin} = useContext(AuthContext);
-  useMain('GET', null);
-
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
@@ -45,6 +43,15 @@ const MainScreen = () => {
     setPrevLoading(mainRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainRes.loading]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (login === false) return;
+      setRender(false);
+      hookMain('GET' as string, null, setMainRes, setLogin);
+      return () => {};
+    }, [login, setMainRes, setLogin])
+  );
 
   return !render ? (
     <LoadingScreen

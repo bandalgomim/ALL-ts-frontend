@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
@@ -41,19 +41,9 @@ const MatchScreen = () => {
   useFocusEffect(
     useCallback(() => {
       if (login === false) return;
-
       setRender(false);
-
-      // (선택) 진행 중 요청 취소용
-      // const controller = new AbortController();
-
       hookMatch('GET', { matchId }, setMatchRes, setLogin /* , controller.signal */);
-
-      // cleanup: 포커스 잃을 때 실행 (요청 취소가 필요하면 사용)
-      return () => {
-        // controller.abort();
-      };
-      // key도 의존성에 포함 → 같은 matchId라도 key가 바뀌면 다시 fetch
+      return () => {};
     }, [login, matchId, key, setMatchRes, setLogin])
   );
 
@@ -93,7 +83,4 @@ const MatchScreen = () => {
       zIndex: 0, // 다른 요소보다 뒤에 표시되도록 설정
     },
   });
-function useFocusEffect(arg0: any) {
-  throw new Error('Function not implemented.');
-}
 

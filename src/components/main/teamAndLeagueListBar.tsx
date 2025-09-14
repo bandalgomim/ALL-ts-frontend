@@ -9,7 +9,7 @@ import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-nativ
 import { StackNavigationProp } from '@react-navigation/stack';
 import { transformToPatchMainReqDto } from './util';
 import { width, height } from './../../global';
-import { useMain } from '../../hooks/main.hook';
+import { hookMain, useMain } from '../../hooks/main.hook';
 import SerchBar from '../searchBar/serchBar';
 
 interface ContentsProps {
@@ -20,6 +20,7 @@ interface emptyProps {
 }
 
 const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) => {
+  const {login, setLogin} = useContext(AuthContext);
   const [list, setList] = useState<(teamDto | leagueDto | emptyProps)[] | null>(null);
   const [patch, setPatch] = useState<patchMainReqDto>({
     method: 'PATCH',
@@ -55,6 +56,9 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
     }
   }, [teamAndLeagueList]);
   useMain(patch.method, patch.data);
+  useEffect(() => {
+    hookMain('PATCH' as string, patch.data, null, setLogin);
+  }, [patch.data]);
   const handleDragEnd = ({ data }: { data: (teamDto | leagueDto)[] }) => {
     const updatedData = data.map((item, index) => ({
       ...item,
