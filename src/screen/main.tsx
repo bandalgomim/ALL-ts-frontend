@@ -15,6 +15,7 @@ import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
 import { getmainResDto, leagueDto, teamDto } from '../model/main.dto';
 import MainTabBar from '../components/main/mainTabBar';
+import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
 
 
 const MainScreen = () => {
@@ -26,7 +27,9 @@ const MainScreen = () => {
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
-
+  useRefetchOnAppForeground(() => {
+      hookMain('GET' as string, null, setMainRes, setLogin);
+    });
   useEffect(() => {
     if (login === undefined) {
       return;

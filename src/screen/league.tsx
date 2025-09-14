@@ -15,6 +15,7 @@ import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
+import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
 
 const LeagueScreen = () => {
   const {leagueRes, setLeagueRes} = useContext(LeagueContext);
@@ -40,7 +41,9 @@ const LeagueScreen = () => {
     setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueRes.loading]);
-
+  useRefetchOnAppForeground(() => {
+    hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
+  });
   useFocusEffect(
     useCallback(() => {
       if (login === false) return;

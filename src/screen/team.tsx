@@ -14,6 +14,7 @@ import { TeamContext } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
+import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
 
 const TeamScreen = () => {
   const {teamRes, setTeamRes } = useContext(TeamContext);
@@ -21,7 +22,9 @@ const TeamScreen = () => {
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
-
+  useRefetchOnAppForeground(() => {
+    hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
+  });
   useEffect(() => {
       setRender(false);
       hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);

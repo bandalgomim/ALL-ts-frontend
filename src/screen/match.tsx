@@ -10,6 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
+import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
 
 const MatchScreen = () => {
 
@@ -27,7 +28,9 @@ const MatchScreen = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
-
+  useRefetchOnAppForeground(() => {
+    hookMatch('GET', { matchId }, setMatchRes, setLogin /* , controller.signal */);
+  });
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   useEffect(() => {
