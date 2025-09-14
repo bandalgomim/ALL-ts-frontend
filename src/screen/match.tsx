@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
@@ -93,7 +93,4 @@ const MatchScreen = () => {
       zIndex: 0, // 다른 요소보다 뒤에 표시되도록 설정
     },
   });
-function useFocusEffect(arg0: any) {
-  throw new Error('Function not implemented.');
-}
 
