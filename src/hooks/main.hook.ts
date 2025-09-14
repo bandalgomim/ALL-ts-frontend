@@ -29,3 +29,26 @@ export const useMain = (method: string, data: getMainResQueryDto | null = null) 
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, method === 'GET' ? [] : [data]);
 };
+
+export const hookMain = async (
+    method: string,
+    data: getMainResQueryDto | null = null,
+    setMainRes: (res: any) => void,
+    setLogin: (login: any) => void
+) => {
+    if (method !== 'GET' && data === null) {
+        return;
+    }
+    setMainRes({ type: 'LOADING' });
+    const url = 'https://all-ts-backend-production.up.railway.app/main';
+    const query = new URLSearchParams();
+    if (method === 'GET'){
+        if (data) {
+            Object.entries(data as unknown as getMainResQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
+        }
+        const getUrl = url + '?' + query.toString();
+        await commonPostHook(method, url, null, setMainRes, setLogin, true );
+    } else if (method === 'PATCH') {
+        await commonPostHook(method, url, data, null, setLogin );
+    }
+}
