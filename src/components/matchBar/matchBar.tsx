@@ -18,10 +18,19 @@ interface MatchBarPros {
 const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   const { setModalVisible, setModalNextMatchVisible } = useContext(ModalContext);
   const [score, setScore] = useState(false);
-  const style =
+  /*const style =
     color === 'white'
       ? [styles.stateTextWhite, styles.teamNameWhite, styles.teamNameWhiteKR]
-      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKR];
+      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKR];*/
+
+  const styleColor =
+    color === 'white'
+      ? styles.textWhite
+      : color === 'blue'
+      ? styles.textBlue
+      : styles.stateText;
+
+
   const onPressScore = () => {
     setScore(!score);
   };
@@ -33,10 +42,10 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
     const hasEnglish = /[a-zA-Z]/.test(text);
 
       if (hasKR && !hasEnglish) {
-        return (<Text style={[style[2], {textAlign: position }]}>{text}</Text>);
+        return (<Text style={[styles.teamNameKR, styleColor, {textAlign: position }]}>{text}</Text>);
       }
       else if (!hasKR && hasEnglish) {
-        return (<Text style={[style[1], {textAlign: position }]}>{text}</Text>);
+        return (<Text style={[styles.teamName, styleColor, {textAlign: position }]}>{text}</Text>);
       } else {return;}
   }
 
@@ -54,7 +63,9 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
           source={
             color === 'white'
               ? require('../../assets/match/bar/matchBar_w-TEST.png')
-              : require('../../assets/match/bar/matchBar_b-TEST.png')
+              : color === 'blue'
+              ? require('../../assets/match/bar/matchBar_b-TEST.png')
+              : require('../../assets/match/bar/matchBar_r-TEST.png')
           }
           style={[styles.matchBar, { height: height * 0.075, width: width * 0.93 }]}
         >
@@ -72,7 +83,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
             >
               <Text
                 style={[
-                  style[0],
+                  styles.stateText,
+                  styleColor,
                   {
                     width: width * 0.21,
                     fontSize: width * 0.049,
@@ -88,9 +100,14 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               </Text>
               <Text
                 style={[
-                  style[0],
+                  styles.stateText,
+                  styleColor,
                   { width: width * 0.21, fontSize: width * 0.075 },
-                  { color: match.matchState === 'live' ? '#EA5579' : style[0].color },
+                  {
+                    color: match.matchState === 'live'
+                      ? (color === 'red' ? '#30397A' : '#EA5579')
+                      : styleColor.color
+                  },
                 ]}
               >{`${match.matchState}`}</Text>
             </View>
@@ -109,7 +126,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               />
               <Text
                 style={[
-                  style[1],
+                  styles.teamName,
+                  styleColor,
                   { fontSize: width * 0.0745, margin: -width * 0.01, marginTop: -height * 0.01 },
                 ]}
               >
@@ -159,6 +177,18 @@ const styles = StyleSheet.create({
   state: {
     alignItems: 'center',
   },
+  textWhite: {
+    color: 'white',
+    textShadowColor: '#242b5c', // 그림자 색상
+    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
+  textBlue: {
+    color: '#30397A',
+    textShadowColor: '#bdb4b4', // 그림자 색상
+    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
   stateTextBlue: {
     textAlign: 'center',
     fontFamily: 'sb-it-ver1',
@@ -175,6 +205,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
+  stateText: {
+    textAlign: 'center',
+    fontFamily: 'sb-it-ver1',
+  },
   teamNameBlue: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.08,
@@ -190,6 +224,10 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
+  },
+  teamName: {
+    fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.08,
   },
   teamNameBlueKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
@@ -210,6 +248,12 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
+  },
+  teamNameKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
+    fontSize: width * 0.06,
+    transform: [{ scaleY: 1 }],
+    marginTop: height * -0.002,
   },
 });
 
