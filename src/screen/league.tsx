@@ -15,7 +15,7 @@ import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
+import { useRefetchOnAppForeground } from '../hooks/refaetch.hook';
 
 const LeagueScreen = () => {
   const {leagueRes, setLeagueRes} = useContext(LeagueContext);

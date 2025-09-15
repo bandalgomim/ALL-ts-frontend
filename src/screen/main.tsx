@@ -15,7 +15,7 @@ import { AuthContext } from '../context/auth.context';
 import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
 import { getmainResDto, leagueDto, teamDto } from '../model/main.dto';
 import MainTabBar from '../components/main/mainTabBar';
-import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
+import { hookRefetch, useRefetchOnAppForeground } from '../hooks/refaetch.hook';
 
 
 const MainScreen = () => {
@@ -27,9 +27,13 @@ const MainScreen = () => {
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
-  useRefetchOnAppForeground(() => {
-      hookMain('GET' as string, null, setMainRes, setLogin);
-    });
+  const refetch = useCallback(() => {
+    setRender(false);
+    return hookMain('GET', null, setMainRes, setLogin);
+  }, [setMainRes, setLogin]);
+
+  hookRefetch(refetch)
+
   useEffect(() => {
     if (login === undefined) {
       return;
@@ -47,14 +51,14 @@ const MainScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainRes.loading]);
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       if (login === false) return;
       setRender(false);
       hookMain('GET' as string, null, setMainRes, setLogin);
       return () => {};
     }, [login, setMainRes, setLogin])
-  );
+  );*/
 
   return !render ? (
     <LoadingScreen

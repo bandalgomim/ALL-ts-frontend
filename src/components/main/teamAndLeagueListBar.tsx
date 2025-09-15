@@ -55,7 +55,6 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
       setList(teamAndLeagueList);
     }
   }, [teamAndLeagueList]);
-  useMain(patch.method, patch.data);
   useEffect(() => {
     hookMain('PATCH' as string, patch.data, null, setLogin);
   }, [patch.data]);
