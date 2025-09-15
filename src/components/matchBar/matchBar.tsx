@@ -25,10 +25,10 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
 
   const styleColor =
     color === 'white'
-      ? styles.textWhite
-      : color === 'blue'
       ? styles.textBlue
-      : styles.stateText;
+      : color === 'blue'
+      ? styles.textWhite
+      : styles.textWhite;
 
 
   const onPressScore = () => {
@@ -189,65 +189,13 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
-  stateTextBlue: {
-    textAlign: 'center',
-    fontFamily: 'sb-it-ver1',
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
-  stateTextWhite: {
-    textAlign: 'center',
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
   stateText: {
     textAlign: 'center',
     fontFamily: 'sb-it-ver1',
   },
-  teamNameBlue: {
-    fontFamily: 'sb-it-ver1',
-    fontSize: width * 0.08,
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
-  teamNameWhite: {
-    fontFamily: 'sb-it-ver1',
-    fontSize: width * 0.08,
-    color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
   teamName: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.08,
-  },
-  teamNameBlueKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.06,
-    transform: [{ scaleY: 1 }],
-    marginTop: height * -0.002,
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-  },
-  teamNameWhiteKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.06,
-    transform: [{ scaleY: 1 }],
-    marginTop: height * -0.002,
-    color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
   },
   teamNameKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
