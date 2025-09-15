@@ -3,15 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import SearchBar from './searchBar/serchBar';
 import TeamOrLeagueLogo  from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
-
+import RefreshButton from './refresh';
 import { width, height } from '../global';
 import { TeamContext } from '../context/team.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ModalContext } from '../context/modal.context';
 import { findNext } from './calendar/utills';
 import LogoPicker from './logo/logoPicker';
+import { refetchDto } from '../model/refetch.dto';
 
-const TeamHeader = () => {
+const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
   const {teamRes} = useContext(TeamContext);
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const [record, setRecord] = useState(false);
@@ -176,6 +177,7 @@ const TeamHeader = () => {
               leagueId={null}
               matchId={null}
             />
+            <RefreshButton refetch={refetch} />
           </View>
         </View>
       </View>

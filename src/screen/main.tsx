@@ -13,7 +13,7 @@ import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import { getmainResDto } from '../model/main.dto';
-import { hookRefetch } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refetch.hook';
 
 
 const MainScreen = () => {

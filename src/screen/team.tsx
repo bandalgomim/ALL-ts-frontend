@@ -14,7 +14,7 @@ import { TeamContext } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { hookRefetch } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refetch.hook';
 
 const TeamScreen = () => {
   const { teamRes, setTeamRes } = useContext(TeamContext);
@@ -66,7 +66,7 @@ const TeamScreen = () => {
   ) : (
     <View style={styles.Container}>
       <HeadNotch/>
-      <TeamHeader/>
+      <TeamHeader refetch={refetch}/>
       <TeamCalendar/>
       <View style={[styles.tabBar]}>
         <MainTabBar

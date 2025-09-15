@@ -4,7 +4,7 @@ import { hookIsSelected } from '../hooks/isSelected.hook';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../model/navigation.dto';
-import { width } from '../global';
+import { height, width } from '../global';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 
@@ -46,6 +46,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   return (
     <TouchableOpacity
       onPress={onPressStart}
+      style={{height: height*0.03}}
     >
       <Image resizeMode="contain" style={[styles.container, {width: width * 0.07, height: width * 0.07}]} source={state === true
       ? require('./../assets/star/star.png')

@@ -14,7 +14,7 @@ import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { hookRefetch } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refetch.hook';
 
 const LeagueScreen = () => {
   const { leagueRes, setLeagueRes } = useContext(LeagueContext);
@@ -65,7 +65,7 @@ const LeagueScreen = () => {
   ) : (
     <View style={styles.Container}>
       <HeadNotch/>
-      <LeagueHeader/>
+      <LeagueHeader refetch={refetch}/>
       <LeagueCalendar/>
       <View style={[styles.tabBar]}>
         <MainTabBar

@@ -12,12 +12,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
+import RefreshButton from '../refresh';
 
 interface MatchPros {
   match: getMatchReqDto;
+  refetch: () => Promise<any> | void
 }
 
-const Match: React.FC<MatchPros> = ({ match }) => {
+const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
@@ -149,14 +151,11 @@ const Match: React.FC<MatchPros> = ({ match }) => {
               style={{width: width * 0.5, height: height * 0.14, position: 'absolute', zIndex: 0, marginTop: -height * 0.026}}
               source={require('../../assets/match/blue.png')}
             />
-            <Text
-              style={[
-                styles.fontWhiteState,
-                match.matchState === 'live' && styles.fontLive,
-              ]}
-            >
-            {match?.matchState}
-            </Text>
+            <TouchableOpacity onPress={() => refetch()}>
+              <Text style={[styles.fontWhiteState, match.matchState === 'live' && styles.fontLive]}>
+                {match?.matchState}
+              </Text>
+            </TouchableOpacity>
             <View style={styles.dateContainer}>
               <Text style={styles.fontDate}>
                 {match.matchDate ? match.matchDate.split("T")[0] : '0000'}

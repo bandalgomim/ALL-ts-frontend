@@ -8,8 +8,10 @@ import { LeagueContext } from '../../context/league.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LeagueRankList from './leagueRankList';
 import LogoPicker from '../logo/logoPicker';
+import { refetchDto } from '../../model/refetch.dto';
+import RefreshButton from '../refresh';
 
-const LeagueHeader = () => {
+const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
   const {leagueRes} = useContext(LeagueContext);
   const [record, setRecord] = useState(false);
   return (
@@ -39,12 +41,16 @@ const LeagueHeader = () => {
             type={'big'}
             initial={leagueRes?.data?.league?.leagueInit}
           />
-          <IsSelected
-            isSelected={leagueRes.data?.league?.isSelected}
-            teamId={null}
-            leagueId={leagueRes.data?.league?.leagueId}
-            matchId={null}
-          />
+          <View>
+            <IsSelected
+              isSelected={leagueRes.data?.league?.isSelected}
+              teamId={null}
+              leagueId={leagueRes.data?.league?.leagueId}
+              matchId={null}
+            />
+            <RefreshButton refetch={refetch} />
+          </View>
+          
         </View>
 
       </View>

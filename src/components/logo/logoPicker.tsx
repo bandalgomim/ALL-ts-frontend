@@ -19,9 +19,12 @@ const LogoPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
   }, [setLogoModalContents, setLogoModalContents]);
 
   return (
+    <View>
       <TouchableOpacity style={{zIndex: 100 }} onPress={() => onPressDate(type, id, uri)}>
         <Icon name={'options-vertical'} size={height*0.03} color={'#30397A'} />
       </TouchableOpacity>
+    </View>
+      
   );
 };
 

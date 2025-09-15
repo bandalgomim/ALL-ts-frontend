@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
-import { hookRefetch } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refetch.hook';
 
 
 const MatchScreen = () => {
@@ -64,6 +64,7 @@ const MatchScreen = () => {
     <View style={[styles.logo]}>
     <Match
       match={matchRes.data ?? {}}
+      refetch={refetch}
     />
     </View>
     <View style={[styles.container]}>
