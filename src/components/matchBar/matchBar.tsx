@@ -28,7 +28,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
       ? styles.textBlue
       : color === 'blue'
       ? styles.textWhite
-      : styles.textBlue;
+      : styles.textRed;
 
 
   const onPressScore = () => {
@@ -187,6 +187,12 @@ const styles = StyleSheet.create({
     color: '#30397A',
     textShadowColor: '#bdb4b4', // 그림자 색상
     textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
+    textShadowRadius: 3, // 그림자 반경
+  },
+  textRed: {
+    color: 'white',
+    textShadowColor: '#b94460', // 그림자 색상
+    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
   stateText: {

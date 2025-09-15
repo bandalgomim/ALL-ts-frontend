@@ -25,7 +25,7 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
       req = require('../../assets/score/score_b_s.png');
       break;
     default:
-      req = require('../../assets/score/score_b.png');
+      req = require('../../assets/score/score_w.png');
       break;
   }
 
