@@ -20,7 +20,10 @@ const LeagueHeader = () => {
       <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
-            <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>
+            {leagueRes.data.league?.leagueName.length! < 9
+            ? <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>
+            : <Text style={[styles.LeagueInfoName, {fontSize: width * 0.13, marginBottom: -height * 0.01, marginTop:width*0.04}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>}
+            
             <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>

@@ -36,7 +36,7 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
       style={[styles.scoreContainer, { width: size, height:size, marginLeft: -width * 0.013, marginRight: -width * 0.013}]}
     >
       <Text style={[styles.scoreBox, {color: color === 'white' ? '#ffffff' : '#30397A',
-        fontSize: type === 'small' ? width * 0.08 : width * 0.22,
+        fontSize: type === 'small' ? width * 0.07 : width * 0.22,
         marginTop: type === 'small' ? height * 0.001 : height * 0.001,
         width: size * 1.2}]}
       >
