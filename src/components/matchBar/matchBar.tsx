@@ -28,7 +28,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
       ? styles.textBlue
       : color === 'blue'
       ? styles.textWhite
-      : styles.textWhite;
+      : styles.textBlue;
 
 
   const onPressScore = () => {
