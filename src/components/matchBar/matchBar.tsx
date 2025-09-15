@@ -105,7 +105,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                   { width: width * 0.21, fontSize: width * 0.075 },
                   {
                     color: match.matchState === 'live'
-                      ? (color === 'red' ? '#ffffff' : '#EA5579')
+                      ? (color === 'red' ? '#F8F815' : '#EA5579')
                       : styleColor.color
                   },
                 ]}
