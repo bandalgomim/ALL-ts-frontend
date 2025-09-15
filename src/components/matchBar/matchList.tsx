@@ -31,27 +31,49 @@ const MatchList: React.FC<ContentsProps> = ({
     });
     return () => cancelAnimationFrame(rafId);
   }, [matchList]);
-
-  const renderItem = useCallback(({ item }: { item: matchDto[] }) => (
-    <View style={{ marginBottom: height * 0.01 }}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={[styles.frontDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
-        <View>
-          <Text style={[styles.dateText, { color: color === 'white' ? 'white' : '#30397A' }]}>
-            {item[0].matchDate}
-          </Text>
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC → KST
+  const today = kst.toISOString().split('T')[0]; //
+  const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
+    // 기본 색상
+    let dateColor = color;
+    if (item[0]?.matchDate === today) {
+      dateColor = '#FFCC21';
+    } else if (color === 'blue') {
+      dateColor = '#30397A';
+    }
+    return (
+      <View style={{ marginBottom: height * 0.01 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <View
+            style={[
+              styles.frontDateBar,
+              { backgroundColor: dateColor },
+            ]}
+          />
+          <View>
+            <Text
+              style={[
+                styles.dateText,
+                { color: dateColor },
+              ]}
+            >
+              {item[0].matchDate}
+            </Text>
+          </View>
+          <View
+            style={[
+              styles.backDateBar,
+              { backgroundColor: dateColor },
+            ]}
+          />
         </View>
-        <View style={[styles.backDateBar, { backgroundColor: color === 'white' ? 'white' : '#30397A' }]} />
+        {item.map((data: matchDto) => (
+          <MatchBar key={data.matchId} match={data} color={dateColor} />
+        ))}
       </View>
-      {item.map((data: matchDto) => (
-        <MatchBar
-          key={data.matchId}
-          match={data}
-          color={color}
-        />
-      ))}
-    </View>
-  ), [color]);
+    );
+  }, [color, today]);
 
   return (
     <FlatList
