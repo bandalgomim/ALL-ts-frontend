@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import SearchBar from '../searchBar/serchBar';
 import { leagueDto, patchMainReqDto, teamDto } from '../../model/main.dto';
@@ -11,6 +11,7 @@ import { transformToPatchMainReqDto } from './util';
 import { width, height } from './../../global';
 import { hookMain, useMain } from '../../hooks/main.hook';
 import SerchBar from '../searchBar/serchBar';
+import { AuthContext } from '../../context/auth.context';
 
 interface ContentsProps {
   teamAndLeagueList: (teamDto | leagueDto)[] | null;
