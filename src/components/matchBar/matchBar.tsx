@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   textRed: {
     color: 'white',
-    textShadowColor: '#ea5579', // 그림자 색상
+    textShadowColor: '#af405b', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
   },
