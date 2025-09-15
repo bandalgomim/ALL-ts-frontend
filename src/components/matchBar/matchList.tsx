@@ -37,10 +37,15 @@ const MatchList: React.FC<ContentsProps> = ({
   const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
     // 기본 색상
     let dateColor = color;
+    let colorBar;
     if (item[0]?.matchDate === today) {
-      dateColor = '#FFCC21';
+      dateColor = '#EA5579';
+      colorBar = 'red';
     } else if (color === 'blue') {
       dateColor = '#30397A';
+      colorBar = 'blue';
+    } else{
+      colorBar = 'white';
     }
     return (
       <View style={{ marginBottom: height * 0.01 }}>
@@ -69,7 +74,7 @@ const MatchList: React.FC<ContentsProps> = ({
           />
         </View>
         {item.map((data: matchDto) => (
-          <MatchBar key={data.matchId} match={data} color={color} />
+          <MatchBar key={data.matchId} match={data} color={colorBar} />
         ))}
       </View>
     );
