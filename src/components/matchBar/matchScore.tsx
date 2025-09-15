@@ -25,7 +25,7 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
       req = require('../../assets/score/score_b_s.png');
       break;
     default:
-      req = require('../../assets/score/score_w.png');
+      req = require('../../assets/score/score_b.png');
       break;
   }
 
@@ -35,7 +35,7 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
       source={req}
       style={[styles.scoreContainer, { width: size, height:size, marginLeft: -width * 0.013, marginRight: -width * 0.013}]}
     >
-      <Text style={[styles.scoreBox, {color: color === 'white' ? '#ffffff' : '#30397A',
+      <Text style={[styles.scoreBox, {color: color === 'blue' ? '#30397A' : '#ffffff',
         fontSize: type === 'small' ? width * 0.07 : width * 0.22,
         marginTop: type === 'small' ? height * 0.001 : height * 0.001,
         width: size * 1.2}]}
