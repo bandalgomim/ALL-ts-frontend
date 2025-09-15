@@ -24,6 +24,9 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
     case (type === 'small' && color === 'white'):
       req = require('../../assets/score/score_b_s.png');
       break;
+    case (type === 'big' && color === 'white'):
+      req = require('../../assets/score/score_b.png');
+      break;
     default:
       req = require('../../assets/score/score_w_s.png');
       break;
