@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
-import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
+import { useRefetchOnAppForeground } from '../hooks/refetch.hook';
 
 const MatchScreen = () => {
 

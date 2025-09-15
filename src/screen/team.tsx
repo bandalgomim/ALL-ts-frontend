@@ -14,7 +14,7 @@ import { TeamContext } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { useRefetchOnAppForeground } from '../hooks/foreground.hook';
+import { useRefetchOnAppForeground } from '../hooks/refetch.hook';
 
 const TeamScreen = () => {
   const {teamRes, setTeamRes } = useContext(TeamContext);
