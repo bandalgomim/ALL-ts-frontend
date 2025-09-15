@@ -105,7 +105,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                   { width: width * 0.21, fontSize: width * 0.075 },
                   {
                     color: match.matchState === 'live'
-                      ? (color === 'red' ? '#30397A' : '#EA5579')
+                      ? (color === 'red' ? '#ffffff' : '#EA5579')
                       : styleColor.color
                   },
                 ]}
@@ -155,6 +155,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               teamId={null}
               leagueId={null}
               matchId={match.matchId}
+              color={color}
             />
           </View>
         </ImageBackground>

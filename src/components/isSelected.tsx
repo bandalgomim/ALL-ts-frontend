@@ -13,9 +13,10 @@ interface IsSelectedPros {
     teamId: number | null;
     leagueId: number | null;
     matchId: string | null;
+    color?: string;
 }
 
-const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId}) => {
+const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId, color}) => {
   const { setMainRes } = useContext(MainContext);
   const { setLogin } = useContext(AuthContext);
   const [state, setState] = useState<boolean | null>(false);
@@ -49,7 +50,7 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
       style={{height: height*0.03}}
     >
       <Image resizeMode="contain" style={[styles.container, {width: width * 0.07, height: width * 0.07}]} source={state === true
-      ? require('./../assets/star/star.png')
+      ? (color !== 'red' ? require('./../assets/star/star.png') : require('./../assets/star/star_blue.png'))
       : require('./../assets/star/star_empty.png')} />
     </TouchableOpacity>
   );
