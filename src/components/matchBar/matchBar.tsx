@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
   },
   textRed: {
-    color: '#white',
+    color: 'white',
     textShadowColor: '#F8F815', // 그림자 색상
     textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
     textShadowRadius: 3, // 그림자 반경
