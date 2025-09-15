@@ -69,7 +69,7 @@ const MatchList: React.FC<ContentsProps> = ({
           />
         </View>
         {item.map((data: matchDto) => (
-          <MatchBar key={data.matchId} match={data} color={dateColor} />
+          <MatchBar key={data.matchId} match={data} color={color} />
         ))}
       </View>
     );
