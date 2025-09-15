@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext } from 'react';
-import { View, StyleSheet,  ImageBackground, ScrollView, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, StyleSheet,  ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { TeamPageParamList } from '../../model/navigation.dto';
 import { teamDto } from '../../model/league.dto';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';

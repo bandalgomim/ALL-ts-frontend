@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
 import { hookTeam } from '../hooks/team.hook';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import { getTeamReqQueryDto } from '../model/team.dto';
 import MainTabBar from '../components/main/mainTabBar';
@@ -14,26 +14,26 @@ import { TeamContext } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { useRefetchOnAppForeground } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refaetch.hook';
 
 const TeamScreen = () => {
-  const {teamRes, setTeamRes } = useContext(TeamContext);
-  const {login, setLogin} = useContext(AuthContext);
+  const { teamRes, setTeamRes } = useContext(TeamContext);
+  const { login, setLogin } = useContext(AuthContext);
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
-  useRefetchOnAppForeground(() => {
-    hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
-  });
-  useEffect(() => {
-      setRender(false);
-      hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
-  }, [teamId, key]);
-
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  const refetch = useCallback(() => {
+    setRender(false);
+    return hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teamId, key, setTeamRes, setLogin]);
+  hookRefetch(refetch);
+
   useEffect(() => {
     if (login === false) {
       navigateIAM();
@@ -50,14 +50,14 @@ const TeamScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamRes.loading]);
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       if (login === false) return;
       setRender(false);
       hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
       return () => {};
     }, [login, teamId, key, setTeamRes, setLogin])
-  );
+  );*/
 
   return !render ? (
     <LoadingScreen

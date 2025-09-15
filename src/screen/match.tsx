@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
@@ -10,27 +10,32 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
-import { useRefetchOnAppForeground } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refaetch.hook';
+
 
 const MatchScreen = () => {
 
-  const {matchRes, setMatchRes} = useContext(MatchContext);
-  const {login, setLogin } = useContext(AuthContext);
-  const { matchId, key } = useRoute().params as getMatchResQueryDto;
-
+  const { matchRes, setMatchRes } = useContext(MatchContext);
+  const { login, setLogin } = useContext(AuthContext);
+  const { matchId } = useRoute().params as getMatchResQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  const refetch = useCallback(() => {
+    setRender(false);
+    return hookMatch('GET', { matchId }, setMatchRes, setLogin);
+  }, [matchId, setMatchRes, setLogin]);
+  hookRefetch(refetch);
+
+
   useEffect(() => {
     if (login === false) {
       navigateIAM();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
-  useRefetchOnAppForeground(() => {
-    hookMatch('GET', { matchId }, setMatchRes, setLogin /* , controller.signal */);
-  });
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   useEffect(() => {
@@ -41,14 +46,14 @@ const MatchScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchRes.loading]);
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       if (login === false) return;
       setRender(false);
-      hookMatch('GET', { matchId }, setMatchRes, setLogin /* , controller.signal */);
+      hookMatch('GET', { matchId }, setMatchRes, setLogin);
       return () => {};
     }, [login, matchId, key, setMatchRes, setLogin])
-  );
+  )*/
 
   return !render ? (
     <LoadingScreen

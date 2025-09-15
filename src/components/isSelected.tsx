@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { hookIsSelected } from '../hooks/isSelected.hook';
 import { useNavigation } from '@react-navigation/native';

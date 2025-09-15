@@ -19,7 +19,6 @@ const IAMScreen = () => {
   const {setTeamRes} = useContext(TeamContext);
   const {setLeagueRes} = useContext(LeagueContext);
   const {setMatchRes} = useContext(MatchContext);
-  const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [id, setId] = useState<string>('');
   const [isFocused, setIsFocused] = useState(false);
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
@@ -29,12 +28,13 @@ const IAMScreen = () => {
 
   const handlePress = () => {
     hookLogIn({id: id}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin);
-  }
+  };
 
   useEffect(() => {
     if (login === true) {
       navigateMain();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
 
   const handleSearch = useCallback((input: string) => {

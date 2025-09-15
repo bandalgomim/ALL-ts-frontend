@@ -2,28 +2,27 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
-import { hookMain, useMain } from '../hooks/main.hook';
+import { hookMain } from '../hooks/main.hook';
 import { MainHeader } from '../components/main/mainHeader';
 import LoadingScreen  from '../components/loadingPage';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
-import TeamAndLeagueListBar from '../components/main/teamAndLeagueListBar';
-import { getmainResDto, leagueDto, teamDto } from '../model/main.dto';
-import MainTabBar from '../components/main/mainTabBar';
-import { hookRefetch, useRefetchOnAppForeground } from '../hooks/refaetch.hook';
+import { getmainResDto } from '../model/main.dto';
+import { hookRefetch } from '../hooks/refaetch.hook';
 
 
 const MainScreen = () => {
-  const {setMainRes, mainRes} = useContext(MainContext);
-  const {login, setLogin} = useContext(AuthContext);
+  const { setMainRes, mainRes } = useContext(MainContext);
+  const { login, setLogin } = useContext(AuthContext);
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
@@ -31,34 +30,19 @@ const MainScreen = () => {
     setRender(false);
     return hookMain('GET', null, setMainRes, setLogin);
   }, [setMainRes, setLogin]);
-
-  hookRefetch(refetch)
+  hookRefetch(refetch);
 
   useEffect(() => {
-    if (login === undefined) {
-      return;
-    }
-    if (login === false) {
-      navigateIAM();
-    }
+    if (login === undefined) { return; }
+    if (login === false) { navigateIAM(); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
 
   useEffect(() => {
-    if (prevLoading === true && mainRes.loading === false) {
-      setRender(true);
-    }
+    if (prevLoading === true && mainRes.loading === false) { setRender(true); }
     setPrevLoading(mainRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainRes.loading]);
-
-  /*useFocusEffect(
-    useCallback(() => {
-      if (login === false) return;
-      setRender(false);
-      hookMain('GET' as string, null, setMainRes, setLogin);
-      return () => {};
-    }, [login, setMainRes, setLogin])
-  );*/
 
   return !render ? (
     <LoadingScreen
@@ -81,9 +65,7 @@ const MainScreen = () => {
       <MainCalendar
         data={mainRes?.data as getmainResDto}
       />
-      <View style={[styles.tabBar]}>
-
-      </View>
+      <View style={[styles.tabBar]} />
     </View>
   );
 };

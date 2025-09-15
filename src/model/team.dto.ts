@@ -21,7 +21,8 @@ export interface getTeamResDto {
 }
 
 export interface getTeamReqQueryDto {
-    teamId: number
+    teamId: number,
+    key?: string
 }
 
 export type getTeamReqDto = StateDto<getTeamReqQueryDto>

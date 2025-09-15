@@ -2,9 +2,8 @@ import React, { useState, useContext, useEffect, useCallback } from 'react';
 import {  StyleSheet, Text, View } from 'react-native';
 import LeagueCalendar from '../components/calendar/LeagueCalendar';
 import LeagueHeader from '../components/league/leagueHeader';
-import LeageTeamListBar from '../components/league/leageTeamList';
 import { hookLeague } from '../hooks/league.hook';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
 import { getLeagueReqQueryDto } from '../model/league.dto';
 import MainTabBar from '../components/main/mainTabBar';
@@ -15,16 +14,24 @@ import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
-import { useRefetchOnAppForeground } from '../hooks/refaetch.hook';
+import { hookRefetch } from '../hooks/refaetch.hook';
 
 const LeagueScreen = () => {
-  const {leagueRes, setLeagueRes} = useContext(LeagueContext);
-  const {login, setLogin} = useContext(AuthContext);
-  const { leagueId, key } = useRoute().params as getLeagueReqQueryDto;
+  const { leagueRes, setLeagueRes } = useContext(LeagueContext);
+  const { login, setLogin } = useContext(AuthContext);
+  const { leagueId } = useRoute().params as getLeagueReqQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+
   const navigateIAM = useCallback(() => {
     navigationIAM.navigate('IAMScreen', undefined);
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  const refetch = useCallback(() => {
+      setRender(false);
+      return hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [leagueId, setLeagueRes, setLogin]);
+    hookRefetch(refetch);
+
   useEffect(() => {
     if (login === false) {
       navigateIAM();
@@ -41,14 +48,15 @@ const LeagueScreen = () => {
     setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueRes.loading]);
-  useFocusEffect(
+
+  /*useFocusEffect(
     useCallback(() => {
-      if (login === false) return;
+      if (login === false) {return;}
       setRender(false);
       hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
       return () => {};
     }, [login, leagueId, key, setLeagueRes, setLogin])
-  );
+  );*/
 
   return !render ? (
     <LoadingScreen
@@ -58,7 +66,6 @@ const LeagueScreen = () => {
     <View style={styles.Container}>
       <HeadNotch/>
       <LeagueHeader/>
-      
       <LeagueCalendar/>
       <View style={[styles.tabBar]}>
         <MainTabBar
