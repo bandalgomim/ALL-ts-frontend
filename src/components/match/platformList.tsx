@@ -21,7 +21,12 @@ const openUrlHandle = async (url: string) => {
 
 
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
-
+  const hasReplayType = platformList.some(item => item.platformMatchUrlType === 'replay');
+  if (!hasReplayType && type === 'replay') {
+    type = 'root'
+  }
+  console.log('PlatformList render', platformList);
+  
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
     let uri = require('../../assets/match/platform/none.png');
@@ -38,7 +43,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
     // marginRight: 다음 아이템이 있으면 10, 마지막이면 0
     const isLast = index === platformList.length - 1;
 
-    if (item.platfromMatchUrlType && type === item.platfromMatchUrlType) {
+    if (item.platformMatchUrlType && type === item.platformMatchUrlType) {
       return (
         <TouchableOpacity
           onPress={() => {
@@ -67,11 +72,11 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
       <View style={styles.barContainer}>
         <View style={[styles.frontDateBar]} />
         <View>
-          <Text style={[styles.dateText, { width: type === 'replay' ? width * 0.13 : width * 0.18 }]}>
-            {type}
+          <Text style={[styles.dateText, { width: type === 'highlight' ? width * 0.18 : width * 0.13 }]}>
+            {type === 'replay' || type === 'root' ? 'replay' : 'highlight'}
           </Text>
         </View>
-        <View style={[styles.backDateBar, { width: type === 'replay' ? width * 0.2505 : width * 0.205 }]} />
+        <View style={[styles.backDateBar, { width: type === 'highlight' ? width * 0.205 : width * 0.2505 }]} />
       </View>
       <FlatList
         style={{ width: width * 0.45}}
