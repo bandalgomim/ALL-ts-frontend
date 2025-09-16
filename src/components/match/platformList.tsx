@@ -21,7 +21,7 @@ const openUrlHandle = async (url: string) => {
 
 
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
-  const hasReplayType = platformList.some(item => item.platformMatchUrlType === 'replay');
+  const hasReplayType = platformList.some(item => item.platfromMatchUrlType === 'replay');
   if (!hasReplayType && type === 'replay') {
     type = 'root'
   }
@@ -38,16 +38,18 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
       uri =  require('../../assets/match/platform/tving.png');
     } else if(item.platformName === 'spotv') {
       uri =  require('../../assets/match/platform/spotv.png');
+    } else if(item.platformName === 'coupang') {
+      uri =  require('../../assets/match/platform/coupang.png');
     }
 
     // marginRight: 다음 아이템이 있으면 10, 마지막이면 0
     const isLast = index === platformList.length - 1;
 
-    if (item.platformMatchUrlType && type === item.platformMatchUrlType) {
+    if (item.platfromMatchUrlType && type === item.platfromMatchUrlType) {
       return (
         <TouchableOpacity
           onPress={() => {
-            openUrlHandle(item.platformMatchUrl as string);
+            openUrlHandle(item.platformMatchUrl ? item.platformMatchUrl as string : item.platformLeagueUrl as string);
           }}
         >
           <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: isLast ? 0 : width * 0.04 }}>

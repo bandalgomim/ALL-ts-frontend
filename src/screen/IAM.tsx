@@ -12,6 +12,7 @@ import { LeagueContext } from '../context/league.context';
 import { MainContext } from '../context/main.context';
 import { MatchContext } from '../context/match.context';
 import { TeamContext } from '../context/team.context';
+import KakaoLoginButton from '../components/IAM/kakao';
 
 const IAMScreen = () => {
   const {login, setLogin} = useContext(AuthContext);
@@ -70,6 +71,7 @@ const IAMScreen = () => {
           />
         </TouchableOpacity>
       </View>
+      <KakaoLoginButton />
     </View>
   );
 };

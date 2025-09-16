@@ -6,7 +6,7 @@ export interface platform {
     platformlogo: string | null,
     platformLeagueUrl: string | null,
     platformMatchUrl: string | null,
-    platformMatchUrlType: string | null
+    platfromMatchUrlType: string | null
 }
 
 export interface getMatchReqDto {
