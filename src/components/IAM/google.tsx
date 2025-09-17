@@ -3,8 +3,17 @@ import { Button, Alert } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
+interface GoogleLoginButtonProps {
+  type: 'login' | 'signUp';
+}
 
-export default function GoogleLoginButton() {
+const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ type }) => {
+  let url: string = '';
+  if (type !== 'login' && type !== 'signUp') {
+    url = 'http://localhost:4000/auth/login';
+  } else if (type === 'login') {
+    url = 'http://localhost:4000/auth/signUp';
+  }
   useEffect(() => {
     GoogleSignin.configure({
       // ✅ 반드시 Web Client ID (서버 검증용)
@@ -32,12 +41,12 @@ export default function GoogleLoginButton() {
     console.log('ID Token:', idToken, 'Access Token:', accessToken);
 
       // 백엔드로 전달
-      const res = await axios.post('http://localhost:4000/auth/google', {
-        idToken,
-        code: accessToken, // (선택) 서버에서 refresh token 교환하려면 사용
+      /*const res = await axios.post(url, {
+        type: 'google',
+        idToken: idToken,
       });
 
-      Alert.alert('서버 응답', JSON.stringify(res.data));
+      Alert.alert('서버 응답', JSON.stringify(res.data));*/
     } catch (err) {
       console.error('Google login error:', err);
       Alert.alert('로그인 실패', String(err));
@@ -46,3 +55,5 @@ export default function GoogleLoginButton() {
 
   return <Button title="Google 로그인" onPress={handleLogin} />;
 }
+
+export default React.memo(GoogleLoginButton);
