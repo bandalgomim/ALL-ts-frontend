@@ -14,6 +14,7 @@ import { MatchContext } from '../context/match.context';
 import { TeamContext } from '../context/team.context';
 import KakaoLoginButton from '../components/IAM/kakao';
 import GoogleLoginButton from '../components/IAM/google';
+import AuthButton from '../components/IAM/authButton';
 
 const IAMScreen = () => {
   const {login, setLogin} = useContext(AuthContext);
@@ -53,26 +54,10 @@ const IAMScreen = () => {
       <View>
         <Text style={[styles.text4, {width: width, fontSize: width * 0.0885, marginTop:-height * 0.04}, styles.textWhite]}>All  Sports  Scheduler</Text>
       </View>
-      <View style={[{flexDirection: 'row', alignItems:'center'}]}>
-        <TextInput
-          placeholder={isFocused ? '' : 'login'} // 포커스되면 placeholder 제거
-          placeholderTextColor={'#30397A'}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          value={id}
-          onChangeText={handleSearch}
-          style={[styles.textInput, { fontSize: width * 0.07, width:width * 0.5, height:height * 0.06 }]}
-        />
-        <TouchableOpacity onPress={handlePress} // 버튼 클릭 시 실행되는 함수
-        >
-          <Icon
-            name="login"  // 아이콘 이름 (Ionicons의 close 아이콘)
-            size={width * 0.1}
-            color="gray"
-          />
-        </TouchableOpacity>
+      <View style={{flexDirection: "row", width: width*0.5, justifyContent: 'space-between'}}>
+        <AuthButton type="sign Up" />
+        <AuthButton type="login" />
       </View>
-      <GoogleLoginButton type={'login'}/>
     </View>
   );
 };
