@@ -4,8 +4,7 @@ import { getLeagueReqQueryDto } from '../model/league.dto';
 export const hookLeague = async (
     method: string,
     data: getLeagueReqQueryDto | null = null,
-    setLeagueRes: (res: any) => void,
-    setLogin: (login: any) => void
+    setLeagueRes: (res: any) => void
 ) => {
     setLeagueRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/league';        
@@ -16,6 +15,6 @@ export const hookLeague = async (
         }
     });
     const getUrl = url + '?' + query.toString();
-    await commonPostHook(method, getUrl, null, setLeagueRes, setLogin);
+    await commonPostHook(method, getUrl, null, setLeagueRes);
     };
 

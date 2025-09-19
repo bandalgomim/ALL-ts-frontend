@@ -7,7 +7,6 @@ export const commonPostHook = async (
     url: string,
     data: Object | null = null,
     dispatch: Function | null,
-    loginState: Function,
     notification: boolean = false
 ) => {
     const authToken = await localData.get('Authorization');
@@ -34,12 +33,13 @@ export const commonPostHook = async (
             dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});}
         } else {
             await localData.set('Authorization', response.headers.authorization);
-            await commonPostHook(method, url, data, dispatch, loginState);
+            await commonPostHook(method, url, data, dispatch);
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response?.data.includes('refresh token unmatched')) {
-                loginState(false);
+                await localData.delete('Authorization');
+                await localData.delete('RefreshToken');
             }
             if (dispatch !== null) {
             dispatch({ type: 'ERROR', payload: error.message + '!!' });}

@@ -14,29 +14,28 @@ import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 import { getmainResDto } from '../model/main.dto';
 import { hookRefetch } from '../hooks/refetch.hook';
+import { localData } from '../IAM/localData';
+import { hookIsLogin } from '../hooks/IAM.hook';
 
 
 const MainScreen = () => {
   const { setMainRes, mainRes } = useContext(MainContext);
-  const { login, setLogin } = useContext(AuthContext);
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
-
   const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', undefined);
+    navigationIAM.replace('IAMScreen', {state: true});
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
-  const refetch = useCallback(() => {
-    setRender(false);
-    return hookMain('GET', null, setMainRes, setLogin);
-  }, [setMainRes, setLogin]);
-  hookRefetch(refetch);
 
   useEffect(() => {
-    if (login === undefined) { return; }
-    if (login === false) { navigateIAM(); }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
+    hookIsLogin(navigateIAM)
+  }, []);
+  
+  const refetch = useCallback(() => {
+    setRender(false);
+    return hookMain('GET', null, setMainRes);
+  }, [setMainRes]);
+  hookRefetch(refetch);
 
   useEffect(() => {
     if (prevLoading === true && mainRes.loading === false) { setRender(true); }

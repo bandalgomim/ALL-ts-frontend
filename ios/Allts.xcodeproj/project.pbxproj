@@ -22,8 +22,9 @@
 		CC0EE2D32DA3F27100FF67D8 /* lt-it-ver3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2CE2DA3F27000FF67D8 /* lt-it-ver3.ttf */; };
 		CC0EE2D52DA3F27100FF67D8 /* rg-it-ver2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D02DA3F27100FF67D8 /* rg-it-ver2.ttf */; };
 		CC0EE2DA2DA3F3B500FF67D8 /* sb-it-ver1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D92DA3F3B500FF67D8 /* sb-it-ver1.ttf */; };
+		CC5D203F2E7AF3C0003F0327 /* client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC5D203E2E7AF3C0003F0327 /* client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist */; };
+		CC5D20412E7AF3D6003F0327 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC5D20402E7AF3D6003F0327 /* GoogleService-Info.plist */; };
 		CC7B393B2DA49957000E5319 /* sb-rg-ver4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EE2D82DA3F38900FF67D8 /* sb-rg-ver4.ttf */; };
-		CCD0D7822DD5277500FE66F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */; };
 		DCC925DBB59D43B89F99E455 /* lt-it-ver3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88F64F689034105AF930561 /* lt-it-ver3.ttf */; };
 /* End PBXBuildFile section */
 
@@ -67,8 +68,9 @@
 		CC0EE2EC2DA4718E00FF67D8 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		CC0EE2ED2DA4718E00FF67D8 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		CC0EE2EE2DA4718E00FF67D8 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		CC5D203E2E7AF3C0003F0327 /* client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
+		CC5D20402E7AF3D6003F0327 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC98A19D2DD533F900F15E58 /* ALLts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ALLts.entitlements; path = ALLts/ALLts.entitlements; sourceTree = "<group>"; };
-		CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC91914F03BE4E9B9509E1C6 /* NotoSansKR-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKR-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSansKR-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F88F64F689034105AF930561 /* lt-it-ver3.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "lt-it-ver3.ttf"; path = "../src/assets/fonts/lt-it-ver3.ttf"; sourceTree = "<group>"; };
@@ -89,8 +91,9 @@
 		13B07FAE1A68108700A75B9A /* ALLts */ = {
 			isa = PBXGroup;
 			children = (
+				CC5D203E2E7AF3C0003F0327 /* client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist */,
+				CC5D20402E7AF3D6003F0327 /* GoogleService-Info.plist */,
 				CC98A19D2DD533F900F15E58 /* ALLts.entitlements */,
-				CCD0D7812DD5277500FE66F0 /* GoogleService-Info.plist */,
 				CC0EE2DB2DA470A000FF67D8 /* fonts */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
@@ -266,7 +269,6 @@
 			files = (
 				CC7B393B2DA49957000E5319 /* sb-rg-ver4.ttf in Resources */,
 				CC0EE2DA2DA3F3B500FF67D8 /* sb-it-ver1.ttf in Resources */,
-				CCD0D7822DD5277500FE66F0 /* GoogleService-Info.plist in Resources */,
 				CC0EE2D22DA3F27100FF67D8 /* rg-bd-ver5.ttf in Resources */,
 				CC0EE2D32DA3F27100FF67D8 /* lt-it-ver3.ttf in Resources */,
 				CC0EE2D52DA3F27100FF67D8 /* rg-it-ver2.ttf in Resources */,
@@ -277,8 +279,10 @@
 				195EEFE1128F4C5484829C64 /* rg-bd-ver5.ttf in Resources */,
 				A5F4A0B448364DF480852AED /* rg-it-ver2.ttf in Resources */,
 				C449A6DDB1F249D5B9335173 /* sb-it-ver1.ttf in Resources */,
+				CC5D20412E7AF3D6003F0327 /* GoogleService-Info.plist in Resources */,
 				5986340EB0934BBD9B6CEF2F /* sb-rg-ver4.ttf in Resources */,
 				85F6DBA3B31845B49D29108C /* NotoSansKR-Bold.ttf in Resources */,
+				CC5D203F2E7AF3C0003F0327 /* client_596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com.plist in Resources */,
 				0B851D7C60BF4C55915D92F0 /* NotoSansKR-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

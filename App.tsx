@@ -12,8 +12,6 @@ function App(): React.JSX.Element {
   useEffect(() => {
     // 알림 초기화
     initializeNotifications();
-    hookRefreshToken(setLogin);
-
     const unsubscribeOnMessage = onMessage(getMessaging(getApp()), async remoteMessage => {
       await displayNotification(remoteMessage);
     });

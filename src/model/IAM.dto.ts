@@ -11,5 +11,5 @@ export interface patchFcmTokenReqDto {
 
 
 export interface getLoginReqDto {
-    id: string,
+    idToken: string,
 }

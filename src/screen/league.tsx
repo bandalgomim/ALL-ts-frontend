@@ -15,29 +15,27 @@ import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
 import { hookRefetch } from '../hooks/refetch.hook';
+import { localData } from '../IAM/localData';
+import { hookIsLogin } from '../hooks/IAM.hook';
 
 const LeagueScreen = () => {
   const { leagueRes, setLeagueRes } = useContext(LeagueContext);
-  const { login, setLogin } = useContext(AuthContext);
   const { leagueId } = useRoute().params as getLeagueReqQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {
-    navigationIAM.navigate('IAMScreen', undefined);
-  }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+    navigationIAM.navigate('IAMScreen', {state: true});
+  }, [navigationIAM]);
   const refetch = useCallback(() => {
-      setRender(false);
-      return hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [leagueId, setLeagueRes, setLogin]);
-    hookRefetch(refetch);
+    setRender(false);
+    return hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [leagueId, setLeagueRes]);
+  hookRefetch(refetch);
 
   useEffect(() => {
-    if (login === false) {
-      navigateIAM();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
+    hookIsLogin(navigateIAM)
+  }, []);
 
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);

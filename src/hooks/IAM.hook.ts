@@ -1,65 +1,45 @@
-import { useContext, useEffect } from 'react';
 import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '../model/IAM.dto';
 import axios from 'axios';
 import { localData } from '../IAM/localData';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
-import { AuthContext } from '../context/auth.context';
 import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 
-export const useSignUp = (data: postSignUpReqDto) => {
-    const {setLogin} = useContext(AuthContext);
-    useEffect(() => {
-        if (data === null) {
-            return;
-        }
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/signUpTest';
-        const fetchMyPage = async () => {
-            await commonIAMHook('POST', url, data, setLogin);
-        };
-        fetchMyPage();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-};
-
-export const hookLogIn = async (
+export const hookAuth = async (
     data: getLoginReqDto,
+    type: 'login' | 'signUp',
+    idp: 'google' | 'apple',
     setMainRes: (res: any) => void,
     setTeamRes: (res: any) => void,
     setLeagueRes: (res: any) => void,
-    setMatchRes: (res: any) => void,
-    setLogin: (login: any) => void
+    setMatchRes: (res: any) => void
 ) => {
     // 입력값 검증
-    if (data.id === null || data.id === "") {return;}
+    if (data.idToken === null || data.idToken === "") {return;}
     // 모든 상태 초기화
     setMainRes(initialmainRes);
     setTeamRes(initialteamRes);
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
     // API 호출
-    const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/loginTest';
-    await commonIAMHook('post', url, data, setLogin);
-
+    const url = `https://170a3ecb9abb.ngrok-free.app/auth/IAM/${type}/${idp}`;
+    const res = await commonIAMHook('post', url, data);
     try {
         // iOS에서 FCM 등록
         const fcmToken = await getToken(getMessaging(getApp()));
-        console.log('fcmToken', fcmToken);
         await hookFcmToken({'token': fcmToken});
+        return res;
     } catch (e) {
         console.error('FCM 토큰 에러:', e);
     }
 };
 
-export const hookRefreshToken = async (
-    setLogin: (login: any) => void
-) => {
+export const hookRefreshToken = async () => {
     try {
         const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
-        await commonIAMHook('GET', url, null, setLogin);
+        await commonIAMHook('GET', url, null);
     } catch (error) {
         console.error('RefreshToken 요청 실패:', error);
-        setLogin(false);
     }
 };
 
@@ -67,26 +47,29 @@ export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
     console.log("hookFcmToken", data)
     try {
         const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
-        await commonIAMHook('PATCH', url, data, null);
+        await commonIAMHook('PATCH', url, data);
     } catch (error) {
         console.error('hookFcmToken 요청 실패:', error);
     }
 };
 
 
+export const hookIsLogin = async (navigation: () => void) => {
+    const checkRefreshToken = async () => {
+    return Boolean(await localData.get('RefreshToken'));
+    };
+    const isLogin = await checkRefreshToken();
+    console.log('MainScreen mounted with login:', isLogin);
+    if (!isLogin) { navigation() }
+};
+
 export const commonIAMHook = async (
     method: string,
     url: string,
-    data: Object | null = null,
-    loginState: Function | null) => {
+    data: Object | null = null) => {
     try {
         const authToken = await localData.get('Authorization');
         const refreshToken = await localData.get('RefreshToken');
-        if (refreshToken === null && data === null) {
-            if (loginState) {
-                loginState(false);
-            }
-        }
         const response = await axios({
             method: method,
             url: url,  // 올바른 URL 설정
@@ -99,23 +82,17 @@ export const commonIAMHook = async (
           if (response.headers.authorization) {
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
-            if (loginState) {
-                loginState(true);
-            }
-          } else {
-            if (loginState) {
-                loginState(true);
-            }
+            await localData.set('icon', response.data.icon);
           }
-
+          if (response.data && response.data.success) {
+            console.log('Response Data:', response.data.icon);
+            return response.data.success;
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response?.data.includes('refresh token unmatched')) {
                 await localData.delete('Authorization');
                 await localData.delete('RefreshToken');
-                if (loginState) {
-                    loginState(true);
-                }
             }
         } else {
             console.log('Error:', error);

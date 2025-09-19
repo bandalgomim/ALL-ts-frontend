@@ -1,10 +1,9 @@
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { use, useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text,  TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { hookLogIn } from '../hooks/IAM.hook';
 import { width, height } from '../global';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
@@ -14,35 +13,21 @@ import { MatchContext } from '../context/match.context';
 import { TeamContext } from '../context/team.context';
 import KakaoLoginButton from '../components/IAM/kakao';
 import GoogleLoginButton from '../components/IAM/google';
+import AppleLoginButton from '../components/IAM/apple';
 import AuthButton from '../components/IAM/authButton';
+import { getTeamReqQueryDto } from '../model/team.dto';
+import { localData } from '../IAM/localData';
+import { hookIsLogin } from '../hooks/IAM.hook';
+import AppleLogin from '../components/IAM/apple';
 
 const IAMScreen = () => {
-  const {login, setLogin} = useContext(AuthContext);
-  const {setMainRes} = useContext(MainContext);
-  const {setTeamRes} = useContext(TeamContext);
-  const {setLeagueRes} = useContext(LeagueContext);
-  const {setMatchRes} = useContext(MatchContext);
-  const [id, setId] = useState<string>('');
-  const [isFocused, setIsFocused] = useState(false);
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
   };
-
-  const handlePress = () => {
-    hookLogIn({id: id}, setMainRes, setTeamRes, setLeagueRes, setMatchRes, setLogin);
-  };
-
-  useEffect(() => {
-    if (login === true) {
-      navigateMain();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
-
-  const handleSearch = useCallback((input: string) => {
-    setId(input);
-  }, [setId]);
+  /*useEffect(() => {
+    hookIsLogin(navigateMain)
+  }, []);*/
 
   return (
     <View style={[styles.LoadingContainer]}>
@@ -58,6 +43,8 @@ const IAMScreen = () => {
         <AuthButton type="sign Up" />
         <AuthButton type="login" />
       </View>
+      <GoogleLoginButton type="login" />
+      <AppleLogin />
     </View>
   );
 };

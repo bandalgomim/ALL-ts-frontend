@@ -11,31 +11,27 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { AuthContext } from '../context/auth.context';
 import { MatchContext } from '../context/match.context';
 import { hookRefetch } from '../hooks/refetch.hook';
+import { localData } from '../IAM/localData';
+import { hookIsLogin } from '../hooks/IAM.hook';
 
 
 const MatchScreen = () => {
 
   const { matchRes, setMatchRes } = useContext(MatchContext);
-  const { login, setLogin } = useContext(AuthContext);
   const { matchId } = useRoute().params as getMatchResQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {
-    navigationIAM.navigate('IAMScreen', undefined);
+    navigationIAM.navigate('IAMScreen', {state: true});
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   const refetch = useCallback(() => {
     setRender(false);
-    return hookMatch('GET', { matchId }, setMatchRes, setLogin);
-  }, [matchId, setMatchRes, setLogin]);
+    return hookMatch('GET', { matchId }, setMatchRes);
+  }, [matchId, setMatchRes]);
   hookRefetch(refetch);
-
-
   useEffect(() => {
-    if (login === false) {
-      navigateIAM();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login]);
+    hookIsLogin(navigateIAM)
+  }, []);
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   useEffect(() => {

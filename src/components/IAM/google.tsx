@@ -1,19 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Alert } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
+import { hookAuth } from '../../hooks/IAM.hook';
+import { LeagueContext } from '../../context/league.context';
+import { TeamContext } from '../../context/team.context';
+import { MainContext } from '../../context/main.context';
+import { AuthContext } from '../../context/auth.context';
+import { MatchContext } from '../../context/match.context';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MainPageParamList } from '../../model/navigation.dto';
+
 
 interface GoogleLoginButtonProps {
   type: 'login' | 'signUp';
 }
 
 const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ type }) => {
-  let url: string = '';
-  if (type !== 'login' && type !== 'signUp') {
-    url = 'http://localhost:4000/auth/login';
-  } else if (type === 'login') {
-    url = 'http://localhost:4000/auth/signUp';
-  }
+  const {setLogin} = useContext(AuthContext);
+  const {setMainRes} = useContext(MainContext);
+  const {setTeamRes} = useContext(TeamContext);
+  const {setLeagueRes} = useContext(LeagueContext);
+  const {setMatchRes} = useContext(MatchContext);
+  const [res, setRes] = useState<boolean>(false);
+  const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
+  const navigateMain = () => {
+    navigationMain.replace('MainScreen', undefined);
+  };
+  useEffect(() => {
+    if (res) {
+      navigateMain();
+    }
+  }, [res]);
+
   useEffect(() => {
     GoogleSignin.configure({
       // ✅ 반드시 Web Client ID (서버 검증용)
@@ -33,27 +53,19 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ type }) => {
     try {
       // 로그인 실행
       const userInfo = await GoogleSignin.signIn();
-      console.log('Google user info:', userInfo);
-
       // 토큰 가져오기
       const { idToken, accessToken } = await GoogleSignin.getTokens();
 // idToken을 서버로 전달
-    console.log('ID Token:', idToken, 'Access Token:', accessToken);
-
       // 백엔드로 전달
-      /*const res = await axios.post(url, {
-        type: 'google',
-        idToken: idToken,
-      });
-
-      Alert.alert('서버 응답', JSON.stringify(res.data));*/
+      setRes(await hookAuth({idToken: idToken}, type, 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
+      
     } catch (err) {
       console.error('Google login error:', err);
       Alert.alert('로그인 실패', String(err));
     }
   };
 
-  return <Button title="Google 로그인" onPress={handleLogin} />;
+  return <Button title="Google" onPress={handleLogin} />;
 }
 
 export default React.memo(GoogleLoginButton);

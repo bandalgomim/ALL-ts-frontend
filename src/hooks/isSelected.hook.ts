@@ -4,8 +4,7 @@ import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
 export const hookIsSelected = async (
     method: string,
     data: patchIsSelected | null,
-    setMainRes: (res: any) => void,
-    setLogin: (login: any) => void
+    setMainRes: (res: any) => void
   ) => {
     setMainRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/isSelected';
@@ -14,5 +13,5 @@ export const hookIsSelected = async (
       if (value !== null) {query.append(key, String(value));}
     });
     const getUrl = `${url}?${query.toString()}`;
-    await commonPostHook(method, getUrl, null, setMainRes, setLogin, true);
+    await commonPostHook(method, getUrl, null, setMainRes, true);
   };

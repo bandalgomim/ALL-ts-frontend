@@ -1,29 +1,39 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import {  Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { width, height } from '../../global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../../model/navigation.dto';
-import { AuthContext } from '../../context/auth.context';
 import { localData } from '../../IAM/localData';
 
 export const MainHeader = () => {
+  const [icon, setIcon] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchIcon = async () => {
+      const fetchedIcon = await localData.get('icon') as string;
+      setIcon(fetchedIcon);
+    };
+    fetchIcon();
+  }, []);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
-  const {setLogin} = useContext(AuthContext);
   const onPress = useCallback(async () => {
     await localData.delete('RefreshToken');
-    await localData.delete('Authorization');
-    setLogin(false);
-    navigationIAM.replace('IAMScreen', undefined);
+    navigationIAM.replace('IAMScreen', {state: true});
   }, []);
+
   return (
     <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginBottom: height * 0.01}]}>
-      <TouchableOpacity style={[styles.myPage,{}]}>
+      <TouchableOpacity style={[styles.myPage,{}]} >
       </TouchableOpacity>
       <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPress}>
-        <Icon name={'person'} size={30} color={'white'} />
-        <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>USER</Text>
+        {icon ? <Image
+          source={{ uri: icon }}
+          style={{ width: width * 0.1, height: width * 0.1, borderRadius: (width * 0.1) / 2 }}
+        /> :
+        <Icon name={'person'} size={30} color={'white'} />}
+        <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>LOG OUT</Text>
       </TouchableOpacity>
     </View>
   );z
