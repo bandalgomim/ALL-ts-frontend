@@ -32,6 +32,7 @@ const IAMScreen = () => {
         <AuthButton type="sign Up" />
         <AuthButton type="login" />
       </View>
+      <></>
       <GoogleAuthButton type="in" />
       <AppleAuthButton type="in" />
     </View>
