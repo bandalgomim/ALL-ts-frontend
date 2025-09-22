@@ -1,3 +1,5 @@
+import { AppleRequestResponse } from "@invertase/react-native-apple-authentication"
+
 export interface postSignUpReqDto {
     id: string,
     email: string,
@@ -11,5 +13,5 @@ export interface patchFcmTokenReqDto {
 
 
 export interface getLoginReqDto {
-    idToken: string,
+    idToken: string | AppleRequestResponse
 }

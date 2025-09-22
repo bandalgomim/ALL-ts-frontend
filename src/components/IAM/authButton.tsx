@@ -1,21 +1,27 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground } from 'react-native';
 import { width, height } from '../../global';
+import modal from '../calendar/contents/modal';
+import { ModalContext } from '../../context/modal.context';
 
 interface ContentsProps {
   type: "login" | "sign Up";
 }
 
 const AuthButton: React.FC<ContentsProps> = ({ type }) => {
+  const {setAuthVisible} = React.useContext(ModalContext);
   let uri;
     if(type === 'login') {
         uri =  require('../../assets/match/platform/spotv.png');
     } else if(type === 'sign Up') {
         uri =  require('../../assets/match/platform/coupang.png');
     }
+  const onPress = () => {
+    setAuthVisible(true);
+  };
 
   return (
-    <TouchableOpacity style={styles.authContainer}>
+    <TouchableOpacity style={styles.authContainer} onPress={onPress}>
       <ImageBackground
         resizeMode="contain"
         source={uri}

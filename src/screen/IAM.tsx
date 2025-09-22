@@ -1,24 +1,13 @@
 
-import React, { use, useCallback, useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, Text,  TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, {  } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { width, height } from '../global';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
-import { AuthContext } from '../context/auth.context';
-import { LeagueContext } from '../context/league.context';
-import { MainContext } from '../context/main.context';
-import { MatchContext } from '../context/match.context';
-import { TeamContext } from '../context/team.context';
-import KakaoLoginButton from '../components/IAM/kakao';
-import GoogleLoginButton from '../components/IAM/google';
-import AppleLoginButton from '../components/IAM/apple';
 import AuthButton from '../components/IAM/authButton';
-import { getTeamReqQueryDto } from '../model/team.dto';
-import { localData } from '../IAM/localData';
-import { hookIsLogin } from '../hooks/IAM.hook';
-import AppleLogin from '../components/IAM/apple';
+import GoogleAuthButton from '../components/IAM/googleAuthButton';
+import AppleAuthButton from '../components/IAM/appleAuthButton';
 
 const IAMScreen = () => {
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
@@ -43,8 +32,8 @@ const IAMScreen = () => {
         <AuthButton type="sign Up" />
         <AuthButton type="login" />
       </View>
-      <GoogleLoginButton type="login" />
-      <AppleLogin />
+      <GoogleAuthButton type="in" />
+      <AppleAuthButton type="in" />
     </View>
   );
 };

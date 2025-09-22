@@ -4,6 +4,7 @@ import MatchModal from '../components/calendar/contents/modal';
 import SerchModal from './searchBar/serchModal';
 import NextMatchModal from './nextMatchModal';
 import LogoModal from './logo/logoModal';
+import AuthModal from './IAM/authModal';
 
 const CustomHeader = () => {
   return (
@@ -12,6 +13,8 @@ const CustomHeader = () => {
       <SerchModal />
       <NextMatchModal />
       <LogoModal/>
+      <AuthModal/>
+
     </View>
   );
 };
