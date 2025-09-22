@@ -1,22 +1,14 @@
 
-import React, {  } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { width, height } from '../global';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { MainPageParamList } from '../model/navigation.dto';
 import AuthButton from '../components/IAM/authButton';
 import GoogleAuthButton from '../components/IAM/googleAuthButton';
 import AppleAuthButton from '../components/IAM/appleAuthButton';
 
 const IAMScreen = () => {
-  const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
-  const navigateMain = () => {
-    navigationMain.replace('MainScreen', undefined);
-  };
-  /*useEffect(() => {
-    hookIsLogin(navigateMain)
-  }, []);*/
+  const [snsView, setSnsView] = useState<boolean>(false);
+  const [type, setType] = useState<'in' | 'up'>('in');
 
   return (
     <View style={[styles.LoadingContainer]}>
@@ -29,12 +21,13 @@ const IAMScreen = () => {
         <Text style={[styles.text4, {width: width, fontSize: width * 0.0885, marginTop:-height * 0.04}, styles.textWhite]}>All  Sports  Scheduler</Text>
       </View>
       <View style={{flexDirection: "row", width: width*0.5, justifyContent: 'space-between'}}>
-        <AuthButton type="sign Up" />
-        <AuthButton type="login" />
+        <AuthButton type="up" setType={setType} setSnsView={setSnsView}/>
+        <AuthButton type="in" setType={setType} setSnsView={setSnsView}/>
       </View>
-      <></>
-      <GoogleAuthButton type="in" />
-      <AppleAuthButton type="in" />
+      {snsView && <View>
+        <GoogleAuthButton type={type} />
+        <AppleAuthButton type={type} />
+      </View>}
     </View>
   );
 };

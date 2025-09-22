@@ -1,22 +1,22 @@
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useContext, useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from "react-native";
-import { MainPageParamList } from "../../model/navigation.dto";
-import { hookAuth } from "../../hooks/IAM.hook";
-import { LeagueContext } from "../../context/league.context";
-import { MainContext } from "../../context/main.context";
-import { MatchContext } from "../../context/match.context";
-import { TeamContext } from "../../context/team.context";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useContext, useEffect, useState } from 'react';
+import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { MainPageParamList } from '../../model/navigation.dto';
+import { hookAuth } from '../../hooks/IAM.hook';
+import { LeagueContext } from '../../context/league.context';
+import { MainContext } from '../../context/main.context';
+import { MatchContext } from '../../context/match.context';
+import { TeamContext } from '../../context/team.context';
 
 interface GoogleAuthButtonProps {
-  type: "in" | "up";       // "in" → Sign in / "up" → Sign up
+  type: 'in' | 'up';       // "in" → Sign in / "up" → Sign up
 }
 
 const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
   // type 에 따라 버튼 텍스트 결정
-  const buttonText = type === "up" ? "Sign up with Google" : "Sign in with Google";
+  const buttonText = type === 'up' ? 'Sign up with Google' : 'Sign in with Google';
   const {setMainRes} = useContext(MainContext);
   const {setTeamRes} = useContext(TeamContext);
   const {setLeagueRes} = useContext(LeagueContext);
@@ -30,8 +30,9 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
     if (res) {
       navigateMain();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res]);
- 
+
   useEffect(() => {
     GoogleSignin.configure({
       // ✅ 반드시 Web Client ID (서버 검증용)
@@ -50,13 +51,11 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
   const handleLogin = async () => {
     try {
       // 로그인 실행
-      const userInfo = await GoogleSignin.signIn();
       // 토큰 가져오기
-      const { idToken, accessToken } = await GoogleSignin.getTokens();
+      const { idToken } = await GoogleSignin.getTokens();
 // idToken을 서버로 전달
       // 백엔드로 전달
       setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
-      
     } catch (err) {
       console.error('Google login error:', err);
       Alert.alert('로그인 실패', String(err));
@@ -67,7 +66,7 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
       <View style={styles.contentWrapper}>
         {/* PNG 로고 */}
         <Image
-          source={require("../../assets/auth/Google.webp")}
+          source={require('../../assets/auth/Google.webp')}
           style={styles.icon}
           resizeMode="contain"
         />
@@ -81,19 +80,19 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#747775",
+    backgroundColor: '#FFFFFF',
+    borderColor: '#747775',
     borderWidth: 1,
     borderRadius: 4,
     height: 40,
     paddingHorizontal: 12,
     maxWidth: 400,
     minWidth: 100,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   contentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   icon: {
     width: 20,
@@ -102,8 +101,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontWeight: "500",
-    color: "#1f1f1f",
+    fontWeight: '500',
+    color: '#1f1f1f',
     letterSpacing: 0.25,
   },
 });

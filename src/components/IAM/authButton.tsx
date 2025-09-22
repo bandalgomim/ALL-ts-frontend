@@ -1,23 +1,23 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground } from 'react-native';
 import { width, height } from '../../global';
-import modal from '../calendar/contents/modal';
-import { ModalContext } from '../../context/modal.context';
 
 interface ContentsProps {
-  type: "login" | "sign Up";
+  type: "in" | "up",
+  setType: (type: 'in' | 'up') => void,
+  setSnsView: (view: boolean) => void,
 }
 
-const AuthButton: React.FC<ContentsProps> = ({ type }) => {
-  const {setAuthVisible} = React.useContext(ModalContext);
+const AuthButton: React.FC<ContentsProps> = ({ type, setType, setSnsView }) => {
   let uri;
-    if(type === 'login') {
+    if(type === 'in') {
         uri =  require('../../assets/match/platform/spotv.png');
-    } else if(type === 'sign Up') {
+    } else if(type === 'up') {
         uri =  require('../../assets/match/platform/coupang.png');
     }
   const onPress = () => {
-    setAuthVisible(true);
+    setType(type);
+    setSnsView(true);
   };
 
   return (
@@ -28,7 +28,7 @@ const AuthButton: React.FC<ContentsProps> = ({ type }) => {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            {type}
+            Sign {type}
         </Text>
       </ImageBackground>
     </TouchableOpacity>
