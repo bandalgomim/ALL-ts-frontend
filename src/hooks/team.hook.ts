@@ -7,7 +7,7 @@ export const hookTeam = async (
     setTeamRes: (res: any) => void
   ) => {
     setTeamRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/team';
+    const url = 'https://cc2ffc638600.ngrok-free.app/team';
     const query = new URLSearchParams();
     Object.entries(data as unknown as getTeamReqQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
     const getUrl = url + '?' + query.toString();

@@ -71,60 +71,73 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     if (rank === '3') {return 'rd';}
     return 'th';
   };
-  const renderItem = useCallback(({ item }: { item: teamDto }) => (
-    <View style={styles.container}>
-      {item.section && item.rank === '1' ? (()=>{
-        const [a, b] = item.section.split(' ');
-        return (
-          <View style={styles.sectionHeader}>
-            {detectLang(a)}
-            {detectLang(b)}
-          </View>
-        );
-      })() : null}
-        <View style={styles.rankItem}>
+  const renderItem = useCallback(
+    ({ item }: { item: teamDto }) => {
+      // rank가 '0'이면 렌더링하지 않음
+      if (String(item.rank) === '0') return null;
+  
+      const showSection = !!item.section && String(item.rank) === '1';
+      const [a = '', b = ''] = (item.section ?? '').split(' ');
+  
+      return (
+        <View style={styles.container}>
+          {showSection && (
+            <View style={styles.sectionHeader}>
+              {detectLang(a)}
+              {detectLang(b)}
+            </View>
+          )}
+  
+          <View style={styles.rankItem}>
             <View style={styles.rankView}>
-                <Text style={styles.rankText}>{item.rank}</Text>
-                <Text style={[styles.rankText, {fontSize: width*0.045, marginBottom:-height*0.0045}]}>{getRankSuffix(item.rank)}</Text>
+              <Text style={styles.rankText}>{item.rank}</Text>
+              <Text style={[styles.rankText, { fontSize: width * 0.045, marginBottom: -height * 0.0045 }]}>
+                {getRankSuffix(item.rank)}
+              </Text>
             </View>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>{navigateTeam(item.teamId);}}>
+  
+            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigateTeam(item.teamId)}>
               <View style={styles.teamLogoView}>
-                  <FastImage
-                      resizeMode="contain"
-                      source={{ uri: item.teamLogo as string}}
-                      style={{ width: width * 0.05, height: width * 0.05 }}
-                  />
-              </View>
-              <View style={styles.teamInitView}>
-                  {detectLangRank(item.teamInit)}
-              </View>
-            </TouchableOpacity>
-            <View style={[styles.numberTextView, {marginLeft: width * 0.006}]}>
-                <Text style={styles.numberText}>{item.win}</Text>
-            </View>
-            <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {color: "#9E9E9E"}]}>{item.draw}</Text>
-            </View>
-            <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {opacity: 0.3}]}>{item.rose}</Text>
-            </View>
-            <View style={styles.numberTextView}>
-                <Text style={[styles.numberText, {color: "#EA5579"}]}>{item.point}</Text>
-            </View>
-            <TouchableOpacity onPress={()=>onPressRemain(item.teamId)} style={styles.remainView}>
-                <Image
-                    resizeMode="contain"
-                    style={styles.recordImage}
-                    source={require('../../assets/record/record.png')}
+                <FastImage
+                  resizeMode="contain"
+                  source={{ uri: String(item.teamLogo) }}
+                  style={{ width: width * 0.05, height: width * 0.05 }}
                 />
-                <Text style={styles.recordTextOnImage}>
-                    remain
-                </Text>
+              </View>
+              <View style={styles.teamInitView}>{detectLangRank(item.teamInit)}</View>
             </TouchableOpacity>
+  
+            <View style={[styles.numberTextView, { marginLeft: width * 0.006 }]}>
+              <Text style={styles.numberText}>{item.win}</Text>
+            </View>
+            <View style={styles.numberTextView}>
+              <Text style={[styles.numberText, { color: '#9E9E9E' }]}>{item.draw}</Text>
+            </View>
+            <View style={styles.numberTextView}>
+              <Text style={[styles.numberText, { opacity: 0.3 }]}>{item.rose}</Text>
+            </View>
+            <View style={styles.numberTextView}>
+              <Text style={[styles.numberText, { color: '#EA5579' }]}>{item.point}</Text>
+            </View>
+  
+            <TouchableOpacity onPress={() => onPressRemain(item.teamId)} style={styles.remainView}>
+              <Image
+                resizeMode="contain"
+                style={styles.recordImage}
+                source={require('../../assets/record/record.png')}
+              />
+              <Text style={styles.recordTextOnImage}>remain</Text>
+            </TouchableOpacity>
+          </View>
+  
+          <View style={styles.underBar} />
         </View>
-        <View style={[styles.underBar]} />
-    </View>
-  ), []);
+      );
+    },
+    // 의존성: 외부 함수/값이 바뀔 가능성이 있으면 넣어주세요
+    [navigateTeam, onPressRemain, detectLang, detectLangRank, getRankSuffix]
+  );
+  
 
   return (
     <FlatList

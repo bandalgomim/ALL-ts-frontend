@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { width, height } from '../../global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '../../model/navigation.dto';
+import { UserPageParamList } from '../../model/navigation.dto';
 import { localData } from '../../IAM/localData';
 
 export const MainHeader = () => {
@@ -17,10 +17,9 @@ export const MainHeader = () => {
     };
     fetchIcon();
   }, []);
-  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
+  const navigationUser = useNavigation<StackNavigationProp<UserPageParamList>>();
   const onPress = useCallback(async () => {
-    await localData.delete('RefreshToken');
-    navigationIAM.replace('IAMScreen', {state: true});
+    navigationUser.navigate('UserScreen', {state: true});
   }, []);
 
   return (

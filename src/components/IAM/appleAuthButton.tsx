@@ -9,6 +9,7 @@ import { LeagueContext } from "../../context/league.context";
 import { MainContext } from "../../context/main.context";
 import { MatchContext } from "../../context/match.context";
 import { TeamContext } from "../../context/team.context";
+import { height, width } from '../../global';
 
 interface AppleAuthButtonProps {
   type: "in" | "up";       // "in" → Sign in / "up" → Sign up
@@ -16,19 +17,22 @@ interface AppleAuthButtonProps {
 
 const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
   // type 에 따라 버튼 텍스트 결정
-  const buttonText = type === "up" ? "Sign up with Google" : "Sign in with Google";
+  const buttonText = type === "up" ? "Sign up with Apple" : "Sign in with Apple";
   const {setMainRes} = useContext(MainContext);
   const {setTeamRes} = useContext(TeamContext);
   const {setLeagueRes} = useContext(LeagueContext);
   const {setMatchRes} = useContext(MatchContext);
-  const [res, setRes] = useState<boolean>(false);
+  const [res, setRes] = useState<boolean | string>("초기값");
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
   };
   useEffect(() => {
-    if (res) {
+    if (res === true) {
       navigateMain();
+    } else if (res === false) {
+      if (type === 'in') {Alert.alert('로그인 실패', '다시 시도해주세요.');}
+      else {Alert.alert('회원가입 실패', '다시 시도해주세요.');}
     }
   }, [res]);
   
@@ -46,7 +50,6 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
       
     } catch (err) {
       console.error('Google login error:', err);
-      Alert.alert('로그인 실패', String(err));
     }
   };
   return (
@@ -68,29 +71,30 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#747775",
+    backgroundColor: '#FFFFFF',
+    borderColor: '#747775',
     borderWidth: 1,
     borderRadius: 4,
-    height: 40,
+    height: height * 0.045,
     paddingHorizontal: 12,
-    maxWidth: 400,
-    minWidth: 100,
-    justifyContent: "center",
+    width: width * 0.7,
+    justifyContent: 'center',
   },
   contentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: width * 0.06,
+    height: width * 0.06,
     marginRight: 12,
   },
   text: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#1f1f1f",
+    fontSize: width * 0.045,
+    width: width * 0.44,
+    fontWeight: '700',
+    color: '#1f1f1f',
     letterSpacing: 0.25,
   },
 });

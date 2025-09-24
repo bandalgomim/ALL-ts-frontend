@@ -8,8 +8,8 @@ export const localData = {
                 return;
             }
             await EncryptedStorage.setItem(key, value);
-        } catch (error) {
-            console.error('데이터 저장 실패:', error);
+        } catch (error: any) {
+            console.error('데이터 저장 실패:', key, error);
           }
     },
     get: async (key: string) => {
@@ -27,6 +27,7 @@ export const localData = {
           } catch (error) {
 
             console.error('데이터 삭제 실패:', key, error);
+            
           }
     },
 };

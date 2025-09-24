@@ -7,6 +7,7 @@ import LeagueScreen from '../screen/league';
 import MatchScreen  from '../screen/match';
 import IAMScreen  from '../screen/IAM';
 import CustomHeader from '../components/customHeader';
+import UserScreen from '../screen/user';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -56,6 +57,10 @@ const StackNavigator = () => {
           <Stack.Screen
             name="IAMScreen"
             component={IAMScreen}
+          />
+          <Stack.Screen
+            name="UserScreen"
+            component={UserScreen}
           />
         </Stack.Navigator>
         <CustomHeader/>

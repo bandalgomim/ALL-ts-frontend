@@ -4,20 +4,31 @@ import { width, height } from '../../global';
 
 interface ContentsProps {
   type: "in" | "up",
+  snsView: boolean,
   setType: (type: 'in' | 'up') => void,
   setSnsView: (view: boolean) => void,
 }
 
-const AuthButton: React.FC<ContentsProps> = ({ type, setType, setSnsView }) => {
+const AuthButton: React.FC<ContentsProps> = ({ type, snsView, setType, setSnsView }) => {
   let uri;
     if(type === 'in') {
         uri =  require('../../assets/match/platform/spotv.png');
     } else if(type === 'up') {
         uri =  require('../../assets/match/platform/coupang.png');
     }
+    
   const onPress = () => {
-    setType(type);
-    setSnsView(true);
+// 이미 공유드린 패턴 요약
+setType(type);
+if (!snsView) {
+  setSnsView(true);
+} else {
+  setSnsView(false);
+  // 다음 프레임(2번) 뒤 다시 열어 애니메이션 재생
+  setTimeout(() => setSnsView(true), 300);
+}
+
+    
   };
 
   return (

@@ -24,7 +24,7 @@ const LeagueScreen = () => {
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {
-    navigationIAM.navigate('IAMScreen', {state: true});
+    navigationIAM.replace('IAMScreen', {state: true});
   }, [navigationIAM]);
   const refetch = useCallback(() => {
     setRender(false);

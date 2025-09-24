@@ -25,7 +25,7 @@ const TeamScreen = () => {
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {
-    navigationIAM.navigate('IAMScreen', {state: true});
+    navigationIAM.replace('IAMScreen', {state: true});
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   const refetch = useCallback(() => {
     setRender(false);

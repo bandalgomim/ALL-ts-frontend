@@ -31,11 +31,7 @@ export function ModalProvider({ children }) {
     setLogoModalVisible,
     logoModalContents,
     setLogoModalContents,
-    authVisible,
-    setAuthVisible,
-    authContents,
-    setAuthContents,
-  }), [modalVisible, modalContents, searchVisible, searchContents, logoModalVisible, logoModalContents, modalNextMatchVisible, modalNextMatchContents, authVisible, authContents]);
+  }), [modalVisible, modalContents, searchVisible, searchContents, logoModalVisible, logoModalContents, modalNextMatchVisible, modalNextMatchContents]);
 
   return (
     <ModalContext.Provider value={value}>
