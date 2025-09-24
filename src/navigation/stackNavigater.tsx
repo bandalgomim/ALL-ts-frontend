@@ -57,6 +57,7 @@ const StackNavigator = () => {
           <Stack.Screen
             name="IAMScreen"
             component={IAMScreen}
+            options={{ gestureEnabled: false }}
           />
           <Stack.Screen
             name="UserScreen"
