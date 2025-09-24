@@ -3,7 +3,6 @@ import { StateDto } from './config';
 export interface platform {
     platformId: number | null,
     platformName: string | null,
-    platformlogo: string | null,
     platformLeagueUrl: string | null,
     platformMatchUrl: string | null,
     platfromMatchUrlType: string | null

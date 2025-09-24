@@ -27,6 +27,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   }
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
+    console.log('Rendering item:', item);
     let uri = require('../../assets/match/platform/none.png');
     if(item.platformName === 'soop') {
       uri =  require('../../assets/match/platform/soop.png');
