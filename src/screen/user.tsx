@@ -42,8 +42,12 @@ const UserScreen = () => {
 
       <View style={styles.buttonsContainer}>
         <View style={styles.typeButtons}>
+          <View style={{ marginLeft: width * 0.1}}>
           <LogoutButton/>
+          </View>
+          <View style={{ marginRight: width * 0.1 }}>
           <DeleteButton/>
+          </View>
         </View>
         <View style={styles.snsWrapper}>
         </View>

@@ -28,7 +28,6 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
     navigationMain.replace('MainScreen', undefined);
   };
   useEffect(() => {
-    console.log('res 변경:', res);
     if (res === true) {
       navigateMain();
     } else if (res === false) {

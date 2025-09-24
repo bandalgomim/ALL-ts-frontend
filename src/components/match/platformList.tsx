@@ -25,8 +25,6 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   if (!hasReplayType && type === 'replay') {
     type = 'root'
   }
-  console.log('PlatformList render', platformList);
-  
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
     let uri = require('../../assets/match/platform/none.png');

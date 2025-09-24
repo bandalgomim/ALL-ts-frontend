@@ -16,6 +16,11 @@ const LogoutButton = () => {
 
   const onPress = useCallback(async () => {
     await localData.delete('RefreshToken');
+    await localData.delete('Authorization');
+    if (await localData.get('icon')) {
+      await localData.delete('icon');
+    }
+    
     navigateIAM();
   }, [navigateIAM]);
 
@@ -28,7 +33,7 @@ const LogoutButton = () => {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            logout
+            log out
         </Text>
       </ImageBackground>
     </TouchableOpacity>

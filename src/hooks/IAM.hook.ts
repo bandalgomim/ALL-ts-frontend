@@ -22,7 +22,7 @@ export const hookAuth = async (
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
     // API 호출
-    const url = `https://cc2ffc638600.ngrok-free.app/auth/IAM/${type}/${idp}`;
+    const url = `https://all-ts-backend-production.up.railway.app/auth/IAM/${type}/${idp}`;
     const res = await commonIAMHook('post', url, data);
     try {
         // iOS에서 FCM 등록
@@ -43,7 +43,7 @@ export const hookDeleteAccount = async (
     setTeamRes(initialteamRes);
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
-    const url = 'https://cc2ffc638600.ngrok-free.app/auth/IAM/delete';
+    const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/delete';
     const res = await commonIAMHook('DELETE', url, null);
     try {
         await localData.delete('RefreshToken');
@@ -56,7 +56,7 @@ export const hookDeleteAccount = async (
 
 export const hookRefreshToken = async () => {
     try {
-        const url = 'https://cc2ffc638600.ngrok-free.app/auth/IAM/refreshToken';
+        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
         await commonIAMHook('GET', url, null);
     } catch (error) {
         console.error('RefreshToken 요청 실패:', error);
@@ -64,9 +64,8 @@ export const hookRefreshToken = async () => {
 };
 
 export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
-    console.log("hookFcmToken", data)
     try {
-        const url = 'https://cc2ffc638600.ngrok-free.app/fcmToken';
+        const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
         await commonIAMHook('PATCH', url, data);
     } catch (error) {
         console.error('hookFcmToken 요청 실패:', error);
@@ -79,7 +78,6 @@ export const hookIsLogin = async (navigation: () => void) => {
     return Boolean(await localData.get('RefreshToken'));
     };
     const isLogin = await checkRefreshToken();
-    console.log('MainScreen mounted with login:', isLogin);
     if (!isLogin) { navigation() }
 };
 
@@ -102,10 +100,11 @@ export const commonIAMHook = async (
         if (response.headers.authorization) {
             await localData.set('Authorization', response.headers.authorization);
             await localData.set('RefreshToken', response.headers.refreshtoken);
-            await localData.set('icon', response.data.icon);
+            if (response.data.icon) {
+                await localData.set('icon', response.data.icon);
+            }
         }
         if (response.data) {
-            console.log('Response Data:', response.data);
             return response.data.success;
         }
     } catch (error) {
@@ -113,6 +112,9 @@ export const commonIAMHook = async (
             if (error.response?.data.includes('refresh token unmatched')) {
                 await localData.delete('Authorization');
                 await localData.delete('RefreshToken');
+                if (await localData.get('icon')) {
+                    await localData.delete('icon');
+                }
             } else {
                 console.error('Axios error:', error.response);
             }

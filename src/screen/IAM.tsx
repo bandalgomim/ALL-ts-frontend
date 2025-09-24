@@ -43,8 +43,12 @@ const IAMScreen = () => {
 
       <View style={styles.buttonsContainer}>
         <View style={styles.typeButtons}>
-          <AuthButton type="up" setType={setType} setSnsView={setSnsView} snsView={snsView} />
-          <AuthButton type="in" setType={setType} setSnsView={setSnsView} snsView={snsView} />
+          <View style={{ marginLeft: width * 0.1}}>
+            <AuthButton type="up" setType={setType} setSnsView={setSnsView} snsView={snsView} />
+          </View>
+          <View style={{ marginRight: width * 0.1 }}>
+            <AuthButton type="in" setType={setType} setSnsView={setSnsView} snsView={snsView} />
+          </View>
         </View>
 
         {/* ▼ 드롭 영역 (moti) */}

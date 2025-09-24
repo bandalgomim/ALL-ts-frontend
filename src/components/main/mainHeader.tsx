@@ -23,25 +23,22 @@ export const MainHeader = () => {
   }, []);
 
   return (
-    <View style={[styles.header, {width: width * 0.8, height: height * 0.04, marginBottom: height * 0.01}]}>
-      <TouchableOpacity style={[styles.myPage,{}]} >
-      </TouchableOpacity>
+    <View style={[styles.header, {width: width * 0.85, height: height * 0.04, marginBottom: height * 0.01}]}>
       <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPress}>
         {icon ? <Image
           source={{ uri: icon }}
-          style={{ width: width * 0.1, height: width * 0.1, borderRadius: (width * 0.1) / 2 }}
+          style={{ width: width * 0.08, height: width * 0.08, borderRadius: (width * 0.1) / 2 }}
         /> :
-        <Icon name={'person'} size={30} color={'white'} />}
-        <Text style={[styles.myPageText,{marginTop: -height * 0.005}]}>LOG OUT</Text>
+        <Icon name={'person'} size={width * 0.1} color={'white'} />}
       </TouchableOpacity>
     </View>
-  );z
+  );
 };
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',   // 가로 배치
-    justifyContent: 'space-between',  // 양 끝 정렬
+    justifyContent: 'flex-end',  // 양 끝 정렬
     alignItems: 'center',   // 수직 정렬 (선택 사항)
   },
   menu: {
@@ -54,9 +51,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   myPage: {
+    flexDirection: 'row',
   },
   myPageText: {
     color: 'white',
-    fontFamily: '',
+    textAlign: 'center',
+    fontFamily: 'roboto',
+    fontSize: width * 0.06,
   },
 });
