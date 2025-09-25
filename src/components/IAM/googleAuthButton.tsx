@@ -62,7 +62,7 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
       setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
       
     } catch (err) {
-      console.error('Google login error:', err);
+
     }
   };
   return (

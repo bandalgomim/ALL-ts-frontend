@@ -49,7 +49,7 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
       setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'apple', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
       
     } catch (err) {
-      console.error('Google login error:', err);
+     
     }
   };
   return (
