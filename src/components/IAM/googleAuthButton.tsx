@@ -31,8 +31,43 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
     if (res === true) {
       navigateMain();
     } else if (res === false) {
-      if (type === 'in') {Alert.alert('로그인 실패', '다시 시도해주세요.');}
-      else {Alert.alert('회원가입 실패', '다시 시도해주세요.');}
+      if (type === 'in') {
+        Alert.alert(
+          '계정이 존재하지 않습니다.',
+          '회원가입 하시겠습니까?',
+          [
+            {
+              text: '아니오',
+              style: 'cancel',
+              onPress: () => {},
+            },
+            {
+              text: '예',
+              style: 'destructive',   // iOS: 빨간 버튼
+              onPress: () => {handleLogin('up');}
+            },
+          ],
+          { cancelable: true } 
+        );
+      }
+      else {Alert.alert(
+        '계정이 이미 존재합니다',
+        '로그인 하시겠습니까?',
+        [
+          {
+            text: '아니오',
+            style: 'cancel',
+            onPress: () => {},
+          },
+          {
+            text: '예',
+            style: 'destructive',   // iOS: 빨간 버튼
+            onPress: () => {handleLogin('in');}
+          },
+        ],
+        { cancelable: true } 
+      
+      );}
     }
   }, [res]);
  
@@ -51,21 +86,13 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
     });
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      // 로그인 실행
-      const userInfo = await GoogleSignin.signIn();
-      // 토큰 가져오기
-      const { idToken, accessToken } = await GoogleSignin.getTokens();
-// idToken을 서버로 전달
-      // 백엔드로 전달
-      setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
-      
-    } catch (err) {
-    }
+  const handleLogin = async (type: string) => {
+    const userInfo = await GoogleSignin.signIn();
+    const { idToken, accessToken } = await GoogleSignin.getTokens();
+    setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
   };
   return (
-    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleLogin}>
+    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=>handleLogin(type)}>
       <View style={styles.contentWrapper}>
         {/* PNG 로고 */}
         <Image

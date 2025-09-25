@@ -31,28 +31,59 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
     if (res === true) {
       navigateMain();
     } else if (res === false) {
-      if (type === 'in') {Alert.alert('로그인 실패', '다시 시도해주세요.');}
-      else {Alert.alert('회원가입 실패', '다시 시도해주세요.');}
+      if (type === 'in') {
+        Alert.alert(
+          '계정이 존재하지 않습니다.',
+          '회원가입 하시겠습니까?',
+          [
+            {
+              text: '아니오',
+              style: 'cancel',
+              onPress: () => {},
+            },
+            {
+              text: '예',
+              style: 'destructive',
+              onPress: () => {handleLogin('up');}
+            },
+          ],
+          { cancelable: true } 
+        );
+      }
+      else {Alert.alert(
+        '계정이 이미 존재합니다',
+        '로그인 하시겠습니까?',
+        [
+          {
+            text: '아니오',
+            style: 'cancel',
+            onPress: () => {
+              // 취소 시 로직 (필요하면)
+            },
+          },
+          {
+            text: '예',
+            style: 'destructive',
+            onPress: () => {handleLogin('in');}
+          },
+        ],
+        { cancelable: true } 
+      
+      );}
     }
   }, [res]);
   
 
 
-  const handleLogin = async () => {
-    try {
-      const idToken = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-      });
-// idToken을 서버로 전달
-      // 백엔드로 전달
-      setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'apple', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
-      
-    } catch (err) {
-    }
+  const handleLogin = async (type: string) => {
+    const idToken = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+    setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'apple', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
   };
   return (
-    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleLogin}>
+    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=>handleLogin(type)}>
       <View style={styles.contentWrapper}>
         {/* PNG 로고 */}
         <Image

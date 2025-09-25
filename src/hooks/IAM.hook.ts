@@ -24,10 +24,12 @@ export const hookAuth = async (
     // API 호출
     const url = `https://108481f2624c.ngrok-free.app/auth/IAM/${type}/${idp}`;
     const res = await commonIAMHook('post', url, data);
+    console.log('hookAuth 결과:', res);
     try {
-        // iOS에서 FCM 등록
-        const fcmToken = await getToken(getMessaging(getApp()));
-        await hookFcmToken({'token': fcmToken});
+        if (res === true) {
+            const fcmToken = await getToken(getMessaging(getApp()));
+            await hookFcmToken({'token': fcmToken});
+        }
         return res;
     } catch (e) {
         console.error('FCM 토큰 에러:', e);
