@@ -7,6 +7,6 @@ export const hookIcon = async (
     setTypeRes: (res: any) => void
   ) => {
     setTypeRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/icon';
+    const url = 'https://108481f2624c.ngrok-free.app/icon';
     await commonPostHook(method, url, data, setTypeRes, true);
   };

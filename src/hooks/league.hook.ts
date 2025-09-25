@@ -7,7 +7,7 @@ export const hookLeague = async (
     setLeagueRes: (res: any) => void
 ) => {
     setLeagueRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/league';        
+    const url = 'https://108481f2624c.ngrok-free.app/league';        
     const query = new URLSearchParams();
     Object.entries(data as unknown as getLeagueReqQueryDto).forEach(([key, value]) => {
         if (value !== null) {

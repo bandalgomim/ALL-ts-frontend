@@ -6,6 +6,6 @@ export const hookSearchTag = async (
     setSearchTagRes: (res: any) => void
   ) => {
     setSearchTagRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/searchTag';
+    const url = 'https://108481f2624c.ngrok-free.app/searchTag';
     await commonPostHook(method, url, data, setSearchTagRes, false);
   };
