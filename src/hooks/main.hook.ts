@@ -13,6 +13,7 @@ export const hookMain = async (
         return;
     }
     setMainRes({ type: 'LOADING' });
+    console.log('hookMain called with method:', method);
     const url = 'https://all-ts-backend-production.up.railway.app/main';
     const query = new URLSearchParams();
     if (method === 'GET'){

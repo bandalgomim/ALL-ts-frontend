@@ -208,12 +208,12 @@ const styles = StyleSheet.create({
   },
   matchListMonth: {
     marginTop: height * 0.03,
-    height: height * 0.6,
+    height: height * 0.62,
 
   },
   matchListWeek: {
     marginTop: height * 0.04,
-    height: height * 0.61,
+    height: height * 0.62,
 
   },
   calendarView: {}

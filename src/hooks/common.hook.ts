@@ -21,9 +21,11 @@ export const commonPostHook = async (
         },
         ...(data && { data }) // ⬅️ data가 있을 때만 포함
       };
+        console.log('Request:', req);
     try {
         const response = await axios(req);
         if (!response.headers.authorization) {
+            console.log('Response:', response, url);
             let resultKeys = null;
             if (response.data.result) {resultKeys = Object.keys(response.data.result);}
             if (dispatch !== null) {

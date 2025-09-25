@@ -11,8 +11,6 @@ export function ModalProvider({ children }) {
   const [modalNextMatchContents, setModalNextMatchContents] = useState(false);
   const [logoModalVisible, setLogoModalVisible] = useState(false);
   const [logoModalContents, setLogoModalContents] = useState(false);
-  const [authVisible, setAuthVisible] = useState(false);
-  const [authContents, setAuthContents] = useState(false);
 
   const value = useMemo(() => ({
     modalVisible,

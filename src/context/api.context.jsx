@@ -4,6 +4,7 @@ import { LeagueProvider } from './league.context';
 import { MatchProvider } from './match.context';
 import { AuthProvider } from './auth.context';
 import { ModalProvider } from './modal.context';
+import { SearchTagProvider } from './searchTag.context';
 
 export default function ApiProvider({ children }) {
   return (
@@ -13,7 +14,9 @@ export default function ApiProvider({ children }) {
           <TeamProvider>
             <LeagueProvider>
               <MatchProvider>
-                {children}
+                  <SearchTagProvider>
+                    {children}
+                  </SearchTagProvider>
               </MatchProvider>
             </LeagueProvider>
           </TeamProvider>

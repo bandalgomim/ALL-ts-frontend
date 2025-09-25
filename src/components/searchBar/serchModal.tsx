@@ -19,6 +19,7 @@ import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.d
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
 import { ModalContext } from '../../context/modal.context';
+import { SearchTagContext } from '../../context/searchTag.context';
 
 interface filteredItems {
   name: string;
@@ -30,6 +31,7 @@ const SCREEN_HEIGHT = height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const SearchModal: React.FC = () => {
+  const {searchTagRes, setSearchTagRes} = useContext(SearchTagContext);
   const { searchVisible, setSearchVisible } = useContext(ModalContext);
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
@@ -66,7 +68,7 @@ const SearchModal: React.FC = () => {
     const lowerQuery = input.toLowerCase();
 
     // 검색 결과 필터링
-    const filteredResults = searchTag
+    const filteredResults = searchTagRes.payload
       .filter(t => {
         const lowerTag = t.tag.toLowerCase();
 
@@ -79,9 +81,9 @@ const SearchModal: React.FC = () => {
         return startsWithQuery || hasThreeConsecutiveChars;
       })
       .map(t => ({ 
-        name: t.item_name, 
-        teamId: t.team_id ?? undefined, 
-        leagueId: t.league_id ?? undefined 
+        name: t.itemName, 
+        teamId: t.teamId ?? undefined, 
+        leagueId: t.leagueId ?? undefined 
       }));
 
     // 중복 제거 로직 추가: item_name이 동일하면서 teamId 또는 leagueId가 같은 항목은 하나만 유지
@@ -100,24 +102,37 @@ const SearchModal: React.FC = () => {
     setFilteredTeams(uniqueResults);
   };
 
+  // 언어별 스타일만 리턴
+  const detectLangStyle = (text: string) => {
+    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+    const hasEN = /[a-zA-Z]/.test(text);
+    if (hasKR && !hasEN) return [styles.inlineKR];
+    if (!hasKR && hasEN) return [styles.inlineEN];
+    return [styles.inlineEN]; // 기본 영문 폰트
+  };
+
+  // 한 줄로, 말줄임표 적용하여 렌더
   const renderItem = ({ item }: { item: filteredItems }) => {
-    const itemText = item.name.split(' ');
+    const parts = item.name.split(' ').filter(Boolean);
     return (
       <TouchableOpacity
         onPress={() => {
-          if (item.teamId) {
-            navigateTeam(item.teamId);
-          } else if (item.leagueId) {
-            navigateLeague(item.leagueId);
-          }
+          if (item.teamId) navigateTeam(item.teamId);
+          else if (item.leagueId) navigateLeague(item.leagueId);
         }}
       >
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center'}}>
-          {itemText.map((char, idx) => (
-            <View key={idx}>
-              {detectLang(char)}
-            </View>
-          ))}
+        <View style={{ width: width * 0.5, marginBottom: height * 0.015 }}>
+          <Text
+            style={styles.inlineBase}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {parts.map((p, i) => (
+              <Text key={`${p}-${i}`} style={detectLangStyle(p)}>
+                {p}{i < parts.length - 1 ? ' ' : ''}
+              </Text>
+            ))}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -444,6 +459,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  inlineBase: {
+    fontSize: width * 0.07,
+    color: '#30397A',
+  },
+  inlineEN: {
+    fontFamily: 'sb-it-ver1',
+    color: '#30397A',
+  },
+  inlineKR: {
+    fontFamily: 'NotoSansKR-ExtraBold',
+    color: '#30397A',
+    lineHeight: height * 0.0375,
+    fontSize: width * 0.06,
   },
 });
 
