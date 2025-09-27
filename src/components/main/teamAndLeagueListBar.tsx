@@ -113,6 +113,14 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
     },
     [list, navigateTeam, navigateLeague]
   );
+
+  const getItemKey = useCallback((item: teamDto | leagueDto, index: number) => {
+    if ('teamId' in item) return `team-${item.teamId}`;
+    if ('leagueId' in item) return `league-${item.leagueId}`;
+    if ('box' in item) return `empty-${index}`;
+    return String(index);
+  }, []);
+
   return (
     <View style={[styles.CalendarContainer, styles.calendarSize]}>
       <ImageBackground
@@ -125,7 +133,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
             <DraggableFlatList
               data={list}
               onDragEnd={handleDragEnd}
-              keyExtractor={(item: teamDto | leagueDto, index: number) => index.toString()}
+              keyExtractor={getItemKey}
               renderItem={renderItem}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
