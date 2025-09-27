@@ -20,7 +20,6 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current;
-  console.log(mainRes)
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);

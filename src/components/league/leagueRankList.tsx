@@ -78,9 +78,6 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     ({ item, index }: { item: teamDto, index: number }) => {
       // rank가 '0'이면 렌더링하지 않음
       if (String(item.rank) === '0') return null;
-      
-      console.log('prevItem item:', prevItem?.teamInit, 'at index:', index);
-      
       const showSection = item.section && String(item.rank) === '1' && String(prevItem?.rank) !== '1';
       prevItem = item;
       const [a = '', b = ''] = (item.section ?? '').split(' ');

@@ -1,13 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import StackNavigator from './src/navigation/stackNavigater';
 import { initializeNotifications } from './src/notification/initializeNotifications';
-import { AuthContext } from './src/context/auth.context';
-import { hookRefreshToken } from './src/hooks/IAM.hook';
 import { getMessaging, onMessage } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 import { displayNotification } from './src/notification/displayNotification';
 import useDailyTask from './src/hooks/daily.hook';
+import mobileAds from 'react-native-google-mobile-ads';
 
+mobileAds()
+  .initialize()
+  .then(adapterStatuses => {
+    console.log('AdMob initialized:', adapterStatuses);
+  });
 
 function App(): React.JSX.Element {
   useDailyTask();

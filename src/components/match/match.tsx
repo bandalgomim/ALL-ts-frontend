@@ -13,6 +13,7 @@ import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
 import RefreshButton from '../refresh';
+import { BannerBottom } from '../ad/Banner';
 
 interface MatchPros {
   match: getMatchReqDto;
@@ -53,6 +54,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
       <HeadNotch />
       <View style={styles.middleContainer}>
         <SearchBar type="match" />
+        
         <View style={styles.isSelectedContainer}>
           <IsSelected
             isSelected={match.isMatchSelected}
@@ -60,6 +62,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
             leagueId={null}
             matchId={match.matchId}
           />
+          
         </View>
         <Image
           resizeMode="contain"

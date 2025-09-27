@@ -24,7 +24,6 @@ export const hookAuth = async (
     // API 호출
     const url = `https://all-ts-backend-production.up.railway.app/auth/IAM/${type}/${idp}`;
     const res = await commonIAMHook('post', url, data);
-    console.log('hookAuth 결과:', res);
     try {
         if (res === true) {
             const fcmToken = await getToken(getMessaging(getApp()));
