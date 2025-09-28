@@ -29,6 +29,7 @@ const LeageTeamListBar = () => {
   }
 
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
+    if (String(item.rank) === '0') return null;
     return (
       <View key={index} style={[styles.box, {width: width * 0.13, height: width * 0.1, marginTop: height * 0.049, marginRight: index !== leagueRes.data.teamList.length - 1 ? width * 0.074 : width * 0.012, marginLeft: width * 0.012}]}>
         <TouchableOpacity

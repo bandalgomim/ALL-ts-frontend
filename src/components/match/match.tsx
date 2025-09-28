@@ -12,8 +12,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
-import RefreshButton from '../refresh';
-import { BannerBottom } from '../ad/Banner';
 
 interface MatchPros {
   match: getMatchReqDto;

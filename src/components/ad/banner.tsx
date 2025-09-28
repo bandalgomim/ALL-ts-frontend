@@ -1,17 +1,66 @@
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import { Platform } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { Image, Platform, Text, View } from "react-native";
+import {
+  NativeAd,
+  TestIds,
+  AdEventType,
+  NativeAdView,
+  NativeAsset,
+  NativeAssetType,
+  NativeMediaView,
+} from "react-native-google-mobile-ads";
 
-const BANNER_UNIT_ID = __DEV__
-  ? TestIds.BANNER
-  : 'ca-app-pub-4702221338725869/3630555253'; // AdMob에서 배너용 단위를 따로 생성해 넣으세요
 
-export function BannerBottom() {
+type AdUnitIdType = string;
+
+const AD_UNIT_ID: AdUnitIdType = Platform.select({
+  ios: TestIds.NATIVE,
+  android: TestIds.NATIVE
+}) as AdUnitIdType;
+
+/**
+ * [공통] 네이티브 고급 광고
+ * @returns
+ */
+const AdmobNativeAd: React.FC = () => {
+  const [nativeAd, setNativeAd] = useState<NativeAd>();
+
+  useEffect(() => {
+    NativeAd.createForAdRequest(AD_UNIT_ID)
+      .then(setNativeAd)
+      .catch(console.error);
+  }, []);
+
+  if (!nativeAd) {
+    return null;
+  }
+
   return (
-    <BannerAd
-      unitId={BANNER_UNIT_ID}
-      size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} // 화면폭에 맞게
-      requestOptions={{ requestNonPersonalizedAdsOnly: true }}
-      onAdFailedToLoad={(e) => console.log('Banner fail:', e)}
-    />
+    // Wrap all the ad assets in the NativeAdView component, and register the view with the nativeAd prop
+    <NativeAdView nativeAd={nativeAd}>
+        <NativeAsset assetType={NativeAssetType.HEADLINE}>
+    <Text>{nativeAd.headline}</Text>
+  </NativeAsset>
+      <View
+      style={{
+        width: 120,
+        height: 120,
+        borderRadius: 16,
+        overflow: 'hidden',       // <-- 핵심
+        backgroundColor: '#000',  // 안쪽 투명 가장자리 방지 (안드로이드용)
+      }}
+    >
+      <NativeMediaView
+        style={{
+          flex: 1,               // 부모 크기에 맞춤
+          // 선택: 필요하면 비율 고정
+          // aspectRatio: 1,
+          // resizeMode는 MediaView에는 없으니 크기는 부모로 조절
+        }}
+      />
+    </View>
+    </NativeAdView>
   );
-}
+};
+
+export default AdmobNativeAd;
