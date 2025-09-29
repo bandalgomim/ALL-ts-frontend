@@ -22,7 +22,6 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,                  // 기본값 설정
   headerHeight
 }) => {
-  console.log('in MatchList: ', matchList);
   const flatListRef = useRef<FlatList>(null);
   useLayoutEffect(() => {
     if (flatListRef.current) {
@@ -38,8 +37,8 @@ const MatchList: React.FC<ContentsProps> = ({
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC → KST
   const today = kst.toISOString().split('T')[0]; //
-  const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
-    // 기본 색상
+  const renderItem = useCallback(({ item, index }: { item: matchDto[], index: number }) => {
+    console.log(item, index)
     let dateColor = color;
     let colorBar;
     if (item[0]?.matchDate === today) {

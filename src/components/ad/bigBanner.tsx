@@ -15,7 +15,7 @@ import { height, width } from "../../global";
 type AdUnitIdType = string;
 
 const AD_UNIT_ID: AdUnitIdType = Platform.select({
-  ios: TestIds.NATIVE,
+  ios: "ca-app-pub-4702221338725869/9501829039",
   android: TestIds.NATIVE
 }) as AdUnitIdType;
 
@@ -55,7 +55,7 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
 
   function detectLang(text: string, type: 'headline' | 'body' | 'cta') {
     console.log(text);
-    if (!text) {text = ""}
+    if (!text) {text = "ad"}
     const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
@@ -70,11 +70,11 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
       else if (!hasKR && hasEnglish && type === 'body') {
         return (<Text numberOfLines={2} style={[styles.teamName, bodyColor, {textAlign: 'left', fontSize: width * 0.043, marginTop: height * 0.005}]}>{text}</Text>);
       } else if (!hasKR && hasEnglish && type === 'cta') {
-        return (<Text style={[styles.teamName, ctaColor, {textAlign: 'center', fontSize: width * 0.044, width: width*0.2}]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamName, ctaColor, {textAlign: 'center', fontSize: width * 0.044, width: width*0.17}]}>{text}</Text>);
       } else if (hasKR && !hasEnglish && type === 'cta') {
-        return (<Text style={[styles.teamNameKR, ctaColor, {textAlign: 'center', fontSize: width * 0.04, width: width*0.2}]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamNameKR, ctaColor, {textAlign: 'center', fontSize: width * 0.04, width: width*0.17}]}>{text}</Text>);
       } else {
-        return (<Text style={[styles.teamName, hedlineColor]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamName, bodyColor, {textAlign: 'left', fontSize: width * 0.043, marginTop: height * 0.005}]}>{text}</Text>);
       }
   }
 
@@ -89,22 +89,27 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
           ? require('../../assets/ad/ad_blue.png')
           : require('../../assets/ad/ad_red.png')
       }
-      style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.165, alignItems: "center"}]}
+      style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.17, alignItems: "center"}]}
     >
       {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.93, height:height*0.152, marginTop: -height*0.01, alignItems: "center"}}>
       <View
           style={{
             marginLeft: width * 0.015,
             marginTop: height * 0.0007,
+            aspectRatio: 1, // 강제로 1:1 정사각형
+            backgroundColor: "black", // 빈공간(레터박스)을 검게 처리
             width: width * 0.31,
             height: width * 0.31,
+            overflow: 'hidden',
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 13,
-            overflow: 'hidden'
           }}
         >
           <NativeMediaView
             style={{
-              flex: 1
+              width: "100%",
+            height: "100%",
             }}
           />
         </View>
@@ -114,16 +119,13 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
               {detectLang(nativeAd.headline, 'headline')}
             </NativeAsset>
           </View>
-          <View style={{width: width*0.53, marginBottom: height * 0.005}}>
+          <View style={{width: width*0.53, marginBottom: height * 0.005, height: height*0.06}}>
             <NativeAsset assetType={NativeAssetType.BODY}>
               {detectLang(nativeAd.body, 'body')}
             </NativeAsset>
           </View>
           <View style={{flexDirection: "row", marginLeft: width*0.11,}}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", width: width*0.26, marginRight: width*0.02}}>
-              <NativeAsset assetType={NativeAssetType.ADVERTISER}>
-                <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray'}}>{nativeAd.advertiser ?? ''}</Text>
-              </NativeAsset>
               <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', }}> 광고</Text>
             </View>
             <View style={{
@@ -187,8 +189,8 @@ const styles = StyleSheet.create({
     fontSize: width * 0.07,
   },
   teamNameKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.04,
+    fontFamily: 'NotoSansKR-Bold',
+    fontSize: width * 0.06,
     transform: [{ scaleY: 1 }],
     marginTop: height * -0.002,
   },

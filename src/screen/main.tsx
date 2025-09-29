@@ -16,6 +16,8 @@ import { getmainResDto } from '../model/main.dto';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { localData } from '../IAM/localData';
 import { hookIsLogin } from '../hooks/IAM.hook';
+import AdmobNativeAdBig from '../components/ad/bigBanner';
+import AdmobNativeAdSmall from '../components/ad/smallBanner';
 
 
 const MainScreen = () => {
@@ -64,6 +66,7 @@ const MainScreen = () => {
       <MainCalendar
         data={mainRes?.data as getmainResDto}
       />
+                
       <View style={[styles.tabBar]} />
     </View>
   );

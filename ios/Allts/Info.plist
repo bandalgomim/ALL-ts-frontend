@@ -80,6 +80,7 @@
 		<string>MaterialIcons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>NotoSansKR-ExtraBold.ttf</string>
+		<string>NotoSansKR-Medium.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
