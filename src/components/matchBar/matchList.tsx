@@ -3,7 +3,9 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MatchBar from './matchBar';
 import { matchListDto, matchDto } from '../../model/main.dto';
 import { height, width } from '../../global';
-import AdmobNativeAd from '../ad/banner';
+import AdmobNativeAd from '../ad/bigBanner';
+import AdmobNativeAdSmall from '../ad/smallBanner';
+import AdmobNativeAdBig from '../ad/bigBanner';
 
 interface ContentsProps {
   matchList: matchListDto,
@@ -50,11 +52,6 @@ const MatchList: React.FC<ContentsProps> = ({
     }
     return (
       <View style={{ marginBottom: height * 0.01 }}>
-        
-        <View style={{ backgroundColor: "red"}}>
-          <AdmobNativeAd/>
-        </View>
-        
         <View style={{ flexDirection: 'row' }}>
           <View
             style={[
@@ -82,8 +79,9 @@ const MatchList: React.FC<ContentsProps> = ({
         {item.map((data: matchDto) => (
           <MatchBar key={data.matchId} match={data} color={colorBar} />
         ))}
-        <View style={{ width: width*0.9 }}>
-        </View>
+
+          <AdmobNativeAdSmall color={colorBar}/>
+          <AdmobNativeAdBig color={colorBar}/>
         
       </View>
     );
