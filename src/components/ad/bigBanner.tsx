@@ -94,7 +94,7 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
       {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.93, height:height*0.152, marginTop: -height*0.01, alignItems: "center"}}>
       <View
           style={{
-            marginLeft: width * 0.02,
+            marginLeft: width * 0.015,
             width: width * 0.31,
             height: width * 0.31,
             borderRadius: 13,
