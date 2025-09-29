@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   dateContainer: {
     alignItems: 'center',
     width: width * 0.5,
-    marginTop: height * 0.012,
+    marginTop: -height * 0.001,
   },
   fontDate: {
     fontFamily: 'sb-it-ver1',

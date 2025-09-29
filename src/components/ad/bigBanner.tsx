@@ -60,10 +60,10 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
     const hasEnglish = /[a-zA-Z]/.test(text);
 
       if (hasKR && !hasEnglish && type === 'headline') {
-        return (<Text style={[styles.teamNameKR, hedlineColor, {textAlign: 'left' }]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamNameKR, hedlineColor, {textAlign: 'left' }]}>{text}</Text>);
       }
       else if (!hasKR && hasEnglish && type === 'headline') {
-        return (<Text style={[styles.teamName, hedlineColor, {textAlign: 'left' }]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamName, hedlineColor, {textAlign: 'left' }]}>{text}</Text>);
       } else if (hasKR && !hasEnglish && type === 'body') {
         return (<Text numberOfLines={2} style={[styles.teamNameKR, bodyColor, {textAlign: 'left', fontSize: width * 0.035, marginTop: height * 0.005}]}>{text}</Text>);
       }
@@ -93,7 +93,7 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
     >
       {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.93, height:height*0.152, marginTop: -height*0.01, alignItems: "center"}}>
         <View style={{width: width *0.93 - 124, alignItems: "center"}}>
-          <View style={{ backgroundColor: color === 'white' ? "#30397A" : "white", alignItems: "center", borderRadius: 5, width: width* 0.55}}>
+          <View style={{ backgroundColor: color === 'white' ? "#30397A" : "white", alignItems: "center", borderRadius: 5, width: width* 0.55, paddingRight: width*0.01, paddingLeft: width*0.01}}>
             <NativeAsset assetType={NativeAssetType.HEADLINE}>
               {detectLang(nativeAd.headline, 'headline')}
             </NativeAsset>

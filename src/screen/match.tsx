@@ -13,6 +13,7 @@ import { MatchContext } from '../context/match.context';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { localData } from '../IAM/localData';
 import { hookIsLogin } from '../hooks/IAM.hook';
+import AdmobNativeAdSmall from '../components/ad/smallBanner';
 
 
 const MatchScreen = () => {
@@ -63,10 +64,12 @@ const MatchScreen = () => {
       refetch={refetch}
     />
     </View>
-    <View style={[styles.container]}>
-      <MainTabBar
-        color="white"
-      />
+      
+      <View style={[styles.container]}>
+      <AdmobNativeAdSmall color={'red'}/>
+        <MainTabBar
+          color="white"
+        />
     </View>
     </>
     );
@@ -82,6 +85,7 @@ const MatchScreen = () => {
       right: 0,
       zIndex: 1,  // MainTabBar가 다른 요소 위에 표시되도록 설정
       backgroundColor: 'transparent', // 배경색을 투명으로 설정하여 위에 요소들이 보이게
+      alignItems: 'center',
     },
     logo: {
       flex: 1,  // Match 컴포넌트가 화면의 나머지 공간을 차지하도록 설정

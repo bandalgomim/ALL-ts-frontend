@@ -54,17 +54,16 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
     : styles.textWhite;
 
   function detectLang(text: string, type: 'headline' | 'body' | 'cta') {
-    console.log(text);
     if (!text) {text = "ad"}
     const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
     const hasEnglish = /[a-zA-Z]/.test(text);
 
       if (hasKR && !hasEnglish && type === 'headline') {
-        return (<Text style={[styles.teamNameKR, hedlineColor, {textAlign: 'left', height: height*0.32}]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamNameKR, hedlineColor, {textAlign: 'left', height: height*0.32}]}>{text}</Text>);
       } else if (!hasKR && hasEnglish && type === 'headline') {
-        return (<Text style={[styles.teamName, hedlineColor, {textAlign: 'left', height: height*0.032}]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamName, hedlineColor, {textAlign: 'left', height: height*0.032}]}>{text}</Text>);
       } else if (hasKR && !hasEnglish && type === 'body') {
-        return (<Text style={[styles.teamNameKR, bodyColor, {textAlign: 'left', fontSize: width * 0.035}]}>{text}</Text>);
+        return (<Text numberOfLines={1} style={[styles.teamNameKR, bodyColor, {textAlign: 'left', fontSize: width * 0.035}]}>{text}</Text>);
       }
       else if (!hasKR && hasEnglish && type === 'body') {
         return (<Text numberOfLines={1} style={[styles.teamName, bodyColor, {textAlign: 'left', fontSize: width * 0.046}]}>{text}</Text>);
@@ -97,19 +96,19 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
         </NativeAsset>
       </View>
       <View>
-        <View style={{flexDirection: 'row'}}>
-          <NativeAsset assetType={NativeAssetType.HEADLINE}>
-            {detectLang(nativeAd.headline, 'headline')}
-          </NativeAsset>
-          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', marginLeft:width*0.02, marginTop: height*0.008}}>광고 </Text>
+        <View style={{flexDirection: 'row',width: width*0.55 }}>
+          <View style={{width: width*0.44}}>
+            <NativeAsset assetType={NativeAssetType.HEADLINE}>
+              {detectLang(nativeAd.headline, 'headline')}
+            </NativeAsset>
+          </View>
+          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', marginTop: height*0.008}}>광고 </Text>
         </View>
         <View style={{ width: width*0.55, marginRight: width*0.035}}>
           <NativeAsset assetType={NativeAssetType.BODY}>
             {detectLang(nativeAd.body, 'body')}
           </NativeAsset>
         </View>
-
-        
       </View>
       <View style={{ backgroundColor: color === 'red' ? "#30397A" : "#EA5579", alignItems: "center", borderRadius: 5, paddingLeft: width* 0.01, paddingRight: width*0.01, width: width*0.17, height: height*0.037, justifyContent: "center"}}>
           <NativeAsset assetType={NativeAssetType.CALL_TO_ACTION}>
