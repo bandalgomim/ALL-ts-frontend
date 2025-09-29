@@ -73,7 +73,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
         <View style={[styles.frontDateBar]} />
         <View>
           <Text style={[styles.dateText, { width: type === 'highlight' ? width * 0.18 : width * 0.13 }]}>
-            {type === 'replay' || type === 'root' ? 'replay' : 'highlight'}
+            {type === 'replay' || type === 'root' ? 'videos' : 'highlight'}
           </Text>
         </View>
         <View style={[styles.backDateBar, { width: type === 'highlight' ? width * 0.205 : width * 0.2505 }]} />

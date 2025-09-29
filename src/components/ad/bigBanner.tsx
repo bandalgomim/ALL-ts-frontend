@@ -86,15 +86,16 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
         color === 'white'
           ? require('../../assets/ad/ad_white.png')
           : color === 'blue'
-          ? require('../../assets/ad/ad_blue_big.png')
+          ? require('../../assets/ad/ad_blue.png')
           : require('../../assets/ad/ad_red.png')
       }
-      style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.185, alignItems: "center"}]}
+      style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.165, alignItems: "center"}]}
     >
       {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.93, height:height*0.152, marginTop: -height*0.01, alignItems: "center"}}>
       <View
           style={{
             marginLeft: width * 0.015,
+            marginTop: height * 0.0007,
             width: width * 0.31,
             height: width * 0.31,
             borderRadius: 13,
@@ -107,7 +108,7 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
             }}
           />
         </View>
-        <View style={{width: width *0.93 - 124, alignItems: "center"}}>
+        <View style={{width: width *0.605, alignItems: "center"}}>
           <View style={{ backgroundColor: color === 'white' ? "#30397A" : "white", alignItems: "center", borderRadius: 5, width: width* 0.55, paddingRight: width*0.01, paddingLeft: width*0.01}}>
             <NativeAsset assetType={NativeAssetType.HEADLINE}>
               {detectLang(nativeAd.headline, 'headline')}
