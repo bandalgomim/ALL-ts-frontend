@@ -42,7 +42,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
     const hasEnglish = /[a-zA-Z]/.test(text);
 
       if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.teamNameKR, styleColor, {textAlign: position }]}>{text}</Text>);
+        return (<Text style={[styles.teamNameKR, styleColor,{textAlign: position,}]}>{text}</Text>);
       }
       else if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamName, styleColor, {textAlign: position }]}>{text}</Text>);
@@ -206,8 +206,7 @@ const styles = StyleSheet.create({
   },
   teamNameKR: {
     fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.06,
-    transform: [{ scaleY: 1 }],
+    fontSize: width * 0.08,
     marginTop: height * -0.002,
   },
 });

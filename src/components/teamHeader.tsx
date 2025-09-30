@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 1.5 },
     textShadowRadius: 3,
+    lineHeight: height * 0.1,
     marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
