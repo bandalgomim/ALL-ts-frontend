@@ -12,6 +12,7 @@ import LeageTeamListBar from '../league/leageTeamList';
 
 
 export default function LeagueCalendar() {
+
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
@@ -36,7 +37,9 @@ export default function LeagueCalendar() {
     const weekResult: { [key: string]: matchDto[] } = {};
     const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
+      
       const key = date.toLocaleDateString('sv-SE');
+      console.log('weekDates', key);
       if (leagueRes.data.matchList[key]) {
         weekResult[key] = leagueRes.data.matchList[key];
       }

@@ -13,8 +13,7 @@ export const hookMain = async (
         return;
     }
     setMainRes({ type: 'LOADING' });
-    console.log('hookMain called with method:', method);
-    const url = 'https://all-ts-backend-production.up.railway.app/main';
+    const url = 'https://bb88b1567876.ngrok-free.app/main';
     const query = new URLSearchParams();
     if (method === 'GET'){
         if (data) {

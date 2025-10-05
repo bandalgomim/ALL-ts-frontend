@@ -19,23 +19,10 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
 
   function detectLang(text: string, size: 'big' | 'small') {
     if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
     if (size === 'big') {
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.teamInfoNameKR, styles.headerTeamInfoNameLargeKR] }>{text}</Text>);
-      }
-      if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
-      }
     } else if (size === 'small') {
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.teamInfoNameKR, styles.headerTeamInfoNameSmallKR]}>{text}</Text>);
-      }
-      if (!hasKR && hasEnglish) {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
-      }
     } else {return;}
   }
   function detectLangth(text: string) {
@@ -203,7 +190,7 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
               <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{teamRes.data?.team?.rose}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{teamRes.data?.team?.lose}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>LOSE</Text>
             </View>
             <View style={styles.recordItemBox}>
@@ -272,40 +259,13 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     marginLeft: width * 0.015,
   },
-  teamInfoNameKR: {
-    textAlign: 'right',
-    fontFamily: 'NotoSansKR-ExtraBold',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 1.5 },
-    textShadowRadius: 3,
-    marginLeft: width * 0.015,
-  },
   headerTeamInfoNameLarge: {
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
   },
-  headerTeamInfoNameLargeKR: {
-    transform: [{ scaleY: 1 }],
-    textAlign: 'center',
-    fontSize: height*0.05,
-    lineHeight: height * 0.05,
-    marginTop: height * 0.015,
-    height: height * 0.055,
-    paddingTop: height * 0.01,
-  },
   headerTeamInfoNameSmall: {
     fontSize: width * 0.083,
     marginBottom: -height * 0.01,
-  },
-  headerTeamInfoNameSmallKR: {
-    transform: [{ scaleY: 1 }],
-    textAlign: 'center',
-    fontSize: width*0.063,
-    marginTop: height*0.004,
-    marginBottom: -height * 0.005,
-    lineHeight: height * 0.035,
-    height: height * 0.035,
   },
   teamInfoEtc: {
     textAlign: 'right',

@@ -31,32 +31,6 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     });
   }, [teamList]);
 
-  function detectLang(text: string) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-    if (hasKR && !hasEnglish) {
-      return (<Text style={{fontFamily: 'NotoSansKR-ExtraBold', fontSize: width*0.042, lineHeight:width*0.055, marginTop: height*0.003, marginRight: width*0.015 } }>{text}</Text>);
-    }
-    if (!hasKR && hasEnglish) {
-      return (<Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}> {text}</Text>);
-    }
-    return;
-  }
-
-  function detectLangRank(text: string) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-    if (hasKR && !hasEnglish) {
-      return (<Text style={styles.teamInitKR}>{text}</Text>);
-    }
-    if (!hasKR && hasEnglish) {
-      return (<Text style={styles.teamInit}> {text}</Text>);
-    }
-    return;
-  }
-
   const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
   const onPressRemain = useCallback((teamId: number) => {
       const matchInfo = findNextInLeague(matchList, teamId);
@@ -72,28 +46,24 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     return 'th';
   };
 
-  let prevItem : teamDto; // 이전 아이템을 저장할 변수
-
   const renderItem = useCallback(
-    ({ item, index }: { item: teamDto, index: number }) => {
-      // rank가 '0'이면 렌더링하지 않음
+    ({ item, index }: { item: teamDto; index: number }) => {
       if (String(item.rank) === '0') return null;
-      
-      console.log('prevItem item:', prevItem?.teamInit, 'at index:', index);
-      
-      const showSection = item.section && String(item.rank) === '1' && String(prevItem?.rank) !== '1';
-      prevItem = item;
+
+      // boolean 강제 + 이전 아이템과 section 비교
+      const prev = index > 0 ? sortedItems[index - 1] : undefined;
+      const showSection = !!item.section && (index === 0 || prev?.section !== item.section);
       const [a = '', b = ''] = (item.section ?? '').split(' ');
-  
+
       return (
         <View style={styles.container}>
           {showSection && (
             <View style={styles.sectionHeader}>
-              {detectLang(a)}
-              {detectLang(b)}
+              <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{a}</Text>
+              <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{b}</Text>
             </View>
           )}
-  
+
           <View style={styles.rankItem}>
             <View style={styles.rankView}>
               <Text style={styles.rankText}>{item.rank}</Text>
@@ -101,7 +71,7 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                 {getRankSuffix(item.rank)}
               </Text>
             </View>
-  
+
             <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigateTeam(item.teamId)}>
               <View style={styles.teamLogoView}>
                 <FastImage
@@ -110,9 +80,10 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                   style={{ width: width * 0.05, height: width * 0.05 }}
                 />
               </View>
-              <View style={styles.teamInitView}>{detectLangRank(item.teamInit)}</View>
+              <View style={styles.teamInitView}>
+                <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{item.teamInit}</Text>
+              </View>
             </TouchableOpacity>
-  
             <View style={[styles.numberTextView, { marginLeft: width * 0.006 }]}>
               <Text style={styles.numberText}>{item.win}</Text>
             </View>
@@ -120,12 +91,12 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
               <Text style={[styles.numberText, { color: '#9E9E9E' }]}>{item.draw}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, { opacity: 0.3 }]}>{item.rose}</Text>
+              <Text style={[styles.numberText, { opacity: 0.3 }]}>{item.lose}</Text>
             </View>
             <View style={styles.numberTextView}>
               <Text style={[styles.numberText, { color: '#EA5579' }]}>{item.point}</Text>
             </View>
-  
+
             <TouchableOpacity onPress={() => onPressRemain(item.teamId)} style={styles.remainView}>
               <Image
                 resizeMode="contain"
@@ -135,15 +106,13 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
               <Text style={styles.recordTextOnImage}>remain</Text>
             </TouchableOpacity>
           </View>
-  
+
           <View style={styles.underBar} />
         </View>
       );
     },
-    // 의존성: 외부 함수/값이 바뀔 가능성이 있으면 넣어주세요
-    [navigateTeam, onPressRemain, detectLang, detectLangRank, getRankSuffix]
+    [sortedItems, navigateTeam, onPressRemain, getRankSuffix]
   );
-  
 
   return (
     <FlatList
@@ -198,8 +167,8 @@ const styles = StyleSheet.create({
   },
   teamLogo: {},
   teamInitView: {
-    width: width * 0.08,
-    marginRight: width * 0.03,
+    width: width * 0.1,
+    marginRight: width * 0.01,
   },
   teamInit: {
     fontFamily: 'sb-it-ver1',

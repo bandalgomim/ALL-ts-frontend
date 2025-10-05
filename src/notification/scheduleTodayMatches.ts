@@ -30,7 +30,6 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
 
       // 이미 지난 경기면 패스
       if (matchDateTime.getTime() < Date.now()) {
-        console.log(`⏭️ 이미 지난 경기: ${homeTeamName} vs ${awayTeamName}`);
         continue;
       }
 

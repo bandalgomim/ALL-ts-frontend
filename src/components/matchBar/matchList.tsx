@@ -3,6 +3,8 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MatchBar from './matchBar';
 import { matchListDto, matchDto } from '../../model/main.dto';
 import { height, width } from '../../global';
+import AdmobNativeAdSmall from '../ad/smallBanner';
+import AdmobNativeAdBig from '../ad/bigBanner';
 
 interface ContentsProps {
   matchList: matchListDto,
@@ -24,18 +26,26 @@ const MatchList: React.FC<ContentsProps> = ({
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     }
+    matchCountRef.current = 0
     const rafId = requestAnimationFrame(() => {
       if (flatListRef.current) {
         flatListRef.current.scrollToOffset({ offset: 0, animated: false });
       }
+      matchCountRef.current = 0
     });
     return () => cancelAnimationFrame(rafId);
   }, [matchList]);
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC → KST
   const today = kst.toISOString().split('T')[0]; //
-  const renderItem = useCallback(({ item }: { item: matchDto[] }) => {
-    // 기본 색상
+
+  const matchCountRef = useRef(0);
+  const adBanner  = (color: string, count: number) => {
+    if (count % 10 === 0) {
+      return <AdmobNativeAdSmall color={color}/>;
+    }
+  }
+  const renderItem = useCallback(({ item, index }: { item: matchDto[], index: number }) => {
     let dateColor = color;
     let colorBar;
     if (item[0]?.matchDate === today) {
@@ -73,9 +83,16 @@ const MatchList: React.FC<ContentsProps> = ({
             ]}
           />
         </View>
-        {item.map((data: matchDto) => (
-          <MatchBar key={data.matchId} match={data} color={colorBar} />
-        ))}
+        {item.map((data: matchDto) => {
+          matchCountRef.current += 1; // 카운터 증가
+          const matchCount = matchCountRef.current;
+          return (
+          <View key={data.matchId}>
+            <MatchBar key={data.matchId} match={data} color={colorBar} />
+            {/*adBanner(colorBar, matchCount)*/}
+          </View>
+        )})}
+          
       </View>
     );
   }, [color, today]);
@@ -87,7 +104,12 @@ const MatchList: React.FC<ContentsProps> = ({
       data={Object.values(matchList)}
       renderItem={renderItem}
       ListHeaderComponent={() => (headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }} /> : null)}
-      ListFooterComponent={() => (headerHeight ? <View style={{ height: height*0.17, alignItems: 'center' }} /> : null)}
+      ListFooterComponent={() => (
+        <>
+          {/*<AdmobNativeAdSmall color={color}/>*/}
+          {(headerHeight ? <View style={{ height: height*0.17, alignItems: 'center' }} /> : null)}
+        </>
+      )}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
       maxToRenderPerBatch={10}

@@ -10,12 +10,10 @@ import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
-import { AuthContext } from '../context/auth.context';
 import { LeagueContext } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
 import { hookRefetch } from '../hooks/refetch.hook';
-import { localData } from '../IAM/localData';
 import { hookIsLogin } from '../hooks/IAM.hook';
 
 const LeagueScreen = () => {

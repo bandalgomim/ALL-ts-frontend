@@ -12,7 +12,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
-import RefreshButton from '../refresh';
 
 interface MatchPros {
   match: getMatchReqDto;
@@ -26,7 +25,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const navigateTeam = (teamId: number) => {
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
-
+  console.log('Match component rendered ', match.matchTime);
   const onPressHomeTeamScore = () => {
     setHomeTeamScore(!homeTeamScore);
   };
@@ -34,25 +33,12 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
     setAwayTeamScore(!awayTeamScore);
   };
 
-  function detectLang(text: string | null) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.fontBlueBigKR]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.fontBlueBig]}>{text}</Text>);
-      } else {return;}
-  }
-  
-
   return (
     <View style={styles.container}>
       <HeadNotch />
       <View style={styles.middleContainer}>
         <SearchBar type="match" />
+        
         <View style={styles.isSelectedContainer}>
           <IsSelected
             isSelected={match.isMatchSelected}
@@ -60,6 +46,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
             leagueId={null}
             matchId={match.matchId}
           />
+          
         </View>
         <Image
           resizeMode="contain"
@@ -85,7 +72,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
                   source={require('../../assets/match/white.png')}
                 />
                 <View style={styles.teamNameContainer}>
-                  {detectLang(match.homeTeamInit)}
+                  <Text style={[styles.fontBlueBig]}>{match.homeTeamInit}</Text>
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`.length > 22
@@ -126,7 +113,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
               <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} initial={match?.awayTeamInit as string}/>
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
-                  {detectLang(match.awayTeamInit)}
+                  <Text style={[styles.fontBlueBig]}>{match.awayTeamInit}</Text>
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`.length > 22
@@ -161,7 +148,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
                 {match.matchDate ? match.matchDate.split("T")[0] : '0000'}
               </Text>
               <Text style={styles.fontTime}>
-                {match.matchDate ? match.matchDate.split("T")[1].slice(0, 8) : '0000'}
+                {match.matchDate ? match.matchTime : '0000'}
               </Text>
             </View>
           </View>
@@ -253,7 +240,7 @@ const styles = StyleSheet.create({
   dateContainer: {
     alignItems: 'center',
     width: width * 0.5,
-    marginTop: height * 0.012,
+    marginTop: -height * 0.004,
   },
   fontDate: {
     fontFamily: 'sb-it-ver1',

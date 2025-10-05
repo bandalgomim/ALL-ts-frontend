@@ -22,9 +22,8 @@ export const hookAuth = async (
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
     // API 호출
-    const url = `https://all-ts-backend-production.up.railway.app/auth/IAM/${type}/${idp}`;
+    const url = `https://bb88b1567876.ngrok-free.app/auth/IAM/${type}/${idp}`;
     const res = await commonIAMHook('post', url, data);
-    console.log('hookAuth 결과:', res);
     try {
         if (res === true) {
             const fcmToken = await getToken(getMessaging(getApp()));
@@ -45,7 +44,7 @@ export const hookDeleteAccount = async (
     setTeamRes(initialteamRes);
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
-    const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/delete';
+    const url = 'https://bb88b1567876.ngrok-free.app/auth/IAM/delete';
     const res = await commonIAMHook('DELETE', url, null);
     try {
         await localData.delete('RefreshToken');
@@ -58,7 +57,7 @@ export const hookDeleteAccount = async (
 
 export const hookRefreshToken = async () => {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
+        const url = 'https://bb88b1567876.ngrok-free.app/auth/IAM/refreshToken';
         await commonIAMHook('GET', url, null);
     } catch (error) {
         console.error('RefreshToken 요청 실패:', error);
@@ -67,7 +66,7 @@ export const hookRefreshToken = async () => {
 
 export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
+        const url = 'https://bb88b1567876.ngrok-free.app/fcmToken';
         await commonIAMHook('PATCH', url, data);
     } catch (error) {
         console.error('hookFcmToken 요청 실패:', error);

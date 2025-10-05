@@ -9,6 +9,7 @@ import { getmainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dt
 import MatchList from '../matchBar/matchList';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
 import { MainContext } from '../../context/main.context';
+import AdmobNativeAdSmall from '../ad/smallBanner';
 
 interface MainCalendarProps {
   data: getmainResDto;
@@ -20,7 +21,6 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current;
-  console.log(mainRes)
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
@@ -130,7 +130,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           </View>
         ) : (
           <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.53 }]}>
-            <Text style={[styles.bannerText, { fontSize: width * 0.07 }]}>advertisement banner</Text>
+            <AdmobNativeAdSmall color={'red'}/>
           </View>
         )}
       </View>
@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     zIndex: 1, // 낮은 z-index 추가
   },
   banner: {
-    backgroundColor: '#b1b4cc',
     alignItems: 'center',
     justifyContent: 'center',
   },

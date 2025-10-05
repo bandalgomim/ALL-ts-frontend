@@ -26,25 +26,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
     size = width * 0.16;
     req = require('../assets/teamLogo/teamLogo_m.png');
   }
-  function detectLang(text: string | null) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-      if (hasKR && !hasEnglish) {
-        return (
-          <View>
-            <Text style={[styles.fontBlueBigKR, {fontSize: size * 0.44}]}>{text}</Text>
-          </View>
-        );
-      }
-      else if (!hasKR && hasEnglish) {
-        return (
-          <View>
-            <Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{text}</Text>
-          </View>
-        )
-      } else {return;}
-  }
+  
   return (
       <ImageBackground
         source={req}
@@ -57,7 +39,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
           onLoad={() => console.log('이미지 로드 성공')}
           onError={(error) => console.log('이미지 로드 실패:', error)}
         /> : <View>
-          {detectLang(initial)}
+          <Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{initial}</Text>
           <View></View>
         </View>}
       </ImageBackground>
