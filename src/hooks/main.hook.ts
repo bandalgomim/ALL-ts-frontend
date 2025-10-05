@@ -13,7 +13,7 @@ export const hookMain = async (
         return;
     }
     setMainRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/main';
+    const url = 'https://bb88b1567876.ngrok-free.app/main';
     const query = new URLSearchParams();
     if (method === 'GET'){
         if (data) {

@@ -21,7 +21,7 @@ export default function LeagueCalendar() {
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
-    setCurrentDate(newDate);
+    (nsetCurrentDateewDate);
   }, [currentDate, mode]);
 
   const handleNext = useCallback(() => {
