@@ -13,4 +13,4 @@ export const colors = {
 
 export const { width, height } = Dimensions.get('window');
 
-export const domain = 'https://bb88b1567876.ngrok-free.app/';
+export const domain = 'https://all-ts-backend-production.up.railway.app/';

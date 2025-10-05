@@ -68,6 +68,7 @@ const SearchModal: React.FC = () => {
     const lowerQuery = input.toLowerCase();
 
     // 검색 결과 필터링
+    console.log('searchTagRes.payload', searchTagRes);
     const filteredResults = searchTagRes.payload
       .filter(t => {
         const lowerTag = t.tag.toLowerCase();
@@ -425,7 +426,7 @@ const styles = StyleSheet.create({
     fontFamily: 'sb-it-ver1',
     color: '#999',
     fontSize: width * 0.07,
-    marginTop: height * 0.03,
+    marginTop: height * 0.01,
     textAlign: 'center',
   },
   emptyResultContainer: {

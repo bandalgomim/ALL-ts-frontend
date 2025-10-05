@@ -38,9 +38,9 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
           style={{ width: size * 0.8, height: size * 0.8 }}
           onLoad={() => console.log('이미지 로드 성공')}
           onError={(error) => console.log('이미지 로드 실패:', error)}
-        /> : <View>
-          <Text style={[styles.fontBlueBig, {fontSize: size * 0.6}]}>{initial}</Text>
-          <View></View>
+        /> : 
+        <View>
+          <Text style={[styles.fontBlueBig, {fontSize: initial.length < 4 ? size * 0.6 : size*0.5}]}>{initial}</Text>
         </View>}
       </ImageBackground>
   );

@@ -7,7 +7,7 @@ export const hookMatch = async (
     setMatchRes: (res: any) => void
 ) => {
     setMatchRes({ type: 'LOADING' });
-    const url = 'https://bb88b1567876.ngrok-free.app/match';
+    const url = 'https://all-ts-backend-production.up.railway.app/match';
     const query = new URLSearchParams();
     
     Object.entries(data as unknown as getMatchResQueryDto).forEach(([key, value]) => {
