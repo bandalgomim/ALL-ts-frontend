@@ -66,7 +66,7 @@ const MatchScreen = () => {
     </View>
       
       <View style={[styles.container]}>
-      <AdmobNativeAdSmall color={'red'}/>
+      {/*<AdmobNativeAdSmall color={'red'}/>*/}
         <MainTabBar
           color="white"
         />

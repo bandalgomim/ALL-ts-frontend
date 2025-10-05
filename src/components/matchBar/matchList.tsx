@@ -21,7 +21,6 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,                  // 기본값 설정
   headerHeight
 }) => {
-  console.log('MatchList 렌더링:', matchList, color);
   const flatListRef = useRef<FlatList>(null);
   useLayoutEffect(() => {
     if (flatListRef.current) {
@@ -90,7 +89,7 @@ const MatchList: React.FC<ContentsProps> = ({
           return (
           <View key={data.matchId}>
             <MatchBar key={data.matchId} match={data} color={colorBar} />
-            {/* adBanner(colorBar, matchCount) */}
+            {/*adBanner(colorBar, matchCount)*/}
           </View>
         )})}
           
@@ -107,7 +106,7 @@ const MatchList: React.FC<ContentsProps> = ({
       ListHeaderComponent={() => (headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }} /> : null)}
       ListFooterComponent={() => (
         <>
-          {/*<AdmobNativeAdSmall color={color}/>;*/}
+          {/*<AdmobNativeAdSmall color={color}/>*/}
           {(headerHeight ? <View style={{ height: height*0.17, alignItems: 'center' }} /> : null)}
         </>
       )}

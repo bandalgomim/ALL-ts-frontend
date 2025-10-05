@@ -14,6 +14,35 @@ import RefreshButton from '../refresh';
 const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
   const {leagueRes} = useContext(LeagueContext);
   const [record, setRecord] = useState(false);
+
+  function detectLang(text: string, size: 'big' | 'medium' | 'small') {
+      if (!text) {return;}
+      if (size === 'big') {
+          return (<Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.015}]}>{text}</Text>);
+      } else if (size === 'medium') {
+          return (<Text style={[styles.LeagueInfoName, {fontSize: width * 0.13, marginBottom: -height * 0.015, marginTop:width*0.04}]}>{text}</Text>);
+      } 
+      else if (size === 'small') {
+          return (<Text style={[styles.LeagueInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+      } else {return;}
+    }
+    function detectLangth(text: string) {
+        let textlength = 0;
+        const hasKR = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
+        const hasEnglish = (text: string) => {return /[a-zA-Z]/.test(text);};
+  
+        for (let i = 0; i < text.length; i++) {
+          if (hasKR(text[i])) {
+            textlength += 2; // 한글은 2로 계산
+          } else if (hasEnglish(text[i])) {
+            textlength += 1; // 영어는 1로 계산
+          } else {
+            textlength += 1; // 기타 문자는 1로 계산
+          }
+        }
+        return textlength;
+      }
+
   return (
     <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
       <SearchBar
@@ -22,9 +51,75 @@ const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
       <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
-            {leagueRes.data.league?.leagueName.length! < 9
-            ? <Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.01}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>
-            : <Text style={[styles.LeagueInfoName, {fontSize: width * 0.13, marginBottom: -height * 0.01, marginTop:width*0.04}]}>{leagueRes.data.league?.leagueName ?? "TBD"}</Text>}
+            {leagueRes?.data?.league?.leagueName ? (() => {
+                          const leagueNameSplit = leagueRes.data?.league?.leagueName.split(' ');
+                          const textLength = detectLangth(leagueRes.data?.league?.leagueName);
+                          if (leagueNameSplit.length === 1) {
+                            if (textLength < 9) {
+                              return (
+                                  detectLang(leagueNameSplit[0], 'big')
+                              );
+                            } else {
+                              return (
+                                  detectLang(leagueNameSplit[0], 'medium')
+                              )
+                            }
+                          } else if (leagueNameSplit.length === 2) {
+                            if (textLength < 9) {
+                              return (
+                                <View style={{flexDirection: 'row'}}>
+                                  {detectLang(leagueNameSplit[0], 'big')}
+                                  {detectLang(leagueNameSplit[1], 'big')}
+                                </View>
+                              );
+                            } else{
+                              return (
+                                <>
+                                  {detectLang(leagueNameSplit[0], 'small')}
+                                  {detectLang(leagueNameSplit[1], 'small')}
+                                </>
+                              );
+                            }
+                          } else {
+                            if (textLength < 8) {
+                              return (
+                                <View style={{flexDirection: 'row'}}>
+                                  {detectLang(leagueNameSplit[0], 'big')}
+                                  {detectLang(leagueNameSplit[1], 'big')}
+                                  {detectLang(leagueNameSplit[2], 'big')}
+                                </View>
+                              );
+                            } else {
+                              const first = `${leagueNameSplit[0]} ${leagueNameSplit[1]}`;
+                              const second = `${leagueNameSplit[1]} ${leagueNameSplit[2]}`;
+                              if (detectLangth(first) <= detectLangth(second)) {
+                                return (
+                                  <>
+                                    <View style={{flexDirection: 'row'}}>
+                                      {detectLang(leagueNameSplit[0], 'small')}
+                                      {detectLang(leagueNameSplit[1], 'small')}
+                                    </View>
+                                    <>
+                                      {detectLang(leagueNameSplit[2], 'small')}
+                                    </>
+                                  </>
+                                );
+                              } else {
+                                return (
+                                  <>
+                                    <>
+                                      {detectLang(leagueNameSplit[0], 'small')}
+                                    </>
+                                    <View style={{flexDirection: 'row'}}>
+                                      {detectLang(leagueNameSplit[1], 'small')}
+                                      {detectLang(leagueNameSplit[2], 'small')}
+                                    </View>
+                                  </>
+                                );
+                              }
+                            }
+                          }
+                        })() : null}
             
             <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
         </View>
@@ -104,6 +199,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     transform: [{ rotate: '2deg' }],
+    height: height * 0.12,
   },
   LeagueInfoName: {
     textAlign: 'center',
@@ -120,6 +216,7 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 3,
+    marginTop: height*0.005
   },
   recordButton: {
     marginTop: -height * 0.015,
@@ -155,6 +252,19 @@ const styles = StyleSheet.create({
   },
   recordPink: {
     color: '#EA5579',
+  },
+  teamInfoName: {
+    textAlign: 'right',
+    fontFamily: 'sb-it-ver1',
+    color: '#30397A',
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
+    marginLeft: width * 0.015,
+  },
+  headerTeamInfoNameSmall: {
+    fontSize: width * 0.083,
+    marginBottom: -height * 0.01,
   },
 
 });

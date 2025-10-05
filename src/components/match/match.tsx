@@ -19,14 +19,13 @@ interface MatchPros {
 }
 
 const Match: React.FC<MatchPros> = ({ match, refetch }) => {
-  console.log('Match 컴포넌트 렌더링:', match);
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
-
+  console.log('Match component rendered ', match.matchTime);
   const onPressHomeTeamScore = () => {
     setHomeTeamScore(!homeTeamScore);
   };
@@ -149,7 +148,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
                 {match.matchDate ? match.matchDate.split("T")[0] : '0000'}
               </Text>
               <Text style={styles.fontTime}>
-                {match.matchDate ? match.matchDate.split("T")[1].slice(0, 8) : '0000'}
+                {match.matchDate ? match.matchTime : '0000'}
               </Text>
             </View>
           </View>

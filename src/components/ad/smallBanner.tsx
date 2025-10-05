@@ -15,7 +15,7 @@ import { height, width } from "../../global";
 type AdUnitIdType = string;
 
 const AD_UNIT_ID: AdUnitIdType = Platform.select({
-  ios: 'ca-app-pub-4702221338725869/9501829039',
+  ios: TestIds.NATIVE/*'ca-app-pub-4702221338725869/9501829039'*/,
   android: TestIds.NATIVE
 }) as AdUnitIdType;
 
@@ -66,10 +66,10 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
       }
       style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.075, alignItems: "center"}]}
     >
-    {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.93, height: height*0.065, marginTop: -height*0.01, alignItems: "center"}}>
+    {<NativeAdView nativeAd={nativeAd} style={{flexDirection: 'row', width: width * 0.9, height: height*0.06, marginTop: -height*0.01, alignItems: "center", }}>
       <View style={{width: width *0.135, justifyContent: "center", marginLeft: width*0.013, marginTop: height*0.0007}}>
         <NativeAsset assetType={NativeAssetType.ICON}>
-          <Image source={{ uri: nativeAd.icon?.url }} width={width*0.12} height={width*0.12} borderRadius={8}/>
+          <Image source={{ uri: nativeAd.icon?.url }} width={width*0.1} height={width*0.1} borderRadius={8}/>
         </NativeAsset>
       </View>
       <View style={{marginLeft: width*0.012, marginTop: height*0.004}}>
@@ -84,7 +84,7 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
           </View>
         </View>
         <View style={{ width: width*0.45, marginRight: width*0.035, flexDirection: 'row'}}>
-          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', marginTop: height*0.002}}>광고 </Text>
+          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', marginTop: height*0.002}}>AD </Text>
           <NativeAsset assetType={NativeAssetType.BODY}>
             <Text
               numberOfLines={1}

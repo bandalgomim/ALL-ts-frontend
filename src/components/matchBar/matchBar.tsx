@@ -16,6 +16,7 @@ interface MatchBarPros {
 }
 
 const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
+  console.log('MatchBar component rendered ', match);
   const { setModalVisible, setModalNextMatchVisible } = useContext(ModalContext);
   const [score, setScore] = useState(false);
   /*const style =

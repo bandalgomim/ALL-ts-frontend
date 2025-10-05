@@ -11,6 +11,7 @@ export interface platform {
 export interface getMatchReqDto {
     matchId: string | null,
     matchDate: string | null,
+    matchTime: string | null,
     homeTeamId: number | null,
     awayTeamId: number | null,
     homeTeamName: string | null,

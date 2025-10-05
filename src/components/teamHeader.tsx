@@ -259,16 +259,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     marginLeft: width * 0.015,
   },
-  teamInfoNameKR: {
-    textAlign: 'right',
-    fontFamily: 'NotoSansKR-ExtraBold',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 1.5 },
-    textShadowRadius: 3,
-    lineHeight: height * 0.05,
-    marginLeft: width * 0.015,
-  },
   headerTeamInfoNameLarge: {
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
