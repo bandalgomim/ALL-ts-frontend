@@ -15,18 +15,6 @@ const LeageTeamListBar = () => {
     navigation.navigate('TeamScreen', { teamId: teamId });
   };
 
-  function detectLang(text: string) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.teamNameKR]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.teamName]}>{text}</Text>);
-      } else {return;}
-  }
 
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
     if (String(item.rank) === '0') return null;
@@ -41,7 +29,7 @@ const LeageTeamListBar = () => {
             type={'middle'}
             initial={item.teamInit}
           />
-          {detectLang(item.teamInit)}
+          <Text style={[styles.teamName]}>{item.teamInit}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -99,19 +87,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
     fontSize:width * 0.05,
     marginTop: -height * 0.002,
-  },
-  teamNameKR: {
-    textAlign: 'center',
-    fontFamily: 'NotoSansKR-ExtraBold',
-    transform: [{ scaleY: 1 }],
-    color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
-    fontSize:width * 0.039,
-    marginTop: height * -0.002,
-    marginBottom: height * 0.002,
-  },
+  }
 });
 
 export default React.memo(LeageTeamListBar);

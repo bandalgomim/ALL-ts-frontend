@@ -21,6 +21,7 @@ const openUrlHandle = async (url: string) => {
 
 
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
+  console.log('PlatformList 렌더링:', platformList, type);
   const hasReplayType = platformList.some(item => item.platfromMatchUrlType === 'replay');
   if (!hasReplayType && type === 'replay') {
     type = 'root'

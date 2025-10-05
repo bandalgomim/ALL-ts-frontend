@@ -14,6 +14,7 @@ mobileAds()
   });
 
 function App(): React.JSX.Element {
+  
   useDailyTask();
   useEffect(() => {
     // 알림 초기화

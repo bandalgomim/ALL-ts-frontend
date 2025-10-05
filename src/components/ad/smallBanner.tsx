@@ -53,29 +53,6 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
     ? styles.texCtaWhite
     : styles.textWhite;
 
-  function detectLang(text: string, type: 'headline' | 'body' | 'cta') {
-    if (!text) {text = "ad"}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish && type === 'headline') {
-        return (<Text numberOfLines={1} style={[styles.teamNameKR, hedlineColor, {textAlign: 'left', height: height*0.032}]}>{text}</Text>);
-      } else if (!hasKR && hasEnglish && type === 'headline') {
-        return (<Text numberOfLines={1} style={[styles.teamName, hedlineColor, {textAlign: 'left', height: height*0.032}]}>{text}</Text>);
-      } else if (hasKR && !hasEnglish && type === 'body') {
-        return (<Text numberOfLines={1} style={[styles.teamNameKR, bodyColor, {textAlign: 'left', fontSize: width * 0.035}]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish && type === 'body') {
-        return (<Text numberOfLines={1} style={[styles.teamName, bodyColor, {textAlign: 'left', fontSize: width * 0.035}]}>{text}</Text>);
-      } else if (!hasKR && hasEnglish && type === 'cta') {
-        return (<Text numberOfLines={1} style={[styles.teamName, ctaColor, {textAlign: 'center', fontSize: width * 0.044, width: width*0.17}]}>{text}</Text>);
-      } else if (hasKR && !hasEnglish && type === 'cta') {
-        return (<Text numberOfLines={1} style={[styles.teamNameKR, ctaColor, {textAlign: 'center', fontSize: width * 0.04, width: width*0.17}]}>{text}</Text>);
-      } else {
-        return (<Text numberOfLines={1} style={[styles.teamName, hedlineColor, {textAlign: 'left', fontSize: width * 0.035}]}>{text}</Text>);
-      }
-  }
-
   return (
     // Wrap all the ad assets in the NativeAdView component, and register the view with the nativeAd prop
     <ImageBackground
@@ -95,25 +72,45 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
           <Image source={{ uri: nativeAd.icon?.url }} width={width*0.12} height={width*0.12} borderRadius={8}/>
         </NativeAsset>
       </View>
-      <View style={{marginLeft: width*0.012}}>
+      <View style={{marginLeft: width*0.012, marginTop: height*0.004}}>
         <View style={{flexDirection: 'row',width: width*0.55 }}>
-          <View style={{width: width*0.55, }}>
+          <View style={{width: width*0.55, marginTop: height*0.005}}>
             <NativeAsset assetType={NativeAssetType.HEADLINE}>
-              {detectLang(nativeAd.headline, 'headline')}
+                <Text 
+                  numberOfLines={1}
+                  style={[styles.teamName, hedlineColor, {textAlign: 'left', height: height*0.032}]}
+                >{nativeAd.headline}</Text>
             </NativeAsset>
           </View>
         </View>
         <View style={{ width: width*0.45, marginRight: width*0.035, flexDirection: 'row'}}>
-          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray'}}>광고 </Text>
+          <Text style={{ fontSize: width*0.035, color: color === 'red' ? 'white' : 'gray', marginTop: height*0.002}}>광고 </Text>
           <NativeAsset assetType={NativeAssetType.BODY}>
-            {detectLang(nativeAd.body, 'body')}
+            <Text
+              numberOfLines={1}
+              style={[styles.teamName, bodyColor, {textAlign: 'left', fontSize: width * 0.042, height: height*0.032}]}
+            >
+              {nativeAd.body ? nativeAd.body : '지금 바로 확인해보세요'}
+            </Text>
           </NativeAsset>
           
         </View>
       </View>
-      <View style={{ backgroundColor: color === 'red' ? "#30397A" : "#EA5579", alignItems: "center", borderRadius: 5, paddingLeft: width* 0.01, paddingRight: width*0.01, width: width*0.17, height: height*0.037, justifyContent: "center"}}>
+      <View style={{
+        backgroundColor: color === 'red' ? "#30397A" : "#EA5579",
+        alignItems: "center", borderRadius: 5,
+        paddingLeft: width* 0.01,
+        paddingRight: width*0.01,
+        width: width*0.17,
+        height: height*0.037,
+        justifyContent: "center",
+        marginLeft: width*0.026,
+      }}>
         <NativeAsset assetType={NativeAssetType.CALL_TO_ACTION}>
-          {detectLang(nativeAd.callToAction, 'cta')}
+          <Text
+            numberOfLines={1}
+            style={[styles.teamName, ctaColor, {textAlign: 'left', fontSize: width * 0.06, height: height*0.032}]}
+          >{nativeAd.callToAction}</Text>
         </NativeAsset>
       </View>
 
@@ -157,14 +154,8 @@ const styles = StyleSheet.create({
   },
   teamName: {
     fontFamily: 'sb-it-ver1',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     
-  },
-  teamNameKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.043,
-    transform: [{ scaleY: 1 }],
-    marginTop: height * -0.002,
   },
 });
 

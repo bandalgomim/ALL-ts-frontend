@@ -68,7 +68,7 @@ const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
                 <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
               </View>
               <View style={styles.recordItemBox}>
-                <Text style={[styles.recordText, styles.recordItemLabel]}>ROSE</Text>
+                <Text style={[styles.recordText, styles.recordItemLabel]}>LOSE</Text>
               </View>
               <View style={styles.recordItemBox}>
                 <Text style={[styles.recordText, styles.recordItemLabel, styles.recordPink]}>POINT</Text>

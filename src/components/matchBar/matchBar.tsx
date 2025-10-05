@@ -36,19 +36,6 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   };
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
 
-  function detectLang(text: string, position: 'left' | 'right') {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.teamNameKR, styleColor,{textAlign: position,}]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.teamName, styleColor, {textAlign: position }]}>{text}</Text>);
-      } else {return;}
-  }
-
   const navigateMatch = (matchId: string) => {
     setModalVisible(false); // 모달 닫기
     setModalNextMatchVisible(false); // 다음 경기 모달 닫기
@@ -112,7 +99,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
               >{`${match.matchState}`}</Text>
             </View>
             <View style={{ marginRight: width * 0.01, width: width * 0.132, borderWidth: 0 }}>
-              {detectLang(match.homeTeamInit, 'right')}
+            <Text style={[styles.teamName, styleColor, {textAlign: 'right' }]}>{match.homeTeamInit}</Text>
             </View>
             <TeamOrLeagueLogo logo={match.hometeamLogo} type={'small'} initial={match.homeTeamInit}/>
             <TouchableOpacity
@@ -148,7 +135,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
                 width: width * 0.132,
               }}
             >
-              {detectLang(match.awayTeamInit, 'left')}
+              <Text style={[styles.teamName, styleColor, {textAlign: 'left' }]}>{match.awayTeamInit}</Text>
             </View>
             <IsSelected
               isSelected={match.isMatchSelected}

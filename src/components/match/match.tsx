@@ -19,6 +19,7 @@ interface MatchPros {
 }
 
 const Match: React.FC<MatchPros> = ({ match, refetch }) => {
+  console.log('Match 컴포넌트 렌더링:', match);
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
@@ -32,20 +33,6 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const onPressAwayTeamScore = () => {
     setAwayTeamScore(!awayTeamScore);
   };
-
-  function detectLang(text: string | null) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.fontBlueBigKR]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.fontBlueBig]}>{text}</Text>);
-      } else {return;}
-  }
-  
 
   return (
     <View style={styles.container}>
@@ -86,7 +73,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
                   source={require('../../assets/match/white.png')}
                 />
                 <View style={styles.teamNameContainer}>
-                  {detectLang(match.homeTeamInit)}
+                  <Text style={[styles.fontBlueBig]}>{match.homeTeamInit}</Text>
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.homeCountryName} ${match?.sportName}/${match?.homeLeagueName}`.length > 22
@@ -127,7 +114,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
               <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} initial={match?.awayTeamInit as string}/>
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
-                  {detectLang(match.awayTeamInit)}
+                  <Text style={[styles.fontBlueBig]}>{match.awayTeamInit}</Text>
                 </View>
                 <Text style={styles.fontBlueSmall} numberOfLines={2}>
                   {`${match?.awayCountryName} ${match?.sportName}/${match?.awayLeagueName}`.length > 22

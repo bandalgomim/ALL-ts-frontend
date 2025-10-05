@@ -20,7 +20,7 @@ export interface teamDto {
     teamLogo: string,
     rank: string,
     win: number,
-    rose: number,
+    lose: number,
     draw: number,
     point: number,
     section: string,

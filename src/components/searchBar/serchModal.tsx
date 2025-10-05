@@ -103,13 +103,6 @@ const SearchModal: React.FC = () => {
   };
 
   // 언어별 스타일만 리턴
-  const detectLangStyle = (text: string) => {
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEN = /[a-zA-Z]/.test(text);
-    if (hasKR && !hasEN) return [styles.inlineKR];
-    if (!hasKR && hasEN) return [styles.inlineEN];
-    return [styles.inlineEN]; // 기본 영문 폰트
-  };
 
   // 한 줄로, 말줄임표 적용하여 렌더
   const renderItem = ({ item }: { item: filteredItems }) => {
@@ -128,7 +121,7 @@ const SearchModal: React.FC = () => {
             ellipsizeMode="tail"
           >
             {parts.map((p, i) => (
-              <Text key={`${p}-${i}`} style={detectLangStyle(p)}>
+              <Text key={`${p}-${i}`} style={styles.inline}>
                 {p}{i < parts.length - 1 ? ' ' : ''}
               </Text>
             ))}
@@ -141,19 +134,6 @@ const SearchModal: React.FC = () => {
   // 애니메이션 값
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0)).current;
-
-  function detectLang(text: string) {
-    if (!text) {return;}
-    const hasKR = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-    const hasEnglish = /[a-zA-Z]/.test(text);
-
-      if (hasKR && !hasEnglish) {
-        return (<Text style={[styles.resultText, styles.serchTextKR]}>{text}</Text>);
-      }
-      else if (!hasKR && hasEnglish) {
-        return (<Text style={[styles.serchText, styles.resultText]}>{text}</Text>);
-      } else {return;}
-  }
 
   // 모달 오픈/닫힘 애니메이션
   useEffect(() => {
@@ -434,13 +414,6 @@ const styles = StyleSheet.create({
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
   },
-  serchTextKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    color: '#30397A',
-    lineHeight: height * 0.0375,
-    fontSize: width * 0.06,
-    marginTop: height * 0.008,
-  },
   resultText: {
     fontSize: width * 0.07,
     textAlign: 'left',
@@ -451,7 +424,7 @@ const styles = StyleSheet.create({
   noResultText: {
     fontFamily: 'sb-it-ver1',
     color: '#999',
-    fontSize: width * 0.05,
+    fontSize: width * 0.07,
     marginTop: height * 0.03,
     textAlign: 'center',
   },
@@ -464,7 +437,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.07,
     color: '#30397A',
   },
-  inlineEN: {
+  inline: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
   },
