@@ -3,6 +3,7 @@ import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '../model/main.dto';
 import { MainContext } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
+import { getDeviceVersion } from '../utils/deviceVersion';
 
 export const hookMain = async (
     method: string,
@@ -12,6 +13,8 @@ export const hookMain = async (
     if (method !== 'GET' && data === null) {
         return;
     }
+    const ver =await  getDeviceVersion()
+    console.log('App Version:', ver);
     setMainRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/main';
     const query = new URLSearchParams();
