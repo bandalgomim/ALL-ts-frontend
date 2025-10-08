@@ -17,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal/search.context'
+import { useSearchActions, useSearchState } from '../../context/modal/search.context'
 import { SearchTagContext } from '../../context/searchTag.context';
 
 interface filteredItems {
@@ -31,7 +31,8 @@ const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const SearchModal: React.FC = () => {
   const {searchTagRes, setSearchTagRes} = useContext(SearchTagContext);
-  const { searchVisible, setSearchVisible } = useContext(ModalContext);
+  const { close } = useSearchActions()
+  const { visible } = useSearchState();
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -42,14 +43,14 @@ const SearchModal: React.FC = () => {
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
-    setSearchVisible(false);
+    close();
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
   const navigateLeague = (leagueId: number) => {
-    setSearchVisible(false);
+    close();
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
@@ -137,7 +138,7 @@ const SearchModal: React.FC = () => {
 
   // 모달 오픈/닫힘 애니메이션
   useEffect(() => {
-    if (searchVisible) {
+    if (visible) {
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0.5,
@@ -164,7 +165,7 @@ const SearchModal: React.FC = () => {
         }),
       ]).start();
     }
-  }, [searchVisible, translateY, backdropOpacity]);
+  }, [visible, translateY, backdropOpacity]);
 
   // 닫기 함수 수정 - 백드롭 애니메이션 추가
   const closeModal = () => {
@@ -179,7 +180,7 @@ const SearchModal: React.FC = () => {
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      setSearchVisible(false);
+      close();
       setQuery('');
       setFilteredTeams([]);
       setIsFocused(false);
@@ -247,7 +248,7 @@ const SearchModal: React.FC = () => {
 
   return (
     <Modal
-      visible={searchVisible}
+      visible={visible}
       transparent
       animationType="none"
       onRequestClose={closeModal}

@@ -9,16 +9,16 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal/logoModal.context';
+import { useLogoModalActions, useLogoModalState } from '../../context/modal/logoModal.context';
 import LogoImgPicker from './logoImgPicker';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const LogoModal: React.FC = () => {
-  const { logoModalVisible, setLogoModalVisible, logoModalContents, setLogoModalContents } = useContext(ModalContext);
-  
-  const safeLogoModalContents = logoModalContents || {};
+  const { close} = useLogoModalActions();
+  const { visible, contents } = useLogoModalState();
+  const safeLogoModalContents = contents || {};
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0.5)).current;
@@ -43,14 +43,13 @@ const LogoModal: React.FC = () => {
         useNativeDriver: true,
       })
     ]).start(() => {
-      setLogoModalVisible(false);
-      setLogoModalContents(null);
+      close()
     });
   };
 
   // 모달 열기/닫기 애니메이션
   useEffect(() => {
-    if (logoModalVisible) {
+    if (visible) {
       // 모달 열기 애니메이션 (기존 코드 유지)
       translateY.setValue(SCREEN_HEIGHT);
       backdropOpacity.setValue(0);
@@ -82,7 +81,7 @@ const LogoModal: React.FC = () => {
         })
       ]).start();
     }
-  }, [logoModalVisible, translateY]);
+  }, [visible, translateY]);
 
   // 모달 헤더(핸들바 포함)를 위한 PanResponder
   const modalHeaderPanResponder = useRef(
@@ -163,7 +162,7 @@ const LogoModal: React.FC = () => {
 
   return (
     <Modal
-      visible={logoModalVisible}
+      visible={visible}
       transparent
       animationType="none"
       onRequestClose={closeModal}

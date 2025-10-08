@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { StyleSheet,  Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { height, width } from '../../global';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { ModalContext } from '../../context/modal/logoModal.context';
+import { useLogoModalActions } from '../../context/modal/logoModal.context';
 
 
 interface TeamOrLogoPros {
@@ -12,11 +12,10 @@ interface TeamOrLogoPros {
 }
 
 const LogoPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
-  const { setLogoModalVisible, setLogoModalContents } = useContext(ModalContext);
+  const { open} = useLogoModalActions();
   const onPressDate = useCallback((type: TeamOrLogoPros['type'], id: number, uri: string ) => {
-    setLogoModalContents({'type': type, 'id': id, 'uri': uri});
-    setLogoModalVisible(true);
-  }, [setLogoModalContents, setLogoModalContents]);
+    open({'type': type, 'id': id, 'uri': uri})
+  }, [id, uri, type]);
 
   return (
     <View>

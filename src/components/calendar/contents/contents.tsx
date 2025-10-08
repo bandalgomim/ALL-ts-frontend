@@ -5,7 +5,7 @@ import { DAYS_OF_WEEK } from '../utills';
 import { matchListDto } from '../../../model/main.dto';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
-import { ModalContext } from '../../../context/modal/modal.context';
+import { useModalActions } from '../../../context/modal/modal.context.tsx';
 
 interface ContentsProps {
   monthDates: (string | Date)[],
@@ -23,7 +23,7 @@ const Contents: React.FC<ContentsProps> = ({
 }) => {
 
   ('Contents.tsx');
-  const {setModalVisible, setModalContents} = useContext(ModalContext);
+  const { open } = useModalActions();
   const groupedMatches = useMemo(() =>
     matchList,[matchList]); // main.matchList가 변경될 때마다 groupMatchesByDate 실행
   const fontColor = useMemo(() => {
@@ -47,11 +47,10 @@ const Contents: React.FC<ContentsProps> = ({
     if (day instanceof Date) {
       const matchInfo = groupedMatches ? groupedMatches[date] : null;
       if (matchInfo) {
-        setModalContents({'modalContents':matchInfo});
-        setModalVisible(true);
+        open({'contents':matchInfo})
       }
     }
-  }, [groupedMatches, setModalContents, setModalVisible]);
+  }, [groupedMatches]);
 
   return (
     <View

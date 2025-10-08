@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet,  Image, ImageBackground } from 'react-native';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal/search.context';
+import { ModalContext, useSearchActions } from '../../context/modal/search.context';
 
 
 interface SearchBarPros {
@@ -16,11 +16,11 @@ const imageMap = {
 
 const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
   const src = type ? imageMap[type as keyof typeof imageMap] : null;
-  const{setSearchVisible} = useContext(ModalContext);
+  const { open } = useSearchActions()
 
   return type ? (
     <View style={[styles.Container, { width: width * 0.7, height: height * 0.1, marginTop: height * 0.015, marginBottom: -height * 0.015}]}>
-      <TouchableOpacity onPress={()=>{setSearchVisible(true);}}>
+      <TouchableOpacity onPress={()=>{open();}}>
         <Image
           resizeMode="contain"
           style={{ width: width * 0.45, height: width * 0.1 }}
@@ -30,7 +30,7 @@ const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
     </View>
   ) : (
     <>
-    <TouchableOpacity onPress={()=>{setSearchVisible(true);}}>
+    <TouchableOpacity onPress={()=>{open();}}>
       <ImageBackground
         source={require('../../assets/teamLogo/teamLogo_m.png')}
         style={[styles.logoView, { width:width * 0.16 }]}

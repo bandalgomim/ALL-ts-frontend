@@ -9,14 +9,16 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { width, height } from '../global';
-import { ModalContext } from '../context/modal/modalNextMatch.context';
+import { ModalContext, useModalNextMatchActions, useModalNextMatchState } from '../context/modal/modalNextMatch.context';
 import MatchList from './matchBar/matchList';
 
 const SCREEN_HEIGHT = height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const NextMatchModal: React.FC = () => {
-  const { modalNextMatchVisible, setModalNextMatchVisible, modalNextMatchContents, setModalNextMatchContents } = useContext(ModalContext);
+  const { close } = useModalNextMatchActions()
+  const { visible, contents } = useModalNextMatchState()
+
 
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
@@ -42,14 +44,14 @@ const NextMatchModal: React.FC = () => {
         useNativeDriver: true,
       })
     ]).start(() => {
-      setModalNextMatchVisible(false);
-      setModalNextMatchContents(null);
+      close();
+      
     });
   };
 
   // 모달 열기/닫기 애니메이션
   useEffect(() => {
-    if (modalNextMatchVisible) {
+    if (visible) {
       // 모달 열기 애니메이션 (기존 코드 유지)
       translateY.setValue(SCREEN_HEIGHT);
       backdropOpacity.setValue(0);
@@ -81,7 +83,7 @@ const NextMatchModal: React.FC = () => {
         })
       ]).start();
     }
-  }, [modalNextMatchVisible, translateY]);
+  }, [visible, translateY]);
 
   // 모달 헤더(핸들바 포함)를 위한 PanResponder
   const modalHeaderPanResponder = useRef(
@@ -162,7 +164,7 @@ const NextMatchModal: React.FC = () => {
 
   return (
     <Modal
-      visible={modalNextMatchVisible}
+      visible={visible}
       transparent
       animationType="none"
       onRequestClose={closeModal}
@@ -199,9 +201,9 @@ const NextMatchModal: React.FC = () => {
 
         {/* 컨텐츠 영역 - MatchList (드래그 불가) */}
         <View style={styles.contentContainer}>
-          {modalNextMatchContents ? (
+          {contents ? (
             <View style={styles.matchListWrapper}>
-              <MatchList matchList={modalNextMatchContents} color="blue" />
+              <MatchList matchList={contents} color="blue" />
             </View>
           ) : (
             <View style={styles.emptyContainer}>

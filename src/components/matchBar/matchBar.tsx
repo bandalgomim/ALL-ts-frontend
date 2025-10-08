@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { MatchPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal/modal.context';
-import { ModalContext as ModalNextMatchContext } from '../../context/modal/modalNextMatch.context';
+import { useModalActions } from '../../context/modal/modal.context.tsx';
+import { ModalContext as ModalNextMatchContext, useModalNextMatchActions } from '../../context/modal/modalNextMatch.context';
 
 interface MatchBarPros {
   match: matchDto; // Assuming match is your interface from earlier
@@ -17,14 +17,10 @@ interface MatchBarPros {
 }
 
 const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
-  console.log('MatchBar.tsx');
-  const { setModalVisible } = useContext(ModalContext);
-  const { setModalNextMatchVisible } = useContext(ModalNextMatchContext);
+  console.log('MatchBar rendered');
+  const { close: closeModal } = useModalActions(); 
+  const { close: closeNextMatchModal } = useModalNextMatchActions();
   const [score, setScore] = useState(false);
-  /*const style =
-    color === 'white'
-      ? [styles.stateTextWhite, styles.teamNameWhite, styles.teamNameWhiteKR]
-      : [styles.stateTextBlue, styles.teamNameBlue, styles.teamNameBlueKR];*/
 
   const styleColor =
     color === 'white'
@@ -40,8 +36,8 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
 
   const navigateMatch = (matchId: string) => {
-    setModalVisible(false); // 모달 닫기
-    setModalNextMatchVisible(false); // 다음 경기 모달 닫기
+    closeModal(); // 모달 닫기
+    closeNextMatchModal(); // 다음 경기 모달 닫기
     navigationMatch.navigate('MatchScreen', { matchId: matchId });
   };
 

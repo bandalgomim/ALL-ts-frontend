@@ -3,11 +3,13 @@ import { AppState } from 'react-native';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 export function hookRefetch(refetch: () => Promise<any> | void) {
+  
   const isFocused = useIsFocused();
   const appState = useRef(AppState.currentState);
   const inFlight = useRef(false);
 
   const run = useCallback(() => {
+    console.log('hookRefetch called');
     if (inFlight.current) return;
     inFlight.current = true;
     Promise.resolve(refetch()).finally(() => { inFlight.current = false; });

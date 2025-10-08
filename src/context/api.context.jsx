@@ -3,7 +3,7 @@ import { TeamProvider } from './team.context';
 import { LeagueProvider } from './league.context';
 import { MatchProvider } from './match.context';
 import { AuthProvider } from './auth.context';
-import { ModalProvider } from './modal/modal.context';
+import { ModalProvider } from './modal/modal.context.tsx';
 import { SearchTagProvider } from './searchTag.context';
 import { LogoModalProvider } from './modal/logoModal.context';
 import { SearchProvider } from './modal/search.context';

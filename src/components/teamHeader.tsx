@@ -7,14 +7,14 @@ import RefreshButton from './refresh';
 import { width, height } from '../global';
 import { TeamContext } from '../context/team.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ModalContext } from '../context/modal/modalNextMatch.context';
+import { useModalNextMatchActions } from '../context/modal/modalNextMatch.context';
 import { findNext } from './calendar/utills';
 import LogoPicker from './logo/logoPicker';
 import { refetchDto } from '../model/refetch.dto';
 
 const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
   const {teamRes} = useContext(TeamContext);
-  const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
+  const { open } = useModalNextMatchActions()
   const [record, setRecord] = useState(false);
 
   function detectLang(text: string, size: 'big' | 'small') {
@@ -45,10 +45,9 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
   const onPressRemain = useCallback(() => {
       const matchInfo = findNext(teamRes.data.matchList)
       if (matchInfo) {
-        setModalNextMatchContents(matchInfo);
-        setModalNextMatchVisible(true)
+        open(matchInfo)
       ;}
-  }, [teamRes, setModalNextMatchVisible, setModalNextMatchContents]);
+  }, [teamRes]);
 
   const getRankSuffix = (rank: string): string => {
     if (rank === '1') return 'st';

@@ -3,12 +3,13 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { height, width } from '../../global';
 import { teamDto } from '../../model/league.dto';
 import FastImage from 'react-native-fast-image';
-import { ModalContext } from '../../context/modal/modal.context';
+import { ModalContext } from '../../context/modal/modal.context.tsx';
 import { matchListDto } from '../../model/main.dto';
 import { findNextInLeague } from '../calendar/utills';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../../model/navigation.dto';
+import { useModalNextMatchActions } from '../../context/modal/modalNextMatch.context.tsx';
 
 interface LeagueRankListProps {
     teamList: teamDto[]
@@ -31,14 +32,13 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     });
   }, [teamList]);
 
-  const {setModalNextMatchVisible, setModalNextMatchContents} = useContext(ModalContext);
+  const { open } = useModalNextMatchActions()
   const onPressRemain = useCallback((teamId: number) => {
       const matchInfo = findNextInLeague(matchList, teamId);
       if (matchInfo) {
-      setModalNextMatchContents(matchInfo);
-      setModalNextMatchVisible(true)
+        open(matchInfo)
       ;}
-  }, [matchList, setModalNextMatchContents, setModalNextMatchVisible]);
+  }, [matchList]);
   const getRankSuffix = (rank: string): string => {
     if (rank === '1') {return 'st';}
     if (rank === '2') {return 'nd';}
