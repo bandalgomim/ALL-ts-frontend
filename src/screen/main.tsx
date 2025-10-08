@@ -11,13 +11,9 @@ import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 import { HeadNotch } from '../components/notch';
 import { MainContext } from '../context/main.context';
-import { AuthContext } from '../context/auth.context';
 import { getmainResDto } from '../model/main.dto';
 import { hookRefetch } from '../hooks/refetch.hook';
-import { localData } from '../IAM/localData';
 import { hookIsLogin } from '../hooks/IAM.hook';
-import AdmobNativeAdBig from '../components/ad/bigBanner';
-import AdmobNativeAdSmall from '../components/ad/smallBanner';
 
 
 const MainScreen = () => {

@@ -2,16 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   Modal,
   Animated,
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from 'react-native';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal.context';
+import { ModalContext } from '../../context/modal/logo.context';
 import LogoImgPicker from './logoImgPicker';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -19,6 +17,7 @@ const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const LogoModal: React.FC = () => {
   const { logoModalVisible, setLogoModalVisible, logoModalContents, setLogoModalContents } = useContext(ModalContext);
+  console.log('logoModalContents', logoModalVisible);
   const safeLogoModalContents = logoModalContents || {};
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;

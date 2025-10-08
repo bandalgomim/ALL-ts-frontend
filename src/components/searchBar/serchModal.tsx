@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal.context';
+import { ModalContext } from '../../context/modal/modal.context';
 import { SearchTagContext } from '../../context/searchTag.context';
 
 interface filteredItems {

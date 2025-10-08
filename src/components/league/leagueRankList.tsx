@@ -3,7 +3,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { height, width } from '../../global';
 import { teamDto } from '../../model/league.dto';
 import FastImage from 'react-native-fast-image';
-import { ModalContext } from '../../context/modal.context';
+import { ModalContext } from '../../context/modal/modal.context';
 import { matchListDto } from '../../model/main.dto';
 import { findNextInLeague } from '../calendar/utills';
 import { useNavigation } from '@react-navigation/native';

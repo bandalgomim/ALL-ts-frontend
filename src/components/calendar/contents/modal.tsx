@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { width, height } from '../../../global';
-import { ModalContext } from '../../../context/modal.context';
+import { ModalContext } from '../../../context/modal/modal.context';
 import MatchList from '../../matchBar/matchList';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;

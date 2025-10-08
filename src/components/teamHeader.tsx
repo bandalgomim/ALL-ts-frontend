@@ -7,7 +7,7 @@ import RefreshButton from './refresh';
 import { width, height } from '../global';
 import { TeamContext } from '../context/team.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ModalContext } from '../context/modal.context';
+import { ModalContext } from '../context/modal/modal.context';
 import { findNext } from './calendar/utills';
 import LogoPicker from './logo/logoPicker';
 import { refetchDto } from '../model/refetch.dto';

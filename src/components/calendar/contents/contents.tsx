@@ -5,7 +5,7 @@ import { DAYS_OF_WEEK } from '../utills';
 import { matchListDto } from '../../../model/main.dto';
 import DayRow from './dayRow';
 import { width, height } from '../../../global';
-import { ModalContext } from '../../../context/modal.context';
+import { ModalContext } from '../../../context/modal/modal.context';
 
 interface ContentsProps {
   monthDates: (string | Date)[],
