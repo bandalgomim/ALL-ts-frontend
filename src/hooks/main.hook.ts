@@ -11,7 +11,7 @@ export const hookMain = async (
         return;
     }
     const ver =await  getDeviceVersion()
-    console.log('App Version:', ver);
+    console.log("요청");
     setMainRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/main';
     const query = new URLSearchParams();

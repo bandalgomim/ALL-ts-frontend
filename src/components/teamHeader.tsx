@@ -14,8 +14,12 @@ import { refetchDto } from '../model/refetch.dto';
 import { PostState } from '../model/config';
 import { getTeamResDto } from '../model/team.dto';
 
-const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
-  const teamRes = useTeamState() as PostState<getTeamResDto>;
+interface TeamHeaderProps {
+  refetch: () => Promise<void>;
+  data?: getTeamResDto;
+}
+
+const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
   const { open } = useModalNextMatchActions()
   const [record, setRecord] = useState(false);
 
@@ -45,11 +49,11 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
     }
 
   const onPressRemain = useCallback(() => {
-      const matchInfo = findNext(teamRes.data.matchList)
+      const matchInfo = findNext(data.matchList)
       if (matchInfo) {
         open(matchInfo)
       ;}
-  }, [teamRes]);
+  }, [data]);
 
   const getRankSuffix = (rank: string): string => {
     if (rank === '1') return 'st';
@@ -64,24 +68,24 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
       <View style={[styles.teamInfoContainer, styles.headerTeamInfoContainer]}>
         <View style={[styles.teamLogo, styles.headerTeamLogo]}>
           <TeamOrLeagueLogo
-            logo={teamRes?.data?.team?.teamLogo}
+            logo={data?.team?.teamLogo}
             type={'big'}
-            initial={teamRes?.data?.team?.teamInit}
+            initial={data?.team?.teamInit}
           />
 
         </View>
         <View style={{marginLeft: -height * 0.005, marginRight: -height*0.025, marginTop: height * 0.01}}>
           <LogoPicker
             type={'team'}
-            id={teamRes?.data?.team?.teamId}
-            uri={teamRes?.data?.team?.teamLogo}
+            id={data?.team?.teamId}
+            uri={data?.team?.teamLogo}
           />
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>
           <View style={styles.teamInfoTextContainer}>
-            {teamRes?.data?.team?.teamName ? (() => {
-              const teamNameSplit = teamRes.data?.team?.teamName.split(' ');
-              const textLength = detectLangth(teamRes.data?.team?.teamName);
+            {data?.team?.teamName ? (() => {
+              const teamNameSplit = data?.team?.teamName.split(' ');
+              const textLength = detectLangth(data?.team?.teamName);
               if (teamNameSplit.length === 1) {
                 if (textLength < 11) {
                   return (
@@ -155,13 +159,13 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
             })() : null}
             <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
 
-              {`${teamRes.data?.team?.countryName} ${teamRes.data?.team?.sportName}/${teamRes.data?.team?.leagueName}`}
+              {`${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
             </Text>
           </View>
           <View>
             <IsSelected
-              isSelected={teamRes.data?.team?.isTeamSelected}
-              teamId={teamRes.data?.team?.teamId}
+              isSelected={data?.team?.isTeamSelected}
+              teamId={data?.team?.teamId}
               leagueId={null}
               matchId={null}
             />
@@ -175,27 +179,27 @@ const TeamHeader: React.FC<refetchDto> = ({ refetch }) => {
         </TouchableOpacity>
         {record && (
           <View style={styles.record}>
-            {teamRes.data?.team.rank.length == 1 ? <View style={styles.recordRankBox}>
-              <Text style={[styles.recordText, styles.recordRank]}>{teamRes.data?.team?.rank}</Text>
-              <Text style={[styles.recordText, styles.recordRankSuffix]}>{getRankSuffix(teamRes.data?.team?.rank)}</Text>
+            {data?.team.rank.length == 1 ? <View style={styles.recordRankBox}>
+              <Text style={[styles.recordText, styles.recordRank]}>{data?.team?.rank}</Text>
+              <Text style={[styles.recordText, styles.recordRankSuffix]}>{getRankSuffix(data?.team?.rank)}</Text>
             </View>: <View style={styles.recordRankBox}>
-              <Text style={[styles.recordText, styles.recordRank, {fontSize: width*0.19, width: width*0.16, marginTop: height*0.01}]}>{teamRes.data?.team?.rank}</Text>
+              <Text style={[styles.recordText, styles.recordRank, {fontSize: width*0.19, width: width*0.16, marginTop: height*0.01}]}>{data?.team?.rank}</Text>
               <Text style={[styles.recordText, styles.recordRankSuffix, {width: width*0.035}]}>{null}</Text>
             </View>}
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum]}>{teamRes.data?.team?.win}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum]}>{data?.team?.win}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>WIN</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>{teamRes.data?.team?.draw}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>{data?.team?.draw}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{teamRes.data?.team?.lose}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{data?.team?.lose}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>LOSE</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>{teamRes.data?.team?.point}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>{data?.team?.point}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel, styles.recordPink]}>POINT</Text>
             </View>
             <TouchableOpacity onPress={onPressRemain} style={styles.recordImageContainer}>

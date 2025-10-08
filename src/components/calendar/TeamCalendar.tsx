@@ -11,11 +11,14 @@ import MatchList from '../matchBar/matchList';
 import { PostState } from '../../model/config';
 import { getTeamResDto } from '../../model/team.dto';
 
-export default function TeamCalendar() {
+interface TeamCalendarProps {
+  data: getTeamResDto;
+}
+
+const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
-  const teamRes = useTeamState() as PostState<getTeamResDto>;
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
@@ -39,18 +42,18 @@ export default function TeamCalendar() {
     const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
       const key = (date instanceof Date ? date : new Date(date)).toLocaleDateString('sv-SE');
-      if (teamRes.data.matchList[key]) {
-        weekResult[key] = teamRes.data.matchList[key];
+      if (data.matchList[key]) {
+        weekResult[key] = data.matchList[key];
       }
     });
     monthDates.forEach((date) => {
       const key = date.toLocaleDateString('sv-SE');
-      if (teamRes.data.matchList[key]) {
-        monthResult[key] = teamRes.data.matchList[key];
+      if (data.matchList[key]) {
+        monthResult[key] = data.matchList[key];
       }
     });
     return { week: weekResult, month: monthResult };
-  }, [weekDates, monthDates, teamRes.data.matchList]);
+  }, [weekDates, monthDates, data.matchList]);
   // 스와이프 기능 추가
   const panResponder = useMemo(
     () =>
@@ -144,7 +147,7 @@ export default function TeamCalendar() {
               month={currentDate.getMonth()}
               color={'white'}
               mode={mode}
-              matchList={teamRes.data.matchList}
+              matchList={data.matchList}
               goToPrevious={handlePrevious}
               goToNext={handleNext}
             />
@@ -220,3 +223,4 @@ const styles = StyleSheet.create({
   },
   calendarView: {}
 });
+export default React.memo(TeamCalendar);

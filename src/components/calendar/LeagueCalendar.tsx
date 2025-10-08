@@ -12,13 +12,14 @@ import LeageTeamListBar from '../league/leageTeamList';
 import { getLeagueResDto } from '../../model/league.dto';
 import { PostState } from '../../model/config';
 
-
-export default function LeagueCalendar() {
+interface LeagueCalendarProps {
+  data: getLeagueResDto;
+}
+const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
-  const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
 
   // Handlers for changing the month
@@ -41,18 +42,18 @@ export default function LeagueCalendar() {
     weekDates.forEach((date) => {
       
       const key = date.toLocaleDateString('sv-SE');
-      if (leagueRes.data.matchList[key]) {
-        weekResult[key] = leagueRes.data.matchList[key];
+      if (data.matchList[key]) {
+        weekResult[key] = data.matchList[key];
       }
     });
     monthDates.forEach((date) => {
       const key = date.toLocaleDateString('sv-SE');
-      if (leagueRes.data.matchList[key]) {
-        monthResult[key] = leagueRes.data.matchList[key];
+      if (data.matchList[key]) {
+        monthResult[key] = data.matchList[key];
       }
     });
     return { week: weekResult, month: monthResult };
-  }, [weekDates, monthDates, leagueRes.data.matchList]);
+  }, [weekDates, monthDates, data.matchList]);
 
   // 스와이프 기능 추가
   const panResponder = useMemo(
@@ -114,7 +115,7 @@ export default function LeagueCalendar() {
           {zIndex: zIndex ? 2 : 1}
         ]}
       >
-        <LeageTeamListBar/>
+        <LeageTeamListBar data={data}/>
         <View>
           <Image
             resizeMode="contain"
@@ -154,7 +155,7 @@ export default function LeagueCalendar() {
                 month={currentDate.getMonth()}
                 color={'white'}
                 mode={mode}
-                matchList={leagueRes.data.matchList}
+                matchList={data.matchList}
                 goToPrevious={handlePrevious}
                 goToNext={handleNext}
               />
@@ -214,3 +215,4 @@ const styles = StyleSheet.create({
     zIndex: 2, // 높은 z-index 추가
   }
 });
+export default React.memo(LeagueCalendar);

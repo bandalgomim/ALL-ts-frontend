@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
 import { hookMain } from '../hooks/main.hook';
 import { MainHeader } from '../components/main/mainHeader';
 import LoadingScreen  from '../components/loadingPage';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
@@ -18,54 +18,41 @@ import { PostState } from '../model/config';
 
 
 const MainScreen = () => {
-  const { setMainRes } = useMainActions()
+  const { setMainRes } = useMainActions()  
   const mainRes = useMainState() as PostState<getMainResDto>
-  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
-  const [render, setRender] = useState(false);
-  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
-  const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', {state: true});
-  }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  console.log('MainScreen 렌더링,', mainRes.loading);
 
-  useEffect(() => {
-    hookIsLogin(navigateIAM)
-  }, []);
-  
   const refetch = useCallback(() => {
-    setRender(false);
     return hookMain('GET', null, setMainRes);
   }, [setMainRes]);
-  hookRefetch(refetch);
+  hookRefetch(refetch, setMainRes);
 
-  useEffect(() => {
-    if (prevLoading === true && mainRes.loading === false) { setRender(true); }
-    setPrevLoading(mainRes.loading); // 이전 상태 업데이트
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainRes.loading]);
 
-  return !render ? (
+  return mainRes.loading ? (
     <LoadingScreen
     color="white"
     />
   ) : (
     <View style={styles.Container}>
+      {/* Removed unnecessary console.log */}
       <HeadNotch/>
       <MainHeader/>
       <View style={[styles.logo]}>
-        <View style={{marginLeft: width * 0.18}}>
-          <Logo
-            color="white"
-          />
-        </View>
-        <View>
-          <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
-        </View>
+      <View style={{marginLeft: width * 0.18}}>
+        <Logo
+        color="white"
+        />
+      </View>
+      <View>
+        <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
+      </View>
       </View>
       <MainCalendar
-        data={mainRes?.data as getMainResDto}
+      data={mainRes?.data as getMainResDto}
       />
-                
+          
       <View style={[styles.tabBar]} />
+      {console.log('Rendering MainScreen')}
     </View>
   );
 };
@@ -114,3 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 export default React.memo(MainScreen);
+MainScreen.whyDidYouRender = true;

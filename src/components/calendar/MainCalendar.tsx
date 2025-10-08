@@ -17,7 +17,6 @@ interface MainCalendarProps {
 }
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
-  const mainRes = useMainState() as PostState<getMainResDto>
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
@@ -95,7 +94,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
       >
         <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {alignItems: 'center', zIndex: zIndex ? 2 : 1}]}>
           <TeamAndLeagueListBar
-            teamAndLeagueList={mainRes?.data?.teamAndLeagueList as (teamDto | leagueDto)[]}
+            teamAndLeagueList={data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
           <View style={{alignItems: 'center', marginTop: -height * 0.025}}>
           <MainHeader

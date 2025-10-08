@@ -18,6 +18,7 @@ const MatchScreen = () => {
 
   const { setMatchRes } = useMatchActions();
   const matchRes = useMatchState() as PostState<getMatchResDto>
+  console.log('MatchScreen 렌더링,', matchRes.loading);
   const { matchId } = useRoute().params as getMatchResQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
@@ -25,24 +26,14 @@ const MatchScreen = () => {
     navigationIAM.replace('IAMScreen', {state: true});
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   const refetch = useCallback(() => {
-    setRender(false);
     return hookMatch('GET', { matchId }, setMatchRes);
   }, [matchId, setMatchRes]);
-  hookRefetch(refetch);
+  hookRefetch(refetch, setMatchRes);
   useEffect(() => {
     hookIsLogin(navigateIAM)
   }, []);
-  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
-  const [render, setRender] = useState(false);
-  useEffect(() => {
-    if (prevLoading === true && matchRes.loading === false) {
-      setRender(true);
-    }
-    setPrevLoading(matchRes.loading); // 이전 상태 업데이트
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchRes.loading]);
 
-  return !render ? (
+  return matchRes.loading ? (
     <LoadingScreen
       color="white"
     />
@@ -61,6 +52,7 @@ const MatchScreen = () => {
           color="white"
         />
     </View>
+    {console.log('Rendering MatchScreen')}
     </>
     );
   };

@@ -18,45 +18,29 @@ import { hookIsLogin } from '../hooks/IAM.hook';
 import { PostState } from '../model/config';
 
 const LeagueScreen = () => {
+  
   const { setLeagueRes } = useLeagueActions();
   const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
-  console.log('LeagueScreen 렌더링: ', leagueRes);
+  console.log('LeagueScreen 렌더링,', leagueRes.loading);
+  //console.log('LeagueScreen 렌더링,', leagueRes.loading);
   const { leagueId } = useRoute().params as getLeagueReqQueryDto;
-  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
-  const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', {state: true});
-  }, [navigationIAM]);
   const refetch = useCallback(() => {
-    setRender(false);
     return hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueId, setLeagueRes]);
-  hookRefetch(refetch);
+  hookRefetch(refetch, setLeagueRes);
 
-  useEffect(() => {
-    hookIsLogin(navigateIAM)
-  }, []);
 
-  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
-  const [render, setRender] = useState(false);
-  useEffect(() => {
-    if (prevLoading === true && leagueRes.loading === false) {
-      setRender(true);
-    }
-    setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leagueRes.loading]);
-
-  return !render ? (
+  return leagueRes.loading ? (
     <LoadingScreen
       color="blue"
     />
   ) : (
     <View style={styles.Container}>
       <HeadNotch/>
-      <LeagueHeader refetch={refetch}/>
-      <LeagueCalendar/>
+      <LeagueHeader refetch={refetch} data={leagueRes.data}/>
+      <LeagueCalendar data={leagueRes.data}/>
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
@@ -68,6 +52,7 @@ const LeagueScreen = () => {
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>
       </View>
+      {console.log('Rendering LeagueScreen')}
     </View>
   );
 };
@@ -106,3 +91,4 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(LeagueScreen);
+LeagueScreen.whyDidYouRender = true;

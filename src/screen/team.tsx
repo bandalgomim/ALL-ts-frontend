@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import TeamCalendar from '../components/calendar/TeamCalendar';
 import TeamHeader from '../components/teamHeader';
@@ -11,7 +11,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
 import { useTeamState, useTeamActions } from '../context/team.context';
-import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
 import { hookRefetch } from '../hooks/refetch.hook';
@@ -21,42 +20,25 @@ import { PostState } from '../model/config';
 const TeamScreen = () => {
   const {setTeamRes} = useTeamActions();
   const teamRes = useTeamState() as PostState<getTeamResDto>;
-  const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
-  const [render, setRender] = useState(false);
+  console.log('TeamScreen 렌더링,', teamRes.loading);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
-  const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
-  const navigateIAM = useCallback(() => {
-    navigationIAM.replace('IAMScreen', {state: true});
-  }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
   const refetch = useCallback(() => {
-    setRender(false);
     return hookTeam('GET' as string, {teamId: teamId}, setTeamRes);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamId, key, setTeamRes]);
-  hookRefetch(refetch);
-  useEffect(() => {
-    hookIsLogin(navigateIAM)
-  }, []);
+  hookRefetch(refetch, setTeamRes);
 
 
-  useEffect(() => {
-    if (prevLoading === true && teamRes.loading === false) {
-      setRender(true);
-    }
-    setPrevLoading(teamRes.loading); // 이전 상태 업데이트
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamRes.loading]);
-
-  return !render ? (
+  return teamRes.loading ? (
     <LoadingScreen
       color="blue"
     />
   ) : (
     <View style={styles.Container}>
       <HeadNotch/>
-      <TeamHeader refetch={refetch}/>
-      <TeamCalendar/>
+      <TeamHeader refetch={refetch} data={teamRes.data}/>
+      <TeamCalendar data={teamRes.data}/>
       <View style={[styles.tabBar]}>
         <MainTabBar
           color="blue"
@@ -70,6 +52,7 @@ const TeamScreen = () => {
             <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
           </View>
         </View>
+        {console.log('Rendering TeamScreen')}
     </View>
   );
 };
@@ -108,3 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 export default React.memo(TeamScreen);
+TeamScreen.whyDidYouRender = true;

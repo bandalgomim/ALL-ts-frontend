@@ -1,28 +1,57 @@
+// hookRefetch.ts
 import { useCallback, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { IAMPageParamList } from '../model/navigation.dto';
+import { hookIsLogin } from './IAM.hook';
 
-export function hookRefetch(refetch: () => Promise<any> | void) {
-  
+type LoadingAction = { type: 'LOADING' };
+
+export function hookRefetch(
+  refetch: () => Promise<any> | void,
+  hookPageState: (action: LoadingAction) => void
+) {
   const isFocused = useIsFocused();
   const appState = useRef(AppState.currentState);
   const inFlight = useRef(false);
+  const isMounted = useRef(true);
+
+  const navigation = useNavigation<StackNavigationProp<IAMPageParamList>>();
+  const navigateIAM = useCallback(() => {
+    navigation.replace('IAMScreen', { state: true });
+  }, [navigation]);
 
   const run = useCallback(() => {
-    if (inFlight.current) return;
+    hookIsLogin(navigateIAM);
+    if (inFlight.current || !isMounted.current) return;
     inFlight.current = true;
-    Promise.resolve(refetch()).finally(() => { inFlight.current = false; });
-  }, [refetch]);
+    Promise.resolve(refetch()).finally(() => {
+      inFlight.current = false;
+    });
+  }, [refetch, navigateIAM]);
 
-  // 1) 화면 포커스될 때마다 (초기 진입 포함)
+  // 1) 포커스될 때 호출, 포커스 해제(blur)될 때 LOADING로 되돌리기
   useFocusEffect(
     useCallback(() => {
       run();
-      return () => {}; // 필요 시 진행 중 요청 취소
-    }, [run])
+      return () => {
+        if (!isMounted.current) return;
+        hookPageState({ type: 'LOADING' });   // ✅ blur 시점
+      };
+    }, [run, hookPageState])
   );
 
-  // 2) 백→포어 전환 시, 이 화면이 포커스 상태라면
+  // 2) 화면을 떠나기 직전(beforeRemove)에도 실행 (뒤로가기/replace 등)
+  useEffect(() => {
+    const sub = navigation.addListener('beforeRemove', () => {
+      if (!isMounted.current) return;
+      hookPageState({ type: 'LOADING' });     // ✅ 네비게이션 이탈 직전
+    });
+    return sub;
+  }, [navigation, hookPageState]);
+
+  // 3) 백그라운드→포어그라운드 복귀 시, 이 화면이 포커스라면 재요청
   useEffect(() => {
     const sub = AppState.addEventListener('change', next => {
       const wasBg = /inactive|background/.test(appState.current);
@@ -31,4 +60,13 @@ export function hookRefetch(refetch: () => Promise<any> | void) {
     });
     return () => sub.remove();
   }, [isFocused, run]);
+
+  // 4) 언마운트 시점 가드 및 마지막 정리
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+      // 언마운트 도중 setState 경고 방지: isMounted 가드로 이미 보호
+      hookPageState({ type: 'LOADING' });     // ✅ 완전 언마운트 시
+    };
+  }, [hookPageState]);
 }

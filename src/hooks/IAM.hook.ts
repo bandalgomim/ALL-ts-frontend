@@ -1,7 +1,7 @@
 import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '../model/IAM.dto';
 import axios from 'axios';
 import { localData } from '../IAM/localData';
-import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducsers/apiReducer';
+import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducers/apiReducer';
 import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 

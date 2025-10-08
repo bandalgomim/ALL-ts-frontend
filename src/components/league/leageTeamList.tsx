@@ -9,9 +9,12 @@ import { width, height } from '../../global';
 import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import { PostState } from '../../model/config';
-const LeageTeamListBar = () => {
+
+interface LeageTeamListBarProps {
+  data: getLeagueResDto;
+}
+const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
-  const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   const navigateTeam = (teamId: number) => {
     navigation.navigate('TeamScreen', { teamId: teamId });
   };
@@ -20,7 +23,7 @@ const LeageTeamListBar = () => {
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
     if (String(item.rank) === '0') return null;
     return (
-      <View key={index} style={[styles.box, {width: width * 0.13, height: width * 0.1, marginTop: height * 0.049, marginRight: index !== leagueRes.data.teamList.length - 1 ? width * 0.074 : width * 0.012, marginLeft: width * 0.012}]}>
+      <View key={index} style={[styles.box, {width: width * 0.13, height: width * 0.1, marginTop: height * 0.049, marginRight: index !== data.teamList.length - 1 ? width * 0.074 : width * 0.012, marginLeft: width * 0.012}]}>
         <TouchableOpacity
           style={{alignItems: 'center'}}
           onPress={()=>{navigateTeam(item.teamId);}}
@@ -35,7 +38,7 @@ const LeageTeamListBar = () => {
       </View>
     );
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leagueRes.data.teamList]);
+  }, [data.teamList]);
   return (
     <View style={[styles.CalendarContainer, {width: width, height: width * 0.320, marginTop: height * 0.01, marginBottom: -height * 0.036}]}>
       <ImageBackground
@@ -45,7 +48,7 @@ const LeageTeamListBar = () => {
       >
         <DraggableFlatList
           style={[styles.scrollView, {width: width * 0.8}]}
-          data={leagueRes.data.teamList}
+          data={data.teamList}
           horizontal={true}
           keyExtractor={(item: teamDto, index: number) => index.toString()}
           renderItem={renderItem}

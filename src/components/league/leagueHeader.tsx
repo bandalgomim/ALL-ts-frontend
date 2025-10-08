@@ -13,8 +13,12 @@ import RefreshButton from '../refresh';
 import { PostState } from '../../model/config';
 import { getLeagueResDto } from '../../model/league.dto';
 
-const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
-    const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
+interface LeagueHeaderProps {
+  refetch: () => Promise<void>;
+  data: getLeagueResDto;
+}
+
+const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
   const [record, setRecord] = useState(false);
 
   function detectLang(text: string, size: 'big' | 'medium' | 'small') {
@@ -53,9 +57,9 @@ const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
       <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
-            {leagueRes?.data?.league?.leagueName ? (() => {
-                          const leagueNameSplit = leagueRes.data?.league?.leagueName.split(' ');
-                          const textLength = detectLangth(leagueRes.data?.league?.leagueName);
+            {data?.league?.leagueName ? (() => {
+                          const leagueNameSplit = data?.league?.leagueName.split(' ');
+                          const textLength = detectLangth(data?.league?.leagueName);
                           if (leagueNameSplit.length === 1) {
                             if (textLength < 9) {
                               return (
@@ -123,26 +127,26 @@ const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
                           }
                         })() : null}
             
-            <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${leagueRes.data?.league?.countryName} ${leagueRes.data?.league?.sportName}`}</Text>
+            <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
         </View>
         <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
         <View style={{marginLeft: -height * 0.025, marginRight: -height*0.005, marginTop: height * 0.01}}>
             <LogoPicker
               type={'league'}
-              id={leagueRes.data?.league?.leagueId}
-              uri={leagueRes.data?.league?.leagueLogo || ''}
+              id={data?.league?.leagueId}
+              uri={data?.league?.leagueLogo || ''}
             />
           </View>
           <TeamOrLeagueLogo
-            logo={leagueRes?.data?.league?.leagueLogo}
+            logo={data?.league?.leagueLogo}
             type={'big'}
-            initial={leagueRes?.data?.league?.leagueInit}
+            initial={data?.league?.leagueInit}
           />
           <View>
             <IsSelected
-              isSelected={leagueRes.data?.league?.isSelected}
+              isSelected={data?.league?.isSelected}
               teamId={null}
-              leagueId={leagueRes.data?.league?.leagueId}
+              leagueId={data?.league?.leagueId}
               matchId={null}
             />
             <RefreshButton refetch={refetch} />
@@ -173,8 +177,8 @@ const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
             </View>
             <View style={styles.recordListView}>
               <LeagueRankList
-                teamList={leagueRes.data?.teamList ?? []}
-                matchList={leagueRes.data?.matchList ?? []}
+                teamList={data?.teamList ?? []}
+                matchList={data?.matchList ?? []}
               />
             </View>
           </View>

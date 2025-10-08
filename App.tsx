@@ -7,6 +7,8 @@ import { displayNotification } from './src/notification/displayNotification';
 import useDailyTask from './src/hooks/daily.hook';
 import mobileAds from 'react-native-google-mobile-ads';
 
+
+
 mobileAds()
   .initialize()
   .then(adapterStatuses => {

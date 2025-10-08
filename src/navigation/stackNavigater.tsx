@@ -41,27 +41,32 @@ const StackNavigator = () => {
           <Stack.Screen
             name="MainScreen"
             component={MainScreen}
+            options={{ freezeOnBlur: true }}
           />
           <Stack.Screen
             name="TeamScreen"
             component={TeamScreen}
+            options={{ freezeOnBlur: true }}
           />
           <Stack.Screen
             name="LeagueScreen"
             component={LeagueScreen}
+            options={{ freezeOnBlur: true }}
           />
           <Stack.Screen
             name="MatchScreen"
             component={MatchScreen}
+            options={{ freezeOnBlur: true }}
           />
           <Stack.Screen
             name="IAMScreen"
             component={IAMScreen}
-            options={{ gestureEnabled: false }}
+            options={{ gestureEnabled: false, freezeOnBlur: true }}
           />
           <Stack.Screen
             name="UserScreen"
             component={UserScreen}
+            options={{ freezeOnBlur: true }}
           />
         </Stack.Navigator>
         <CustomHeader/>

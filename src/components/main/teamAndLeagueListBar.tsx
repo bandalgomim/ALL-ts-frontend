@@ -28,6 +28,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = useCallback(
+    
     (teamId: number) => {
       navigationTeam.navigate('TeamScreen', { teamId: teamId });
     },
