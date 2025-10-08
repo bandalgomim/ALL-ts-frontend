@@ -2,19 +2,19 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground, Alert } from 'react-native';
 import { width, height } from '../../global';
 import { hookDeleteAccount } from '../../hooks/IAM.hook';
-import { LeagueContext } from '../../context/league.context';
-import { MainContext } from '../../context/main.context';
-import { MatchContext } from '../../context/match.context';
-import { TeamContext } from '../../context/team.context';
+import { useLeagueState, useLeagueActions } from '../../context/league.context';
+import { useMainActions } from '../../context/main.context';
+import { useMatchActions } from '../../context/match.context';
+import { useTeamState, useTeamActions } from '../../context/team.context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../../model/navigation.dto';
 
 const DeleteButton = () => {
-  const {setMainRes} = useContext(MainContext);
-  const {setTeamRes} = useContext(TeamContext);
-  const {setLeagueRes} = useContext(LeagueContext);
-  const {setMatchRes} = useContext(MatchContext);
+  const { setMainRes } = useMainActions()
+  const {setTeamRes} = useTeamActions();
+  const { setLeagueRes } = useLeagueActions();
+  const { setMatchRes } = useMatchActions();
   const [res, setRes] = useState<boolean | string>("초기값");
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {

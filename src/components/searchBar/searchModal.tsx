@@ -18,7 +18,8 @@ import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.d
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
 import { useSearchActions, useSearchState } from '../../context/modal/search.context'
-import { SearchTagContext } from '../../context/searchTag.context';
+import { useSearchTagState } from '../../context/searchTag.context';
+import { PostState } from '../../model/config';
 
 interface filteredItems {
   name: string;
@@ -30,12 +31,13 @@ const SCREEN_HEIGHT = height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const SearchModal: React.FC = () => {
-  const {searchTagRes, setSearchTagRes} = useContext(SearchTagContext);
+  
   const { close } = useSearchActions()
   const { visible } = useSearchState();
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
+  const searchTagRes  = useSearchTagState() as PostState<filteredItems>
 
   // 드래그 중인지 상태 추가
   const [isDragging, setIsDragging] = useState(false);
@@ -65,26 +67,37 @@ const SearchModal: React.FC = () => {
       return;
     }
 
-    const lowerQuery = input.toLowerCase();
+// 1) data를 항상 배열로 정규화
+const items = Array.isArray(searchTagRes?.data)
+  ? searchTagRes.data
+  : searchTagRes?.data
+    ? Object.values(searchTagRes.data)
+    : [];
 
-    // 검색 결과 필터링
-    const filteredResults = searchTagRes.payload
-      .filter(t => {
-        const lowerTag = t.tag.toLowerCase();
+// 2) 입력 정규화
+const lowerQuery = String(input ?? '').trim().toLowerCase();
 
-        // 첫 글자가 같은 경우
-        const startsWithQuery = lowerTag.startsWith(lowerQuery);
+// 3) 빈 쿼리는 바로 빈 결과(원하면 인기검색어 등 리턴)
+if (!lowerQuery) {
+  // setFilteredResults([]) 같은 처리
+}
 
-        // 연속된 3글자 이상 일치하는 경우
-        const hasThreeConsecutiveChars = lowerQuery.length >= 3 && lowerTag.includes(lowerQuery);
+// 4) 안전 가드 + 필터 + 매핑
+const filteredResults = items
+  .filter((t: any) => t && typeof t.tag === 'string' && t.tag.length > 0)
+  .filter((t: any) => {
+    const lowerTag = t.tag.toLowerCase();
+    const startsWithQuery = lowerTag.startsWith(lowerQuery);
+    const hasThreeConsecutiveChars =
+      lowerQuery.length >= 3 && lowerTag.includes(lowerQuery);
+    return startsWithQuery || hasThreeConsecutiveChars;
+  })
+  .map((t: any) => ({
+    name: t.itemName ?? t.tag ?? '',
+    teamId: t.teamId ?? undefined,
+    leagueId: t.leagueId ?? undefined,
+  }));
 
-        return startsWithQuery || hasThreeConsecutiveChars;
-      })
-      .map(t => ({ 
-        name: t.itemName, 
-        teamId: t.teamId ?? undefined, 
-        leagueId: t.leagueId ?? undefined 
-      }));
 
     // 중복 제거 로직 추가: item_name이 동일하면서 teamId 또는 leagueId가 같은 항목은 하나만 유지
     const uniqueResults: filteredItems[] = [];

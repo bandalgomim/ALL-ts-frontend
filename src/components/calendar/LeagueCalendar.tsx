@@ -5,10 +5,12 @@ import Header from './headers/Header';
 import Mode from './mode/mode';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
-import { LeagueContext } from '../../context/league.context';
+import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import LeageTeamListBar from '../league/leageTeamList';
+import { getLeagueResDto } from '../../model/league.dto';
+import { PostState } from '../../model/config';
 
 
 export default function LeagueCalendar() {
@@ -16,7 +18,7 @@ export default function LeagueCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
-  const { leagueRes } = useContext(LeagueContext);
+  const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
 
   // Handlers for changing the month
@@ -39,7 +41,6 @@ export default function LeagueCalendar() {
     weekDates.forEach((date) => {
       
       const key = date.toLocaleDateString('sv-SE');
-      console.log('weekDates', key);
       if (leagueRes.data.matchList[key]) {
         weekResult[key] = leagueRes.data.matchList[key];
       }

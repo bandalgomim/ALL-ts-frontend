@@ -5,18 +5,19 @@ import Contents from './contents/contents';
 import Mode from './mode/mode';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '../../global';
-import { getmainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
+import { getMainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { MainContext } from '../../context/main.context';
+import { useMainState } from '../../context/main.context';
 import AdmobNativeAdSmall from '../ad/smallBanner';
+import { PostState } from '../../model/config';
 
 interface MainCalendarProps {
-  data: getmainResDto;
+  data: getMainResDto;
 }
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
-  const {mainRes} = useContext(MainContext);
+  const mainRes = useMainState() as PostState<getMainResDto>
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가

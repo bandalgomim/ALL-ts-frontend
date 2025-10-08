@@ -1,4 +1,4 @@
-import { MainProvider } from './main.context';
+import { MainProvider } from './main.context.jsx';
 import { TeamProvider } from './team.context';
 import { LeagueProvider } from './league.context';
 import { MatchProvider } from './match.context';
@@ -11,7 +11,6 @@ import { ModalNextMatchProvider } from './modal/modalNextMatch.context';
 
 export default function ApiProvider({ children }) {
   return (
-    <AuthProvider>
       <LogoModalProvider>
         <ModalProvider>
           <ModalNextMatchProvider>
@@ -31,6 +30,5 @@ export default function ApiProvider({ children }) {
           </ModalNextMatchProvider>
         </ModalProvider>
       </LogoModalProvider>
-    </AuthProvider>
   );
 }

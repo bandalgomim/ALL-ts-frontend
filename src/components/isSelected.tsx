@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../model/navigation.dto';
 import { height, width } from '../global';
-import { MainContext } from '../context/main.context';
+import { useMainActions } from '../context/main.context';
 import { AuthContext } from '../context/auth.context';
 
 interface IsSelectedPros {
@@ -17,8 +17,7 @@ interface IsSelectedPros {
 }
 
 const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, matchId, color}) => {
-  const { setMainRes } = useContext(MainContext);
-  const { setLogin } = useContext(AuthContext);
+  const { setMainRes } = useMainActions()
   const [state, setState] = useState<boolean | null>(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = useCallback(
@@ -36,14 +35,14 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
     setState(!state);
     if (teamId) {
 
-      await hookIsSelected('PATCH', {teamId: teamId}, setMainRes, setLogin);
+      await hookIsSelected('PATCH', {teamId: teamId}, setMainRes);
       navigateTeam(teamId);
     } else if (leagueId) {
-      await hookIsSelected('PATCH', {leagueId: leagueId}, setMainRes, setLogin);
+      await hookIsSelected('PATCH', {leagueId: leagueId}, setMainRes);
     } else if (matchId) {
-      await hookIsSelected('PATCH', {matchId: matchId}, setMainRes, setLogin);
+      await hookIsSelected('PATCH', {matchId: matchId}, setMainRes);
     }
-  }, [leagueId, matchId, navigateTeam, setLogin, setMainRes, state, teamId]);
+  }, [leagueId, matchId, navigateTeam, setMainRes, state, teamId]);
   return (
     <TouchableOpacity
       onPress={onPressStart}

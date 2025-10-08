@@ -1,5 +1,5 @@
 import { StateDto } from './config';
-import { matchDto } from './main.dto';
+import { matchDto, matchListDto } from './main.dto';
 
 export interface leagueDto {
     leagueId: number,
@@ -27,9 +27,9 @@ export interface teamDto {
 }
 
 export interface getLeagueResDto {
-    league: leagueDto | null,
-    teamList: teamDto[] | null,
-    matchList: matchDto[] | null
+    league: leagueDto,
+    teamList: teamDto[],
+    matchList: matchListDto
 }
 
 export interface getLeagueReqQueryDto {

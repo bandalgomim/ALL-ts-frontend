@@ -8,7 +8,7 @@ export interface platform {
     platfromMatchUrlType: string | null
 }
 
-export interface getMatchReqDto {
+export interface getMatchResDto {
     matchId: string | null,
     matchDate: string | null,
     matchTime: string | null,
@@ -35,5 +35,3 @@ export interface getMatchReqDto {
 export interface getMatchResQueryDto {
     matchId: string
 }
-
-export type getMatchResDto = StateDto<getMatchResQueryDto>

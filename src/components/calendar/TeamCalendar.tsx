@@ -5,15 +5,17 @@ import Mode from './mode/mode';
 import Header from './headers/Header';
 import { width, height } from '../../global';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
-import { TeamContext } from '../../context/team.context';
+import { useTeamState, useTeamActions } from '../../context/team.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
+import { PostState } from '../../model/config';
+import { getTeamResDto } from '../../model/team.dto';
 
 export default function TeamCalendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [mode, setMode] = useState<'m' | 'w'>('w');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
-  const { teamRes } = useContext(TeamContext);
+  const teamRes = useTeamState() as PostState<getTeamResDto>;
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘

@@ -1,27 +1,3 @@
-/*import React, { createContext, useState, useMemo } from 'react';
-
-export const ModalContext = createContext();
-
-export function SearchProvider({ children }) {
-
-  const [searchVisible, setSearchVisible] = useState(false);
-  const [searchContents, setSearchContents] = useState(false);
-
-
-  const value = useMemo(() => ({
-    
-    searchVisible,
-    setSearchVisible,
-    
-  }), [searchVisible]);
-
-  return (
-    <ModalContext.Provider value={value}>
-      {children}
-    </ModalContext.Provider>
-  );
-}*/
-
 import React, {
   createContext,
   useContext,
@@ -29,7 +5,7 @@ import React, {
   useReducer,
   ReactNode,
 } from 'react';
-import { modalSingleReducer } from '../../reducsers/modalReducer';
+import { modalSingleReducer } from '../../reducers/modalReducer';
 
 // --- State & Actions 타입 ---
 export interface SearchState {

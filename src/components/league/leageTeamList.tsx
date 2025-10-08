@@ -2,15 +2,16 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext } from 'react';
 import { View, StyleSheet,  ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { TeamPageParamList } from '../../model/navigation.dto';
-import { teamDto } from '../../model/league.dto';
+import { getLeagueResDto, teamDto } from '../../model/league.dto';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
-import { LeagueContext } from '../../context/league.context';
+import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import DraggableFlatList from 'react-native-draggable-flatlist';
+import { PostState } from '../../model/config';
 const LeageTeamListBar = () => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
-  const {leagueRes} = useContext(LeagueContext);
+  const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   const navigateTeam = (teamId: number) => {
     navigation.navigate('TeamScreen', { teamId: teamId });
   };

@@ -5,10 +5,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from "react-native";
 import { MainPageParamList } from "../../model/navigation.dto";
 import { hookAuth } from "../../hooks/IAM.hook";
-import { LeagueContext } from "../../context/league.context";
-import { MainContext } from "../../context/main.context";
-import { MatchContext } from "../../context/match.context";
-import { TeamContext } from "../../context/team.context";
+import { useLeagueState, useLeagueActions } from "../../context/league.context";
+import { useMainActions } from "../../context/main.context";
+import { useMatchActions } from "../../context/match.context";
+import { useTeamState, useTeamActions } from "../../context/team.context";
 import { height, width } from "../../global";
 
 interface GoogleAuthButtonProps {
@@ -18,10 +18,10 @@ interface GoogleAuthButtonProps {
 const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
   // type 에 따라 버튼 텍스트 결정
   const buttonText = type === "up" ? "Sign up with Google" : "Sign in with Google";
-  const {setMainRes} = useContext(MainContext);
-  const {setTeamRes} = useContext(TeamContext);
-  const {setLeagueRes} = useContext(LeagueContext);
-  const {setMatchRes} = useContext(MatchContext);
+  const { setMainRes } = useMainActions()
+  const {setTeamRes} = useTeamActions();
+  const { setLeagueRes } = useLeagueActions();
+  const { setMatchRes } = useMatchActions();
   const [res, setRes] = useState<boolean | string>("초기");
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {

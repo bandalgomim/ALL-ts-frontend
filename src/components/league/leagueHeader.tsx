@@ -4,15 +4,17 @@ import SearchBar from '../searchBar/searchBar';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import IsSelected from './../isSelected';
 import { width, height } from '../../global';
-import { LeagueContext } from '../../context/league.context';
+import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LeagueRankList from './leagueRankList';
 import LogoPicker from '../logo/logoPicker';
 import { refetchDto } from '../../model/refetch.dto';
 import RefreshButton from '../refresh';
+import { PostState } from '../../model/config';
+import { getLeagueResDto } from '../../model/league.dto';
 
 const LeagueHeader: React.FC<refetchDto> = ({ refetch }) => {
-  const {leagueRes} = useContext(LeagueContext);
+    const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   const [record, setRecord] = useState(false);
 
   function detectLang(text: string, size: 'big' | 'medium' | 'small') {

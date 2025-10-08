@@ -9,7 +9,7 @@ import { MatchPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
 import { useModalActions } from '../../context/modal/modal.context.tsx';
-import { ModalContext as ModalNextMatchContext, useModalNextMatchActions } from '../../context/modal/modalNextMatch.context';
+import { ModalContext as ModalNextuseMatchActions, useModalNextMatchActions } from '../../context/modal/modalNextMatch.context';
 
 interface MatchBarPros {
   match: matchDto; // Assuming match is your interface from earlier

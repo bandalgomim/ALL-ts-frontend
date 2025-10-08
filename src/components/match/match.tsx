@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { getMatchReqDto, platform } from '../../model/match.dto';
+import { getMatchResDto, platform } from '../../model/match.dto';
 import SearchBar from '../searchBar/searchBar';
 import TeamOrLeagueLogo from '../teamOrLeagueLogo';
 import MatchScore from '../matchBar/matchScore';
@@ -14,7 +14,7 @@ import { width, height } from '../../global';
 import { HeadNotch } from '../notch';
 
 interface MatchPros {
-  match: getMatchReqDto;
+  match: getMatchResDto;
   refetch: () => Promise<any> | void
 }
 

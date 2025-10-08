@@ -4,8 +4,8 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import { hookIcon } from '../../hooks/icon.hook';
 import { AuthContext } from '../../context/auth.context';
-import { TeamContext } from '../../context/team.context';
-import { LeagueContext } from '../../context/league.context';
+import { useTeamState, useTeamActions } from '../../context/team.context';
+import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import { height, width } from '../../global';
 
 interface TeamOrLogoPros {
@@ -15,9 +15,8 @@ interface TeamOrLogoPros {
 }
 
 const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
-  const { setTeamRes } = useContext(TeamContext);
-  const { setLeagueRes } = useContext(LeagueContext);
-  const { setLogin } = useContext(AuthContext);
+  const { setTeamRes} = useTeamActions();
+  const { setLeagueRes } = useLeagueActions();
   const handleSelectAndSaveImage = async (type:TeamOrLogoPros['type'], id: number, uri: string) => {
     const result = await launchImageLibrary({
       mediaType: 'photo',
@@ -53,7 +52,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
           uri: destPath,
         }
         const dispatch = type === 'team' ? setTeamRes : setLeagueRes;
-        await hookIcon('PATCH', req, dispatch, setLogin);
+        await hookIcon('PATCH', req, dispatch);
         
         Alert.alert('이미지 저장 성공');
       } catch (error) {
@@ -84,7 +83,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
             uri: null,
           }
           const dispatch = type === 'team' ? setTeamRes : setLeagueRes;
-          await hookIcon('PATCH', req, dispatch, setLogin);
+          await hookIcon('PATCH', req, dispatch);
           
           Alert.alert('이미지 삭제 성공');
     } catch (error) {

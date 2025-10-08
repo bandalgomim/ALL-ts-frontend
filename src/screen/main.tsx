@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {  StyleSheet, View, Text } from 'react-native';
 import MainCalendar from '../components/calendar/MainCalendar';
 import Logo from '../components/logo';
@@ -10,14 +10,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { width, height } from '../global';
 import { HeadNotch } from '../components/notch';
-import { MainContext } from '../context/main.context';
-import { getmainResDto } from '../model/main.dto';
+import { useMainActions, useMainState } from '../context/main.context';
+import { getMainResDto } from '../model/main.dto';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { hookIsLogin } from '../hooks/IAM.hook';
+import { PostState } from '../model/config';
 
 
 const MainScreen = () => {
-  const { setMainRes, mainRes } = useContext(MainContext);
+  const { setMainRes } = useMainActions()
+  const mainRes = useMainState() as PostState<getMainResDto>
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
@@ -60,7 +62,7 @@ const MainScreen = () => {
         </View>
       </View>
       <MainCalendar
-        data={mainRes?.data as getmainResDto}
+        data={mainRes?.data as getMainResDto}
       />
                 
       <View style={[styles.tabBar]} />

@@ -1,24 +1,23 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Match  from '../components/match/match';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '../hooks/match.hook';
 import LoadingScreen  from '../components/loadingPage';
 import { View, StyleSheet } from 'react-native';
 import MainTabBar from '../components/main/mainTabBar';
-import { getMatchResQueryDto } from '../model/match.dto';
+import { getMatchResDto, getMatchResQueryDto } from '../model/match.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
-import { AuthContext } from '../context/auth.context';
-import { MatchContext } from '../context/match.context';
+import { useMatchState, useMatchActions } from '../context/match.context';
 import { hookRefetch } from '../hooks/refetch.hook';
-import { localData } from '../IAM/localData';
 import { hookIsLogin } from '../hooks/IAM.hook';
-import AdmobNativeAdSmall from '../components/ad/smallBanner';
+import { PostState } from '../model/config';
 
 
 const MatchScreen = () => {
 
-  const { matchRes, setMatchRes } = useContext(MatchContext);
+  const { setMatchRes } = useMatchActions();
+  const matchRes = useMatchState() as PostState<getMatchResDto>
   const { matchId } = useRoute().params as getMatchResQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
@@ -43,15 +42,6 @@ const MatchScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchRes.loading]);
 
-  /*useFocusEffect(
-    useCallback(() => {
-      if (login === false) return;
-      setRender(false);
-      hookMatch('GET', { matchId }, setMatchRes, setLogin);
-      return () => {};
-    }, [login, matchId, key, setMatchRes, setLogin])
-  )*/
-
   return !render ? (
     <LoadingScreen
       color="white"
@@ -60,7 +50,7 @@ const MatchScreen = () => {
     <>
     <View style={[styles.logo]}>
     <Match
-      match={matchRes.data ?? {}}
+      match={matchRes.data as getMatchResDto ?? {}}
       refetch={refetch}
     />
     </View>

@@ -5,19 +5,22 @@ import LeagueHeader from '../components/league/leagueHeader';
 import { hookLeague } from '../hooks/league.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
-import { getLeagueReqQueryDto } from '../model/league.dto';
+import { getLeagueReqQueryDto, getLeagueResDto } from '../model/league.dto';
 import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
-import { LeagueContext } from '../context/league.context';
+import { useLeagueState, useLeagueActions } from '../context/league.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { hookIsLogin } from '../hooks/IAM.hook';
+import { PostState } from '../model/config';
 
 const LeagueScreen = () => {
-  const { leagueRes, setLeagueRes } = useContext(LeagueContext);
+  const { setLeagueRes } = useLeagueActions();
+  const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
+  console.log('LeagueScreen 렌더링: ', leagueRes);
   const { leagueId } = useRoute().params as getLeagueReqQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
@@ -44,15 +47,6 @@ const LeagueScreen = () => {
     setPrevLoading(leagueRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueRes.loading]);
-
-  /*useFocusEffect(
-    useCallback(() => {
-      if (login === false) {return;}
-      setRender(false);
-      hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes, setLogin);
-      return () => {};
-    }, [login, leagueId, key, setLeagueRes, setLogin])
-  );*/
 
   return !render ? (
     <LoadingScreen

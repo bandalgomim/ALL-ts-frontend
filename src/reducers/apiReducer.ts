@@ -1,7 +1,7 @@
 import { PostState, PostAction, StateDto } from '../model/config';
 import { getLeagueResDto } from '../model/league.dto';
-import { getmainResDto } from '../model/main.dto';
-import { getMatchReqDto } from '../model/match.dto';
+import { getMainResDto } from '../model/main.dto';
+import { getMatchResDto } from '../model/match.dto';
 import { getTeamResDto } from '../model/team.dto';
 
 
@@ -36,7 +36,7 @@ export const createInitial = <T>(data: T | null): PostState<T> => ({
 
 // 각 데이터 구조에 맞게 초기값을 생성
 
-export const initialmainRes = createInitial<getmainResDto>({
+export const initialmainRes = createInitial<getMainResDto>({
   matchList: null,
   teamAndLeagueList: null,
 });
@@ -52,7 +52,7 @@ export const initialLeagueRes = createInitial<getLeagueResDto>({
   matchList: null,
 });
 
-export const initialmatchRes = createInitial<getMatchReqDto>({
+export const initialmatchRes = createInitial<getMatchResDto>({
   matchId: null,
   matchDate: null,
   homeTeamId: null,
@@ -73,6 +73,19 @@ export const initialmatchRes = createInitial<getMatchReqDto>({
   matchState: null,
   isMatchSelected: null,
   platform: null,
+  matchTime: null
+});
+
+interface filteredItems {
+  name: string;
+  teamId: number | undefined;
+  leagueId: number | undefined;
+}
+
+export const initialsearchTagRes = createInitial<filteredItems>({
+  name: '',
+  teamId: undefined,
+  leagueId: undefined,
 });
 
 export const initialRes: StateDto<null> = {

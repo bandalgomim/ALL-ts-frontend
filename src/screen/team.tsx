@@ -5,20 +5,22 @@ import TeamHeader from '../components/teamHeader';
 import { hookTeam } from '../hooks/team.hook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LoadingScreen  from '../components/loadingPage';
-import { getTeamReqQueryDto } from '../model/team.dto';
+import { getTeamReqQueryDto, getTeamResDto } from '../model/team.dto';
 import MainTabBar from '../components/main/mainTabBar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '../model/navigation.dto';
 import { HeadNotch } from '../components/notch';
-import { TeamContext } from '../context/team.context';
+import { useTeamState, useTeamActions } from '../context/team.context';
 import { AuthContext } from '../context/auth.context';
 import { height, width } from '../global';
 import Logo from '../components/logo';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { hookIsLogin } from '../hooks/IAM.hook';
+import { PostState } from '../model/config';
 
 const TeamScreen = () => {
-  const { teamRes, setTeamRes } = useContext(TeamContext);
+  const {setTeamRes} = useTeamActions();
+  const teamRes = useTeamState() as PostState<getTeamResDto>;
   const [prevLoading, setPrevLoading] = useState<boolean | null>(null); // 이전 로딩 상태
   const [render, setRender] = useState(false);
   const { teamId, key } = useRoute().params as getTeamReqQueryDto;
@@ -45,15 +47,6 @@ const TeamScreen = () => {
     setPrevLoading(teamRes.loading); // 이전 상태 업데이트
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamRes.loading]);
-
-  /*useFocusEffect(
-    useCallback(() => {
-      if (login === false) return;
-      setRender(false);
-      hookTeam('GET' as string, {teamId: teamId}, setTeamRes, setLogin);
-      return () => {};
-    }, [login, teamId, key, setTeamRes, setLogin])
-  );*/
 
   return !render ? (
     <LoadingScreen

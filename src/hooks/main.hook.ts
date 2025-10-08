@@ -1,8 +1,5 @@
-import { useContext, useEffect } from 'react';
 import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '../model/main.dto';
-import { MainContext } from '../context/main.context';
-import { AuthContext } from '../context/auth.context';
 import { getDeviceVersion } from '../utils/deviceVersion';
 
 export const hookMain = async (

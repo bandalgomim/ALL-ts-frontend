@@ -35,7 +35,7 @@ export interface leagueDto {
 
 export type matchListDto = Record<string, matchDto[]>;
 
-export interface getmainResDto {
+export interface getMainResDto {
     matchList: matchListDto | null,
     teamAndLeagueList: (teamDto | leagueDto)[] | null,
 }

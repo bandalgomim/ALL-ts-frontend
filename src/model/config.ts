@@ -1,6 +1,6 @@
 // 상태 타입 정의
 export interface PostState<T> {
-    data: T | Record<string, unknown> | null;
+    data: T;
     loading: boolean;
     error: string | null;
   }

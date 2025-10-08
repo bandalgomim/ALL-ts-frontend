@@ -1,13 +1,12 @@
-import { localData } from '../IAM/localData';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { hookSearchTag } from './searchTag.hook';
-import { SearchTagContext } from '../context/searchTag.context';
-import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
+import { useSearchTagActions } from '../context/searchTag.context';
+import { getMessaging, getToken } from '@react-native-firebase/messaging';
 import { hookFcmToken } from './IAM.hook';
 import { getApp } from '@react-native-firebase/app';
 
 const useDailyTask = () => {
-  const {searchTagRes, setSearchTagRes} = useContext(SearchTagContext)
+  const { setSearchTagRes } = useSearchTagActions()
   useEffect(() => {
     const runDailyTask = async () => {
       try {
