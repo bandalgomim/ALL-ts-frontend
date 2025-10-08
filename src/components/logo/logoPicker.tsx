@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { StyleSheet,  Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { height, width } from '../../global';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { ModalContext } from '../../context/modal/modal.context';
+import { ModalContext } from '../../context/modal/logoModal.context';
 
 
 interface TeamOrLogoPros {

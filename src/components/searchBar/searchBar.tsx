@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet,  Image, ImageBackground } from 'react-native';
 import { width, height } from '../../global';
-import { ModalContext } from '../../context/modal/modal.context';
+import { ModalContext } from '../../context/modal/search.context';
 
 
-interface SerchBarPros {
+interface SearchBarPros {
     type: string | null;
 }
 
 const imageMap = {
-  blue: require('./../../assets/searchBar/serchBar_blue.png'),
-  white: require('./../../assets/searchBar/serchBar_white.png'),
-  match: require('./../../assets/searchBar/serchBar.png'),
+  blue: require('./../../assets/searchBar/searchBar_blue.png'),
+  white: require('./../../assets/searchBar/searchBar_white.png'),
+  match: require('./../../assets/searchBar/searchBar.png'),
 };
 
-const SearchBar: React.FC<SerchBarPros> = ({ type }) => {
+const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
   const src = type ? imageMap[type as keyof typeof imageMap] : null;
   const{setSearchVisible} = useContext(ModalContext);
 

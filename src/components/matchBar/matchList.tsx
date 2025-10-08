@@ -21,7 +21,7 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,                  // 기본값 설정
   headerHeight
 }) => {
-  console.log('MatchBar component rendered ', matchList);
+  console.log('MatchBar component rendered');
   const flatListRef = useRef<FlatList>(null);
   useLayoutEffect(() => {
     if (flatListRef.current) {

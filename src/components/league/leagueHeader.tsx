@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import SearchBar from '../searchBar/serchBar';
+import SearchBar from '../searchBar/searchBar';
 import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
 import IsSelected from './../isSelected';
 import { width, height } from '../../global';

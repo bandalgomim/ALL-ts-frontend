@@ -9,6 +9,7 @@ import { MatchPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '../../global';
 import { ModalContext } from '../../context/modal/modal.context';
+import { ModalContext as ModalNextMatchContext } from '../../context/modal/modalNextMatch.context';
 
 interface MatchBarPros {
   match: matchDto; // Assuming match is your interface from earlier
@@ -16,8 +17,9 @@ interface MatchBarPros {
 }
 
 const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
-  
-  const { setModalVisible, setModalNextMatchVisible } = useContext(ModalContext);
+  console.log('MatchBar.tsx');
+  const { setModalVisible } = useContext(ModalContext);
+  const { setModalNextMatchVisible } = useContext(ModalNextMatchContext);
   const [score, setScore] = useState(false);
   /*const style =
     color === 'white'

@@ -5,16 +5,16 @@ import { MatchProvider } from './match.context';
 import { AuthProvider } from './auth.context';
 import { ModalProvider } from './modal/modal.context';
 import { SearchTagProvider } from './searchTag.context';
-import { LogoProvider } from './modal/logo.context';
-import { SearchProvider } from './modal/serch.context';
-import { NextMatchProvider } from './modal/nextMatch.context';
+import { LogoModalProvider } from './modal/logoModal.context';
+import { SearchProvider } from './modal/search.context';
+import { ModalNextMatchProvider } from './modal/modalNextMatch.context';
 
 export default function ApiProvider({ children }) {
   return (
     <AuthProvider>
-      <LogoProvider>
+      <LogoModalProvider>
         <ModalProvider>
-          <NextMatchProvider>
+          <ModalNextMatchProvider>
             <SearchProvider>
               <MainProvider>
                 <TeamProvider>
@@ -28,9 +28,9 @@ export default function ApiProvider({ children }) {
                 </TeamProvider>
               </MainProvider>
             </SearchProvider>
-          </NextMatchProvider>
+          </ModalNextMatchProvider>
         </ModalProvider>
-      </LogoProvider>
+      </LogoModalProvider>
     </AuthProvider>
   );
 }

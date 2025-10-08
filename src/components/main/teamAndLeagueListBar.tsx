@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import SearchBar from '../searchBar/serchBar';
+import SearchBar from '../searchBar/searchBar';
 import { leagueDto, patchMainReqDto, teamDto } from '../../model/main.dto';
 import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
@@ -10,7 +10,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { transformToPatchMainReqDto } from './util';
 import { width, height } from './../../global';
 import { hookMain } from '../../hooks/main.hook';
-import SerchBar from '../searchBar/serchBar';
 import { AuthContext } from '../../context/auth.context';
 
 interface ContentsProps {
@@ -81,7 +80,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
       if ('box' in item && item.box === null) {
         return (
           <View key={item.index} style={boxStyle}>
-            <SerchBar type={null} />
+            <SearchBar type={null} />
           </View>
         );
       }
@@ -141,7 +140,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
             />
           ) : null}
         </View>
-        <View style={[styles.serchBarContainer, styles.searchBarPosition]}>
+        <View style={[styles.searchBarContainer, styles.searchBarPosition]}>
           <SearchBar type="blue" />
         </View>
       </ImageBackground>
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     height: height * 0.118,
   },
-  serchBarContainer: {
+  searchBarContainer: {
     transform: [{ rotate: '7deg' }],
   },
   searchBarPosition: {
