@@ -1,19 +1,4 @@
-/*import React, { createContext, useReducer, useMemo } from 'react';
-import { PostReducer, initialteamRes } from '../reducsers/apiReducer';
 
-export const useTeamState, useTeamActions = createContext();
-
-export function TeamProvider({ children }) {
-  const [teamRes, setTeamRes] = useReducer(PostReducer, initialteamRes);
-
-  const value = useMemo(() => ({ teamRes, setTeamRes }), [teamRes]);
-
-  return (
-    <useTeamState, useTeamActions.Provider value={value}>
-      {children}
-    </useTeamState, useTeamActions.Provider>
-  );
-}*/
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 import { PostReducer, initialteamRes } from '../reducers/apiReducer';
 
