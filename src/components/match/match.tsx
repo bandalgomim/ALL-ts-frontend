@@ -25,7 +25,6 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const navigateTeam = (teamId: number) => {
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
   };
-  console.log('Match component rendered ', match.matchTime);
   const onPressHomeTeamScore = () => {
     setHomeTeamScore(!homeTeamScore);
   };

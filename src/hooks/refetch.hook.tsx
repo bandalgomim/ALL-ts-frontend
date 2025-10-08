@@ -9,7 +9,6 @@ export function hookRefetch(refetch: () => Promise<any> | void) {
   const inFlight = useRef(false);
 
   const run = useCallback(() => {
-    console.log('hookRefetch called');
     if (inFlight.current) return;
     inFlight.current = true;
     Promise.resolve(refetch()).finally(() => { inFlight.current = false; });

@@ -17,7 +17,6 @@ interface MatchBarPros {
 }
 
 const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
-  console.log('MatchBar rendered');
   const { close: closeModal } = useModalActions(); 
   const { close: closeNextMatchModal } = useModalNextMatchActions();
   const [score, setScore] = useState(false);

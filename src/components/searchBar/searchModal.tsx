@@ -68,7 +68,6 @@ const SearchModal: React.FC = () => {
     const lowerQuery = input.toLowerCase();
 
     // 검색 결과 필터링
-    console.log('searchTagRes.payload', searchTagRes);
     const filteredResults = searchTagRes.payload
       .filter(t => {
         const lowerTag = t.tag.toLowerCase();

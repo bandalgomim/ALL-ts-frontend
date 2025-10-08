@@ -58,7 +58,6 @@ export async function initializeNotifications() {
   }
   // 이벤트 핸들러 등록 (기존 코드 유지)
   notifee.onBackgroundEvent(async ({ type, detail }) => {
-    console.log('[Background] 이벤트 수신:', type, detail);
     if (type === EventType.DELIVERED) {
       console.log('[Background] 알림 수신됨:', detail.notification);
     } else if (type === EventType.PRESS) {
@@ -73,7 +72,6 @@ export async function initializeNotifications() {
     return Promise.resolve();
   });
   notifee.onForegroundEvent(({ type, detail }) => {
-    console.log('[Foreground] 이벤트 수신:', type, detail);
     if (type === EventType.DELIVERED) {
       console.log('[Foreground] 알림 수신됨:', detail.notification);
     } else if (type === EventType.PRESS) {
