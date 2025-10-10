@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
 
   },
   matchListWeek: {
-    marginTop: height * 0.04,
+    marginTop: height * 0.03,
     height: height * 0.62,
 
   },
