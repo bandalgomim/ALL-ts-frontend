@@ -8,6 +8,7 @@ import MatchScreen  from '../screen/match';
 import IAMScreen  from '../screen/IAM';
 import CustomHeader from '../components/customHeader';
 import UserScreen from '../screen/user';
+import StartScreen from '../screen/start'
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -38,6 +39,11 @@ const StackNavigator = () => {
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, // iOS 스타일 전환
           }}
         >
+          <Stack.Screen
+            name="StartScreen"
+            component={StartScreen}
+            options={{ freezeOnBlur: true }}
+          />
           <Stack.Screen
             name="MainScreen"
             component={MainScreen}

@@ -1,25 +1,53 @@
-// SplashScreen.tsx
-import React, { useContext, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect } from 'react';
+import LoadingScreen  from '../components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
-import { hookRefreshToken, hookIsLogin } from '../hooks/IAM.hook';
-import { AuthContext } from '../context/auth.context';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList, MainPageParamList } from '../model/navigation.dto';
+import { MainPageParamList } from '../model/navigation.dto';
+import { getDeviceVersion } from '../utils/deviceVersion';
+import { hookVersionCheck } from '../hooks/IAM.hook';
+import { Alert, Linking } from 'react-native';
 
-export default function StartScreen() {
+
+const StartScreen = () => {
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
   };
-  useEffect(() => {
-    // 비동기 인증 체크 후 바로 이동
-        hookIsLogin(navigateMain)
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  return (
-    <View />
+useEffect(() => {
+    const runStartTask = async () => {
+    try {
+        const verCheck = await hookVersionCheck()
+        if (verCheck) {
+            navigateMain();
+        } else {
+            Alert.alert(
+                '업데이트 필요',
+                '보안 강화를 위해 최신 버전으로 업데이트해주세요.',
+                [
+                  { text: '취소', style: 'cancel' },
+                  {
+                    text: '업데이트하기',
+                    onPress: () => Linking.openURL('itms-apps://apps.apple.com/sa/app/allts/id6746038222'),
+                  },
+                ],
+                { cancelable: false }
+              );
+        }
+    } catch (err) {
+        console.error('Daily task error:', err);
+    }
+    };
+
+    runStartTask();
+}, []);
+
+
+  return  (
+    <LoadingScreen
+    color="blue"
+    />
   );
-}
+};
+export default React.memo(StartScreen);
+StartScreen.whyDidYouRender = true;

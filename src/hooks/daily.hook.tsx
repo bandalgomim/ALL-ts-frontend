@@ -13,7 +13,6 @@ const useDailyTask = () => {
         const fcmToken = await getToken(getMessaging(getApp()));
         await hookFcmToken({'token': fcmToken});
         await hookSearchTag('GET', null, setSearchTagRes);
-        
       } catch (err) {
         console.error('Daily task error:', err);
       }

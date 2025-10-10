@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // hookRefetch.ts
 import { useCallback, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';

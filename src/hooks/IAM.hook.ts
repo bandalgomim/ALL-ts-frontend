@@ -4,6 +4,8 @@ import { localData } from '../IAM/localData';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducers/apiReducer';
 import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
+import { getVersion } from 'react-native-device-info';
+import { getDeviceVersion } from '../utils/deviceVersion';
 
 export const hookAuth = async (
     data: getLoginReqDto,
@@ -64,6 +66,23 @@ export const hookRefreshToken = async () => {
     }
 };
 
+export const hookVersionCheck = async() => {
+    try {
+        const url = 'https://806b68989aa5.ngrok-free.app/versionCheck'
+        const ver = await getDeviceVersion()
+        console.log(ver)
+        const response = await axios({
+            method: 'POST',
+            url: url,  // 올바른 URL 설정
+            data: ver ,  // POST, PUT, DELETE일 경우 payload
+        });
+        return response.data.result
+
+    } catch (error) {
+        console.error('hookVersionCheck 요청 실패:', error);
+    }
+}
+ 
 export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
     try {
         const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
