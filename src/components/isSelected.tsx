@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { hookIsSelected } from '../hooks/isSelected.hook';
 import { useNavigation } from '@react-navigation/native';
@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { TeamPageParamList } from '../model/navigation.dto';
 import { height, width } from '../global';
 import { useMainActions } from '../context/main.context';
-import { AuthContext } from '../context/auth.context';
 
 interface IsSelectedPros {
     isSelected: boolean | null;

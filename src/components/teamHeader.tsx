@@ -1,17 +1,14 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import SearchBar from './searchBar/searchBar';
 import TeamOrLeagueLogo  from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
 import RefreshButton from './refresh';
 import { width, height } from '../global';
-import { useTeamState, useTeamActions } from '../context/team.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useModalNextMatchActions } from '../context/modal/modalNextMatch.context';
 import { findNext } from './calendar/utills';
 import LogoPicker from './logo/logoPicker';
-import { refetchDto } from '../model/refetch.dto';
-import { PostState } from '../model/config';
 import { getTeamResDto } from '../model/team.dto';
 
 interface TeamHeaderProps {

@@ -37,7 +37,7 @@ export function hookRefetch(
     useCallback(() => {
       run();
       return () => {
-        setTimeout(() => {hookPageState({ type: 'LOADING' });}, 500); // debounce
+        hookPageState({ type: 'LOADING' });// debounce
            // ✅ blur 시점
         if (!isMounted.current) return;
         
@@ -48,7 +48,7 @@ export function hookRefetch(
   // 2) 화면을 떠나기 직전(beforeRemove)에도 실행 (뒤로가기/replace 등)
   useEffect(() => {
     const sub = navigation.addListener('beforeRemove', () => {
-      setTimeout(() => {hookPageState({ type: 'LOADING' });}, 500); // debounce
+      hookPageState({ type: 'LOADING' });
       if (!isMounted.current) return;
            // ✅ 네비게이션 이탈 직전
     });
@@ -68,7 +68,7 @@ export function hookRefetch(
   // 4) 언마운트 시점 가드 및 마지막 정리
   useEffect(() => {
     return () => {
-      setTimeout(() => {hookPageState({ type: 'LOADING' });}, 500); // debounce
+      hookPageState({ type: 'LOADING' });
       isMounted.current = false;
       // 언마운트 도중 setState 경고 방지: isMounted 가드로 이미 보호
       
