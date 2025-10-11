@@ -27,7 +27,6 @@ export const localData = {
           } catch (error) {
 
             console.error('데이터 삭제 실패:', key, error);
-            
           }
     },
 };
