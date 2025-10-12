@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   headerTeamInfoNameMedium: {
     height: height*0.085,
     fontSize: width * 0.11,
-    paddingTop: height*0.025,
+    paddingTop: height*0.02,
     marginBottom: -height * 0.01,
   },
   headerTeamInfoNameSmall: {
