@@ -7061,6 +7061,11 @@ react-native-vector-icons@^10.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
+react-native-video@^6.17.0:
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.17.0.tgz#36e91627550d4957faa38f88ee5b647aa122c7eb"
+  integrity sha512-sslmQo5paSNLmSJ93t3lkC7kl4yFGIc+LWoBdu44hkL4EKG7OIZNd5iaX+/SedAdqecifJrOZHAozxHzVh3TsQ==
+
 react-native@*:
   version "0.81.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.81.4.tgz#d5e9d0a71ed2e80a550a6c358f2ce3ddb6f5b119"
