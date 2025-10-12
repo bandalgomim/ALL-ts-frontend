@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import LoadingScreen  from '../components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MainPageParamList } from '../model/navigation.dto';
+import { MainPageParamList, OnboardingPageParamList } from '../model/navigation.dto';
 import { getDeviceVersion } from '../utils/deviceVersion';
 import { hookVersionCheck } from '../hooks/IAM.hook';
 import { Alert, Linking } from 'react-native';
+import { localData } from '../IAM/localData';
 
 
 const StartScreen = () => {
@@ -13,13 +14,21 @@ const StartScreen = () => {
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
   };
+  const navigationOnboarding = useNavigation<StackNavigationProp<OnboardingPageParamList>>();
+  const navigateOnboarding = () => {
+    navigationOnboarding.replace('OnboardingScreen', undefined);
+  };
 
 useEffect(() => {
     const runStartTask = async () => {
     try {
         const verCheck = await hookVersionCheck()
         if (verCheck) {
+          if(await localData.get('onbording')) {
             navigateMain();
+          } else {
+            navigateOnboarding();
+          }
         } else {
             Alert.alert(
                 '업데이트 필요',

@@ -26,6 +26,7 @@
     "moti": "^0.30.0",
     "react": "19.0.0",
     "react-native": "0.78.2",
+    "react-native-app-intro-slider": "^4.0.4",
     "react-native-collapsible": "^1.6.2",
     "react-native-device-info": "^14.1.1",
     "react-native-draggable-flatlist": "github:computerjazz/react-native-draggable-flatlist",

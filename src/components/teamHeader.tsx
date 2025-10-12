@@ -20,10 +20,12 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
   const { open } = useModalNextMatchActions()
   const [record, setRecord] = useState(false);
 
-  function detectLang(text: string, size: 'big' | 'small') {
+  function detectLang(text: string, size: 'big' | 'small' | 'medium') {
     if (!text) {return;}
     if (size === 'big') {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
+    }  else if (size === 'medium') {
+        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameMedium]}>{text}</Text>);
     } else if (size === 'small') {
         return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
     } else {return;}
@@ -84,22 +86,30 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               const teamNameSplit = data?.team?.teamName.split(' ');
               const textLength = detectLangth(data?.team?.teamName);
               if (teamNameSplit.length === 1) {
-                if (textLength < 11) {
+                if (textLength < 9) {
                   return (
                     <>
                       {detectLang(teamNameSplit[0], 'big')}
                     </>
                   );
                 } else {
-                  return (
+                  if(textLength < 14){
+                    return (
+                      <>
+                        <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
+                        {detectLang(teamNameSplit[0], 'medium')}
+                      </>
+                    );
+                  } else {
+                    return (
                     <>
                       <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
                       {detectLang(teamNameSplit[0], 'small')}
-                    </>
-                  )
+                    </>)
+                  }
                 }
               } else if (teamNameSplit.length === 2) {
-                if (textLength < 11) {
+                if (textLength < 9) {
                   return (
                     <View style={{flexDirection: 'row'}}>
                       {detectLang(teamNameSplit[0], 'big')}
@@ -107,15 +117,24 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                     </View>
                   );
                 } else{
-                  return (
-                    <>
-                      {detectLang(teamNameSplit[0], 'small')}
-                      {detectLang(teamNameSplit[1], 'small')}
-                    </>
-                  );
+                  if(textLength < 14) {
+                    return (
+                      <View style={{flexDirection: 'row'}}>
+                        {detectLang(teamNameSplit[0], 'medium')}
+                        {detectLang(teamNameSplit[1], 'medium')}
+                      </View>
+                    );
+                  } else {
+                    return (
+                      <View>
+                        {detectLang(teamNameSplit[0], 'small')}
+                        {detectLang(teamNameSplit[1], 'small')}
+                      </View>
+                    )
+                  }
                 }
               } else {
-                if (textLength < 11) {
+                if (textLength < 9) {
                   return (
                     <View style={{flexDirection: 'row'}}>
                       {detectLang(teamNameSplit[0], 'big')}
@@ -155,8 +174,9 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               }
             })() : null}
             <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
-
-              {`${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
+              {`${data?.team?.countryName} ${data?.team?.sportName}`.length > 13 
+              ? `${data?.team?.sportName}/${data?.team?.leagueName}` 
+              : `${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
             </Text>
           </View>
           <View>
@@ -253,6 +273,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '-7deg' }],
   },
   teamInfoName: {
+    
     textAlign: 'right',
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
@@ -262,10 +283,18 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
+    height: height*0.085,
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
   },
+  headerTeamInfoNameMedium: {
+    height: height*0.085,
+    fontSize: width * 0.11,
+    paddingTop: height*0.025,
+    marginBottom: -height * 0.01,
+  },
   headerTeamInfoNameSmall: {
+    height: height*0.05,
     fontSize: width * 0.083,
     marginBottom: -height * 0.01,
   },

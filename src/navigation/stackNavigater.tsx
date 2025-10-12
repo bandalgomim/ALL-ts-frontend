@@ -8,7 +8,8 @@ import MatchScreen  from '../screen/match';
 import IAMScreen  from '../screen/IAM';
 import CustomHeader from '../components/customHeader';
 import UserScreen from '../screen/user';
-import StartScreen from '../screen/start'
+import StartScreen from '../screen/start';
+import OnboardingScreen from '../screen/onbording'
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -74,6 +75,11 @@ const StackNavigator = () => {
             component={UserScreen}
             options={{ freezeOnBlur: true }}
           />
+          <Stack.Screen
+            name='OnboardingScreen'
+            component={OnboardingScreen}
+            options={{freezeOnBlur: true}}
+            />
         </Stack.Navigator>
         <CustomHeader/>
     </NavigationContainer>
