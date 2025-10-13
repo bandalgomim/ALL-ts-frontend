@@ -7,7 +7,7 @@ type Props = {
 };
 
 const INTERVAL_MS = 1500;       // 3초 고정
-const ASPECT = 1080 / 1210;     // 가로/세로 비율
+const ASPECT = 1080 / 1250;     // 가로/세로 비율
 
 export default function TimedImageViewer({ images, isActive = true }: Props) {
   const [index, setIndex] = useState(0);
