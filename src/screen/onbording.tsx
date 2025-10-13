@@ -8,8 +8,19 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 
 const slides = [
-    { key: '1', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/1-1.png'), require('../assets/onboarding/1-2.png'), require('../assets/onboarding/1-3.png')]},
-    { key: '2', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.',
+    { key: '1',
+      title: '앱 시작하기',
+      text: '팀을 선택하고 알림을 받아보세요.',
+      backgroundColor: '#30397A',
+      source: [
+        require('../assets/onboarding/1-1.png'),
+        require('../assets/onboarding/1-2.png'),
+        require('../assets/onboarding/1-3.png')
+      ]},
+    { key: '2',
+      title: '앱 시작하기',
+      text: '팀을 선택하고 알림을 받아보세요.',
+      backgroundColor: 'white',
       source: [
         require('../assets/onboarding/2-1.png'),
         require('../assets/onboarding/2-2.png'),
@@ -29,7 +40,7 @@ export default function OnboardingScreen() {
     const isFocused = useIsFocused();
 
     const renderItem = ({ item, index }: any) => (
-        <View style={styles.slide}>
+        <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
           <TimedImageViewer
             images={item.source}
             isActive={isFocused}
@@ -53,7 +64,7 @@ export default function OnboardingScreen() {
       );
     }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: "#30397A"},
+      slide: { flex: 1, alignItems: 'center', justifyContent: 'center'},
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1' },
