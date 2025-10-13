@@ -6,7 +6,7 @@ type Props = {
   isActive?: boolean;           // 포커스 여부 (기본 true)
 };
 
-const INTERVAL_MS = 3000;       // 3초 고정
+const INTERVAL_MS = 1500;       // 3초 고정
 const ASPECT = 1080 / 1210;     // 가로/세로 비율
 
 export default function TimedImageViewer({ images, isActive = true }: Props) {

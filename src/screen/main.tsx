@@ -23,7 +23,6 @@ const MainScreen = () => {
   }, [setMainRes]);
   hookRefetch(refetch, setMainRes);
 
-
   return mainRes.loading ? (
     <LoadingScreen
     color="white"

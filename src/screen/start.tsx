@@ -27,7 +27,7 @@ useEffect(() => {
           if(await localData.get('onbording')) {
             navigateMain();
           } else {
-            navigateMain();
+            navigateOnboarding();
           }
         } else {
             Alert.alert(
