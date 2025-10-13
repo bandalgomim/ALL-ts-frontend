@@ -8,7 +8,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '../model/navigation.dto';
 
 const slides = [
-    { key: '1', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/이미지_전.png'), require('../assets/onboarding/이미지_후.png')] },
+    { key: '1', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/1-1.png'), require('../assets/onboarding/1-2.png'), require('../assets/onboarding/1-3.png')]},
+    { key: '2', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/1-1.png'), require('../assets/onboarding/1-2.png'), require('../assets/onboarding/1-3.png')] },
   ];
 
 export default function OnboardingScreen() {
