@@ -68,7 +68,7 @@ export const hookRefreshToken = async () => {
 
 export const hookVersionCheck = async() => {
     try {
-        const url = 'https://806b68989aa5.ngrok-free.app/versionCheck'
+        const url = 'https://all-ts-backend-production.up.railway.app/versionCheck'
         const ver = await getDeviceVersion()
         console.log(ver)
         const response = await axios({

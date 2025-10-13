@@ -46,9 +46,7 @@ const MainScreen = () => {
       <MainCalendar
       data={mainRes?.data as getMainResDto}
       />
-          
       <View style={[styles.tabBar]} />
-      {console.log('Rendering MainScreen')}
     </View>
   );
 };
