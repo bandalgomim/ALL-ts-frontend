@@ -62,40 +62,40 @@ const slides = [
 ];
 
 export default function OnboardingScreen() {
-    const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
-      const navigateMain = () => {
-        navigationMain.replace('MainScreen', undefined);
-      };
-    const [current, setCurrent] = useState(0);
-    const isFocused = useIsFocused();
+  const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
+  const navigateMain = () => navigationMain.replace('MainScreen', undefined);
 
-    const renderItem = ({ item, index }: any) => (
-        <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-          <View>
-            <TimedImageViewer
-              images={item.source}
-              isActive={isFocused}
-            />
-          </View>
+  const [current, setCurrent] = useState(0);
+  const isFocused = useIsFocused();
 
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.text}>{item.text}</Text>
-        </View>
-      );
-
-      return (
-        <AppIntroSlider
-          data={slides}
-          renderItem={renderItem}
-          onSlideChange={setCurrent}
-          onDone={()=>{navigateMain();}}
-          showSkipButton
-          onSkip={()=>{}}
-          dotStyle={styles.dot}
-          activeDotStyle={styles.activeDot}
+  const renderItem = ({ item, index }: any) => (
+    <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
+      <View>
+        <TimedImageViewer
+          key={item.key}                    // ✅ 슬라이드별 remount
+          images={item.source}
+          isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
         />
-      );
-    }
+      </View>
+
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.text}>{item.text}</Text>
+    </View>
+  );
+
+  return (
+    <AppIntroSlider
+      data={slides}
+      renderItem={renderItem}
+      onSlideChange={setCurrent}
+      onDone={navigateMain}
+      showSkipButton
+      onSkip={() => {}}
+      dotStyle={styles.dot}
+      activeDotStyle={styles.activeDot}
+    />
+  );
+}
     const styles = StyleSheet.create({
       slide: { flex: 1, alignItems: 'center'},
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
