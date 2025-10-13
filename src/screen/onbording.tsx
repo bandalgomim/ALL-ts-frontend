@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { View, Text, StyleSheet } from 'react-native';
-import { width } from '../global';
+import { height, width } from '../global';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import TimedImageViewer from '../components/onboarding/timedImageViewer';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -64,7 +64,7 @@ export default function OnboardingScreen() {
       );
     }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center', justifyContent: 'center'},
+      slide: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: -height * 0.3 },
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1' },
