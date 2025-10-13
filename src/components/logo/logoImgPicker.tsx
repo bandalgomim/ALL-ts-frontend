@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/auth.context';
 import { useTeamState, useTeamActions } from '../../context/team.context';
 import { useLeagueState, useLeagueActions } from '../../context/league.context';
 import { height, width } from '../../global';
+import { useLogoModalActions } from '../../context/modal/logoModal.context';
 
 interface TeamOrLogoPros {
     type: 'team' | 'league',
@@ -15,9 +16,11 @@ interface TeamOrLogoPros {
 }
 
 const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
+  const { close} = useLogoModalActions();
   const { setTeamRes} = useTeamActions();
   const { setLeagueRes } = useLeagueActions();
   const handleSelectAndSaveImage = async (type:TeamOrLogoPros['type'], id: number, uri: string) => {
+    
     const result = await launchImageLibrary({
       mediaType: 'photo',
       selectionLimit: 1,
@@ -27,7 +30,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
       const sourceUri = result.assets[0].uri!;
       const originalFileName = result.assets[0].fileName; // 원본 파일명
       const destPath = `${RNFS.DocumentDirectoryPath}/${originalFileName}`;
-      
+      close()
       try {
         // 1. 기존 파일이 있다면 삭제
         if (uri && uri !== '') {
@@ -53,7 +56,6 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
         }
         const dispatch = type === 'team' ? setTeamRes : setLeagueRes;
         await hookIcon('PATCH', req, dispatch);
-        
         Alert.alert('이미지 저장 성공');
       } catch (error) {
         console.error('이미지 처리 오류:', error);
@@ -77,6 +79,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
             console.log('기존 파일이 존재하지 않음:', uri);
           }
         }
+        close()
         const req = {
             type: type,
             id: id,
@@ -86,6 +89,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
           await hookIcon('PATCH', req, dispatch);
           
           Alert.alert('이미지 삭제 성공');
+          
     } catch (error) {
         console.error('이미지 처리 오류:', error);
         Alert.alert('저장 실패', error.message);

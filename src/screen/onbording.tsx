@@ -38,7 +38,7 @@ const slides = [
     key: '3',
     title: '앱 시작하기',
     text: '팀을 선택하고 알림을 받아보세요.',
-    backgroundColor: 'white',
+    backgroundColor: '#30397s',
     source: [
       require('../assets/onboarding/3-1.png'),
       require('../assets/onboarding/3-2.png'),
@@ -97,7 +97,7 @@ export default function OnboardingScreen() {
       );
     }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center', justifyContent: 'center'},
+      slide: { flex: 1, alignItems: 'center'},
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1' },

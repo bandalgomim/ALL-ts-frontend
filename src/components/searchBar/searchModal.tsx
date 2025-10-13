@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: width * 0.85,
-    height: height * 0.55, // 0.42 → 0.55로 증가
+    height: height * 0.4265, // 0.42 → 0.55로 증가
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',

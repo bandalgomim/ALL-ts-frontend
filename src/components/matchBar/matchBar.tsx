@@ -41,7 +41,7 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={() => navigateMatch(match.matchId)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => navigateMatch(match.matchId)}>
       <View style={[styles.matchBarContainer, { height: height * 0.075, width: width * 0.93 }]}>
         <ImageBackground
           resizeMode="contain"

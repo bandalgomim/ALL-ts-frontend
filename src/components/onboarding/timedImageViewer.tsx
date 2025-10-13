@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, ImageRequireSource, StyleSheet } from 'react-native';
+import { height, width } from '../../global';
 
 type Props = {
   images: ImageRequireSource[]; // require(...) 배열
   isActive?: boolean;           // 포커스 여부 (기본 true)
 };
 
-const INTERVAL_MS = 1500;       // 3초 고정
-const ASPECT = 1080 / 1250;     // 가로/세로 비율
+const INTERVAL_MS = 1000;       // 3초 고정    // 가로/세로 비율
 
 export default function TimedImageViewer({ images, isActive = true }: Props) {
   const [index, setIndex] = useState(0);
@@ -23,7 +23,7 @@ export default function TimedImageViewer({ images, isActive = true }: Props) {
   const source = images[index] ?? null;
 
   return (
-    <View style={[styles.container, styles.aspect]}>
+    <View style={[styles.container]}>
       {source && (
         <Image
           source={source}
@@ -37,11 +37,10 @@ export default function TimedImageViewer({ images, isActive = true }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    marginTop: height*0.05,
+    width: width,
+    height: height*0.9,
     overflow: 'hidden',
-  },
-  aspect: {
-    aspectRatio: ASPECT, // 세로 자동 계산
   },
   image: {
     width: '100%',
