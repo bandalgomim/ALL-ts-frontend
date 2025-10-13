@@ -9,7 +9,15 @@ import { MainPageParamList } from '../model/navigation.dto';
 
 const slides = [
     { key: '1', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/1-1.png'), require('../assets/onboarding/1-2.png'), require('../assets/onboarding/1-3.png')]},
-    { key: '2', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.', source: [require('../assets/onboarding/1-1.png'), require('../assets/onboarding/1-2.png'), require('../assets/onboarding/1-3.png')] },
+    { key: '2', title: '앱 시작하기', text: '팀을 선택하고 알림을 받아보세요.',
+      source: [
+        require('../assets/onboarding/2-1.png'),
+        require('../assets/onboarding/2-2.png'),
+        require('../assets/onboarding/2-3.png'),
+        require('../assets/onboarding/2-4.png'),
+        require('../assets/onboarding/2-5.png'),
+        require('../assets/onboarding/2-6.png'),
+      ] },
   ];
 
 export default function OnboardingScreen() {
