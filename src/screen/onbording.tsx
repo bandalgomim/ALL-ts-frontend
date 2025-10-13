@@ -64,7 +64,7 @@ export default function OnboardingScreen() {
       );
     }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: -height * 0.3 },
+      slide: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: -height * 0.2 },
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1' },
