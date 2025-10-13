@@ -77,7 +77,7 @@ export default function OnboardingScreen() {
           isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
         />
       </View>
-      <View style={{ marginTop: -height*0.3 }}>
+      <View style={{ marginTop: -height*0.24, borderWidth: 1, width: width*0.7, height: height*0.1, justifyContent: 'center' }}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>{item.text}</Text>
       </View>
