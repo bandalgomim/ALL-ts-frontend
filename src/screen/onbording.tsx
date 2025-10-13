@@ -45,6 +45,19 @@ const slides = [
       require('../assets/onboarding/3-3.png'),
     ],
   },
+  {
+    key: '4',
+    title: '앱 시작하기',
+    text: '팀을 선택하고 알림을 받아보세요.',
+    backgroundColor: 'white',
+    source: [
+      require('../assets/onboarding/4-1.png'),
+      require('../assets/onboarding/4-2.png'),
+      require('../assets/onboarding/4-3.png'),
+      require('../assets/onboarding/4-4.png'),
+      require('../assets/onboarding/4-5.png'),
+    ],
+  },
 
 ];
 
@@ -58,10 +71,13 @@ export default function OnboardingScreen() {
 
     const renderItem = ({ item, index }: any) => (
         <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-          <TimedImageViewer
-            images={item.source}
-            isActive={isFocused}
-          />
+          <View>
+            <TimedImageViewer
+              images={item.source}
+              isActive={isFocused}
+            />
+          </View>
+
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.text}>{item.text}</Text>
         </View>
@@ -81,7 +97,7 @@ export default function OnboardingScreen() {
       );
     }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: -height * 0.2 },
+      slide: { flex: 1, alignItems: 'center', justifyContent: 'center'},
       title: { fontSize: 22, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1' },
