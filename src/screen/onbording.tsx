@@ -43,6 +43,7 @@ const slides = [
       require('../assets/onboarding/3-1.png'),
       require('../assets/onboarding/3-2.png'),
       require('../assets/onboarding/3-3.png'),
+      require('../assets/onboarding/3-4.png'),
     ],
   },
   {
