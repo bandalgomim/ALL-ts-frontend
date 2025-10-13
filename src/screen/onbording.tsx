@@ -38,7 +38,7 @@ const slides = [
     key: '3',
     title: '앱 시작하기',
     text: '팀을 선택하고 알림을 받아보세요.',
-    backgroundColor: 'white',
+    backgroundColor: '#30397A',
     source: [
       require('../assets/onboarding/3-1.png'),
       require('../assets/onboarding/3-2.png'),
