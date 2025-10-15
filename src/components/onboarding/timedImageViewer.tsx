@@ -7,7 +7,7 @@ type Props = {
   isActive?: boolean;
 };
 
-const INTERVAL_MS = 1300;
+const INTERVAL_MS = 1100;
 
 export default function TimedImageViewer({ images, isActive = true }: Props) {
   const [index, setIndex] = useState(0);
