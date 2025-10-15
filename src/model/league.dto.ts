@@ -24,6 +24,7 @@ export interface teamDto {
     draw: number,
     point: number,
     section: string,
+    sectionIdx: number
 }
 
 export interface getLeagueResDto {

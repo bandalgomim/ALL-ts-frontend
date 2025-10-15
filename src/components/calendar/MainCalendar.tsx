@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
   matchListContainer: {
     width: width,
     height: height * 0.62,
-    borderWidth: 1,
     alignItems: 'center',
     zIndex: 1, // 낮은 z-index 추가
   },
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
   },
   calendarView: {
-    borderWidth:1
   }
 });
 

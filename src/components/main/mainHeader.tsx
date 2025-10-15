@@ -18,12 +18,23 @@ export const MainHeader = () => {
     fetchIcon();
   }, []);
   const navigationUser = useNavigation<StackNavigationProp<UserPageParamList>>();
+  const navigationOnboarding = useNavigation<StackNavigationProp<OnboardingPageParamList>>();
+
   const onPress = useCallback(async () => {
     navigationUser.navigate('UserScreen', {state: true});
+  }, []);
+  const onPressHelp = useCallback(async () => {
+    navigationOnboarding.replace('OnboardingScreen', undefined);
   }, []);
 
   return (
     <View style={[styles.header, {width: width * 0.85, height: height * 0.04, marginBottom: height * 0.01}]}>
+      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPressHelp}>
+        <View style={{borderWidth: 2, width: width*0.07, justifyContent: "center", alignItems: "center", height: height*0.03, borderColor: "white", borderRadius: 100, marginTop: height*0.01}}>
+          <Icon name={'Question Mark'} size={width * 0.04} color={'white'} />
+        </View>
+
+      </TouchableOpacity>
       <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPress}>
         {icon ? <Image
           source={{ uri: icon }}
@@ -38,7 +49,7 @@ export const MainHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',   // 가로 배치
-    justifyContent: 'flex-end',  // 양 끝 정렬
+    justifyContent: "space-between",  // 양 끝 정렬
     alignItems: 'center',   // 수직 정렬 (선택 사항)
   },
   menu: {

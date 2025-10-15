@@ -18,16 +18,22 @@ interface LeagueRankListProps {
 
 const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) => {
     const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const navigateTeam = (teamId: number) => {
       navigation.navigate('TeamScreen', { teamId: teamId });
     };
+    console.log(teamList);
+
   const sortedItems = useMemo(() => {
     return [...teamList].sort((a, b) => {
       // 먼저 section 기준 정렬
-      if (a.section && b.section) {
-      const sectionCompare = a.section.localeCompare(b.section);
-      if (sectionCompare !== 0) {return sectionCompare;}}
-      // section이 같으면 rank 기준 정렬
+      if (a.sectionIdx !== b.sectionIdx) {
+        return b.sectionIdx - a.sectionIdx;
+      } else if (a.section && b.section){
+        const sectionCompare = a.section.localeCompare(b.section);
+        if (sectionCompare !== 0) {return sectionCompare;}
+
+      }
       return a.rank - b.rank;
     });
   }, [teamList]);
@@ -39,16 +45,16 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
         open(matchInfo)
       ;}
   }, [matchList]);
-  const getRankSuffix = (rank: string): string => {
+  const getRankSuffix = useCallback((rank: string): string => {
     if (rank === '1') {return 'st';}
     if (rank === '2') {return 'nd';}
     if (rank === '3') {return 'rd';}
     return 'th';
-  };
+  }, []);
 
   const renderItem = useCallback(
     ({ item, index }: { item: teamDto; index: number }) => {
-      if (String(item.rank) === '0') return null;
+      if (String(item.rank) === '0') {return null;}
 
       // boolean 강제 + 이전 아이템과 section 비교
       const prev = index > 0 ? sortedItems[index - 1] : undefined;
@@ -81,7 +87,7 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                 />
               </View>
               <View style={styles.teamInitView}>
-                <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{item.teamInit}</Text>
+                <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06}}>{item.teamInit}</Text>
               </View>
             </TouchableOpacity>
             <View style={[styles.numberTextView, { marginLeft: width * 0.006 }]}>
@@ -167,8 +173,7 @@ const styles = StyleSheet.create({
   },
   teamLogo: {},
   teamInitView: {
-    width: width * 0.1,
-    marginRight: width * 0.01,
+    width: width * 0.11,
   },
   teamInit: {
     fontFamily: 'sb-it-ver1',

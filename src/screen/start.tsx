@@ -3,7 +3,6 @@ import LoadingScreen  from '../components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList, OnboardingPageParamList } from '../model/navigation.dto';
-import { getDeviceVersion } from '../utils/deviceVersion';
 import { hookVersionCheck } from '../hooks/IAM.hook';
 import { Alert, Linking } from 'react-native';
 import { localData } from '../IAM/localData';
@@ -24,7 +23,7 @@ useEffect(() => {
     try {
         const verCheck = await hookVersionCheck()
         if (verCheck) {
-          if(await localData.get('onbording')) {
+          if(await localData.get('onbording') === 'true') {
             navigateMain();
           } else {
             navigateOnboarding();

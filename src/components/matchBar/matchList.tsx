@@ -1,10 +1,9 @@
-import React, { useCallback, useRef, useLayoutEffect } from 'react';
+import React, { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MatchBar from './matchBar';
 import { matchListDto, matchDto } from '../../model/main.dto';
 import { height, width } from '../../global';
 import AdmobNativeAdSmall from '../ad/smallBanner';
-import AdmobNativeAdBig from '../ad/bigBanner';
 
 interface ContentsProps {
   matchList: matchListDto,
@@ -21,7 +20,6 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,                  // 기본값 설정
   headerHeight
 }) => {
-  console.log(matchList)
   const flatListRef = useRef<FlatList>(null);
   useLayoutEffect(() => {
     if (flatListRef.current) {
@@ -47,9 +45,10 @@ const MatchList: React.FC<ContentsProps> = ({
     }
   }
   const renderItem = useCallback(({ item, index }: { item: matchDto[], index: number }) => {
+    const sortedItems = [...item].sort((a, b) => a.matchTime.localeCompare(b.matchTime));
     let dateColor = color;
     let colorBar;
-    if (item[0]?.matchDate === today) {
+    if (sortedItems[0]?.matchDate === today) {
       dateColor = '#EA5579';
       colorBar = 'red';
     } else if (color === 'blue') {
@@ -74,7 +73,7 @@ const MatchList: React.FC<ContentsProps> = ({
                 { color: dateColor },
               ]}
             >
-              {item[0].matchDate}
+              {sortedItems[0].matchDate}
             </Text>
           </View>
           <View
@@ -84,7 +83,7 @@ const MatchList: React.FC<ContentsProps> = ({
             ]}
           />
         </View>
-        {item.map((data: matchDto) => {
+        {sortedItems.map((data: matchDto) => {
           matchCountRef.current += 1; // 카운터 증가
           const matchCount = matchCountRef.current;
           return (
