@@ -12,6 +12,7 @@ import { useMatchState, useMatchActions } from '../context/match.context';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { hookIsLogin } from '../hooks/IAM.hook';
 import { PostState } from '../model/config';
+import { width } from '../global';
 
 
 const MatchScreen = () => {
@@ -38,28 +39,28 @@ const MatchScreen = () => {
       color="white"
     />
   ) : (
-    <>
-    <View style={[styles.logo]}>
-    <Match
-      match={matchRes.data as getMatchResDto ?? {}}
-      refetch={refetch}
-    />
-    </View>
-      
-      <View style={[styles.container]}>
-      {/*<AdmobNativeAdSmall color={'red'}/>*/}
+    <View style={{}}>
+      <View style={{}}>
+        <View/>
+        <View/>
+      </View>
+      <Match
+        match={matchRes.data as getMatchResDto ?? {}}
+        refetch={refetch}
+      />
+       <View style={[styles.container]}>
         <MainTabBar
           color="white"
         />
+      </View>
     </View>
-    {console.log('Rendering MatchScreen')}
-    </>
     );
   };
   export default MatchScreen;
 
   const styles = StyleSheet.create({
     container: {
+      
       flex: 1,  // MainTabBar가 화면에 꽉 차게 확장
       position: 'absolute', // 절대 위치를 사용하여 화면 상단에 배치
       bottom: 0, // 화면 하단에 고정

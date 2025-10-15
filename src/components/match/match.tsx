@@ -11,7 +11,7 @@ import { TeamPageParamList } from '../../model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '../../global';
-import { HeadNotch } from '../notch';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface MatchPros {
   match: getMatchResDto;
@@ -31,13 +31,15 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const onPressAwayTeamScore = () => {
     setAwayTeamScore(!awayTeamScore);
   };
-
+  const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
-      <HeadNotch />
+      <View style={{width: width, height: insets.top, flexDirection: "row"}}>
+        <View style={{width:width*0.5, height: insets.top, backgroundColor: "#30397A"}}/>
+        <View style={{width:width*0.5, height: insets.top, backgroundColor: "white"}}/>
+      </View>
       <View style={styles.middleContainer}>
         <SearchBar type="match" />
-        
         <View style={styles.isSelectedContainer}>
           <IsSelected
             isSelected={match.isMatchSelected}
@@ -45,7 +47,6 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
             leagueId={null}
             matchId={match.matchId}
           />
-          
         </View>
         <Image
           resizeMode="contain"
@@ -159,11 +160,13 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: -10,
     height: '100%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexDirection: 'column',
+
   },
   middleContainer: {
     height: 0,
@@ -189,7 +192,6 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   homeTeamContainer: {
-    borderWidth: 0,
     height: height * 0.86,
     width: '50%',
     backgroundColor: '#30397A',
