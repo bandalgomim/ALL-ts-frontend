@@ -77,7 +77,6 @@ export default function OnboardingScreen() {
     <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
       <View>
         <TimedImageViewer
-          key={item.key}                    // ✅ 슬라이드별 remount
           images={item.source}
           isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
         />

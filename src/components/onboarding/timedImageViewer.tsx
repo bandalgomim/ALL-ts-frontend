@@ -16,6 +16,9 @@ export default function TimedImageViewer({ images, isActive = true }: Props) {
   useEffect(() => {
     setIndex(0);
   }, [images]);
+  useEffect(() => {
+    if (isActive) {setIndex(0);}
+  }, [isActive]);
 
   // ✅ 타이머는 isActive/이미지 세트 변경마다 재시작
   useEffect(() => {
