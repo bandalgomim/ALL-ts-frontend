@@ -7,7 +7,6 @@ export const commonPostHook = async (
     url: string,
     data: Object | null = null,
     dispatch: Function | null,
-    notification: boolean = false
 ) => {
     const authToken = await localData.get('Authorization');
     const refreshToken = await localData.get('RefreshToken');
@@ -27,9 +26,6 @@ export const commonPostHook = async (
             let resultKeys = null;
             if (response.data.result) {resultKeys = Object.keys(response.data.result);}
             if (dispatch !== null) {
-            if (notification === true && response.data.result.matchList) {
-                scheduleTodayMatches(response.data.result.matchList);
-            }
             dispatch({ type: 'SUCCESS', payload: response.data.result, items: resultKeys});}
         } else {
             await localData.set('Authorization', response.headers.authorization);
