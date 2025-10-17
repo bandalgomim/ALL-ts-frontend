@@ -39,7 +39,7 @@ if (!snsView) {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            Sign {type}
+            {type === "in" ? '로그인' : "회원가입"}
         </Text>
       </ImageBackground>
     </TouchableOpacity>

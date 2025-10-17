@@ -33,7 +33,7 @@ const LogoutButton = () => {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            log out
+            로그아웃
         </Text>
       </ImageBackground>
     </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, View, Alert } from 'react-native';
+import { Button, View, Alert, ImageBackground, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import { hookIcon } from '../../hooks/icon.hook';
@@ -98,14 +98,55 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
 
   return (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: height*0.02, width: width*0.5}}>
-        <View style={{ marginTop: height*0.02, borderWidth:1 }}>
-            <Button title="로고 변경" onPress={()=>handleSelectAndSaveImage(type, id, uri)} />
+        <View style={{ marginTop: height*0.01}}>
+          <TouchableOpacity style={styles.authContainer} onPress={()=>handleSelectAndSaveImage(type, id, uri)}>
+                <ImageBackground
+                  resizeMode="contain"
+                  source={require('../../assets/match/platform/soop.png')}
+                  style={[styles.box]}
+                >
+                  <Text style={[styles.boxText]}>
+                      로고 변경
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
         </View>
-        <View style={{ marginTop: height*0.02, borderWidth:1 }}>
-            <Button title="로고 삭제" onPress={()=>deleteSavedImages(type, id, uri)} color="orange" />
+        <View style={{ marginTop: height*0.01 }}>
+        <TouchableOpacity style={styles.authContainer} onPress={()=>deleteSavedImages(type, id, uri)}>
+                <ImageBackground
+                  resizeMode="contain"
+                  source={require('../../assets/match/platform/youtube.png')}
+                  style={[styles.box]}
+                >
+                  <Text style={[styles.boxText]}>
+                      로고 삭제
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
         </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  authContainer: {
+    alignItems: 'center',
+  },
+  box: {
+    width: width * 0.2,
+    height: height * 0.06,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boxText: {
+    marginTop: -height * 0.008,
+    fontFamily: 'sb-it-ver1',
+    color: 'white',
+    fontSize: width * 0.06,
+    width: width * 0.21,
+    textAlign: 'center',
+  },
+
+});
 
 export default React.memo(LogoImgPicker);

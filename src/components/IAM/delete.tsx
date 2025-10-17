@@ -67,7 +67,7 @@ const DeleteButton = () => {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            delete ID
+            계정 제거
         </Text>
       </ImageBackground>
     </TouchableOpacity>
