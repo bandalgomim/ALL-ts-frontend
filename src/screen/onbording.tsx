@@ -37,6 +37,20 @@ const slides = [
   },
   {
     key: '3',
+    title: '순위 확인하기기',
+    text: '팀과 리그 전체의 순위를 확인하세요.',
+    backgroundColor: 'white',
+    source: [
+      require('../assets/onboarding/5-1.png'),
+      require('../assets/onboarding/5-2.png'),
+      require('../assets/onboarding/5-3.png'),
+      require('../assets/onboarding/5-4.png'),
+      require('../assets/onboarding/5-5.png'),
+      require('../assets/onboarding/5-6.png'),
+    ],
+  },
+  {
+    key: '4',
     title: '매치 확인하기',
     text: '실시간 스코어와 하이라이트를 받아보세요.',
     backgroundColor: '#30397A',
@@ -48,7 +62,7 @@ const slides = [
     ],
   },
   {
-    key: '4',
+    key: '5',
     title: '로고 변경하기',
     text: '여러분의 특별한 로고로 변경하세요.',
     backgroundColor: 'white',
@@ -60,6 +74,7 @@ const slides = [
       require('../assets/onboarding/4-5.png'),
     ],
   },
+
 
 ];
 
