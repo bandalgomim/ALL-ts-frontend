@@ -16,16 +16,13 @@ mobileAds()
   });
 
 function App(): React.JSX.Element {
-  
   useDailyTask();
-  
   useEffect(() => {
     // 알림 초기화
     initializeNotifications();
     const unsubscribeOnMessage = onMessage(getMessaging(getApp()), async remoteMessage => {
       await displayNotification(remoteMessage);
     });
-    
     return () => {
       unsubscribeOnMessage();
     };

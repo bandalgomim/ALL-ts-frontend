@@ -98,7 +98,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
 
   return (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: height*0.02, width: width*0.5}}>
-        <View style={{ marginTop: height*0.01}}>
+        <View style={{ marginTop: height*0.012}}>
           <TouchableOpacity style={styles.authContainer} onPress={()=>handleSelectAndSaveImage(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"
@@ -111,7 +111,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
                 </ImageBackground>
               </TouchableOpacity>
         </View>
-        <View style={{ marginTop: height*0.01 }}>
+        <View style={{ marginTop: height*0.012 }}>
         <TouchableOpacity style={styles.authContainer} onPress={()=>deleteSavedImages(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"

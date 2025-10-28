@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
@@ -10,6 +10,7 @@ import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import { PostState } from '../../model/config';
 import { getTeamResDto } from '../../model/team.dto';
+import { localData } from '../../IAM/localData';
 
 interface TeamCalendarProps {
   data: getTeamResDto;
@@ -17,12 +18,17 @@ interface TeamCalendarProps {
 
 const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [mode, setMode] = useState<string>('');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
-
+  useEffect(() => {
+    (async () => {
+      const savedMode = await localData.get('mode') as string;
+      if (savedMode) {setMode(savedMode as string);}
+    })();
+  }, []);
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);

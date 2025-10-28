@@ -12,7 +12,7 @@ interface ContentsProps {
   weekDates: Date[],
   month: number,
   color: string,
-  mode: 'm' | 'w',
+  mode: string,
   matchList: matchListDto | null,
   goToPrevious: () => void,
   goToNext: () => void,

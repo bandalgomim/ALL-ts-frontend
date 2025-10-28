@@ -65,7 +65,7 @@ export const getWeekDates = (today: Date) => {
   return weekDates;
 };
 
-export const goToPrevious = (currentDate: Date, mode: 'm' | 'w'): Date => {
+export const goToPrevious = (currentDate: Date, mode: string): Date => {
   const newDate = new Date(currentDate); // currentDate 복사
   const month = currentDate.getMonth(); // 현재 월 계산
   const year = currentDate.getFullYear(); // 현재 연도 계산
@@ -86,7 +86,7 @@ export const goToPrevious = (currentDate: Date, mode: 'm' | 'w'): Date => {
   return newDate; // 계산된 새로운 날짜 반환
 };
 
-export const goToNext = (currentDate: Date, mode: 'm' | 'w'): Date => {
+export const goToNext = (currentDate: Date, mode: string): Date => {
   const newDate = new Date(currentDate);
   const month = currentDate.getMonth(); // 현재 월 계산
   const year = currentDate.getFullYear(); // 현재 연도 계산

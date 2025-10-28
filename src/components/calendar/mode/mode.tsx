@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet,  StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { width } from '../../../global';
+import { localData } from '../../../IAM/localData';
 
 interface ModeProps {
   type: string;
-  mode: 'm' | 'w';
-  setMode: Dispatch<SetStateAction<'m' | 'w'>>
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>
 }
 
 
@@ -18,8 +19,9 @@ const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
     typeColor = [styles.selectViewBlue, styles.selectedBlue, styles.noSelectedBlue ];
   }
 
-  const onModeChange = (modeChar: 'm' | 'w') => {
+  const onModeChange = async (modeChar: string) => {
     setMode(modeChar);
+    await localData.set('mode', modeChar);
   };
 
   return (

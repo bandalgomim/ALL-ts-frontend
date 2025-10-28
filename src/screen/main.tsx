@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    zIndex: 0,
-    height: height * 0.07,
-    backgroundColor: '#30397A',
+    zIndex: 1000,
+    height: height * 0.06,
+    backgroundColor: '#30397a'
   },
 });
 export default React.memo(MainScreen);

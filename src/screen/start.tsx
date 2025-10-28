@@ -22,6 +22,9 @@ useEffect(() => {
     const runStartTask = async () => {
     try {
         const verCheck = await hookVersionCheck()
+        if (!await localData.get('mode')) {
+          await localData.set('mode', 'w');
+        }
         if (verCheck) {
           if(await localData.get('onbording') === 'true') {
             navigateMain();
@@ -31,7 +34,7 @@ useEffect(() => {
         } else {
             Alert.alert(
                 '업데이트 필요',
-                '보안 강화를 위해 최신 버전으로 업데이트해주세요.',
+                '최신 버전으로 업데이트해주세요.',
                 [
                   { text: '취소', style: 'cancel' },
                   {
@@ -49,8 +52,6 @@ useEffect(() => {
 
     runStartTask();
 }, []);
-
-
   return  (
     <LoadingScreen
     color="blue"

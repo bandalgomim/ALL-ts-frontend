@@ -11,6 +11,7 @@ import MatchList from '../matchBar/matchList';
 import LeageTeamListBar from '../league/leageTeamList';
 import { getLeagueResDto } from '../../model/league.dto';
 import { PostState } from '../../model/config';
+import { localData } from '../../IAM/localData';
 
 interface LeagueCalendarProps {
   data: getLeagueResDto;
@@ -18,10 +19,15 @@ interface LeagueCalendarProps {
 const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [mode, setMode] = useState<string>('');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
-
+  useEffect(() => {
+    (async () => {
+      const savedMode = await localData.get('mode') as string;
+      if (savedMode) {setMode(savedMode as string);}
+    })();
+  }, []);
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -40,7 +46,6 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
     const weekResult: { [key: string]: matchDto[] } = {};
     const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
-      
       const key = date.toLocaleDateString('sv-SE');
       if (data.matchList[key]) {
         weekResult[key] = data.matchList[key];

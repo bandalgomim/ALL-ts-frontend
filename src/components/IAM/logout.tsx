@@ -20,7 +20,6 @@ const LogoutButton = () => {
     if (await localData.get('icon')) {
       await localData.delete('icon');
     }
-    
     navigateIAM();
   }, [navigateIAM]);
 

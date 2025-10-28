@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
-import { View, StyleSheet, Text, PanResponder, Animated } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, PanResponder, Animated } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
@@ -8,9 +8,7 @@ import { width, height } from '../../global';
 import { getMainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { useMainState } from '../../context/main.context';
-import AdmobNativeAdSmall from '../ad/smallBanner';
-import { PostState } from '../../model/config';
+import { localData } from '../../IAM/localData';
 
 interface MainCalendarProps {
   data: getMainResDto;
@@ -18,9 +16,15 @@ interface MainCalendarProps {
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<'m' | 'w'>('w');
+  const [mode, setMode] = useState<string>('');
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    (async () => {
+      const savedMode = await localData.get('mode') as string;
+      if (savedMode) {setMode(savedMode as string);}
+    })();
+  }, []);
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
@@ -34,15 +38,23 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const monthDates = useMemo(() => getMonthDates(currentDate.getMonth(), currentDate.getFullYear()), [currentDate]);
   const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
   const splitMatchList = useMemo(() => {
-    const result: { [key: string]: matchDto[] } = {};
+    const weekResult: { [key: string]: matchDto[] } = {};
+    const monthResult: { [key: string]: matchDto[] } = {};
     weekDates.forEach((date) => {
       const key = date.toLocaleDateString('sv-SE');
       if (data.matchList && data.matchList[key]) {
-        result[key] = data.matchList[key];
+        weekResult[key] = data.matchList[key];
       }
     });
-    return result;
-  }, [weekDates, data.matchList]);
+    monthDates.forEach((date) => {
+      const key = date.toLocaleDateString('sv-SE');
+      if (data.matchList && data.matchList[key]) {
+        monthResult[key] = data.matchList[key];
+      }
+    });
+
+    return { week: weekResult, month: monthResult };;
+  }, [weekDates, monthDates, data.matchList]);
 
   const panResponder = useMemo(
     () =>
@@ -76,7 +88,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: [height * 0.02, 0], // 원하는 높이로 조정
+      outputRange: mode === 'm' ? [height * 0.02, height*0.18] : [height * 0.04, 0], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -90,13 +102,14 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     <View>
       <View
         style={styles.CalendarContainer}
-        {...panResponder.panHandlers}
       >
-        <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {alignItems: 'center', zIndex: zIndex ? 2 : 1}]}>
+        <Animated.View style={[calendarAnimatedStyle, {alignItems: 'center', zIndex: zIndex ? 2 : 1}]}>
           <TeamAndLeagueListBar
             teamAndLeagueList={data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
-          <View style={{alignItems: 'center', marginTop: -height * 0.025}}>
+          <View style={{alignItems: 'center', marginTop: -height * 0.025}}
+             {...panResponder.panHandlers}
+          >
           <MainHeader
             year={currentDate.getFullYear()}
             month={currentDate.getMonth()}
@@ -118,21 +131,15 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
           />
           </View>
         </Animated.View>
-        {mode === 'w' ? (
-          <View style={[styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }]}>
+          <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
             <MatchList
-              matchList={splitMatchList}
+              matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
               color={'white'}
               onScroll={handleMatchListScroll}
               scrollEventThrottle={16}
               headerHeight={0.35} // 헤더 높이 설정
             />
           </View>
-        ) : (
-          <View style={[styles.banner, { width: width * 0.85, height: height * 0.06, marginTop: height * 0.53 }]}>
-            <AdmobNativeAdSmall color={'red'}/>
-          </View>
-        )}
       </View>
     </View>
   );
@@ -145,21 +152,17 @@ const styles = StyleSheet.create({
     width: width,
 
   },
-  matchListContainer: {
-    width: width,
+  matchListWeek: {
+    marginTop: -height*0.02,
     height: height * 0.62,
     alignItems: 'center',
     zIndex: 1, // 낮은 z-index 추가
   },
-  banner: {
+  matchListMonth: {
+    height: height * 0.62,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bannerText: {
-    textAlign: 'center',
-    fontFamily: 'rg-it-ver2',
-  },
-  calendarView: {
+    zIndex: 1,
+
   }
 });
 
