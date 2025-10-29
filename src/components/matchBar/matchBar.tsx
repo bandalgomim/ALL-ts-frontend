@@ -14,12 +14,17 @@ import { ModalContext as ModalNextuseMatchActions, useModalNextMatchActions } fr
 interface MatchBarPros {
   match: matchDto; // Assuming match is your interface from earlier
   color: string;
+  scoreState: boolean
 }
 
-const MatchBar: React.FC<MatchBarPros> = ({ match, color }) => {
+const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
   const { close: closeModal } = useModalActions(); 
   const { close: closeNextMatchModal } = useModalNextMatchActions();
-  const [score, setScore] = useState(false);
+  const [score, setScore] = useState(scoreState);
+  useEffect(() => {
+    // 알림 초기화
+    setScore(scoreState);
+  }, [scoreState]);
 
   const styleColor =
     color === 'white'
@@ -196,4 +201,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(MatchBar);
+export default React.memo(MatchBar, (prev, next) => {
+  return prev.match.matchId === next.match.matchId &&
+         prev.color === next.color &&
+         prev.scoreState === next.scoreState; // 🔥 이걸 꼭 추가
+});

@@ -1,16 +1,14 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
 import { width, height } from '../../global';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
-import { useTeamState, useTeamActions } from '../../context/team.context';
 import { matchDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
-import { PostState } from '../../model/config';
 import { getTeamResDto } from '../../model/team.dto';
-import { localData } from '../../IAM/localData';
+import { localData, localDataMmkv } from '../../IAM/localData';
 
 interface TeamCalendarProps {
   data: getTeamResDto;
@@ -18,17 +16,11 @@ interface TeamCalendarProps {
 
 const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<string>('');
+  const [mode, setMode] = useState<string>(localDataMmkv.get('mode') as string);
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
-  useEffect(() => {
-    (async () => {
-      const savedMode = await localData.get('mode') as string;
-      if (savedMode) {setMode(savedMode as string);}
-    })();
-  }, []);
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);

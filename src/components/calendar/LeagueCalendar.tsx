@@ -11,7 +11,7 @@ import MatchList from '../matchBar/matchList';
 import LeageTeamListBar from '../league/leageTeamList';
 import { getLeagueResDto } from '../../model/league.dto';
 import { PostState } from '../../model/config';
-import { localData } from '../../IAM/localData';
+import { localData, localDataMmkv } from '../../IAM/localData';
 
 interface LeagueCalendarProps {
   data: getLeagueResDto;
@@ -19,15 +19,9 @@ interface LeagueCalendarProps {
 const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<string>('');
+  const [mode, setMode] = useState<string>(localDataMmkv.get('mode') as string);
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current; // 1: 펼침, 0: 접힘
-  useEffect(() => {
-    (async () => {
-      const savedMode = await localData.get('mode') as string;
-      if (savedMode) {setMode(savedMode as string);}
-    })();
-  }, []);
   // Handlers for changing the month
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
@@ -110,7 +104,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
           ? styles.calendarMonth
           : styles.calendarWeek,
       ]}
-      {...panResponder.panHandlers} // 스와이프 핸들러 추가
+       // 스와이프 핸들러 추가
     >
       <Animated.View
         style={[
@@ -148,7 +142,8 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
               goToPrevious={handlePrevious}
               goToNext={handleNext}
             />
-            <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}>
+            <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}
+            {...panResponder.panHandlers}>
               <Mode
                 type={'league'}
                 mode={mode}
@@ -168,7 +163,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
           </View>
         </View>
       </Animated.View>
-      <View style={[styles.matchListContainer, { zIndex: zIndex ? 1 : 2 }]}>
+      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
@@ -211,8 +206,13 @@ const styles = StyleSheet.create({
   leagueCalendarTop: {
     top: -height * 0.015,
   },
-  matchListContainer: {
+  matchListWeek: {
     marginTop: height * 0.03,
+    height: height * 0.63,
+    zIndex: 1, // 낮은 z-index 추가
+  },
+  matchListMonth: {
+    marginTop: height * 0.04,
     height: height * 0.63,
     zIndex: 1, // 낮은 z-index 추가
   },

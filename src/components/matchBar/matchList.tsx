@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useRef, useLayoutEffect, useMemo, useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MatchBar from './matchBar';
 import { matchListDto, matchDto } from '../../model/main.dto';
 import { height, width } from '../../global';
@@ -20,8 +20,14 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,                  // 기본값 설정
   headerHeight
 }) => {
+  const initialDateState = useMemo(
+    () => Object.fromEntries(Object.keys(matchList).map((key) => [key, false])),
+    [matchList]
+  );
+  const [dateScore, setDateScore] = useState<Record<string, boolean>>(initialDateState);
   const flatListRef = useRef<FlatList>(null);
   useLayoutEffect(() => {
+    setDateScore(initialDateState);
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     }
@@ -33,7 +39,7 @@ const MatchList: React.FC<ContentsProps> = ({
       matchCountRef.current = 0
     });
     return () => cancelAnimationFrame(rafId);
-  }, [matchList]);
+  }, [initialDateState]);
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC → KST
   const today = kst.toISOString().split('T')[0]; //
@@ -44,6 +50,13 @@ const MatchList: React.FC<ContentsProps> = ({
       return <AdmobNativeAdSmall color={color}/>;
     }
   }
+  const onPressScore = (date: string) => {
+    setDateScore(prev => {
+      const newState = { ...prev, [date]: !prev[date] };
+      console.log('✅ dateScore updated:', newState);
+      return newState;
+    });
+  };
   const renderItem = useCallback(({ item, index }: { item: matchDto[], index: number }) => {
     const sortedItems = [...item].sort((a, b) => a.matchTime.localeCompare(b.matchTime));
     let dateColor = color;
@@ -82,20 +95,31 @@ const MatchList: React.FC<ContentsProps> = ({
               { backgroundColor: dateColor },
             ]}
           />
+          <View>
+            <TouchableOpacity
+              onPress={()=>{onPressScore(sortedItems[0].matchDate)}}
+            >
+              <Text
+                style={[
+                  styles.scoreText,
+                  { color: dateColor },
+                ]}
+              >all score</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {sortedItems.map((data: matchDto) => {
           matchCountRef.current += 1; // 카운터 증가
           const matchCount = matchCountRef.current;
           return (
           <View key={data.matchId}>
-            <MatchBar key={data.matchId} match={data} color={colorBar} />
+            <MatchBar key={data.matchId} match={data} color={colorBar} scoreState={dateScore[data.matchDate]} />
             {/*adBanner(colorBar, matchCount)*/}
           </View>
-        )})}
-          
+        );})}
       </View>
     );
-  }, [color, today]);
+  }, [color, today, dateScore]);
 
   return (
     <FlatList
@@ -137,8 +161,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: -height * 0.00,
   },
+  scoreText: {
+    fontFamily: 'sb-it-ver1',
+    color: '#30397A',
+    marginLeft: width*0.01,
+    fontSize: width * 0.05,
+    textAlign: 'center',
+    marginBottom: -height * 0.00,
+  },
   backDateBar: {
-    width: width * 0.6,
+    width: width * 0.42,
     height: height * 0.005,
     borderRadius: 10,
     marginTop: height * 0.011,

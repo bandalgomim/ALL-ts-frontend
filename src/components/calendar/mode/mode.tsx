@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet,  StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { width } from '../../../global';
-import { localData } from '../../../IAM/localData';
+import { localDataMmkv } from '../../../IAM/localData';
 
 interface ModeProps {
   type: string;
@@ -11,6 +11,7 @@ interface ModeProps {
 
 
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
+  console.log(mode)
   let typeColor: StyleProp<ViewStyle | TextStyle> = [];
 
   if(type === 'league') {
@@ -21,7 +22,7 @@ const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
 
   const onModeChange = async (modeChar: string) => {
     setMode(modeChar);
-    await localData.set('mode', modeChar);
+    localDataMmkv.set('mode', modeChar);
   };
 
   return (

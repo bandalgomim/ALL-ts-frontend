@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList, OnboardingPageParamList } from '../model/navigation.dto';
 import { hookVersionCheck } from '../hooks/IAM.hook';
 import { Alert, Linking } from 'react-native';
-import { localData } from '../IAM/localData';
+import { localData, localDataMmkv } from '../IAM/localData';
 
 
 const StartScreen = () => {
@@ -22,8 +22,8 @@ useEffect(() => {
     const runStartTask = async () => {
     try {
         const verCheck = await hookVersionCheck()
-        if (!await localData.get('mode')) {
-          await localData.set('mode', 'w');
+        if (!localDataMmkv.get('mode')) {
+          localDataMmkv.set('mode', 'w');
         }
         if (verCheck) {
           if(await localData.get('onbording') === 'true') {

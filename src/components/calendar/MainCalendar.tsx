@@ -8,7 +8,7 @@ import { width, height } from '../../global';
 import { getMainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
 import MatchList from '../matchBar/matchList';
 import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { localData } from '../../IAM/localData';
+import { localData, localDataMmkv } from '../../IAM/localData';
 
 interface MainCalendarProps {
   data: getMainResDto;
@@ -16,15 +16,9 @@ interface MainCalendarProps {
 
 const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [mode, setMode] = useState<string>('');
+  const [mode, setMode] = useState<string>(localDataMmkv.get('mode') as string);
   const [zIndex, setZIndex] = useState<boolean>(true); // z-index 상태 추가
   const animatedHeight = useRef(new Animated.Value(1)).current;
-  useEffect(() => {
-    (async () => {
-      const savedMode = await localData.get('mode') as string;
-      if (savedMode) {setMode(savedMode as string);}
-    })();
-  }, []);
   const handlePrevious = useCallback(() => {
     const newDate = goToPrevious(currentDate, mode);
     setCurrentDate(newDate);
