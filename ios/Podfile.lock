@@ -1388,6 +1388,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-mmkv (3.1.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-safe-area-context (5.6.1):
     - DoubleConversion
     - glog
@@ -2203,6 +2224,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -2251,7 +2273,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AppAuth
     - AppCheckCore
@@ -2361,6 +2383,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-mmkv:
+    :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
@@ -2517,6 +2541,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-encrypted-storage: 569d114e329b1c2c2d9f8c84bcdbe4478dda2258
   react-native-image-picker: 84b261e109faa7312bca59f1f65c8f2b22865496
+  react-native-mmkv: 4b5617f2a0db04a0f124ea69e1fa48cb67fad326
   react-native-safe-area-context: 3ca252db05d82ea67f6d178fbd289ff832f5681b
   react-native-video: d324ce058cca0afc996ca04097feadc553d4c713
   React-NativeModulesApple: fd0545efbb7f936f78edd15a6564a72d2c34bb32
@@ -2568,6 +2593,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: e14bad835e12b6c7e2260fc320bd00e0f4b45add
 
-PODFILE CHECKSUM: da65502c429507e75aa962337505fe0479a3e065
+PODFILE CHECKSUM: 9f37fd0d104b83a3eebc818edde3a12216b6bdf4
 
 COCOAPODS: 1.16.2

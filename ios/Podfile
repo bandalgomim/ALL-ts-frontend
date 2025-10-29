@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -20,7 +21,8 @@ target 'ALLts' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :new_arch_enabled => true
   )
 
   pod 'FirebaseCore', :modular_headers => true
