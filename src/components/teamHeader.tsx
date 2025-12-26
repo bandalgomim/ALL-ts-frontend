@@ -23,11 +23,11 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
   function detectLang(text: string, size: 'big' | 'small' | 'medium') {
     if (!text) { return; }
     if (size === 'big') {
-      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
+      return (<Text style={[styles.baseText, styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
     } else if (size === 'medium') {
-      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameMedium]}>{text}</Text>);
+      return (<Text style={[styles.baseText, styles.teamInfoName, styles.headerTeamInfoNameMedium]}>{text}</Text>);
     } else if (size === 'small') {
-      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+      return (<Text style={[styles.baseText, styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
     } else { return; }
   }
 
@@ -175,7 +175,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                 }
               }
             })() : null}
-            <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
+            <Text style={[styles.baseText, styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
               {`${data?.team?.countryName} ${data?.team?.sportName}`.length > 13
                 ? `${data?.team?.sportName}/${data?.team?.leagueName}`
                 : `${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
@@ -296,10 +296,10 @@ const styles = StyleSheet.create({
     color: '#30397A',
     textShadowColor: '#bdb4b4',
     textShadowRadius: 3,
+    textShadowOffset: { width: 1, height: 3 },
   },
   teamInfoName: {
     textAlign: 'right',
-    textShadowOffset: { width: 1, height: 3 },
     marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
@@ -320,7 +320,6 @@ const styles = StyleSheet.create({
   },
   teamInfoEtc: {
     textAlign: 'right',
-    textShadowOffset: { width: 1, height: 3 },
   },
   headerTeamInfoEtc: {
     fontSize: width * 0.055,

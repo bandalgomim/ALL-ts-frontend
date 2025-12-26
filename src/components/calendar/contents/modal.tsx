@@ -26,7 +26,7 @@ const MatchModal: React.FC = () => {
   const backdropOpacity = useRef(new Animated.Value(0.5)).current;
 
   // 드래그 중인지 여부 상태
-  const [isDragging, setIsDragging] = useState(false);
+  const [_isDragging, setIsDragging] = useState(false);
 
   // 마지막 드래그 위치 추적
   const lastDragPos = useRef(0);
