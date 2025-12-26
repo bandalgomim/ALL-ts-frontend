@@ -39,12 +39,13 @@ const TeamScreen = () => {
       <HeadNotch/>
       <TeamHeader refetch={refetch} data={teamRes.data}/>
       <TeamCalendar data={teamRes.data}/>
-      <View style={[styles.tabBar]}>
+      <View style={[styles.absolutePosition, styles.tabBar]}>
         <MainTabBar
           color="blue"
         />
       </View>
         <View style={[
+          styles.absolutePosition,
           styles.logo,
         ]}>
           <Logo color={'blue'}/>
@@ -64,19 +65,20 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    zIndex:1,
+    zIndex: 1,
   },
-  tabBar: {
-    position: 'absolute', // 하단 고정
+  // 공통 absolute 포지션 스타일
+  absolutePosition: {
+    position: 'absolute',
     left: 0,
     right: 0,
+  },
+  tabBar: {
     bottom: 0,
     zIndex: 0,
   },
   logo: {
-    position: 'absolute',
     left: width * 0.06,
-    right: 0,
     bottom: height * 0.07,
     zIndex: -1,
     opacity: 0.25,

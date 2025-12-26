@@ -123,7 +123,6 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
 const styles = StyleSheet.create({
   matchBarContainer: {
     alignItems: 'center',
-    //justifyContent: 'flex-start',
   },
   matchBarSize: {
     height: height * 0.075,
@@ -132,8 +131,6 @@ const styles = StyleSheet.create({
   matchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    //borderWidth: 1
-    //justifyContent: 'center',
   },
   matchBarInnerWidth: {
     width: width * 0.93,
@@ -162,7 +159,7 @@ const styles = StyleSheet.create({
   homeTeamNameContainer: {
     marginRight: width * 0.01,
     width: width * 0.132,
-    borderWidth: 0
+    borderWidth: 0,
   },
   awayTeamNameContainer: {
     marginRight: -width * 0.015,
@@ -184,23 +181,24 @@ const styles = StyleSheet.create({
   textLeft: {
     textAlign: 'left',
   },
+  // 공통 텍스트 그림자 베이스
+  textShadowBase: {
+    textShadowRadius: 3,
+  },
   textWhite: {
     color: 'white',
-    textShadowColor: '#242b5c', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#242b5c',
+    textShadowOffset: { width: 1, height: 3 },
   },
   textBlue: {
     color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 2 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 2 },
   },
   textRed: {
     color: 'white',
-    textShadowColor: '#af405b', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#af405b',
+    textShadowOffset: { width: 1, height: 3 },
   },
   stateText: {
     textAlign: 'center',
@@ -209,11 +207,6 @@ const styles = StyleSheet.create({
   teamName: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.08,
-  },
-  teamNameKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    fontSize: width * 0.08,
-    marginTop: height * -0.002,
   },
 });
 

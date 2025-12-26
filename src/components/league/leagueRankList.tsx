@@ -65,15 +65,15 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
         <View style={styles.container}>
           {showSection && (
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionText}>{a}</Text>
-              <Text style={styles.sectionText}>{b}</Text>
+              <Text style={[styles.baseText, styles.sectionText]}>{a}</Text>
+              <Text style={[styles.baseText, styles.sectionText]}>{b}</Text>
             </View>
           )}
 
           <View style={styles.rankItem}>
             <View style={styles.rankView}>
-              <Text style={styles.rankText}>{item.rank}</Text>
-              <Text style={[styles.rankText, styles.rankSuffix]}>
+              <Text style={[styles.baseText, styles.rankText]}>{item.rank}</Text>
+              <Text style={[styles.baseText, styles.rankText, styles.rankSuffix]}>
                 {getRankSuffix(item.rank)}
               </Text>
             </View>
@@ -87,20 +87,20 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
                 />
               </View>
               <View style={styles.teamInitView}>
-                <Text style={styles.teamInitText}>{item.teamInit}</Text>
+                <Text style={[styles.baseText, styles.teamInitText]}>{item.teamInit}</Text>
               </View>
             </TouchableOpacity>
             <View style={[styles.numberTextView, styles.numberTextViewMargin]}>
-              <Text style={styles.numberText}>{item.win}</Text>
+              <Text style={[styles.baseText, styles.numberText]}>{item.win}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, styles.numberTextGray]}>{item.draw}</Text>
+              <Text style={[styles.baseText, styles.numberText, styles.textGray]}>{item.draw}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, styles.numberTextFaded]}>{item.lose}</Text>
+              <Text style={[styles.baseText, styles.numberText, styles.textFaded]}>{item.lose}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, styles.numberTextPink]}>{item.point}</Text>
+              <Text style={[styles.baseText, styles.numberText, styles.textPink]}>{item.point}</Text>
             </View>
 
             <TouchableOpacity onPress={() => onPressRemain(item.teamId)} style={styles.remainView}>
@@ -135,11 +135,11 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        marginBottom: height * 0.01,
-    },
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: height * 0.01,
+  },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -148,8 +148,12 @@ const styles = StyleSheet.create({
     marginTop: height * 0.005,
     marginBottom: height * 0.002,
   },
-  sectionText: {
+  // 공통 폰트 베이스 스타일
+  baseText: {
     fontFamily: 'sb-it-ver1',
+    color: '#30397A',
+  },
+  sectionText: {
     fontSize: width * 0.06,
     marginRight: width * 0.015,
   },
@@ -168,9 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.005,
   },
   rankText: {
-    fontFamily: 'sb-it-ver1',
     fontSize: width * 0.08,
-    color: '#30397A',
   },
   rankSuffix: {
     fontSize: width * 0.045,
@@ -191,7 +193,6 @@ const styles = StyleSheet.create({
     width: width * 0.11,
   },
   teamInitText: {
-    fontFamily: 'sb-it-ver1',
     fontSize: width * 0.06,
   },
   numberTextView: {
@@ -201,19 +202,18 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.006,
   },
   numberText: {
-    fontFamily: 'sb-it-ver1',
     fontSize: width * 0.06,
     width: width * 0.1,
     textAlign: 'center',
-    color: '#30397A',
   },
-  numberTextGray: {
+  // 색상 변형 스타일
+  textGray: {
     color: '#9E9E9E',
   },
-  numberTextFaded: {
+  textFaded: {
     opacity: 0.3,
   },
-  numberTextPink: {
+  textPink: {
     color: '#EA5579',
   },
   remainView: {
@@ -230,7 +230,6 @@ const styles = StyleSheet.create({
   recordTextOnImage: {
     position: 'absolute',
     color: 'white',
-    fontFamily: 'sb-it-ver1',
     fontSize: width * 0.04,
     textAlign: 'center',
   },
@@ -241,7 +240,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
     backgroundColor: '#30397A',
   },
-
 });
 
 export default React.memo(LeagueRankList);

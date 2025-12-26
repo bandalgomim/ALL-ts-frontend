@@ -14,13 +14,13 @@ const UserScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.LogoContainer}>
-        <View style={styles.logoWithDimensions}>
-          <Text style={[styles.text1, styles.text1Dimensions, styles.textWhite]}>ALL</Text>
-          <Text style={[styles.text2, styles.text2Dimensions]}>'</Text>
-          <Text style={[styles.text3, styles.text3Dimensions, styles.textWhite]}>ts</Text>
+        <View style={[styles.logoBase, styles.logoWithDimensions]}>
+          <Text style={[styles.textBase, styles.text1, styles.textWhite]}>ALL</Text>
+          <Text style={[styles.textBase, styles.text2]}>'</Text>
+          <Text style={[styles.textBase, styles.text3, styles.textWhite]}>ts</Text>
         </View>
         <View>
-          <Text style={[styles.text4, styles.text4Dimensions, styles.textWhite]}>
+          <Text style={[styles.textBase, styles.text4, styles.textWhite]}>
             All  Sports  Scheduler
           </Text>
         </View>
@@ -54,42 +54,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: {
+  // logo와 logoWithDimensions 통합
+  logoBase: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   logoWithDimensions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
     width: width * 0.8,
     height: height * 0.24,
     marginTop: -height * 0.04,
   },
-  text1: {
+  // 공통 텍스트 베이스 스타일
+  textBase: {
     textAlign: 'center',
-    fontFamily: 'rg-it-ver2',
   },
-  text1Dimensions: {
+  text1: {
+    fontFamily: 'rg-it-ver2',
     width: width * 0.5,
     fontSize: width * 0.43,
   },
   text2: {
     color: '#EA5579',
-    textAlign: 'center',
     fontFamily: 'rg-it-ver2',
-  },
-  text2Dimensions: {
     width: width * 0.15,
     fontSize: width * 0.43,
     marginLeft: -width * 0.1,
   },
   text3: {
-    textAlign: 'center',
     fontFamily: 'lt-it-ver3',
-  },
-  text3Dimensions: {
     width: width * 0.15,
     fontSize: width * 0.15,
     marginLeft: -width * 0.08,
@@ -97,10 +90,7 @@ const styles = StyleSheet.create({
   },
   text4: {
     color: '#EA5579',
-    textAlign: 'center',
     fontFamily: 'rg-it-ver2',
-  },
-  text4Dimensions: {
     width: width,
     fontSize: width * 0.0885,
     marginTop: -height * 0.04,
@@ -113,7 +103,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     width: width,
-    height: height*0.2,
+    height: height * 0.2,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: height * 0.01,
@@ -133,13 +123,10 @@ const styles = StyleSheet.create({
   },
   snsWrapper: {
     alignItems: 'center',
-    height: height*0.12,
+    height: height * 0.12,
     marginTop: -height * 0.01,
-    borderColor:'red',
+    borderColor: 'red',
     overflow: 'visible',
-  },
-  snsInner: {
-    alignItems: 'center',
   },
 });
 

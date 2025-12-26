@@ -103,19 +103,19 @@ export default function OnboardingScreen() {
     // ✅ Next 버튼
     const renderNextButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={styles.nextText}>다음</Text>
+        <Text style={[styles.buttonTextBase, styles.nextText]}>다음</Text>
       </View>
     );
     // ✅ Skip 버튼
     const renderSkipButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={styles.skipText}>완료</Text>
+        <Text style={[styles.buttonTextBase, styles.skipText]}>완료</Text>
       </View>
     );
     // ✅ Done 버튼
     const renderDoneButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={styles.doneText}>완료</Text>
+        <Text style={[styles.buttonTextBase, styles.doneText]}>완료</Text>
       </View>
     );
   return (
@@ -150,47 +150,36 @@ export default function OnboardingScreen() {
         justifyContent: 'center',
         alignItems: 'center',
       },
-      // ✅ 버튼 텍스트 개별 스타일
-      skipText: {
+      // 공통 버튼 텍스트 베이스 스타일
+      buttonTextBase: {
         color: 'white',
         fontSize: 16,
-        fontWeight: '600',
-        textShadowColor: '#af405b', // 그림자 색상
-        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-        textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
+        textShadowColor: '#af405b',
+        textShadowOffset: { width: 1, height: 3 },
+        textShadowRadius: 3,
+        width: width * 0.15,
         textAlign: 'center',
+      },
+      skipText: {
+        fontWeight: '600',
       },
       nextText: {
-        color: 'white',
-        fontSize: 16,
         fontWeight: '700',
-        textShadowColor: '#af405b', // 그림자 색상
-        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-        textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
-        textAlign: 'center',
       },
       doneText: {
-        color: 'white',
-        fontSize: 16,
         fontWeight: '800',
-        textShadowColor: '#af405b', // 그림자 색상
-        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-        textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
-        textAlign: 'center',
+      },
+      // 공통 텍스트 그림자 베이스
+      textShadowBase: {
+        textShadowOffset: { width: 1, height: 3 },
+        textShadowRadius: 3,
       },
       textForBlue: {
         color: 'white',
         textShadowColor: '#242b5c',
-        textShadowOffset: { width: 1, height: 3 },
-        textShadowRadius: 3,
       },
       textForWhite: {
         color: '#30397A',
         textShadowColor: '#bdb4b4',
-        textShadowOffset: { width: 1, height: 3 },
-        textShadowRadius: 3,
       },
     });

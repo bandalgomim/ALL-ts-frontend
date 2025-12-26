@@ -66,9 +66,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
   },
-  logo: {
-    flex: 1,
-    zIndex: 0,
-  },
 });
 

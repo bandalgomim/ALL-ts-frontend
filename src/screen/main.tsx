@@ -65,15 +65,6 @@ const styles = StyleSheet.create({
   logoWrapper: {
     marginLeft: width * 0.18,
   },
-  banner: {
-    backgroundColor: '#b1b4cc',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bannerText: {
-    textAlign: 'center',
-    fontFamily: 'rg-it-ver2',
-  },
   sloganText: {
     width: width,
     fontSize: width * 0.0885,
@@ -89,7 +80,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 1000,
     height: height * 0.06,
-    backgroundColor: '#30397a'
+    backgroundColor: '#30397a',
   },
 });
 export default React.memo(MainScreen);

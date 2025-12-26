@@ -286,14 +286,16 @@ const styles = StyleSheet.create({
     marginBottom: height * -0.02,
     zIndex: 3,
   },
-  teamInfoName: {
-    
-    textAlign: 'right',
+  // 공통 텍스트 스타일
+  baseText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 3 },
     textShadowRadius: 3,
+  },
+  teamInfoName: {
+    textAlign: 'right',
+    textShadowOffset: { width: 1, height: 3 },
     marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
@@ -314,11 +316,7 @@ const styles = StyleSheet.create({
   },
   teamInfoEtc: {
     textAlign: 'right',
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 3 },
-    textShadowRadius: 3,
   },
   headerTeamInfoEtc: {
     fontSize: width * 0.055,

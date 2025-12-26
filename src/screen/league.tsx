@@ -41,12 +41,12 @@ const LeagueScreen = () => {
       <HeadNotch/>
       <LeagueHeader refetch={refetch} data={leagueRes.data}/>
       <LeagueCalendar data={leagueRes.data}/>
-      <View style={[styles.tabBar]}>
+      <View style={[styles.absolutePosition, styles.tabBar]}>
         <MainTabBar
           color="blue"
         />
       </View>
-      <View style={[styles.logo]}>
+      <View style={[styles.absolutePosition, styles.logo]}>
         <Logo color={'blue'} />
         <View>
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
@@ -63,20 +63,21 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    zIndex:1,
+    zIndex: 1,
   },
-  tabBar: {
-    position: 'absolute', // 하단 고정
+  // 공통 absolute 포지션 스타일
+  absolutePosition: {
+    position: 'absolute',
     left: 0,
     right: 0,
+  },
+  tabBar: {
     bottom: 0,
     zIndex: 1000,
   },
   logo: {
-    position: 'absolute',
     zIndex: -1,
     left: width * 0.05,
-    right: 0,
     bottom: 0.07 * height,
     opacity: 0.25,
   },

@@ -227,15 +227,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
   },
-  // 모달 헤더 영역 (드래그 가능)
   modalHeader: {
     width: '100%',
-    paddingTop: height* 0.005,
+    paddingTop: height * 0.005,
     alignItems: 'center',
-    backgroundColor: 'white', // 배경색 설정
+    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // 드래그 영역임을 알리는 약간의 그림자 효과
     zIndex: 10,
   },
   handleContainer: {
@@ -250,35 +248,6 @@ const styles = StyleSheet.create({
     height: height * 0.007,
     backgroundColor: '#DDDDDD',
     borderRadius: 3,
-  },
-  text: {
-    fontSize: width * 0.09,
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 2 },
-    textShadowRadius: 3,
-    marginBottom: height * 0.01,
-    textAlign: 'center',
-  },
-  // 컨텐츠 영역 (드래그 불가)
-  contentContainer: {
-    flex: 1,
-    width: '100%',
-    marginTop: height * 0.01,
-    alignItems: 'center', // 컨텐츠 중앙 정렬 추가
-  },
-  // MatchList를 감싸는 컨테이너 추가
-  matchListWrapper: {
-    width: width * 0.95, // 약간의 여백을 두고 중앙 정렬
-    height: height * 0.385,
-    alignSelf: 'center',
-  },
-  emptyContainer: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

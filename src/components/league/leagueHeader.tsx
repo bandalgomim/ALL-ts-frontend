@@ -24,12 +24,12 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
   function detectLang(text: string, size: 'big' | 'medium' | 'small') {
       if (!text) {return;}
       if (size === 'big') {
-          return (<Text style={[styles.LeagueInfoName, {fontSize: width * 0.15, marginBottom: -height * 0.015}]}>{text}</Text>);
+          return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameBig]}>{text}</Text>);
       } else if (size === 'medium') {
-          return (<Text style={[styles.LeagueInfoName, {fontSize: width * 0.13, marginBottom: -height * 0.015, marginTop:width*0.04}]}>{text}</Text>);
+          return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameMedium]}>{text}</Text>);
       } 
       else if (size === 'small') {
-          return (<Text style={[styles.LeagueInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+          return (<Text style={[styles.baseInfoText, styles.headerTeamInfoNameSmall]}>{text}</Text>);
       } else {return;}
     }
     function detectLangth(text: string) {
@@ -50,11 +50,11 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
       }
 
   return (
-    <View style={[styles.container, {width: width * 0.8, marginBottom: -height * 0.01 }]}>
+    <View style={[styles.container, styles.containerSize]}>
       <SearchBar
         type="blue"
       />
-      <View style={[styles.LeagueInfoContainer, {width: width * 0.8}]}>
+      <View style={styles.LeagueInfoContainer}>
 
         <View style={[styles.LeagueInfoTextContainer ]}>
             {data?.league?.leagueName ? (() => {
@@ -127,9 +127,9 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                           }
                         })() : null}
             
-            <Text style={[styles.LeagueInfoEtc, styles.leagueInfoEtcSize]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
+            <Text style={[styles.baseInfoText, styles.LeagueInfoEtc]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
         </View>
-        <View style={[styles.TeamLogo, styles.teamLogoMargin]}>
+        <View style={styles.TeamLogo}>
           <View style={styles.logoPickerWrapper}>
             <LogoPicker
               type={'league'}
@@ -194,17 +194,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerSize: {
+    width: width * 0.8,
+    marginBottom: -height * 0.01,
+  },
   flexRow: {
     flexDirection: 'row',
   },
   LeagueInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: width * 0.8,
   },
   TeamLogo: {
     flexDirection: 'row',
-  },
-  teamLogoMargin: {
     marginRight: -width * 0.07,
   },
   logoPickerWrapper: {
@@ -218,24 +221,33 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '2deg' }],
     height: height * 0.12,
   },
-  LeagueInfoName: {
+  // 공통 텍스트 베이스 스타일
+  baseInfoText: {
     textAlign: 'center',
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 3,
+  },
+  LeagueInfoName: {
+    // baseInfoText 속성 상속 (사용시 함께 적용)
+  },
+  LeagueInfoNameBig: {
+    fontSize: width * 0.15,
+    marginBottom: -height * 0.015,
+  },
+  LeagueInfoNameMedium: {
+    fontSize: width * 0.13,
+    marginBottom: -height * 0.015,
+    marginTop: width * 0.04,
+  },
+  headerTeamInfoNameSmall: {
+    fontSize: width * 0.083,
+    marginBottom: -height * 0.01,
   },
   LeagueInfoEtc: {
-    textAlign: 'center',
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 2 },
-    textShadowRadius: 3,
     marginTop: height * 0.005,
-  },
-  leagueInfoEtcSize: {
     fontSize: width * 0.055,
   },
   recordButton: {
@@ -250,7 +262,7 @@ const styles = StyleSheet.create({
   },
   record: {
     width: width * 0.85,
-    marginBottom: height * 0.02
+    marginBottom: height * 0.02,
   },
   recordItemView: {
     marginLeft: width * 0.295,
@@ -264,13 +276,11 @@ const styles = StyleSheet.create({
     color: '#30397A',
     textAlign: 'center',
   },
-
   recordItemBox: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.1,
   },
-
   recordItemLabel: {
     fontSize: width * 0.042,
     width: width * 0.1,
@@ -278,20 +288,6 @@ const styles = StyleSheet.create({
   recordPink: {
     color: '#EA5579',
   },
-  teamInfoName: {
-    textAlign: 'right',
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 3 },
-    textShadowRadius: 3,
-    marginLeft: width * 0.015,
-  },
-  headerTeamInfoNameSmall: {
-    fontSize: width * 0.083,
-    marginBottom: -height * 0.01,
-  },
-
 });
 
 export default React.memo(LeagueHeader);
