@@ -1,6 +1,5 @@
 import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '@model/main.dto';
-import { getDeviceVersion } from '@utils/deviceVersion';
 
 export const hookMain = async (
     method: string,
@@ -10,11 +9,9 @@ export const hookMain = async (
     if (method !== 'GET' && data === null) {
         return;
     }
-    const ver = await  getDeviceVersion();
     console.log('요청');
     setMainRes({ type: 'LOADING' });
     const url = 'https://all-ts-backend-production.up.railway.app/main';
-    const query = new URLSearchParams();
     if (method === 'GET'){
         await commonPostHook(method, url, null, setMainRes );
     } else if (method === 'PATCH') {

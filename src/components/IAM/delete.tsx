@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground, Alert } from 'react-native';
 import { width, height } from '@/global';

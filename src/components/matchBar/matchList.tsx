@@ -1,9 +1,9 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, { useCallback, useRef, useLayoutEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MatchBar from './matchBar';
 import { matchListDto, matchDto } from '@model/main.dto';
 import { height, width } from '@/global';
-import AdmobNativeAdSmall from '@components/ad/smallBanner';
 
 interface ContentsProps {
   matchList: matchListDto,
@@ -45,11 +45,6 @@ const MatchList: React.FC<ContentsProps> = ({
   const today = kst.toISOString().split('T')[0]; //
 
   const matchCountRef = useRef(0);
-  const adBanner  = (color: string, count: number) => {
-    if (count % 10 === 0) {
-      return <AdmobNativeAdSmall color={color}/>;
-    }
-  };
   const onPressScore = (date: string) => {
     setDateScore(prev => {
       const newState = { ...prev, [date]: !prev[date] };
@@ -57,7 +52,7 @@ const MatchList: React.FC<ContentsProps> = ({
       return newState;
     });
   };
-  const renderItem = useCallback(({ item, index }: { item: matchDto[], index: number }) => {
+  const renderItem = useCallback(({ item }: { item: matchDto[], index: number }) => {
     const sortedItems = [...item].sort((a, b) => a.matchTime.localeCompare(b.matchTime));
     let dateColor = color;
     let colorBar;
@@ -110,7 +105,6 @@ const MatchList: React.FC<ContentsProps> = ({
         </View>
         {sortedItems.map((data: matchDto) => {
           matchCountRef.current += 1;
-          const matchCount = matchCountRef.current;
           return (
           <View key={data.matchId}>
             <MatchBar key={data.matchId} match={data} color={colorBar} scoreState={dateScore[data.matchDate]} />

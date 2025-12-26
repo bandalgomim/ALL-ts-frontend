@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Contents.tsx
 import React, { useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -19,7 +20,7 @@ interface ContentsProps {
 }
 
 const Contents: React.FC<ContentsProps> = ({
-  monthDates, weekDates, month, color, mode, matchList, goToPrevious, goToNext,
+  monthDates, weekDates, month, color, mode, matchList,
 }) => {
 
   ('Contents.tsx');

@@ -10,10 +10,12 @@ if (Platform.OS === 'ios') {
 export const HeadNotch = () => {
   const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.notch, { paddingTop: Platform.OS === 'ios' ? insets.top : 0 }]} />
+    <View style={[styles.notch, Platform.OS === 'ios' && { paddingTop: insets.top }]} />
   );
 };
 
 const styles = StyleSheet.create({
-  notch: {},
+  notch: {
+    paddingTop: 0,
+  },
 });

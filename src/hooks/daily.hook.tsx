@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { hookSearchTag } from './searchTag.hook';
 import { useSearchTagActions } from '@context/searchTag.context';

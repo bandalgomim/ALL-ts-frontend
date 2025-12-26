@@ -40,7 +40,7 @@ const SearchModal: React.FC = () => {
   const searchTagRes  = useSearchTagState() as PostState<filteredItems>;
 
   // 드래그 중인지 상태 추가
-  const [isDragging, setIsDragging] = useState(false);
+  const [_isDragging, setIsDragging] = useState(false);
 
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();

@@ -94,7 +94,7 @@ export default function OnboardingScreen() {
           isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
         />
       </View>
-      <View style={[styles.textView, {backgroundColor: item.backgroundColor, opacity: 0.9}]}>
+      <View style={[styles.textView, styles.textViewOpacity, {backgroundColor: item.backgroundColor}]}>
         <Text style={[styles.title, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.title}</Text>
         <Text style={[styles.text, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.text}</Text>
       </View>
@@ -137,6 +137,7 @@ export default function OnboardingScreen() {
     const styles = StyleSheet.create({
       slide: { flex: 1, alignItems: 'center'},
       textView: { marginTop: -height * 0.235, width: width, height: height * 0.08, justifyContent: 'center' },
+      textViewOpacity: { opacity: 0.9 },
       title: { fontSize: 25, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 19, textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1', borderWidth:0},
