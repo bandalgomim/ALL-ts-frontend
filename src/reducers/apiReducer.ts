@@ -3,23 +3,38 @@ import { getLeagueResDto } from '@model/league.dto';
 import { getMainResDto } from '@model/main.dto';
 import { getMatchResDto } from '@model/match.dto';
 import { getTeamResDto } from '@model/team.dto';
+import deepEqual from 'fast-deep-equal';
+
 
 
 // 리듀서 함수
 export const PostReducer = <T>(state:PostState<T>, action: PostAction<T>): PostState<T> => {
-  switch (action.type) {
+  const type = action.type;
+  switch (type) {
     case 'LOADING':
+      if (state.loading === true && state.error === null) {return state;}
       return { ...state, loading: true, error: null, data: state.data };
     case 'SUCCESS':
-      if (action.items && action.payload) {
-        const updatedData = { ...state.data } as Record<string, unknown>; //기존 데이터가 객체 형식임을 확정
-        action.items.forEach((item) => {
-          const payload = action.payload as Record<string, unknown>; // 타입 단언
-          updatedData[item] = payload[item]; // `item` 프로퍼티만 업데이트
-        });
-        return { ...state, loading: false, data: updatedData };
+      const payload = action.payload;
+      if (payload == null) {
+        return { ...state, loading: false, data: state.data };
+      }
+      const changed = !deepEqual(state.data, payload);
+      if (changed) {
+        if (action.items) {
+          const items = action.items;
+          const updatedData = { ...(state.data ?? {}) } as Record<string, unknown>;
+          items.forEach((i) => {
+            const updatedPayload = payload as Record<string, unknown>; // 타입 단언
+            updatedData[i] = updatedPayload[i]; // `item` 프로퍼티만 업데이트
+          });
+          return { ...state, loading: false, data: updatedData as T };
+        } else {
+          return { ...state, loading: false, data: payload };
+        }
       } else {
-        return { ...state, loading: false, data: action.payload };
+        if (state.loading === false && state.error === null) {return state;}
+        return { ...state, loading: false, error: null, data: state.data };
       }
     case 'ERROR':
       return { ...state, loading: false, error: action.payload };
@@ -28,7 +43,7 @@ export const PostReducer = <T>(state:PostState<T>, action: PostAction<T>): PostS
   }
 };
 
-export const createInitial = <T>(data: T | null): PostState<T> => ({
+export const createInitial = <T>(data: T | null): PostState<T | null> => ({
   data,
   loading: true,
   error: null,
