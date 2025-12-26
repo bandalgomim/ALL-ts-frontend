@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { width, height } from '@/global';
 import DeleteButton from '@components/IAM/delete';
@@ -7,8 +7,6 @@ import LogoutButton from '@components/IAM/logout';
 // ✅ moti로 교체
 
 const UserScreen = () => {
-  const [snsView, setSnsView] = useState<boolean>(false);
-  const [type, setType] = useState<'in' | 'up'>('in');
 
   return (
     <View style={styles.container}>

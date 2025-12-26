@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*import React, { createContext, useState, useMemo } from 'react';
 
 export const ModalContext = createContext();

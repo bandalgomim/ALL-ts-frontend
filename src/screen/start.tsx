@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import LoadingScreen  from '@components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
