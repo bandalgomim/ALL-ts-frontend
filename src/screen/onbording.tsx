@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { View, Text, StyleSheet } from 'react-native';
-import { height, width } from '../global';
+import { height, width } from '@/global';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import TimedImageViewer from '../components/onboarding/timedImageViewer';
+import TimedImageViewer from '@components/onboarding/timedImageViewer';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MainPageParamList } from '../model/navigation.dto';
-import { localData } from '../IAM/localData';
+import { MainPageParamList } from '@model/navigation.dto';
+import { localData } from '@IAM/localData';
 
 const slides = [
   {
@@ -15,10 +15,10 @@ const slides = [
     text: '원하는 팀과 리그를 검색해 보세요.',
     backgroundColor: '#30397A',
     source: [
-      require('../assets/onboarding/1-1.png'),
-      require('../assets/onboarding/1-2.png'),
-      require('../assets/onboarding/1-3.png'),
-      require('../assets/onboarding/1-4.png'),
+      require('@assets/onboarding/1-1.png'),
+      require('@assets/onboarding/1-2.png'),
+      require('@assets/onboarding/1-3.png'),
+      require('@assets/onboarding/1-4.png'),
     ],
   },
   {
@@ -27,12 +27,12 @@ const slides = [
     text: '원하는 팀과 리그 그리고 매치를 선택하세요.',
     backgroundColor: 'white',
     source: [
-      require('../assets/onboarding/2-1.png'),
-      require('../assets/onboarding/2-2.png'),
-      require('../assets/onboarding/2-3.png'),
-      require('../assets/onboarding/2-4.png'),
-      require('../assets/onboarding/2-5.png'),
-      require('../assets/onboarding/2-6.png'),
+      require('@assets/onboarding/2-1.png'),
+      require('@assets/onboarding/2-2.png'),
+      require('@assets/onboarding/2-3.png'),
+      require('@assets/onboarding/2-4.png'),
+      require('@assets/onboarding/2-5.png'),
+      require('@assets/onboarding/2-6.png'),
     ],
   },
   {
@@ -41,12 +41,12 @@ const slides = [
     text: '팀과 리그 전체의 순위를 확인하세요.',
     backgroundColor: 'white',
     source: [
-      require('../assets/onboarding/3-1.png'),
-      require('../assets/onboarding/3-2.png'),
-      require('../assets/onboarding/3-3.png'),
-      require('../assets/onboarding/3-4.png'),
-      require('../assets/onboarding/3-5.png'),
-      require('../assets/onboarding/3-6.png'),
+      require('@assets/onboarding/3-1.png'),
+      require('@assets/onboarding/3-2.png'),
+      require('@assets/onboarding/3-3.png'),
+      require('@assets/onboarding/3-4.png'),
+      require('@assets/onboarding/3-5.png'),
+      require('@assets/onboarding/3-6.png'),
     ],
   },
   {
@@ -55,10 +55,10 @@ const slides = [
     text: '실시간 스코어와 하이라이트를 받아보세요.',
     backgroundColor: '#30397A',
     source: [
-      require('../assets/onboarding/4-1.png'),
-      require('../assets/onboarding/4-2.png'),
-      require('../assets/onboarding/4-3.png'),
-      require('../assets/onboarding/4-4.png'),
+      require('@assets/onboarding/4-1.png'),
+      require('@assets/onboarding/4-2.png'),
+      require('@assets/onboarding/4-3.png'),
+      require('@assets/onboarding/4-4.png'),
     ],
   },
   {
@@ -67,15 +67,13 @@ const slides = [
     text: '여러분의 특별한 로고로 변경하세요.',
     backgroundColor: 'white',
     source: [
-      require('../assets/onboarding/5-1.png'),
-      require('../assets/onboarding/5-2.png'),
-      require('../assets/onboarding/5-3.png'),
-      require('../assets/onboarding/5-4.png'),
-      require('../assets/onboarding/5-5.png'),
+      require('@assets/onboarding/5-1.png'),
+      require('@assets/onboarding/5-2.png'),
+      require('@assets/onboarding/5-3.png'),
+      require('@assets/onboarding/5-4.png'),
+      require('@assets/onboarding/5-5.png'),
     ],
   },
-
-
 ];
 
 export default function OnboardingScreen() {

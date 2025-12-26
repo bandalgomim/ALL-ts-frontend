@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground } from 'react-native';
-import { width, height } from '../../global';
+import { width, height } from '@/global';
 
 interface ContentsProps {
   type: "in" | "up",
@@ -12,9 +12,9 @@ interface ContentsProps {
 const AuthButton: React.FC<ContentsProps> = ({ type, snsView, setType, setSnsView }) => {
   let uri;
     if(type === 'in') {
-        uri =  require('../../assets/match/platform/spotv.png');
+        uri = require('@assets/match/platform/spotv.png');
     } else if(type === 'up') {
-        uri =  require('../../assets/match/platform/coupang.png');
+        uri = require('@assets/match/platform/coupang.png');
     }
     
   const onPress = () => {

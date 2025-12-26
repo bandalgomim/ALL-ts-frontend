@@ -1,16 +1,15 @@
-
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { getMatchResDto, platform } from '../../model/match.dto';
-import SearchBar from '../searchBar/searchBar';
-import TeamOrLeagueLogo from '../teamOrLeagueLogo';
-import MatchScore from '../matchBar/matchScore';
-import IsSelected from '../isSelected';
+import { getMatchResDto, platform } from '@model/match.dto';
+import SearchBar from '@components/searchBar/searchBar';
+import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
+import MatchScore from '@components/matchBar/matchScore';
+import IsSelected from '@components/isSelected';
 import { useNavigation } from '@react-navigation/native';
-import { TeamPageParamList } from '../../model/navigation.dto';
+import { TeamPageParamList } from '@model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
-import { width, height } from '../../global';
+import { width, height } from '@/global';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface MatchPros {
@@ -51,7 +50,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
         <Image
           resizeMode="contain"
           style={styles.scoreImage}
-          source={require('./../../assets/match/score.png')}
+          source={require('@assets/match/score.png')}
         />
       </View>
       <View style={styles.teamContainer}>
@@ -69,7 +68,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
                 <Image
                   resizeMode="contain"
                   style={styles.whiteBackground}
-                  source={require('../../assets/match/white.png')}
+                  source={require('@assets/match/white.png')}
                 />
                 <View style={styles.teamNameContainer}>
                   <Text style={[styles.fontBlueBig]}>{match.homeTeamInit}</Text>
@@ -136,7 +135,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
             <Image
               resizeMode="contain"
               style={{width: width * 0.5, height: height * 0.14, position: 'absolute', zIndex: 0, marginTop: -height * 0.026}}
-              source={require('../../assets/match/blue.png')}
+              source={require('@assets/match/blue.png')}
             />
             <TouchableOpacity onPress={() => refetch()}>
               <Text style={[styles.fontWhiteState, match.matchState === 'live' && styles.fontLive]}>

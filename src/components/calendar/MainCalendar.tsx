@@ -4,11 +4,11 @@ import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
-import { width, height } from '../../global';
-import { getMainResDto, leagueDto, matchDto, teamDto } from '../../model/main.dto';
-import MatchList from '../matchBar/matchList';
-import TeamAndLeagueListBar from '../main/teamAndLeagueListBar';
-import { localData, localDataMmkv } from '../../IAM/localData';
+import { width, height } from '@/global';
+import { getMainResDto, leagueDto, matchDto, teamDto } from '@model/main.dto';
+import MatchList from '@components/matchBar/matchList';
+import TeamAndLeagueListBar from '@components/main/teamAndLeagueListBar';
+import { localData, localDataMmkv } from '@IAM/localData';
 
 interface MainCalendarProps {
   data: getMainResDto;

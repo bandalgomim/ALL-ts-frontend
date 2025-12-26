@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import LoadingScreen  from '../components/loadingPage';
+import LoadingScreen  from '@components/loadingPage';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MainPageParamList, OnboardingPageParamList } from '../model/navigation.dto';
-import { hookVersionCheck } from '../hooks/IAM.hook';
+import { MainPageParamList, OnboardingPageParamList } from '@model/navigation.dto';
+import { hookVersionCheck } from '@hooks/IAM.hook';
 import { Alert, Linking } from 'react-native';
-import { localData, localDataMmkv } from '../IAM/localData';
-
+import { localData, localDataMmkv } from '@IAM/localData';
 
 const StartScreen = () => {
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();

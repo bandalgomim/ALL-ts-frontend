@@ -1,8 +1,8 @@
-import { PostState, PostAction, StateDto } from '../model/config';
-import { getLeagueResDto } from '../model/league.dto';
-import { getMainResDto } from '../model/main.dto';
-import { getMatchResDto } from '../model/match.dto';
-import { getTeamResDto } from '../model/team.dto';
+import { PostState, PostAction, StateDto } from '@model/config';
+import { getLeagueResDto } from '@model/league.dto';
+import { getMainResDto } from '@model/main.dto';
+import { getMatchResDto } from '@model/match.dto';
+import { getTeamResDto } from '@model/team.dto';
 
 
 // 리듀서 함수

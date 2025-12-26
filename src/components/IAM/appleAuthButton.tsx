@@ -3,13 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from "react-native";
-import { MainPageParamList } from "../../model/navigation.dto";
-import { hookAuth } from "../../hooks/IAM.hook";
-import { useLeagueState, useLeagueActions } from "../../context/league.context";
-import { useMainActions } from "../../context/main.context";
-import { useMatchActions } from "../../context/match.context";
-import { useTeamState, useTeamActions } from "../../context/team.context";
-import { height, width } from '../../global';
+import { MainPageParamList } from "@model/navigation.dto";
+import { hookAuth } from "@hooks/IAM.hook";
+import { useLeagueState, useLeagueActions } from "@context/league.context";
+import { useMainActions } from "@context/main.context";
+import { useMatchActions } from "@context/match.context";
+import { useTeamState, useTeamActions } from "@context/team.context";
+import { height, width } from '@/global';
 
 interface AppleAuthButtonProps {
   type: "in" | "up";       // "in" → Sign in / "up" → Sign up
@@ -87,7 +87,7 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
       <View style={styles.contentWrapper}>
         {/* PNG 로고 */}
         <Image
-          source={require("../../assets/auth/Apple.png")}
+          source={require("@assets/auth/Apple.png")}
           style={styles.icon}
           resizeMode="contain"
         />

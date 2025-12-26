@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { height, width } from '../global';
+import { height, width } from '@/global';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { refetchDto } from '../model/refetch.dto';
+import { refetchDto } from '@model/refetch.dto';
 
 const RefreshButton: React.FC<refetchDto> = ({ refetch }) => {
 

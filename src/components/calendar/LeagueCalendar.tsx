@@ -4,14 +4,14 @@ import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
-import { width, height } from '../../global';
-import { useLeagueState, useLeagueActions } from '../../context/league.context';
-import { matchDto } from '../../model/main.dto';
-import MatchList from '../matchBar/matchList';
-import LeageTeamListBar from '../league/leageTeamList';
-import { getLeagueResDto } from '../../model/league.dto';
-import { PostState } from '../../model/config';
-import { localData, localDataMmkv } from '../../IAM/localData';
+import { width, height } from '@/global';
+import { useLeagueState, useLeagueActions } from '@context/league.context';
+import { matchDto } from '@model/main.dto';
+import MatchList from '@components/matchBar/matchList';
+import LeageTeamListBar from '@components/league/leageTeamList';
+import { getLeagueResDto } from '@model/league.dto';
+import { PostState } from '@model/config';
+import { localData, localDataMmkv } from '@IAM/localData';
 
 interface LeagueCalendarProps {
   data: getLeagueResDto;
@@ -123,7 +123,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
               styles.leagueBackgroundMonth,
               { opacity: mode === 'm' ? 1 : 0 }
             ]}
-            source={require('./../../assets/calendar/leagueBackground.png')}
+            source={require('@assets/calendar/leagueBackground.png')}
           />
           <Image
             resizeMode="contain"
@@ -132,7 +132,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
               styles.leagueBackgroundWeek,
               { opacity: mode === 'w' ? 1 : 0 }
             ]}
-            source={require('./../../assets/calendar/leagueBackground_s.png')}
+            source={require('@assets/calendar/leagueBackground_s.png')}
           />
           <View style={{ marginTop: height * 0.005 }}>
             <Header

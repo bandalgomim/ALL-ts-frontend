@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground } from 'react-native';
-import { width, height } from '../../global';
+import { width, height } from '@/global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '../../model/navigation.dto';
-import { localData } from '../../IAM/localData';
+import { IAMPageParamList } from '@model/navigation.dto';
+import { localData } from '@IAM/localData';
 
 const LogoutButton = () => {
-  const uri = require('../../assets/match/platform/youtube.png');
+  const uri = require('@assets/match/platform/youtube.png');
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {

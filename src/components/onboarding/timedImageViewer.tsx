@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, ImageRequireSource, StyleSheet } from 'react-native';
-import { height, width } from '../../global';
+import { height, width } from '@/global';
 
 type Props = {
   images: ImageRequireSource[];

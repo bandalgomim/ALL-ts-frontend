@@ -14,12 +14,12 @@ import {
   Keyboard,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
+import { LeaguePageParamList, TeamPageParamList } from '@model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { width, height } from '../../global';
-import { useSearchActions, useSearchState } from '../../context/modal/search.context'
-import { useSearchTagState } from '../../context/searchTag.context';
-import { PostState } from '../../model/config';
+import { width, height } from '@/global';
+import { useSearchActions, useSearchState } from '@context/modal/search.context';
+import { useSearchTagState } from '@context/searchTag.context';
+import { PostState } from '@model/config';
 
 interface filteredItems {
   name: string;
@@ -293,7 +293,7 @@ const filteredResults = items
           <ImageBackground
             resizeMode="contain"
             style={styles.textBackground}
-            source={require('../../assets/searchBar/modal.png')}
+            source={require('@assets/searchBar/modal.png')}
           >
             <TextInput
               placeholder={isFocused ? '' : 'SEARCH'}

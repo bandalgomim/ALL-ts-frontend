@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet,  Image, TouchableOpacity } from 'react-native';
-import { hookIsSelected } from '../hooks/isSelected.hook';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { hookIsSelected } from '@hooks/isSelected.hook';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { TeamPageParamList } from '../model/navigation.dto';
-import { height, width } from '../global';
-import { useMainActions } from '../context/main.context';
+import { TeamPageParamList } from '@model/navigation.dto';
+import { height, width } from '@/global';
+import { useMainActions } from '@context/main.context';
 
 interface IsSelectedPros {
     isSelected: boolean | null;
@@ -48,8 +48,8 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
       style={{height: height*0.03}}
     >
       <Image resizeMode="contain" style={[styles.container, {width: width * 0.07, height: width * 0.07}]} source={state === true
-      ? (color !== 'red' ? require('./../assets/star/star.png') : require('./../assets/star/star_blue.png'))
-      : require('./../assets/star/star_empty.png')} />
+      ? (color !== 'red' ? require('@assets/star/star.png') : require('@assets/star/star_blue.png'))
+      : require('@assets/star/star_empty.png')} />
     </TouchableOpacity>
   );
 };

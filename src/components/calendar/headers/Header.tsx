@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { width, height } from '../../../global';
+import { width, height } from '@/global';
 
 interface TeamHeaderProps {
   year: number;

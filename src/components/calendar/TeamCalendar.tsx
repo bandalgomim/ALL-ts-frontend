@@ -3,12 +3,12 @@ import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
 import Header from './headers/Header';
-import { width, height } from '../../global';
+import { width, height } from '@/global';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
-import { matchDto } from '../../model/main.dto';
-import MatchList from '../matchBar/matchList';
-import { getTeamResDto } from '../../model/team.dto';
-import { localData, localDataMmkv } from '../../IAM/localData';
+import { matchDto } from '@model/main.dto';
+import MatchList from '@components/matchBar/matchList';
+import { getTeamResDto } from '@model/team.dto';
+import { localData, localDataMmkv } from '@IAM/localData';
 
 interface TeamCalendarProps {
   data: getTeamResDto;
@@ -113,7 +113,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
               ? styles.teamBackgroundMonth
               : { opacity: 0 }
           ]}
-          source={require('./../../assets/calendar/teamBackground-test.png')}
+          source={require('@assets/calendar/teamBackground-test.png')}
         />
         <Image
           resizeMode="contain"
@@ -123,7 +123,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
               ? styles.teamBackgroundWeek
               : { opacity: 0 }
           ]}
-          source={require('./../../assets/calendar/teamBackground_s-test.png')}
+          source={require('@assets/calendar/teamBackground_s-test.png')}
         />
         <View style={{marginTop: height * 0.005}}>
           <Header

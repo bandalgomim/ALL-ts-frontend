@@ -1,16 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import SearchBar from '../searchBar/searchBar';
-import { leagueDto, patchMainReqDto, teamDto } from '../../model/main.dto';
+import SearchBar from '@components/searchBar/searchBar';
+import { leagueDto, patchMainReqDto, teamDto } from '@model/main.dto';
 import { useNavigation } from '@react-navigation/native';
-import { LeaguePageParamList, TeamPageParamList } from '../../model/navigation.dto';
-import TeamOrLeagueLogo from '../teamOrLeagueLogo';
+import { LeaguePageParamList, TeamPageParamList } from '@model/navigation.dto';
+import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { transformToPatchMainReqDto } from './util';
-import { width, height } from './../../global';
-import { hookMain } from '../../hooks/main.hook';
-import { AuthContext } from '../../context/auth.context';
+import { width, height } from '@/global';
+import { hookMain } from '@hooks/main.hook';
+import { AuthContext } from '@context/auth.context';
 
 interface ContentsProps {
   teamAndLeagueList: (teamDto | leagueDto)[] | null;
@@ -125,7 +125,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
       <ImageBackground
         resizeMode="contain"
         style={[styles.ImageBackground, styles.imageSize]}
-        source={require('./../../assets/main/teamListBar_s.png')}
+        source={require('@assets/main/teamListBar_s.png')}
       >
         <View style={styles.flatListContainer}>
           {list ? (

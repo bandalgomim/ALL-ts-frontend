@@ -1,5 +1,5 @@
 import notifee, { TimestampTrigger, TriggerType, AndroidImportance } from '@notifee/react-native';
-import { matchDto, matchListDto } from '../model/main.dto';
+import { matchDto, matchListDto } from '@model/main.dto';
 
 export async function scheduleTodayMatches(matchList: matchListDto) {
   if (!matchList) return;

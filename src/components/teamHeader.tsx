@@ -1,15 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import SearchBar from './searchBar/searchBar';
-import TeamOrLeagueLogo  from './teamOrLeagueLogo';
+import TeamOrLeagueLogo from './teamOrLeagueLogo';
 import IsSelected from './isSelected';
 import RefreshButton from './refresh';
-import { width, height } from '../global';
+import { width, height } from '@/global';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useModalNextMatchActions } from '../context/modal/modalNextMatch.context';
+import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
 import { findNext } from './calendar/utills';
 import LogoPicker from './logo/logoPicker';
-import { getTeamResDto } from '../model/team.dto';
+import { getTeamResDto } from '@model/team.dto';
 
 interface TeamHeaderProps {
   refetch: () => Promise<void>;
@@ -223,7 +223,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               <Image
                 resizeMode="contain"
                 style={styles.recordImage}
-                source={require('../assets/record/record.png')}
+                source={require('@assets/record/record.png')}
               />
               <Text style={styles.recordTextOnImage}>
                 remain

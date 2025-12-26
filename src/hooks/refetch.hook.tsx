@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '../model/navigation.dto';
+import { IAMPageParamList } from '@model/navigation.dto';
 import { hookIsLogin } from './IAM.hook';
 
 type LoadingAction = { type: 'LOADING' };

@@ -1,18 +1,17 @@
 import React, { useCallback, useEffect } from 'react';
-import Match  from '../components/match/match';
+import Match from '@components/match/match';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { hookMatch } from '../hooks/match.hook';
-import LoadingScreen  from '../components/loadingPage';
+import { hookMatch } from '@hooks/match.hook';
+import LoadingScreen from '@components/loadingPage';
 import { View, StyleSheet } from 'react-native';
-import MainTabBar from '../components/main/mainTabBar';
-import { getMatchResDto, getMatchResQueryDto } from '../model/match.dto';
+import MainTabBar from '@components/main/mainTabBar';
+import { getMatchResDto, getMatchResQueryDto } from '@model/match.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '../model/navigation.dto';
-import { useMatchState, useMatchActions } from '../context/match.context';
-import { hookRefetch } from '../hooks/refetch.hook';
-import { hookIsLogin } from '../hooks/IAM.hook';
-import { PostState } from '../model/config';
-
+import { IAMPageParamList } from '@model/navigation.dto';
+import { useMatchState, useMatchActions } from '@context/match.context';
+import { hookRefetch } from '@hooks/refetch.hook';
+import { hookIsLogin } from '@hooks/IAM.hook';
+import { PostState } from '@model/config';
 
 const MatchScreen = () => {
 

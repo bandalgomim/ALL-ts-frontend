@@ -5,7 +5,7 @@ import React, {
   useReducer,
   ReactNode,
 } from 'react';
-import { modalSingleReducer } from '../../reducers/modalReducer';
+import { modalSingleReducer } from '@reducers/modalReducer';
 
 // --- State & Actions 타입 ---
 export interface ModalNextMatchState {

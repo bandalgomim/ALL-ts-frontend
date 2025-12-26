@@ -10,9 +10,9 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import { width, height } from '../../../global';
-import MatchList from '../../matchBar/matchList';
-import { useModalState, useModalActions } from '../../../context/modal/modal.context';
+import { width, height } from '@/global';
+import MatchList from '@components/matchBar/matchList';
+import { useModalState, useModalActions } from '@context/modal/modal.context';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값

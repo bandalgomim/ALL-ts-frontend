@@ -1,5 +1,5 @@
 import { commonPostHook } from './common.hook';
-import { getMatchResQueryDto } from '../model/match.dto';
+import { getMatchResQueryDto } from '@model/match.dto';
 
 export const hookMatch = async (
     method: string,

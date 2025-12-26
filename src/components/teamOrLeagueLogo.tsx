@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet,  Image, ImageBackground, Text, View } from 'react-native';
-import { height, width } from '../global';
+import { height, width } from '@/global';
 import FastImage from 'react-native-fast-image';
 
 
@@ -16,13 +16,13 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
 
   if (type === 'small') {
     size = width * 0.1;
-    req = require('../assets/teamLogo/teamLogo_s.png');
+    req = require('@assets/teamLogo/teamLogo_s.png');
   } else if(type === 'big') {
     size = width * 0.25;
-    req = require('../assets/teamLogo/teamLogo_b.png');
+    req = require('@assets/teamLogo/teamLogo_b.png');
   } else {
     size = width * 0.16;
-    req = require('../assets/teamLogo/teamLogo_m.png');
+    req = require('@assets/teamLogo/teamLogo_m.png');
   }
 
   const logoImageStyle = { width: size * 0.8, height: size * 0.8 };

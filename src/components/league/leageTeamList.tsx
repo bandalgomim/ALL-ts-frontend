@@ -1,14 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext } from 'react';
-import { View, StyleSheet,  ImageBackground, Text, TouchableOpacity } from 'react-native';
-import { TeamPageParamList } from '../../model/navigation.dto';
-import { getLeagueResDto, teamDto } from '../../model/league.dto';
-import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
+import { View, StyleSheet, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { TeamPageParamList } from '@model/navigation.dto';
+import { getLeagueResDto, teamDto } from '@model/league.dto';
+import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { width, height } from '../../global';
-import { useLeagueState, useLeagueActions } from '../../context/league.context';
+import { width, height } from '@/global';
+import { useLeagueState, useLeagueActions } from '@context/league.context';
 import DraggableFlatList from 'react-native-draggable-flatlist';
-import { PostState } from '../../model/config';
+import { PostState } from '@model/config';
 
 interface LeageTeamListBarProps {
   data: getLeagueResDto;
@@ -18,7 +18,6 @@ const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
   const navigateTeam = (teamId: number) => {
     navigation.navigate('TeamScreen', { teamId: teamId });
   };
-
 
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
     if (String(item.rank) === '0') return null;
@@ -44,7 +43,7 @@ const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
       <ImageBackground
         resizeMode="contain"
         style={[styles.ImageBackground, {width:width, height: width * 0.32 }]}
-        source={ require('./../../assets/league/teamList.png')}
+        source={require('@assets/league/teamList.png')}
       >
         <DraggableFlatList
           style={[styles.scrollView, {width: width * 0.8}]}

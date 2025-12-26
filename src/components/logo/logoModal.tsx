@@ -8,8 +8,8 @@ import {
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { width, height } from '../../global';
-import { useLogoModalActions, useLogoModalState } from '../../context/modal/logoModal.context';
+import { width, height } from '@/global';
+import { useLogoModalActions, useLogoModalState } from '@context/modal/logoModal.context';
 import LogoImgPicker from './logoImgPicker';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;

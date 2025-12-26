@@ -1,17 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import SearchBar from '../searchBar/searchBar';
-import TeamOrLeagueLogo  from '../teamOrLeagueLogo';
-import IsSelected from './../isSelected';
-import { width, height } from '../../global';
-import { useLeagueState, useLeagueActions } from '../../context/league.context';
+import SearchBar from '@components/searchBar/searchBar';
+import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
+import IsSelected from '@components/isSelected';
+import { width, height } from '@/global';
+import { useLeagueState, useLeagueActions } from '@context/league.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LeagueRankList from './leagueRankList';
-import LogoPicker from '../logo/logoPicker';
-import { refetchDto } from '../../model/refetch.dto';
-import RefreshButton from '../refresh';
-import { PostState } from '../../model/config';
-import { getLeagueResDto } from '../../model/league.dto';
+import LogoPicker from '@components/logo/logoPicker';
+import { refetchDto } from '@model/refetch.dto';
+import RefreshButton from '@components/refresh';
+import { PostState } from '@model/config';
+import { getLeagueResDto } from '@model/league.dto';
 
 interface LeagueHeaderProps {
   refetch: () => Promise<void>;

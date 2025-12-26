@@ -1,4 +1,4 @@
-import { matchDto } from '../../model/main.dto';
+import { matchDto } from '@model/main.dto';
 
 const formatMatchDate = (matchDate: string): string => {
   return matchDate.replace(' ', 'T')

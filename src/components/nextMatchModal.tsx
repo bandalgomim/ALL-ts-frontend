@@ -8,8 +8,8 @@ import {
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { width, height } from '../global';
-import { ModalContext, useModalNextMatchActions, useModalNextMatchState } from '../context/modal/modalNextMatch.context';
+import { width, height } from '@/global';
+import { ModalContext, useModalNextMatchActions, useModalNextMatchState } from '@context/modal/modalNextMatch.context';
 import MatchList from './matchBar/matchList';
 
 const SCREEN_HEIGHT = height;

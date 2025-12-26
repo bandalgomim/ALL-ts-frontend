@@ -1,11 +1,11 @@
-import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '../model/IAM.dto';
+import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '@model/IAM.dto';
 import axios from 'axios';
-import { localData } from '../IAM/localData';
-import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '../reducers/apiReducer';
+import { localData } from '@IAM/localData';
+import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '@reducers/apiReducer';
 import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 import { getVersion } from 'react-native-device-info';
-import { getDeviceVersion } from '../utils/deviceVersion';
+import { getDeviceVersion } from '@utils/deviceVersion';
 
 export const hookAuth = async (
     data: getLoginReqDto,

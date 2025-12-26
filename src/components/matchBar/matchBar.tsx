@@ -1,15 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import { matchDto } from '../../model/main.dto';
+import { matchDto } from '@model/main.dto';
 import MatchScore from './matchScore';
-import IsSelected from '../isSelected';
-import TeamOrLeagueLogo from '../teamOrLeagueLogo';
+import IsSelected from '@components/isSelected';
+import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import { useNavigation } from '@react-navigation/native';
-import { MatchPageParamList } from '../../model/navigation.dto';
+import { MatchPageParamList } from '@model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { width, height } from '../../global';
-import { useModalActions } from '../../context/modal/modal.context.tsx';
-import { ModalContext as ModalNextuseMatchActions, useModalNextMatchActions } from '../../context/modal/modalNextMatch.context';
+import { width, height } from '@/global';
+import { useModalActions } from '@context/modal/modal.context';
+import { ModalContext as ModalNextuseMatchActions, useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
 
 interface MatchBarPros {
   match: matchDto; // Assuming match is your interface from earlier
@@ -52,10 +52,10 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
           resizeMode="contain"
           source={
             color === 'white'
-              ? require('../../assets/match/bar/matchBar_w-TEST.png')
+              ? require('@assets/match/bar/matchBar_w-TEST.png')
               : color === 'blue'
-              ? require('../../assets/match/bar/matchBar_b-TEST.png')
-              : require('../../assets/match/bar/matchBar_r-TEST.png')
+              ? require('@assets/match/bar/matchBar_b-TEST.png')
+              : require('@assets/match/bar/matchBar_r-TEST.png')
           }
           style={[styles.matchBar, { height: height * 0.075, width: width * 0.93 }]}
         >

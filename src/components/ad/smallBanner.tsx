@@ -9,7 +9,7 @@ import {
   NativeAssetType,
   NativeMediaView,
 } from "react-native-google-mobile-ads";
-import { height, width } from "../../global";
+import { height, width } from "@/global";
 
 
 type AdUnitIdType = string;
@@ -59,10 +59,10 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
       resizeMode="contain"
       source={
         color === 'white'
-          ? require('../../assets/match/bar/matchBar_w-TEST.png')
+          ? require('@assets/match/bar/matchBar_w-TEST.png')
           : color === 'blue'
-          ? require('../../assets/match/bar/matchBar_b-TEST.png')
-          : require('../../assets/match/bar/matchBar_r-TEST.png')
+          ? require('@assets/match/bar/matchBar_b-TEST.png')
+          : require('@assets/match/bar/matchBar_r-TEST.png')
       }
       style={[{ justifyContent: "center", width: width * 0.93, height: height * 0.075, alignItems: "center"}]}
     >

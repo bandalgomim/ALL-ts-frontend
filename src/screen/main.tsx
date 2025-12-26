@@ -1,17 +1,16 @@
 import React, { useCallback } from 'react';
-import {  StyleSheet, View, Text } from 'react-native';
-import MainCalendar from '../components/calendar/MainCalendar';
-import Logo from '../components/logo';
-import { hookMain } from '../hooks/main.hook';
-import { MainHeader } from '../components/main/mainHeader';
-import LoadingScreen  from '../components/loadingPage';
-import { width, height } from '../global';
-import { HeadNotch } from '../components/notch';
-import { useMainActions, useMainState } from '../context/main.context';
-import { getMainResDto } from '../model/main.dto';
-import { hookRefetch } from '../hooks/refetch.hook';
-import { PostState } from '../model/config';
-
+import { StyleSheet, View, Text } from 'react-native';
+import MainCalendar from '@components/calendar/MainCalendar';
+import Logo from '@components/logo';
+import { hookMain } from '@hooks/main.hook';
+import { MainHeader } from '@components/main/mainHeader';
+import LoadingScreen from '@components/loadingPage';
+import { width, height } from '@/global';
+import { HeadNotch } from '@components/notch';
+import { useMainActions, useMainState } from '@context/main.context';
+import { getMainResDto } from '@model/main.dto';
+import { hookRefetch } from '@hooks/refetch.hook';
+import { PostState } from '@model/config';
 
 const MainScreen = () => {
   const { setMainRes } = useMainActions()  

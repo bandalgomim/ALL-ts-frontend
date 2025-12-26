@@ -1,9 +1,8 @@
 import React, { useCallback, useContext } from 'react';
-import { StyleSheet,  Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
-import { height, width } from '../../global';
+import { StyleSheet, Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
+import { height, width } from '@/global';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { useLogoModalActions } from '../../context/modal/logoModal.context';
-
+import { useLogoModalActions } from '@context/modal/logoModal.context';
 
 interface TeamOrLogoPros {
     type: 'team' | 'league',

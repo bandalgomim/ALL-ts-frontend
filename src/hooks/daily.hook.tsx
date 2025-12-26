@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { hookSearchTag } from './searchTag.hook';
-import { useSearchTagActions } from '../context/searchTag.context';
+import { useSearchTagActions } from '@context/searchTag.context';
 import { getMessaging, getToken } from '@react-native-firebase/messaging';
 import { hookFcmToken } from './IAM.hook';
 import { getApp } from '@react-native-firebase/app';

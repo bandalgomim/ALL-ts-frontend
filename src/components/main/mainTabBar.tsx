@@ -3,8 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { MainPageParamList } from '../../model/navigation.dto';
-import { width, height } from '../../global';
+import { MainPageParamList } from '@model/navigation.dto';
+import { width, height } from '@/global';
+
 interface MainTabBarProps {
   color: 'blue' | 'white';
 }

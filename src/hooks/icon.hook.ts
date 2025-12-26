@@ -1,5 +1,5 @@
 import { commonPostHook } from './common.hook';
-import { patchIcon } from '../model/Icon.dto';
+import { patchIcon } from '@model/Icon.dto';
 
 export const hookIcon = async (
     method: string,

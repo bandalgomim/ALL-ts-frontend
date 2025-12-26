@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
-import { width, height } from '../global';
+import { width, height } from '@/global';
 
 interface logoProps {
   color: 'blue' | 'white';

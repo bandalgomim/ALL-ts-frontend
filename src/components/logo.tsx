@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { width, height } from '../global'
+import { width, height } from '@/global';
 interface logoProps {
   color: 'blue' | 'white';
 }

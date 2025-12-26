@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text, StyleSheet,  ImageBackground } from 'react-native';
-import { width, height } from '../../global';
+import { Text, StyleSheet, ImageBackground } from 'react-native';
+import { width, height } from '@/global';
 
 interface MatchScorePros {
     score: string | number;
@@ -16,19 +16,19 @@ const MatchScore: React.FC<MatchScorePros> = ({score, color, type}) => {
     : width * 0.34;
   switch (true) {
     case (type === 'small' && color === 'blue'):
-      req = require('../../assets/score/score_w_s.png');
+      req = require('@assets/score/score_w_s.png');
       break;
     case (type === 'big' && color === 'blue'):
-      req = require('../../assets/score/score_w.png');
+      req = require('@assets/score/score_w.png');
       break;
     case (type === 'small' && color === 'white'):
-      req = require('../../assets/score/score_b_s.png');
+      req = require('@assets/score/score_b_s.png');
       break;
     case (type === 'big' && color === 'white'):
-      req = require('../../assets/score/score_b.png');
+      req = require('@assets/score/score_b.png');
       break;
     default:
-      req = require('../../assets/score/score_w_s.png');
+      req = require('@assets/score/score_w_s.png');
       break;
   }
 

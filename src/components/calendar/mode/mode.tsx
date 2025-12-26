@@ -1,14 +1,13 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet,  StyleProp, ViewStyle, TextStyle } from 'react-native';
-import { width } from '../../../global';
-import { localDataMmkv } from '../../../IAM/localData';
+import { View, TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { width } from '@/global';
+import { localDataMmkv } from '@IAM/localData';
 
 interface ModeProps {
   type: string;
   mode: string;
   setMode: Dispatch<SetStateAction<string>>
 }
-
 
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
   console.log(mode)

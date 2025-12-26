@@ -1,15 +1,15 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { height, width } from '../../global';
-import { teamDto } from '../../model/league.dto';
+import { height, width } from '@/global';
+import { teamDto } from '@model/league.dto';
 import FastImage from 'react-native-fast-image';
-import { ModalContext } from '../../context/modal/modal.context.tsx';
-import { matchListDto } from '../../model/main.dto';
-import { findNextInLeague } from '../calendar/utills';
+import { ModalContext } from '@context/modal/modal.context';
+import { matchListDto } from '@model/main.dto';
+import { findNextInLeague } from '@components/calendar/utills';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { TeamPageParamList } from '../../model/navigation.dto';
-import { useModalNextMatchActions } from '../../context/modal/modalNextMatch.context.tsx';
+import { TeamPageParamList } from '@model/navigation.dto';
+import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
 
 interface LeagueRankListProps {
     teamList: teamDto[]
@@ -107,7 +107,7 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
               <Image
                 resizeMode="contain"
                 style={styles.recordImage}
-                source={require('../../assets/record/record.png')}
+                source={require('@assets/record/record.png')}
               />
               <Text style={styles.recordTextOnImage}>remain</Text>
             </TouchableOpacity>

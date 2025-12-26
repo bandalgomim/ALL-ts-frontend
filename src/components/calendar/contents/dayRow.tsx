@@ -1,27 +1,25 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { width, height } from '../../../global';
+import { width, height } from '@/global';
 
 
 interface DayRowProps {
   days: (string | Date)[];
   month: number;
   onPressDate: (date: Date) => void;
-  groupedMatches: { [key: string]: any[] }; // 날짜별 매칭된 데이터
+  groupedMatches: { [key: string]: any[] };
   fontColor: { color: string; fontFamily: string;}[];
   width: number;
   height: number;
 }
 
 const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatches = {}, fontColor }) => {
-  // groupedMatches에 기본값 {}를 할당하여 null 처리
   const today = new Date();
   return (
     <View style={styles.weekRow}>
       {days.map((day, index) => (
         <View key={index} style={styles.dayContainer}>
           <TouchableOpacity onPress={() => day instanceof Date && onPressDate(day as Date)}>
-            {/* 날짜 텍스트 렌더링 (기존 코드) */}
             <Text
               style={day instanceof Date
                 ? [
@@ -38,28 +36,26 @@ const DayRow: React.FC<DayRowProps> = (({ days, month, onPressDate, groupedMatch
               {day instanceof Date ? day.getDate() : ''}
             </Text>
           </TouchableOpacity>
-          {/* 밑줄 이미지 렌더링 - 안전하게 처리 */}
           {day instanceof Date && (
             <Image
               resizeMode="contain"
               style={[styles.underBar, { height: height * 0.013, width: width * 0.1, bottom: -height * 0.003, right: width * 0.013 }]}
               source={(() => {
                 try {
-                  // 안전한 접근을 위한 처리
                   if (!groupedMatches) { return null; }
                   const dateString = day.toLocaleDateString('sv-SE');
                   const matchesForDay = groupedMatches[dateString] || [];
                   const matchCount = matchesForDay.length;
                   switch (matchCount) {
                     case 1:
-                      return require('./../../../assets/calendar/underBar/1bar.png');
+                      return require('@assets/calendar/underBar/1bar.png');
                     case 2:
-                      return require('./../../../assets/calendar/underBar/2bar.png');
+                      return require('@assets/calendar/underBar/2bar.png');
                     case 3:
-                      return require('./../../../assets/calendar/underBar/3bar.png');
+                      return require('@assets/calendar/underBar/3bar.png');
                     default:
                       if (matchCount >= 4) {
-                        return require('./../../../assets/calendar/underBar/4bar.png');
+                        return require('@assets/calendar/underBar/4bar.png');
                       }
                       return null;
                   }

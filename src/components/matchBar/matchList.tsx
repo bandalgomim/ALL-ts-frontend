@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useLayoutEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MatchBar from './matchBar';
-import { matchListDto, matchDto } from '../../model/main.dto';
-import { height, width } from '../../global';
-import AdmobNativeAdSmall from '../ad/smallBanner';
+import { matchListDto, matchDto } from '@model/main.dto';
+import { height, width } from '@/global';
+import AdmobNativeAdSmall from '@components/ad/smallBanner';
 
 interface ContentsProps {
   matchList: matchListDto,

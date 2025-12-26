@@ -1,11 +1,11 @@
 import React, { useContext, useCallback, useEffect } from 'react';
-import {  Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { width, height } from '../../global';
+import { width, height } from '@/global';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { UserPageParamList } from '../../model/navigation.dto';
-import { localData } from '../../IAM/localData';
+import { UserPageParamList } from '@model/navigation.dto';
+import { localData } from '@IAM/localData';
 
 export const MainHeader = () => {
   const [icon, setIcon] = React.useState<string | null>(null);

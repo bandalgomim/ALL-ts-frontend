@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { Button, View, Alert, ImageBackground, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
-import { hookIcon } from '../../hooks/icon.hook';
-import { AuthContext } from '../../context/auth.context';
-import { useTeamState, useTeamActions } from '../../context/team.context';
-import { useLeagueState, useLeagueActions } from '../../context/league.context';
-import { height, width } from '../../global';
-import { useLogoModalActions } from '../../context/modal/logoModal.context';
+import { hookIcon } from '@hooks/icon.hook';
+import { AuthContext } from '@context/auth.context';
+import { useTeamState, useTeamActions } from '@context/team.context';
+import { useLeagueState, useLeagueActions } from '@context/league.context';
+import { height, width } from '@/global';
+import { useLogoModalActions } from '@context/modal/logoModal.context';
 
 interface TeamOrLogoPros {
     type: 'team' | 'league',
@@ -102,7 +102,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
           <TouchableOpacity style={styles.authContainer} onPress={()=>handleSelectAndSaveImage(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"
-                  source={require('../../assets/match/platform/soop.png')}
+                  source={require('@assets/match/platform/soop.png')}
                   style={[styles.box]}
                 >
                   <Text style={[styles.boxText]}>
@@ -115,7 +115,7 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
         <TouchableOpacity style={styles.authContainer} onPress={()=>deleteSavedImages(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"
-                  source={require('../../assets/match/platform/youtube.png')}
+                  source={require('@assets/match/platform/youtube.png')}
                   style={[styles.box]}
                 >
                   <Text style={[styles.boxText]}>

@@ -1,5 +1,5 @@
 import { commonPostHook } from './common.hook';
-import { patchIsSelected, patchIsTeamSelected } from '../model/isSelected.dto';
+import { patchIsSelected, patchIsTeamSelected } from '@model/isSelected.dto';
 
 export const hookIsSelected = async (
     method: string,

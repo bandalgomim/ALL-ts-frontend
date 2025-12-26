@@ -1,5 +1,5 @@
 import { commonPostHook } from './common.hook';
-import { getLeagueReqQueryDto } from '../model/league.dto';
+import { getLeagueReqQueryDto } from '@model/league.dto';
 
 export const hookLeague = async (
     method: string,

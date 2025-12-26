@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import MatchModal from '../components/calendar/contents/modal';
+import MatchModal from '@components/calendar/contents/modal';
 import SearchModal from './searchBar/searchModal';
 import NextMatchModal from './nextMatchModal';
 import LogoModal from './logo/logoModal';

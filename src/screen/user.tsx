@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { width, height } from '../global';
-import DeleteButton from '../components/IAM/delete';
-import LogoutButton from '../components/IAM/logout';
+import { width, height } from '@/global';
+import DeleteButton from '@components/IAM/delete';
+import LogoutButton from '@components/IAM/logout';
 
 // ✅ moti로 교체
 import { MotiView, AnimatePresence } from 'moti';

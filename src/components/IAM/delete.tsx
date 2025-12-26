@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground, Alert } from 'react-native';
-import { width, height } from '../../global';
-import { hookDeleteAccount } from '../../hooks/IAM.hook';
-import { useLeagueState, useLeagueActions } from '../../context/league.context';
-import { useMainActions } from '../../context/main.context';
-import { useMatchActions } from '../../context/match.context';
-import { useTeamState, useTeamActions } from '../../context/team.context';
+import { width, height } from '@/global';
+import { hookDeleteAccount } from '@hooks/IAM.hook';
+import { useLeagueState, useLeagueActions } from '@context/league.context';
+import { useMainActions } from '@context/main.context';
+import { useMatchActions } from '@context/match.context';
+import { useTeamState, useTeamActions } from '@context/team.context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '../../model/navigation.dto';
+import { IAMPageParamList } from '@model/navigation.dto';
 
 const DeleteButton = () => {
   const { setMainRes } = useMainActions()
@@ -20,7 +20,7 @@ const DeleteButton = () => {
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', {state: true});
   }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
-  const uri = require('../../assets/match/platform/spotv.png');
+  const uri = require('@assets/match/platform/spotv.png');
 
   useEffect(() => {
     if (res === true) {

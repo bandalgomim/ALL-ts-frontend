@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlatList, TouchableOpacity, StyleSheet, Linking, View, Text, Platform, ImageBackground } from 'react-native';
-import { platform } from '../../model/match.dto';
-import { width, height } from '../../global';
+import { platform } from '@model/match.dto';
+import { width, height } from '@/global';
 import { Image } from 'react-native';
 
 interface ContentsProps {
@@ -18,8 +18,6 @@ const openUrlHandle = async (url: string) => {
   }
 };
 
-
-
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   const hasReplayType = platformList.some(item => item.platfromMatchUrlType === 'replay');
   if (!hasReplayType && type === 'replay') {
@@ -27,17 +25,17 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   }
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
-    let uri = require('../../assets/match/platform/none.png');
+    let uri = require('@assets/match/platform/none.png');
     if(item.platformName === 'soop') {
-      uri =  require('../../assets/match/platform/soop.png');
+      uri = require('@assets/match/platform/soop.png');
     } else if(item.platformName === 'youtube') {
-      uri =  require('../../assets/match/platform/youtube.png');
+      uri = require('@assets/match/platform/youtube.png');
     } else if(item.platformName === 'tving') {
-      uri =  require('../../assets/match/platform/tving.png');
+      uri = require('@assets/match/platform/tving.png');
     } else if(item.platformName === 'spotv') {
-      uri =  require('../../assets/match/platform/spotv.png');
+      uri = require('@assets/match/platform/spotv.png');
     } else if(item.platformName === 'coupang') {
-      uri =  require('../../assets/match/platform/coupang.png');
+      uri = require('@assets/match/platform/coupang.png');
     }
 
     // marginRight: 다음 아이템이 있으면 10, 마지막이면 0

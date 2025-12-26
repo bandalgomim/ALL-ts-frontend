@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { width, height } from '../global';
-import AuthButton from '../components/IAM/authButton';
-import GoogleAuthButton from '../components/IAM/googleAuthButton';
-import AppleAuthButton from '../components/IAM/appleAuthButton';
+import { width, height } from '@/global';
+import AuthButton from '@components/IAM/authButton';
+import GoogleAuthButton from '@components/IAM/googleAuthButton';
+import AppleAuthButton from '@components/IAM/appleAuthButton';
 
 // ✅ moti로 교체
 import { MotiView, AnimatePresence } from 'moti';

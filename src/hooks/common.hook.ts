@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { localData } from '../IAM/localData';
-import { scheduleTodayMatches } from '../notification/scheduleTodayMatches';
+import { localData } from '@IAM/localData';
+import { scheduleTodayMatches } from '@notification/scheduleTodayMatches';
 
 export const commonPostHook = async (
     method: string,

@@ -1,17 +1,16 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
-import { width, height } from '../../global';
-import { ModalContext, useSearchActions } from '../../context/modal/search.context';
-
+import { width, height } from '@/global';
+import { ModalContext, useSearchActions } from '@context/modal/search.context';
 
 interface SearchBarPros {
     type: string | null;
 }
 
 const imageMap = {
-  blue: require('./../../assets/searchBar/searchBar_blue.png'),
-  white: require('./../../assets/searchBar/searchBar_white.png'),
-  match: require('./../../assets/searchBar/searchBar.png'),
+  blue: require('@assets/searchBar/searchBar_blue.png'),
+  white: require('@assets/searchBar/searchBar_white.png'),
+  match: require('@assets/searchBar/searchBar.png'),
 };
 
 const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
@@ -32,12 +31,12 @@ const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
     <>
     <TouchableOpacity onPress={()=>{open();}}>
       <ImageBackground
-        source={require('../../assets/teamLogo/teamLogo_m.png')}
+        source={require('@assets/teamLogo/teamLogo_m.png')}
         style={styles.logoView}
       >
         <Image
           resizeMode="contain"
-          source={require('../../assets/main/botton.png')}
+          source={require('@assets/main/botton.png')}
           style={styles.logoImage}
         />
       </ImageBackground>

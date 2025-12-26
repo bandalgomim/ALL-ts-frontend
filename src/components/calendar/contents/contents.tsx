@@ -1,11 +1,11 @@
 // Contents.tsx
 import React, { useCallback, useContext, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { DAYS_OF_WEEK } from '../utills';
-import { matchListDto } from '../../../model/main.dto';
+import { DAYS_OF_WEEK } from '@components/calendar/utills';
+import { matchListDto } from '@model/main.dto';
 import DayRow from './dayRow';
-import { width, height } from '../../../global';
-import { useModalActions } from '../../../context/modal/modal.context.tsx';
+import { width, height } from '@/global';
+import { useModalActions } from '@context/modal/modal.context';
 
 interface ContentsProps {
   monthDates: (string | Date)[],

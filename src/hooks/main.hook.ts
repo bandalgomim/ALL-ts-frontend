@@ -1,6 +1,6 @@
 import { commonPostHook } from './common.hook';
-import { getMainResQueryDto } from '../model/main.dto';
-import { getDeviceVersion } from '../utils/deviceVersion';
+import { getMainResQueryDto } from '@model/main.dto';
+import { getDeviceVersion } from '@utils/deviceVersion';
 
 export const hookMain = async (
     method: string,
