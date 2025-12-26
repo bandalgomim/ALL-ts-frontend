@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '@model/main.dto';
 import MatchScore from './matchScore';
@@ -25,36 +25,41 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
     setScore(scoreState);
   }, [scoreState]);
 
-  const styleColor =
+  const styleColor = useMemo(() =>
     color === 'white'
       ? styles.textBlue
       : color === 'blue'
       ? styles.textWhite
-      : styles.textRed;
+      : styles.textRed
+  , [color]);
 
-  const onPressScore = () => {
-    setScore(!score);
-  };
+  const onPressScore = useCallback(() => {
+    setScore(prev => !prev);
+  }, []);
+
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
 
-  const navigateMatch = (matchId: string) => {
+  const handleNavigateMatch = useCallback(() => {
     closeModal();
     closeNextMatchModal();
-    navigationMatch.navigate('MatchScreen', { matchId: matchId });
-  };
+    navigationMatch.navigate('MatchScreen', { matchId: match.matchId });
+  }, [closeModal, closeNextMatchModal, navigationMatch, match.matchId]);
+
+  const backgroundSource = useMemo(() => {
+    if (color === 'white') {
+      return require('@assets/match/bar/matchBar_w-TEST.png');
+    } else if (color === 'blue') {
+      return require('@assets/match/bar/matchBar_b-TEST.png');
+    }
+    return require('@assets/match/bar/matchBar_r-TEST.png');
+  }, [color]);
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => navigateMatch(match.matchId)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={handleNavigateMatch}>
       <View style={[styles.matchBarContainer, styles.matchBarSize]}>
         <ImageBackground
           resizeMode="contain"
-          source={
-            color === 'white'
-              ? require('@assets/match/bar/matchBar_w-TEST.png')
-              : color === 'blue'
-              ? require('@assets/match/bar/matchBar_b-TEST.png')
-              : require('@assets/match/bar/matchBar_r-TEST.png')
-          }
+          source={backgroundSource}
           style={[styles.matchBar, styles.matchBarSize]}
         >
           <View style={[styles.matchBar, styles.matchBarInnerWidth]}>

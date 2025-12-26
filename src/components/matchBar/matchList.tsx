@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React, { useCallback, useRef, useLayoutEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MatchBar from './matchBar';
@@ -45,13 +44,14 @@ const MatchList: React.FC<ContentsProps> = ({
   const today = kst.toISOString().split('T')[0]; //
 
   const matchCountRef = useRef(0);
-  const onPressScore = (date: string) => {
+  const onPressScore = useCallback((date: string) => {
     setDateScore(prev => {
       const newState = { ...prev, [date]: !prev[date] };
       console.log('✅ dateScore updated:', newState);
       return newState;
     });
-  };
+  }, []);
+
   const renderItem = useCallback(({ item }: { item: matchDto[], index: number }) => {
     const sortedItems = [...item].sort((a, b) => a.matchTime.localeCompare(b.matchTime));
     let dateColor = color;
@@ -62,9 +62,14 @@ const MatchList: React.FC<ContentsProps> = ({
     } else if (color === 'blue') {
       dateColor = '#30397A';
       colorBar = 'blue';
-    } else{
+    } else {
       colorBar = 'white';
     }
+
+    const handlePressScore = () => {
+      onPressScore(sortedItems[0].matchDate);
+    };
+
     return (
       <View style={styles.itemContainer}>
         <View style={styles.dateRow}>
@@ -91,9 +96,7 @@ const MatchList: React.FC<ContentsProps> = ({
             ]}
           />
           <View>
-            <TouchableOpacity
-              onPress={()=>{onPressScore(sortedItems[0].matchDate);}}
-            >
+            <TouchableOpacity onPress={handlePressScore}>
               <Text
                 style={[
                   styles.scoreText,
@@ -106,13 +109,28 @@ const MatchList: React.FC<ContentsProps> = ({
         {sortedItems.map((data: matchDto) => {
           matchCountRef.current += 1;
           return (
-          <View key={data.matchId}>
-            <MatchBar key={data.matchId} match={data} color={colorBar} scoreState={dateScore[data.matchDate]} />
-          </View>
-        );})}
+            <View key={data.matchId}>
+              <MatchBar key={data.matchId} match={data} color={colorBar} scoreState={dateScore[data.matchDate]} />
+            </View>
+          );
+        })}
       </View>
     );
-  }, [color, today, dateScore]);
+  }, [color, today, dateScore, onPressScore]);
+
+  const listHeaderStyle = useMemo(() =>
+    headerHeight ? [styles.listHeader, { height: height * headerHeight }] : null, [headerHeight]);
+
+  const ListHeaderComponent = useCallback(() => (
+    headerHeight ? <View style={listHeaderStyle} /> : null
+  ), [headerHeight, listHeaderStyle]);
+
+  const ListFooterComponent = useCallback(() => (
+    headerHeight ? <View style={styles.listFooter} /> : null
+  ), [headerHeight]);
+
+  const keyExtractor = useCallback((item: matchDto[], index: number) =>
+    `match-group-${index}-${item[0]?.matchId || index}`, []);
 
   return (
     <FlatList
@@ -120,18 +138,14 @@ const MatchList: React.FC<ContentsProps> = ({
       style={styles.flatList}
       data={Object.values(matchList)}
       renderItem={renderItem}
-      ListHeaderComponent={() => (headerHeight ? <View style={[styles.listHeader, { height: height * headerHeight }]} /> : null)}
-      ListFooterComponent={() => (
-        <>
-          {(headerHeight ? <View style={styles.listFooter} /> : null)}
-        </>
-      )}
+      ListHeaderComponent={ListHeaderComponent}
+      ListFooterComponent={ListFooterComponent}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
       maxToRenderPerBatch={10}
       windowSize={10}
       removeClippedSubviews={true}
-      keyExtractor={(item, index) => `match-group-${index}-${item[0]?.matchId || index}`}
+      keyExtractor={keyExtractor}
       onScroll={onScroll}
       scrollEventThrottle={scrollEventThrottle}
     />

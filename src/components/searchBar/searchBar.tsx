@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
 import { width, height } from '@/global';
 import { useSearchActions } from '@context/modal/search.context';
@@ -17,9 +17,13 @@ const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
   const src = type ? imageMap[type as keyof typeof imageMap] : null;
   const { open } = useSearchActions();
 
+  const handleOpen = useCallback(() => {
+    open();
+  }, [open]);
+
   return type ? (
     <View style={styles.containerWithType}>
-      <TouchableOpacity onPress={()=>{open();}}>
+      <TouchableOpacity onPress={handleOpen}>
         <Image
           resizeMode="contain"
           style={styles.searchImage}
@@ -29,7 +33,7 @@ const SearchBar: React.FC<SearchBarPros> = ({ type }) => {
     </View>
   ) : (
     <>
-    <TouchableOpacity onPress={()=>{open();}}>
+    <TouchableOpacity onPress={handleOpen}>
       <ImageBackground
         source={require('@assets/teamLogo/teamLogo_m.png')}
         style={styles.logoView}

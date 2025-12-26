@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   TextInput,
@@ -28,7 +28,7 @@ interface filteredItems {
 }
 
 const SCREEN_HEIGHT = height;
-const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
+const DISMISS_THRESHOLD = 100;
 
 const SearchModal: React.FC = () => {
 
@@ -39,72 +39,66 @@ const SearchModal: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const searchTagRes  = useSearchTagState() as PostState<filteredItems>;
 
-  // 드래그 중인지 상태 추가
   const [_isDragging, setIsDragging] = useState(false);
 
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
-  const navigateTeam = (teamId: number) => {
+
+  const navigateTeam = useCallback((teamId: number) => {
     close();
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
     navigationTeam.navigate('TeamScreen', { teamId: teamId });
-  };
-  const navigateLeague = (leagueId: number) => {
+  }, [close, navigationTeam]);
+
+  const navigateLeague = useCallback((leagueId: number) => {
     close();
     setQuery('');
     setFilteredTeams([]);
     setIsFocused(false);
     navigationLeague.navigate('LeagueScreen', { leagueId: leagueId });
-  };
+  }, [close, navigationLeague]);
 
   // 검색 실행 함수
-  const handleSearch = (input: string) => {
+  const handleSearch = useCallback((input: string) => {
     setQuery(input);
     if (!input) {
       setFilteredTeams([]);
       return;
     }
 
-// 1) data를 항상 배열로 정규화
-const items = Array.isArray(searchTagRes?.data)
-  ? searchTagRes.data
-  : searchTagRes?.data
-    ? Object.values(searchTagRes.data)
-    : [];
+    const items = Array.isArray(searchTagRes?.data)
+      ? searchTagRes.data
+      : searchTagRes?.data
+        ? Object.values(searchTagRes.data)
+        : [];
 
-// 2) 입력 정규화
-const lowerQuery = String(input ?? '').trim().toLowerCase();
+    const lowerQuery = String(input ?? '').trim().toLowerCase();
 
-// 3) 빈 쿼리는 바로 빈 결과(원하면 인기검색어 등 리턴)
-if (!lowerQuery) {
-  // setFilteredResults([]) 같은 처리
-}
+    if (!lowerQuery) {
+      return;
+    }
 
-// 4) 안전 가드 + 필터 + 매핑
-const filteredResults = items
-  .filter((t: any) => t && typeof t.tag === 'string' && t.tag.length > 0)
-  .filter((t: any) => {
-    const lowerTag = t.tag.toLowerCase();
-    const startsWithQuery = lowerTag.startsWith(lowerQuery);
-    const hasThreeConsecutiveChars =
-      lowerQuery.length >= 3 && lowerTag.includes(lowerQuery);
-    return startsWithQuery || hasThreeConsecutiveChars;
-  })
-  .map((t: any) => ({
-    name: t.itemName ?? t.tag ?? '',
-    teamId: t.teamId ?? undefined,
-    leagueId: t.leagueId ?? undefined,
-  }));
+    const filteredResults = items
+      .filter((t: any) => t && typeof t.tag === 'string' && t.tag.length > 0)
+      .filter((t: any) => {
+        const lowerTag = t.tag.toLowerCase();
+        const startsWithQuery = lowerTag.startsWith(lowerQuery);
+        const hasThreeConsecutiveChars =
+          lowerQuery.length >= 3 && lowerTag.includes(lowerQuery);
+        return startsWithQuery || hasThreeConsecutiveChars;
+      })
+      .map((t: any) => ({
+        name: t.itemName ?? t.tag ?? '',
+        teamId: t.teamId ?? undefined,
+        leagueId: t.leagueId ?? undefined,
+      }));
 
-
-    // 중복 제거 로직 추가: item_name이 동일하면서 teamId 또는 leagueId가 같은 항목은 하나만 유지
     const uniqueResults: filteredItems[] = [];
     const seenItems = new Set<string>();
 
     filteredResults.forEach(item => {
-      // teamId 또는 leagueId 기준으로 고유 키 생성
       const key = `${item.name}_${item.teamId || ''}_${item.leagueId || ''}`;
       if (!seenItems.has(key)) {
         seenItems.add(key);
@@ -113,20 +107,20 @@ const filteredResults = items
     });
 
     setFilteredTeams(uniqueResults);
-  };
+  }, [searchTagRes?.data]);
 
-  // 언어별 스타일만 리턴
+  const handleItemPress = useCallback((item: filteredItems) => {
+    if (item.teamId) {
+      navigateTeam(item.teamId);
+    } else if (item.leagueId) {
+      navigateLeague(item.leagueId);
+    }
+  }, [navigateTeam, navigateLeague]);
 
-  // 한 줄로, 말줄임표 적용하여 렌더
-  const renderItem = ({ item }: { item: filteredItems }) => {
+  const renderItem = useCallback(({ item }: { item: filteredItems }) => {
     const parts = item.name.split(' ').filter(Boolean);
     return (
-      <TouchableOpacity
-        onPress={() => {
-          if (item.teamId) {navigateTeam(item.teamId);}
-          else if (item.leagueId) {navigateLeague(item.leagueId);}
-        }}
-      >
+      <TouchableOpacity onPress={() => handleItemPress(item)}>
         <View style={styles.resultItemContainer}>
           <Text
             style={styles.inlineBase}
@@ -142,7 +136,7 @@ const filteredResults = items
         </View>
       </TouchableOpacity>
     );
-  };
+  }, [handleItemPress]);
 
   // 애니메이션 값
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
@@ -179,8 +173,7 @@ const filteredResults = items
     }
   }, [visible, translateY, backdropOpacity]);
 
-  // 닫기 함수 수정 - 백드롭 애니메이션 추가
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     Animated.timing(backdropOpacity, {
       toValue: 0,
       duration: 150,
@@ -198,9 +191,14 @@ const filteredResults = items
       setIsFocused(false);
       Keyboard.dismiss();
     });
-  };
+  }, [backdropOpacity, translateY, close]);
 
-  // 드래그 핸들러 개선
+  const handleFocus = useCallback(() => setIsFocused(true), []);
+  const handleBlur = useCallback(() => setIsFocused(false), []);
+
+  const keyExtractor = useCallback((item: filteredItems) => item.name.toString(), []);
+
+  // 드래그 핸들러
   const modalPanResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -258,6 +256,16 @@ const filteredResults = items
     })
   ).current;
 
+  const backdropStyle = useMemo(() => [
+    styles.backdrop,
+    { opacity: backdropOpacity },
+  ], [backdropOpacity]);
+
+  const animatedContainerStyle = useMemo(() => [
+    styles.animatedContainer,
+    { transform: [{ translateY }] },
+  ], [translateY]);
+
   return (
     <Modal
       visible={visible}
@@ -265,23 +273,13 @@ const filteredResults = items
       animationType="none"
       onRequestClose={closeModal}
     >
-      <Animated.View
-        style={[
-          styles.backdrop,
-          { opacity: backdropOpacity },
-        ]}
-      >
+      <Animated.View style={backdropStyle}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.backdropTouchable} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
-      <Animated.View
-        style={[
-          styles.animatedContainer,
-          { transform: [{ translateY }] },
-        ]}
-      >
+      <Animated.View style={animatedContainerStyle}>
         <View
           style={styles.handleContainer}
           {...modalPanResponder.panHandlers}
@@ -297,8 +295,8 @@ const filteredResults = items
           >
             <TextInput
               placeholder={isFocused ? '' : 'SEARCH'}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               value={query}
               onChangeText={handleSearch}
               style={styles.textInput}
@@ -309,15 +307,12 @@ const filteredResults = items
             {filteredTeams.length > 0 ? (
               <FlatList
                 data={filteredTeams}
-                keyExtractor={(item) => item.name.toString()}
+                keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 keyboardShouldPersistTaps="handled"
                 scrollEnabled={true}
                 nestedScrollEnabled={true}
                 onStartShouldSetResponderCapture={() => true}
-                onMoveShouldSetResponderCapture={(evt, gestureState) => {
-                  return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
-                }}
                 style={styles.flatList}
                 contentContainerStyle={styles.flatListContent}
                 showsVerticalScrollIndicator={false}
@@ -360,7 +355,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: height * 0.2,
     width: width * 0.9,
-    height: height * 0.65, // 0.6 → 0.65로 증가
+    height: height * 0.65,
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
@@ -383,7 +378,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: width * 0.85,
-    height: height * 0.4265, // 0.42 → 0.55로 증가
+    height: height * 0.4265,
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
@@ -400,11 +395,10 @@ const styles = StyleSheet.create({
     zIndex: 15,
   },
   resultsContainer: {
-    flex: 1, // flex: 1 유지
+    flex: 1,
     width: '100%',
     alignItems: 'center',
-    // height 속성 제거 (flex: 1과 충돌)
-    borderWidth: 0, // 경계선 제거 (디버깅용이었다면)
+    borderWidth: 0,
   },
   dragBackground: {
     ...StyleSheet.absoluteFillObject,
@@ -434,7 +428,7 @@ const styles = StyleSheet.create({
   resultText: {
     fontSize: width * 0.07,
     textAlign: 'left',
-    marginVertical: 8, // 약간 더 넓게
+    marginVertical: 8,
     paddingLeft: width * 0.005,
     paddingRight: width * 0.005,
   },

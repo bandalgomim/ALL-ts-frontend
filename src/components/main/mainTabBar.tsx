@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MainPageParamList } from '@model/navigation.dto';
@@ -12,9 +12,26 @@ interface MainTabBarProps {
 
 const MainTabBar: React.FC<MainTabBarProps> = ({ color }) => {
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
-  const navigateMain = () => {
+  const navigateMain = useCallback(() => {
     navigationMain.navigate('MainScreen', undefined);
-  };
+  }, [navigationMain]);
+
+  const tabBarSizeStyle = useMemo(() => ({
+    width: width,
+    height: height * 0.07,
+  }), []);
+
+  const getBackgroundColor = useCallback((pressed: boolean) => {
+    if (pressed) {
+      return color === 'blue' ? '#1a2150' : '#e0e0e0';
+    }
+    return color === 'blue' ? '#30397A' : 'white';
+  }, [color]);
+
+  const iconColor = useMemo(
+    () => (color === 'blue' ? 'white' : '#30397A'),
+    [color]
+  );
 
   return (
     <Pressable onPress={navigateMain}>
@@ -22,15 +39,11 @@ const MainTabBar: React.FC<MainTabBarProps> = ({ color }) => {
         <View
           style={[
             styles.tabBar,
-            { width: width, height: height * 0.07 },
-            {
-              backgroundColor: pressed
-                ? (color === 'blue' ? '#1a2150' : '#e0e0e0') // 터치 시 색상
-                : (color === 'blue' ? '#30397A' : 'white'),
-            },
+            tabBarSizeStyle,
+            { backgroundColor: getBackgroundColor(pressed) },
           ]}
         >
-          <Icon name={'home'} size={30} color={color === 'blue' ? 'white' : '#30397A'} />
+          <Icon name={'home'} size={30} color={iconColor} />
         </View>
       )}
     </Pressable>

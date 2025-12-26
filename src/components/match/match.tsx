@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { getMatchResDto, platform } from '@model/match.dto';
 import SearchBar from '@components/searchBar/searchBar';
@@ -21,21 +21,37 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const [homeTeamScore, setHomeTeamScore] = useState(false);
   const [awayTeamScore, setAwayTeamScore] = useState(false);
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
-  const navigateTeam = (teamId: number) => {
-    navigationTeam.navigate('TeamScreen', { teamId: teamId });
-  };
-  const onPressHomeTeamScore = () => {
-    setHomeTeamScore(!homeTeamScore);
-  };
-  const onPressAwayTeamScore = () => {
-    setAwayTeamScore(!awayTeamScore);
-  };
+  const navigateToHomeTeam = useCallback(() => {
+    navigationTeam.navigate('TeamScreen', { teamId: match.homeTeamId as number });
+  }, [navigationTeam, match.homeTeamId]);
+
+  const navigateToAwayTeam = useCallback(() => {
+    navigationTeam.navigate('TeamScreen', { teamId: match.awayTeamId as number });
+  }, [navigationTeam, match.awayTeamId]);
+
+  const onPressHomeTeamScore = useCallback(() => {
+    setHomeTeamScore(prev => !prev);
+  }, []);
+
+  const onPressAwayTeamScore = useCallback(() => {
+    setAwayTeamScore(prev => !prev);
+  }, []);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
   const insets = useSafeAreaInsets();
+
+  const safeAreaStyle = useMemo(() => ({
+    height: insets.top,
+  }), [insets.top]);
+
   return (
     <View style={styles.container}>
-      <View style={[styles.safeAreaContainer, {height: insets.top}]}>
-        <View style={[styles.safeAreaLeft, {height: insets.top}]}/>
-        <View style={[styles.safeAreaRight, {height: insets.top}]}/>
+      <View style={[styles.safeAreaContainer, safeAreaStyle]}>
+        <View style={[styles.safeAreaLeft, safeAreaStyle]}/>
+        <View style={[styles.safeAreaRight, safeAreaStyle]}/>
       </View>
       <View style={styles.middleContainer}>
         <SearchBar type="match" />
@@ -56,7 +72,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
       <View style={styles.teamContainer}>
         {/* Home Team */}
         <View style={styles.homeTeamContainer}>
-          <TouchableOpacity onPress={() => navigateTeam(match.homeTeamId as number)}>
+          <TouchableOpacity onPress={navigateToHomeTeam}>
             <View style={styles.teamLogoContainer}>
               <TeamOrLeagueLogo
                 logo={match?.hometeamLogo}
@@ -107,7 +123,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
         </View>
         {/* Away Team */}
         <View style={styles.awayTeamContainer}>
-          <TouchableOpacity onPress={() => navigateTeam(match.awayTeamId as number)}>
+          <TouchableOpacity onPress={navigateToAwayTeam}>
             <View style={styles.teamLogoContainer}>
               <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} initial={match?.awayTeamInit as string}/>
               <View style={styles.teamInfoContainer}>
@@ -137,7 +153,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
               style={styles.blueBackground}
               source={require('@assets/match/blue.png')}
             />
-            <TouchableOpacity onPress={() => refetch()}>
+            <TouchableOpacity onPress={handleRefetch}>
               <Text style={[styles.fontWhiteState, match.matchState === 'live' && styles.fontLive]}>
                 {match?.matchState}
               </Text>

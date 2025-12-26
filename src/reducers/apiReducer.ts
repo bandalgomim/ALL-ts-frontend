@@ -9,7 +9,7 @@ import { getTeamResDto } from '@model/team.dto';
 export const PostReducer = <T>(state:PostState<T>, action: PostAction<T>): PostState<T> => {
   switch (action.type) {
     case 'LOADING':
-      return { ...state, loading: true, error: null };
+      return { ...state, loading: true, error: null, data: state.data };
     case 'SUCCESS':
       if (action.items && action.payload) {
         const updatedData = { ...state.data } as Record<string, unknown>; //기존 데이터가 객체 형식임을 확정

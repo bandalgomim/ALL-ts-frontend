@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useMemo } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { width } from '@/global';
 import { localDataMmkv } from '@IAM/localData';
@@ -11,30 +11,48 @@ interface ModeProps {
 
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
   console.log(mode);
-  let typeColor: StyleProp<ViewStyle | TextStyle> = [];
 
-  if(type === 'league') {
-    typeColor = [styles.selectViewWhite, styles.selectedWhite, styles.noSelectedWhite ];
-  } else {
-    typeColor = [styles.selectViewBlue, styles.selectedBlue, styles.noSelectedBlue ];
-  }
+  const typeColor = useMemo((): StyleProp<ViewStyle | TextStyle>[] => {
+    if(type === 'league') {
+      return [styles.selectViewWhite, styles.selectedWhite, styles.noSelectedWhite];
+    }
+    return [styles.selectViewBlue, styles.selectedBlue, styles.noSelectedBlue];
+  }, [type]);
 
-  const onModeChange = async (modeChar: string) => {
-    setMode(modeChar);
-    localDataMmkv.set('mode', modeChar);
-  };
+  const onModeChangeMonth = useCallback(() => {
+    setMode('m');
+    localDataMmkv.set('mode', 'm');
+  }, [setMode]);
+
+  const onModeChangeWeek = useCallback(() => {
+    setMode('w');
+    localDataMmkv.set('mode', 'w');
+  }, [setMode]);
+
+  const containerStyle = useMemo(() => [
+    typeColor[0],
+    { width: width * 0.75 },
+  ], [typeColor]);
+
+  const modeTextStyle = useMemo(() => ({
+    fontSize: width * 0.05,
+    width: width * 0.05,
+  }), []);
+
+  const separatorStyle = useMemo(() => [
+    typeColor[1],
+    { fontSize: width * 0.05, width: width * 0.04 },
+  ], [typeColor]);
 
   return (
-    <View style={[typeColor[0], {width: width * 0.75}]}>
-      <TouchableOpacity
-        onPress={() => onModeChange('m')}
-      >
-      <Text style={[{fontSize: width * 0.05,  width: width * 0.05}, mode === 'm' ? typeColor[1] : typeColor[2]]}>M</Text></TouchableOpacity>
-      <Text style={[typeColor[1], {fontSize: width * 0.05, width: width * 0.04 }]}>/</Text>
-      <TouchableOpacity
-        onPress={() => onModeChange('w')}
-      >
-      <Text style={[{fontSize: width * 0.05, width: width * 0.05}, mode === 'w' ? typeColor[1] : typeColor[2]]}>W</Text></TouchableOpacity>
+    <View style={containerStyle}>
+      <TouchableOpacity onPress={onModeChangeMonth}>
+        <Text style={[modeTextStyle, mode === 'm' ? typeColor[1] : typeColor[2]]}>M</Text>
+      </TouchableOpacity>
+      <Text style={separatorStyle}>/</Text>
+      <TouchableOpacity onPress={onModeChangeWeek}>
+        <Text style={[modeTextStyle, mode === 'w' ? typeColor[1] : typeColor[2]]}>W</Text>
+      </TouchableOpacity>
     </View>
   );
 };
