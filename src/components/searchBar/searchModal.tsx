@@ -127,7 +127,7 @@ const filteredResults = items
           else if (item.leagueId) navigateLeague(item.leagueId);
         }}
       >
-        <View style={{ width: width * 0.5, marginBottom: height * 0.015 }}>
+        <View style={styles.resultItemContainer}>
           <Text
             style={styles.inlineBase}
             numberOfLines={1}
@@ -272,7 +272,7 @@ const filteredResults = items
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={{ width: '100%', height: '100%' }} />
+          <View style={styles.backdropTouchable} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
@@ -349,6 +349,10 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
+  },
+  backdropTouchable: {
+    width: '100%',
+    height: '100%',
   },
   animatedContainer: {
     position: 'absolute',
@@ -459,6 +463,10 @@ const styles = StyleSheet.create({
     color: '#30397A',
     lineHeight: height * 0.0375,
     fontSize: width * 0.06,
+  },
+  resultItemContainer: {
+    width: width * 0.5,
+    marginBottom: height * 0.015,
   },
 });
 

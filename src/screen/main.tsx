@@ -29,30 +29,28 @@ const MainScreen = () => {
     />
   ) : (
     <View style={styles.Container}>
-      {/* Removed unnecessary console.log */}
       <HeadNotch/>
       <MainHeader/>
-      <View style={[styles.logo]}>
-      <View style={{marginLeft: width * 0.18}}>
-        <Logo
-        color="white"
-        />
-      </View>
-      <View>
-        <Text style={[styles.sloganText]}>All  Sports  Scheduler</Text>
-      </View>
+      <View style={styles.logo}>
+        <View style={styles.logoWrapper}>
+          <Logo
+          color="white"
+          />
+        </View>
+        <View>
+          <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
+        </View>
       </View>
       <MainCalendar
       data={mainRes?.data as getMainResDto}
       />
-      <View style={[styles.tabBar]} />
+      <View style={styles.tabBar} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   Container: {
-    //position: 'relative',
     height: '100%',
     width: '100%',
     backgroundColor: '#30397A',
@@ -63,8 +61,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-
     marginTop: height * -0.04,
+  },
+  logoWrapper: {
+    marginLeft: width * 0.18,
   },
   banner: {
     backgroundColor: '#b1b4cc',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontFamily: 'rg-it-ver2',
   },
   tabBar: {
-    position: 'absolute', // 하단 고정
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,

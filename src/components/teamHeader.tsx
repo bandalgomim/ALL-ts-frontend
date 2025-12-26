@@ -73,7 +73,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
           />
 
         </View>
-        <View style={{marginLeft: -height * 0.005, marginRight: -height*0.025, marginTop: height * 0.01}}>
+        <View style={styles.logoPickerContainer}>
           <LogoPicker
             type={'team'}
             id={data?.team?.teamId}
@@ -111,7 +111,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               } else if (teamNameSplit.length === 2) {
                 if (textLength < 9) {
                   return (
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.flexRow}>
                       {detectLang(teamNameSplit[0], 'big')}
                       {detectLang(teamNameSplit[1], 'big')}
                     </View>
@@ -119,7 +119,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                 } else{
                   if(textLength < 14) {
                     return (
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={styles.flexRow}>
                         {detectLang(teamNameSplit[0], 'medium')}
                         {detectLang(teamNameSplit[1], 'medium')}
                       </View>
@@ -136,7 +136,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               } else {
                 if (textLength < 9) {
                   return (
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.flexRow}>
                       {detectLang(teamNameSplit[0], 'big')}
                       {detectLang(teamNameSplit[1], 'big')}
                       {detectLang(teamNameSplit[2], 'big')}
@@ -148,7 +148,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                   if (detectLangth(first) <= detectLangth(second)) {
                     return (
                       <>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={styles.flexRow}>
                           {detectLang(teamNameSplit[0], 'small')}
                           {detectLang(teamNameSplit[1], 'small')}
                         </View>
@@ -163,7 +163,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                         <>
                           {detectLang(teamNameSplit[0], 'small')}
                         </>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={styles.flexRow}>
                           {detectLang(teamNameSplit[1], 'small')}
                           {detectLang(teamNameSplit[2], 'small')}
                         </View>
@@ -191,7 +191,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
         </View>
       </View>
       <View style={styles.recordButton}>
-        <TouchableOpacity style={{marginLeft:-width*0.55, marginTop:height*0.02, marginBottom:height*-0.02, zIndex:3}} onPress={() => setRecord(!record)}>
+        <TouchableOpacity style={styles.recordToggleButton} onPress={() => setRecord(!record)}>
           <Icon name={record === false ? 'keyboard-arrow-down' : 'keyboard-arrow-up'} size={30} color={'#30397A'} />
         </TouchableOpacity>
         {record && (
@@ -272,6 +272,20 @@ const styles = StyleSheet.create({
     marginBottom: -height * 0.015,
     transform: [{ rotate: '-7deg' }],
   },
+  logoPickerContainer: {
+    marginLeft: -height * 0.005,
+    marginRight: -height * 0.025,
+    marginTop: height * 0.01,
+  },
+  flexRow: {
+    flexDirection: 'row',
+  },
+  recordToggleButton: {
+    marginLeft: -width * 0.55,
+    marginTop: height * 0.02,
+    marginBottom: height * -0.02,
+    zIndex: 3,
+  },
   teamInfoName: {
     
     textAlign: 'right',
@@ -314,7 +328,6 @@ const styles = StyleSheet.create({
   recordButton: {
     marginTop: -height * 0.015,
     marginBottom: -height * 0.015,
-    //marginLeft: -width * 0.545,
     alignItems: 'center',
   },
   record: {

@@ -17,7 +17,7 @@ const MatchList: React.FC<ContentsProps> = ({
   matchList,
   color,
   onScroll,
-  scrollEventThrottle = 16,                  // 기본값 설정
+  scrollEventThrottle = 16,
   headerHeight
 }) => {
   const initialDateState = useMemo(
@@ -71,8 +71,8 @@ const MatchList: React.FC<ContentsProps> = ({
       colorBar = 'white';
     }
     return (
-      <View style={{ marginBottom: height * 0.01 }}>
-        <View style={{ flexDirection: 'row' }}>
+      <View style={styles.itemContainer}>
+        <View style={styles.dateRow}>
           <View
             style={[
               styles.frontDateBar,
@@ -109,12 +109,11 @@ const MatchList: React.FC<ContentsProps> = ({
           </View>
         </View>
         {sortedItems.map((data: matchDto) => {
-          matchCountRef.current += 1; // 카운터 증가
+          matchCountRef.current += 1;
           const matchCount = matchCountRef.current;
           return (
           <View key={data.matchId}>
             <MatchBar key={data.matchId} match={data} color={colorBar} scoreState={dateScore[data.matchDate]} />
-            {/*adBanner(colorBar, matchCount)*/}
           </View>
         );})}
       </View>
@@ -124,14 +123,13 @@ const MatchList: React.FC<ContentsProps> = ({
   return (
     <FlatList
       ref={flatListRef}
-      style={{ marginTop: -height * 0.015 }}
+      style={styles.flatList}
       data={Object.values(matchList)}
       renderItem={renderItem}
-      ListHeaderComponent={() => (headerHeight ? <View style={{ height: height * headerHeight, alignItems: 'center' }} /> : null)}
+      ListHeaderComponent={() => (headerHeight ? <View style={[styles.listHeader, { height: height * headerHeight }]} /> : null)}
       ListFooterComponent={() => (
         <>
-          {/*<AdmobNativeAdSmall color={color}/>*/}
-          {(headerHeight ? <View style={{ height: height*0.17, alignItems: 'center' }} /> : null)}
+          {(headerHeight ? <View style={styles.listFooter} /> : null)}
         </>
       )}
       initialScrollIndex={0}
@@ -140,13 +138,16 @@ const MatchList: React.FC<ContentsProps> = ({
       windowSize={10}
       removeClippedSubviews={true}
       keyExtractor={(item, index) => `match-group-${index}-${item[0]?.matchId || index}`}
-      onScroll={onScroll}                         // 추가
-      scrollEventThrottle={scrollEventThrottle}   // 추가
+      onScroll={onScroll}
+      scrollEventThrottle={scrollEventThrottle}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  flatList: {
+    marginTop: -height * 0.015,
+  },
   frontDateBar: {
     width: width * 0.12,
     height: height * 0.005,
@@ -174,6 +175,19 @@ const styles = StyleSheet.create({
     height: height * 0.005,
     borderRadius: 10,
     marginTop: height * 0.011,
+  },
+  itemContainer: {
+    marginBottom: height * 0.01,
+  },
+  dateRow: {
+    flexDirection: 'row',
+  },
+  listHeader: {
+    alignItems: 'center',
+  },
+  listFooter: {
+    height: height * 0.17,
+    alignItems: 'center',
   },
 });
 

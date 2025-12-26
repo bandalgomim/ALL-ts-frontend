@@ -14,27 +14,13 @@ const UserScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.LogoContainer}>
-        <View style={[styles.logo, { width: width * 0.8, height: height * 0.24, marginTop: -height * 0.04 }]}>
-          <Text style={[styles.text1, { width: width * 0.5, fontSize: width * 0.43 }, styles.textWhite]}>ALL</Text>
-          <Text style={[styles.text2, { width: width * 0.15, fontSize: width * 0.43, marginLeft: -width * 0.1 }]}>’</Text>
-          <Text
-            style={[
-              styles.text3,
-              { width: width * 0.15, fontSize: width * 0.15, marginLeft: -width * 0.08, marginBottom: height * 0.03 },
-              styles.textWhite,
-            ]}
-          >
-            ts
-          </Text>
+        <View style={styles.logoWithDimensions}>
+          <Text style={[styles.text1, styles.text1Dimensions, styles.textWhite]}>ALL</Text>
+          <Text style={[styles.text2, styles.text2Dimensions]}>'</Text>
+          <Text style={[styles.text3, styles.text3Dimensions, styles.textWhite]}>ts</Text>
         </View>
         <View>
-          <Text
-            style={[
-              styles.text4,
-              { width: width, fontSize: width * 0.0885, marginTop: -height * 0.04 },
-              styles.textWhite,
-            ]}
-          >
+          <Text style={[styles.text4, styles.text4Dimensions, styles.textWhite]}>
             All  Sports  Scheduler
           </Text>
         </View>
@@ -42,11 +28,11 @@ const UserScreen = () => {
 
       <View style={styles.buttonsContainer}>
         <View style={styles.typeButtons}>
-          <View style={{ marginLeft: width * 0.1}}>
-          <LogoutButton/>
+          <View style={styles.buttonLeft}>
+            <LogoutButton/>
           </View>
-          <View style={{ marginRight: width * 0.1 }}>
-          <DeleteButton/>
+          <View style={styles.buttonRight}>
+            <DeleteButton/>
           </View>
         </View>
         <View style={styles.snsWrapper}>
@@ -73,29 +59,57 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
+  logoWithDimensions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: width * 0.8,
+    height: height * 0.24,
+    marginTop: -height * 0.04,
+  },
   text1: {
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
+  },
+  text1Dimensions: {
+    width: width * 0.5,
+    fontSize: width * 0.43,
   },
   text2: {
     color: '#EA5579',
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
   },
+  text2Dimensions: {
+    width: width * 0.15,
+    fontSize: width * 0.43,
+    marginLeft: -width * 0.1,
+  },
   text3: {
     textAlign: 'center',
     fontFamily: 'lt-it-ver3',
+  },
+  text3Dimensions: {
+    width: width * 0.15,
+    fontSize: width * 0.15,
+    marginLeft: -width * 0.08,
+    marginBottom: height * 0.03,
   },
   text4: {
     color: '#EA5579',
     textAlign: 'center',
     fontFamily: 'rg-it-ver2',
   },
+  text4Dimensions: {
+    width: width,
+    fontSize: width * 0.0885,
+    marginTop: -height * 0.04,
+  },
   textWhite: {
     color: '#30397A',
-    textShadowColor: '#bdb4b4', // 그림자 색상
-    textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
-    textShadowRadius: 3, // 그림자 반경
+    textShadowColor: '#bdb4b4',
+    textShadowOffset: { width: 1, height: 3 },
+    textShadowRadius: 3,
   },
   buttonsContainer: {
     width: width,
@@ -111,15 +125,18 @@ const styles = StyleSheet.create({
     paddingBottom: height * 0.005,
     width: width,
   },
-  // ▼ Collapsible 대체용 래퍼
+  buttonLeft: {
+    marginLeft: width * 0.1,
+  },
+  buttonRight: {
+    marginRight: width * 0.1,
+  },
   snsWrapper: {
     alignItems: 'center',
     height: height*0.12,
     marginTop: -height * 0.01,
-    // borderWidth: 1,
-    //
     borderColor:'red',
-    overflow: 'visible', // 내용 잘리지 않게
+    overflow: 'visible',
   },
   snsInner: {
     alignItems: 'center',

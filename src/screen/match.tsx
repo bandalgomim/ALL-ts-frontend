@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Match  from '../components/match/match';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '../hooks/match.hook';
@@ -12,67 +12,64 @@ import { useMatchState, useMatchActions } from '../context/match.context';
 import { hookRefetch } from '../hooks/refetch.hook';
 import { hookIsLogin } from '../hooks/IAM.hook';
 import { PostState } from '../model/config';
-import { width } from '../global';
 
 
 const MatchScreen = () => {
 
   const { setMatchRes } = useMatchActions();
-  const matchRes = useMatchState() as PostState<getMatchResDto>
-  console.log('MatchScreen 렌더링,', matchRes.loading);
+  const matchRes = useMatchState() as PostState<getMatchResDto>;
   const { matchId } = useRoute().params as getMatchResQueryDto;
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
 
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', {state: true});
-  }, [navigationIAM]); // navigationTeam을 의존성 배열에 추가
+  }, [navigationIAM]);
   const refetch = useCallback(() => {
     return hookMatch('GET', { matchId }, setMatchRes);
   }, [matchId, setMatchRes]);
   hookRefetch(refetch, setMatchRes);
   useEffect(() => {
-    hookIsLogin(navigateIAM)
-  }, []);
+    hookIsLogin(navigateIAM);
+  }, [navigateIAM]);
 
   return matchRes.loading ? (
     <LoadingScreen
       color="white"
     />
   ) : (
-    <View style={{}}>
-      <View style={{}}>
-        <View/>
-        <View/>
-      </View>
+    <View style={styles.rootContainer}>
       <Match
         match={matchRes.data as getMatchResDto ?? {}}
         refetch={refetch}
       />
-       <View style={[styles.container]}>
+      <View style={styles.container}>
         <MainTabBar
           color="white"
         />
       </View>
     </View>
-    );
-  };
-  export default MatchScreen;
+  );
+};
 
-  const styles = StyleSheet.create({
-    container: {
-      
-      flex: 1,  // MainTabBar가 화면에 꽉 차게 확장
-      position: 'absolute', // 절대 위치를 사용하여 화면 상단에 배치
-      bottom: 0, // 화면 하단에 고정
-      left: 0,
-      right: 0,
-      zIndex: 1,  // MainTabBar가 다른 요소 위에 표시되도록 설정
-      backgroundColor: 'transparent', // 배경색을 투명으로 설정하여 위에 요소들이 보이게
-      alignItems: 'center',
-    },
-    logo: {
-      flex: 1,  // Match 컴포넌트가 화면의 나머지 공간을 차지하도록 설정
-      zIndex: 0, // 다른 요소보다 뒤에 표시되도록 설정
-    },
-  });
+export default MatchScreen;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+  },
+  logo: {
+    flex: 1,
+    zIndex: 0,
+  },
+});
 
