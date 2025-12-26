@@ -175,7 +175,7 @@ const LogoModal: React.FC = () => {
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={{ width: '100%', height: '100%' }} />
+          <View style={styles.backdropTouchable} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
@@ -210,6 +210,10 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
+  },
+  backdropTouchable: {
+    width: '100%',
+    height: '100%',
   },
   animatedContainer: {
     position: 'absolute',

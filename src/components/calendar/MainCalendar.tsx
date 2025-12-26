@@ -94,46 +94,42 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
 
   return (
     <View>
-      <View
-        style={styles.CalendarContainer}
-      >
-        <Animated.View style={[calendarAnimatedStyle, {alignItems: 'center', zIndex: zIndex ? 2 : 1}]}>
+      <View style={styles.CalendarContainer}>
+        <Animated.View style={[calendarAnimatedStyle, styles.animatedContainer, zIndex ? styles.zIndexHigh : styles.zIndexLow]}>
           <TeamAndLeagueListBar
             teamAndLeagueList={data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
-          <View style={{alignItems: 'center', marginTop: -height * 0.025}}
-             {...panResponder.panHandlers}
-          >
-          <MainHeader
-            year={currentDate.getFullYear()}
-            month={currentDate.getMonth()}
-          />
-          <Mode
-            mode={mode}
-            setMode={setMode}
-            type={'league'}
-          />
-          <Contents
-            monthDates={monthDates}
-            weekDates={weekDates}
-            month={currentDate.getMonth()}
-            color={'white'}
-            mode={mode}
-            matchList={data.matchList ? data.matchList : null}
-            goToPrevious={handlePrevious}
-            goToNext={handleNext}
-          />
-          </View>
-        </Animated.View>
-          <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
-            <MatchList
-              matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
+          <View style={styles.contentWrapper} {...panResponder.panHandlers}>
+            <MainHeader
+              year={currentDate.getFullYear()}
+              month={currentDate.getMonth()}
+            />
+            <Mode
+              mode={mode}
+              setMode={setMode}
+              type={'league'}
+            />
+            <Contents
+              monthDates={monthDates}
+              weekDates={weekDates}
+              month={currentDate.getMonth()}
               color={'white'}
-              onScroll={handleMatchListScroll}
-              scrollEventThrottle={16}
-              headerHeight={0.35} // 헤더 높이 설정
+              mode={mode}
+              matchList={data.matchList ? data.matchList : null}
+              goToPrevious={handlePrevious}
+              goToNext={handleNext}
             />
           </View>
+        </Animated.View>
+        <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, zIndex ? styles.zIndexLow : styles.zIndexHigh]}>
+          <MatchList
+            matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
+            color={'white'}
+            onScroll={handleMatchListScroll}
+            scrollEventThrottle={16}
+            headerHeight={0.35}
+          />
+        </View>
       </View>
     </View>
   );
@@ -144,20 +140,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
-
+  },
+  animatedContainer: {
+    alignItems: 'center',
+  },
+  contentWrapper: {
+    alignItems: 'center',
+    marginTop: -height * 0.025,
+  },
+  zIndexHigh: {
+    zIndex: 2,
+  },
+  zIndexLow: {
+    zIndex: 1,
   },
   matchListWeek: {
-    marginTop: -height*0.02,
+    marginTop: -height * 0.02,
     height: height * 0.62,
     alignItems: 'center',
-    zIndex: 1, // 낮은 z-index 추가
   },
   matchListMonth: {
     height: height * 0.62,
     alignItems: 'center',
-    zIndex: 1,
-
-  }
+  },
 });
 
 export default React.memo(MainCalendar);

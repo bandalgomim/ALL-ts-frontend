@@ -45,9 +45,9 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
   return (
     <TouchableOpacity
       onPress={onPressStart}
-      style={{height: height*0.03}}
+      style={styles.touchableContainer}
     >
-      <Image resizeMode="contain" style={[styles.container, {width: width * 0.07, height: width * 0.07}]} source={state === true
+      <Image resizeMode="contain" style={styles.starImage} source={state === true
       ? (color !== 'red' ? require('@assets/star/star.png') : require('@assets/star/star_blue.png'))
       : require('@assets/star/star_empty.png')} />
     </TouchableOpacity>
@@ -55,6 +55,14 @@ const IsSelected: React.FC<IsSelectedPros> = ({isSelected, teamId, leagueId, mat
 };
 const styles = StyleSheet.create({
   container: {
+    aspectRatio: 1,
+  },
+  touchableContainer: {
+    height: height * 0.03,
+  },
+  starImage: {
+    width: width * 0.07,
+    height: width * 0.07,
     aspectRatio: 1,
   },
 });

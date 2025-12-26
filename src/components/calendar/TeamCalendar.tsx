@@ -100,18 +100,18 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
     <View
       style={[
         styles.CalendarContainer,
-        { width: width, height: mode === 'm' ? width * 0.94 : width * 0.52 }
+        mode === 'm' ? styles.calendarMonth : styles.calendarWeek
       ]}
       {...panResponder.panHandlers}
     >
-      <Animated.View style={[styles.calendarView, calendarAnimatedStyle, {zIndex: zIndex ? 2 : 1}]}>
+      <Animated.View style={[styles.calendarView, calendarAnimatedStyle, zIndex ? styles.zIndexHigh : styles.zIndexLow]}>
         <Image
           resizeMode="contain"
           style={[
             styles.teamBackground,
             mode === 'm'
               ? styles.teamBackgroundMonth
-              : { opacity: 0 }
+              : styles.hidden
           ]}
           source={require('@assets/calendar/teamBackground-test.png')}
         />
@@ -121,11 +121,11 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
             styles.teamBackground,
             mode === 'w'
               ? styles.teamBackgroundWeek
-              : { opacity: 0 }
+              : styles.hidden
           ]}
           source={require('@assets/calendar/teamBackground_s-test.png')}
         />
-        <View style={{marginTop: height * 0.005}}>
+        <View style={styles.headerWrapper}>
           <Header
             year={year}
             month={month}
@@ -140,8 +140,8 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
               setMode={setMode}
             />
             <Contents
-              monthDates = {monthDates}
-              weekDates= {weekDates}
+              monthDates={monthDates}
+              weekDates={weekDates}
               month={currentDate.getMonth()}
               color={'white'}
               mode={mode}
@@ -152,7 +152,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
           </View>
         </View>
       </Animated.View>
-      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
+      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, zIndex ? styles.zIndexLow : styles.zIndexHigh]}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
@@ -170,6 +170,14 @@ const styles = StyleSheet.create({
   CalendarContainer: {
     alignItems: 'center',
   },
+  calendarMonth: {
+    width: width,
+    height: width * 0.94,
+  },
+  calendarWeek: {
+    width: width,
+    height: width * 0.52,
+  },
   teamBackground: {
     position: 'absolute',
   },
@@ -185,9 +193,21 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
   },
+  hidden: {
+    opacity: 0,
+  },
+  headerWrapper: {
+    marginTop: height * 0.005,
+  },
   teamCalendar: {
     alignItems: 'center',
     top: -height * 0.015,
+  },
+  zIndexHigh: {
+    zIndex: 2,
+  },
+  zIndexLow: {
+    zIndex: 1,
   },
   logo: {
     position: 'absolute',

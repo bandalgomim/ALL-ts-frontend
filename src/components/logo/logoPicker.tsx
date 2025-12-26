@@ -18,11 +18,10 @@ const LogoPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
 
   return (
     <View>
-      <TouchableOpacity style={{zIndex: 100 }} onPress={() => onPressDate(type, id, uri)}>
+      <TouchableOpacity style={styles.optionsButton} onPress={() => onPressDate(type, id, uri)}>
         <Icon name={'options-vertical'} size={height*0.03} color={'#30397A'} />
       </TouchableOpacity>
     </View>
-      
   );
 };
 
@@ -31,6 +30,9 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  optionsButton: {
+    zIndex: 100,
   },
     fontBlueBig: {
       fontFamily: 'sb-it-ver1',

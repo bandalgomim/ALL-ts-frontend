@@ -28,17 +28,16 @@ export const MainHeader = () => {
   }, []);
 
   return (
-    <View style={[styles.header, {width: width * 0.85, height: height * 0.04, marginBottom: height * 0.01}]}>
-      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPressHelp}>
-        <View style={{borderWidth: 2, width: width*0.07, justifyContent: "center", alignItems: "center", height: height*0.03, borderColor: "white", borderRadius: 100, marginTop: height*0.01}}>
+    <View style={[styles.header, styles.headerSize]}>
+      <TouchableOpacity style={[styles.myPage, styles.myPageMargin]} onPress={onPressHelp}>
+        <View style={styles.helpButton}>
           <Icon name={'Question Mark'} size={width * 0.04} color={'white'} />
         </View>
-
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.myPage,{marginTop: height * 0.005}]} onPress={onPress}>
+      <TouchableOpacity style={[styles.myPage, styles.myPageMargin]} onPress={onPress}>
         {icon ? <Image
           source={{ uri: icon }}
-          style={{ width: width * 0.08, height: width * 0.08, borderRadius: (width * 0.1) / 2 }}
+          style={styles.iconImage}
         /> :
         <Icon name={'person'} size={width * 0.1} color={'white'} />}
       </TouchableOpacity>
@@ -52,6 +51,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",  // 양 끝 정렬
     alignItems: 'center',   // 수직 정렬 (선택 사항)
   },
+  headerSize: {
+    width: width * 0.85,
+    height: height * 0.04,
+    marginBottom: height * 0.01,
+  },
   menu: {
     backgroundColor: 'white',
     borderRadius: 10,
@@ -64,10 +68,28 @@ const styles = StyleSheet.create({
   myPage: {
     flexDirection: 'row',
   },
+  myPageMargin: {
+    marginTop: height * 0.005,
+  },
   myPageText: {
     color: 'white',
     textAlign: 'center',
     fontFamily: 'roboto',
     fontSize: width * 0.06,
+  },
+  helpButton: {
+    borderWidth: 2,
+    width: width * 0.07,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 0.03,
+    borderColor: 'white',
+    borderRadius: 100,
+    marginTop: height * 0.01,
+  },
+  iconImage: {
+    width: width * 0.08,
+    height: width * 0.08,
+    borderRadius: (width * 0.1) / 2,
   },
 });

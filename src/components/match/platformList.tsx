@@ -48,7 +48,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
             openUrlHandle(item.platformMatchUrl ? item.platformMatchUrl as string : item.platformLeagueUrl as string);
           }}
         >
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: isLast ? 0 : width * 0.04 }}>
+          <View style={[styles.platformItemContainer, isLast ? styles.platformItemLast : styles.platformItemWithMargin]}>
             <ImageBackground
               resizeMode="contain"
               source={uri}
@@ -68,16 +68,16 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   return (
     <View style={styles.platformContainer}>
       <View style={styles.barContainer}>
-        <View style={[styles.frontDateBar]} />
+        <View style={styles.frontDateBar} />
         <View>
-          <Text style={[styles.dateText, { width: type === 'highlight' ? width * 0.18 : width * 0.13 }]}>
+          <Text style={[styles.dateText, type === 'highlight' ? styles.dateTextHighlight : styles.dateTextVideos]}>
             {type === 'replay' || type === 'root' ? 'videos' : 'highlight'}
           </Text>
         </View>
-        <View style={[styles.backDateBar, { width: type === 'highlight' ? width * 0.205 : width * 0.2505 }]} />
+        <View style={[styles.backDateBar, type === 'highlight' ? styles.backDateBarHighlight : styles.backDateBarVideos]} />
       </View>
       <FlatList
-        style={{ width: width * 0.45}}
+        style={styles.flatList}
         data={platformList}
         horizontal={true}
         keyExtractor={(item, index) => index.toString()}
@@ -98,6 +98,19 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
     //alignItems: 'center',
     flexDirection: 'row',
+    width: width * 0.45,
+  },
+  platformItemContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  platformItemWithMargin: {
+    marginRight: width * 0.04,
+  },
+  platformItemLast: {
+    marginRight: 0,
+  },
+  flatList: {
     width: width * 0.45,
   },
   box: {
@@ -131,11 +144,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: -height * 0.00,
   },
+  dateTextHighlight: {
+    width: width * 0.18,
+  },
+  dateTextVideos: {
+    width: width * 0.13,
+  },
   backDateBar: {
     height: height * 0.005,
     borderRadius: 10,
     marginTop: height * 0.011,
     backgroundColor: 'white',
+  },
+  backDateBarHighlight: {
+    width: width * 0.205,
+  },
+  backDateBarVideos: {
+    width: width * 0.2505,
   },
 });
 

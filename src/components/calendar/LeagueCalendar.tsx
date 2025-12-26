@@ -100,18 +100,14 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
     <View
       style={[
         styles.CalendarContainer,
-        mode === 'm'
-          ? styles.calendarMonth
-          : styles.calendarWeek,
+        mode === 'm' ? styles.calendarMonth : styles.calendarWeek,
       ]}
-       // 스와이프 핸들러 추가
     >
       <Animated.View
         style={[
           styles.calendarView,
           calendarAnimatedStyle,
-          // opacity가 0에 가까우면 아예 렌더링하지 않음
-          {zIndex: zIndex ? 2 : 1}
+          zIndex ? styles.zIndexHigh : styles.zIndexLow
         ]}
       >
         <LeageTeamListBar data={data}/>
@@ -121,7 +117,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
             style={[
               styles.leagueBackground,
               styles.leagueBackgroundMonth,
-              { opacity: mode === 'm' ? 1 : 0 }
+              mode === 'm' ? styles.visible : styles.hidden
             ]}
             source={require('@assets/calendar/leagueBackground.png')}
           />
@@ -130,11 +126,11 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
             style={[
               styles.leagueBackground,
               styles.leagueBackgroundWeek,
-              { opacity: mode === 'w' ? 1 : 0 }
+              mode === 'w' ? styles.visible : styles.hidden
             ]}
             source={require('@assets/calendar/leagueBackground_s.png')}
           />
-          <View style={{ marginTop: height * 0.005 }}>
+          <View style={styles.headerWrapper}>
             <Header
               year={currentDate.getFullYear()}
               month={currentDate.getMonth()}
@@ -142,8 +138,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
               goToPrevious={handlePrevious}
               goToNext={handleNext}
             />
-            <View style={[styles.leagueCalendar, styles.leagueCalendarTop]}
-            {...panResponder.panHandlers}>
+            <View style={[styles.leagueCalendar, styles.leagueCalendarTop]} {...panResponder.panHandlers}>
               <Mode
                 type={'league'}
                 mode={mode}
@@ -163,13 +158,13 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
           </View>
         </View>
       </Animated.View>
-      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, { zIndex: zIndex ? 1 : 2 }]}>
+      <View style={[mode === 'w' ? styles.matchListWeek : styles.matchListMonth, zIndex ? styles.zIndexLow : styles.zIndexHigh]}>
         <MatchList
           matchList={mode === 'w' ? splitMatchList.week : splitMatchList.month}
           color={'blue'}
           onScroll={handleMatchListScroll}
           scrollEventThrottle={16}
-          headerHeight={mode === 'w' ? 0.2 : 0.35} // 헤더 높이 설정
+          headerHeight={mode === 'w' ? 0.2 : 0.35}
         />
       </View>
     </View>
@@ -194,11 +189,20 @@ const styles = StyleSheet.create({
   leagueBackgroundMonth: {
     width: width * 1,
     height: width * 0.93,
-    marginTop: height * 0.001, // 위쪽 여백 조정
+    marginTop: height * 0.001,
   },
   leagueBackgroundWeek: {
     width: width * 1,
     height: width * 0.51,
+  },
+  visible: {
+    opacity: 1,
+  },
+  hidden: {
+    opacity: 0,
+  },
+  headerWrapper: {
+    marginTop: height * 0.005,
   },
   leagueCalendar: {
     alignItems: 'center',
@@ -206,18 +210,20 @@ const styles = StyleSheet.create({
   leagueCalendarTop: {
     top: -height * 0.015,
   },
+  zIndexHigh: {
+    zIndex: 2,
+  },
+  zIndexLow: {
+    zIndex: 1,
+  },
   matchListWeek: {
     marginTop: height * 0.03,
     height: height * 0.63,
-    zIndex: 1, // 낮은 z-index 추가
   },
   matchListMonth: {
     marginTop: height * 0.04,
     height: height * 0.63,
-    zIndex: 1, // 낮은 z-index 추가
   },
-  calendarView: {
-    zIndex: 2, // 높은 z-index 추가
-  }
+  calendarView: {},
 });
 export default React.memo(LeagueCalendar);

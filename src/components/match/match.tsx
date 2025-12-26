@@ -33,9 +33,9 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
   const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
-      <View style={{width: width, height: insets.top, flexDirection: "row"}}>
-        <View style={{width:width*0.5, height: insets.top, backgroundColor: "#30397A"}}/>
-        <View style={{width:width*0.5, height: insets.top, backgroundColor: "white"}}/>
+      <View style={[styles.safeAreaContainer, {height: insets.top}]}>
+        <View style={[styles.safeAreaLeft, {height: insets.top}]}/>
+        <View style={[styles.safeAreaRight, {height: insets.top}]}/>
       </View>
       <View style={styles.middleContainer}>
         <SearchBar type="match" />
@@ -134,7 +134,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
           <View style={styles.rightContainer}>
             <Image
               resizeMode="contain"
-              style={{width: width * 0.5, height: height * 0.14, position: 'absolute', zIndex: 0, marginTop: -height * 0.026}}
+              style={styles.blueBackground}
               source={require('@assets/match/blue.png')}
             />
             <TouchableOpacity onPress={() => refetch()}>
@@ -165,7 +165,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexDirection: 'column',
-
+  },
+  safeAreaContainer: {
+    width: width,
+    flexDirection: 'row',
+  },
+  safeAreaLeft: {
+    width: width * 0.5,
+    backgroundColor: '#30397A',
+  },
+  safeAreaRight: {
+    width: width * 0.5,
+    backgroundColor: 'white',
   },
   middleContainer: {
     height: 0,
@@ -330,6 +341,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.5,
     marginTop: height * 0.012,
+  },
+  blueBackground: {
+    width: width * 0.5,
+    height: height * 0.14,
+    position: 'absolute',
+    zIndex: 0,
+    marginTop: -height * 0.026,
   },
   onAirText: {
     width: width * 0.4,

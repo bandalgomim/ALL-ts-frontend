@@ -97,28 +97,28 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
   };
 
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: height*0.02, width: width*0.5}}>
-        <View style={{ marginTop: height*0.012}}>
+    <View style={styles.containerRow}>
+        <View style={styles.buttonWrapper}>
           <TouchableOpacity style={styles.authContainer} onPress={()=>handleSelectAndSaveImage(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"
                   source={require('@assets/match/platform/soop.png')}
-                  style={[styles.box]}
+                  style={styles.box}
                 >
-                  <Text style={[styles.boxText]}>
+                  <Text style={styles.boxText}>
                       로고 변경
                   </Text>
                 </ImageBackground>
               </TouchableOpacity>
         </View>
-        <View style={{ marginTop: height*0.012 }}>
+        <View style={styles.buttonWrapper}>
         <TouchableOpacity style={styles.authContainer} onPress={()=>deleteSavedImages(type, id, uri)}>
                 <ImageBackground
                   resizeMode="contain"
                   source={require('@assets/match/platform/youtube.png')}
-                  style={[styles.box]}
+                  style={styles.box}
                 >
-                  <Text style={[styles.boxText]}>
+                  <Text style={styles.boxText}>
                       로고 삭제
                   </Text>
                 </ImageBackground>
@@ -129,6 +129,15 @@ const LogoImgPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
 };
 
 const styles = StyleSheet.create({
+  containerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: height * 0.02,
+    width: width * 0.5,
+  },
+  buttonWrapper: {
+    marginTop: height * 0.012,
+  },
   authContainer: {
     alignItems: 'center',
   },
@@ -146,7 +155,6 @@ const styles = StyleSheet.create({
     width: width * 0.21,
     textAlign: 'center',
   },
-
 });
 
 export default React.memo(LogoImgPicker);

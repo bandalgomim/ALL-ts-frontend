@@ -177,7 +177,7 @@ const NextMatchModal: React.FC = () => {
         ]}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={{ width: '100%', height: '100%' }} />
+          <View style={styles.backdropTouchable} />
         </TouchableWithoutFeedback>
       </Animated.View>
 
@@ -207,7 +207,7 @@ const NextMatchModal: React.FC = () => {
             </View>
           ) : (
             <View style={styles.emptyContainer}>
-              <Text style={{ color: '#30397A', fontSize: 16 }}>No matches available</Text>
+              <Text style={styles.emptyText}>No matches available</Text>
             </View>
           )}
         </View>
@@ -220,6 +220,10 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
+  },
+  backdropTouchable: {
+    width: '100%',
+    height: '100%',
   },
   animatedContainer: {
     position: 'absolute',
@@ -285,6 +289,10 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyText: {
+    color: '#30397A',
+    fontSize: 16,
   },
 });
 

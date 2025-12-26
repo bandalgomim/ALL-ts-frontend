@@ -73,7 +73,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                           } else if (leagueNameSplit.length === 2) {
                             if (textLength < 9) {
                               return (
-                                <View style={{flexDirection: 'row'}}>
+                                <View style={styles.flexRow}>
                                   {detectLang(leagueNameSplit[0], 'big')}
                                   {detectLang(leagueNameSplit[1], 'big')}
                                 </View>
@@ -89,7 +89,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                           } else {
                             if (textLength < 8) {
                               return (
-                                <View style={{flexDirection: 'row'}}>
+                                <View style={styles.flexRow}>
                                   {detectLang(leagueNameSplit[0], 'big')}
                                   {detectLang(leagueNameSplit[1], 'big')}
                                   {detectLang(leagueNameSplit[2], 'big')}
@@ -101,7 +101,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                               if (detectLangth(first) <= detectLangth(second)) {
                                 return (
                                   <>
-                                    <View style={{flexDirection: 'row'}}>
+                                    <View style={styles.flexRow}>
                                       {detectLang(leagueNameSplit[0], 'small')}
                                       {detectLang(leagueNameSplit[1], 'small')}
                                     </View>
@@ -116,7 +116,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                                     <>
                                       {detectLang(leagueNameSplit[0], 'small')}
                                     </>
-                                    <View style={{flexDirection: 'row'}}>
+                                    <View style={styles.flexRow}>
                                       {detectLang(leagueNameSplit[1], 'small')}
                                       {detectLang(leagueNameSplit[2], 'small')}
                                     </View>
@@ -127,10 +127,10 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
                           }
                         })() : null}
             
-            <Text style={[styles.LeagueInfoEtc, {fontSize: width * 0.055}]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
+            <Text style={[styles.LeagueInfoEtc, styles.leagueInfoEtcSize]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
         </View>
-        <View style={[styles.TeamLogo, {marginRight: -width * 0.07}]}>
-        <View style={{marginLeft: -height * 0.025, marginRight: -height*0.005, marginTop: height * 0.01}}>
+        <View style={[styles.TeamLogo, styles.teamLogoMargin]}>
+          <View style={styles.logoPickerWrapper}>
             <LogoPicker
               type={'league'}
               id={data?.league?.leagueId}
@@ -156,7 +156,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
 
       </View>
       <View style={styles.recordButton}>
-        <TouchableOpacity style={{marginTop:-height*0.02, marginBottom:height*0.01, zIndex:3}} onPress={() => setRecord(!record)}>
+        <TouchableOpacity style={styles.recordToggle} onPress={() => setRecord(!record)}>
           <Icon name={record === false ? 'keyboard-arrow-down' : 'keyboard-arrow-up'} size={30} color={'#30397A'} />
         </TouchableOpacity>
         {record && (
@@ -194,12 +194,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  flexRow: {
+    flexDirection: 'row',
+  },
   LeagueInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   TeamLogo: {
     flexDirection: 'row',
+  },
+  teamLogoMargin: {
+    marginRight: -width * 0.07,
+  },
+  logoPickerWrapper: {
+    marginLeft: -height * 0.025,
+    marginRight: -height * 0.005,
+    marginTop: height * 0.01,
   },
   LeagueInfoTextContainer: {
     alignItems: 'flex-start',
@@ -222,12 +233,20 @@ const styles = StyleSheet.create({
     textShadowColor: '#bdb4b4',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 3,
-    marginTop: height*0.005
+    marginTop: height * 0.005,
+  },
+  leagueInfoEtcSize: {
+    fontSize: width * 0.055,
   },
   recordButton: {
     marginTop: -height * 0.015,
     marginBottom: -height * 0.015,
     alignItems: 'center',
+  },
+  recordToggle: {
+    marginTop: -height * 0.02,
+    marginBottom: height * 0.01,
+    zIndex: 3,
   },
   record: {
     width: width * 0.85,

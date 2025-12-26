@@ -65,42 +65,42 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
         <View style={styles.container}>
           {showSection && (
             <View style={styles.sectionHeader}>
-              <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{a}</Text>
-              <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06, marginRight: width*0.015}}>{b}</Text>
+              <Text style={styles.sectionText}>{a}</Text>
+              <Text style={styles.sectionText}>{b}</Text>
             </View>
           )}
 
           <View style={styles.rankItem}>
             <View style={styles.rankView}>
               <Text style={styles.rankText}>{item.rank}</Text>
-              <Text style={[styles.rankText, { fontSize: width * 0.045, marginBottom: -height * 0.0045 }]}>
+              <Text style={[styles.rankText, styles.rankSuffix]}>
                 {getRankSuffix(item.rank)}
               </Text>
             </View>
 
-            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigateTeam(item.teamId)}>
+            <TouchableOpacity style={styles.teamRow} onPress={() => navigateTeam(item.teamId)}>
               <View style={styles.teamLogoView}>
                 <FastImage
                   resizeMode="contain"
                   source={{ uri: String(item.teamLogo) }}
-                  style={{ width: width * 0.05, height: width * 0.05 }}
+                  style={styles.teamLogoImage}
                 />
               </View>
               <View style={styles.teamInitView}>
-                <Text style={{fontFamily: 'sb-it-ver1', fontSize: width*0.06}}>{item.teamInit}</Text>
+                <Text style={styles.teamInitText}>{item.teamInit}</Text>
               </View>
             </TouchableOpacity>
-            <View style={[styles.numberTextView, { marginLeft: width * 0.006 }]}>
+            <View style={[styles.numberTextView, styles.numberTextViewMargin]}>
               <Text style={styles.numberText}>{item.win}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, { color: '#9E9E9E' }]}>{item.draw}</Text>
+              <Text style={[styles.numberText, styles.numberTextGray]}>{item.draw}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, { opacity: 0.3 }]}>{item.lose}</Text>
+              <Text style={[styles.numberText, styles.numberTextFaded]}>{item.lose}</Text>
             </View>
             <View style={styles.numberTextView}>
-              <Text style={[styles.numberText, { color: '#EA5579' }]}>{item.point}</Text>
+              <Text style={[styles.numberText, styles.numberTextPink]}>{item.point}</Text>
             </View>
 
             <TouchableOpacity onPress={() => onPressRemain(item.teamId)} style={styles.remainView}>
@@ -140,13 +140,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: height * 0.01,
     },
-  sectionHeader:{
+  sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     height: height * 0.03,
     marginLeft: width * 0.012,
     marginTop: height * 0.005,
     marginBottom: height * 0.002,
+  },
+  sectionText: {
+    fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.06,
+    marginRight: width * 0.015,
   },
   rankItem: {
     flexDirection: 'row',
@@ -167,31 +172,33 @@ const styles = StyleSheet.create({
     fontSize: width * 0.08,
     color: '#30397A',
   },
+  rankSuffix: {
+    fontSize: width * 0.045,
+    marginBottom: -height * 0.0045,
+  },
+  teamRow: {
+    flexDirection: 'row',
+  },
   teamLogoView: {
     marginRight: width * 0.01,
     marginTop: height * 0.005,
   },
-  teamLogo: {},
+  teamLogoImage: {
+    width: width * 0.05,
+    height: width * 0.05,
+  },
   teamInitView: {
     width: width * 0.11,
   },
-  teamInit: {
+  teamInitText: {
     fontFamily: 'sb-it-ver1',
     fontSize: width * 0.06,
-    width: width * 0.1,
-    color: '#30397A',
-  },
-  teamInitKR: {
-    fontFamily: 'NotoSansKR-ExtraBold',
-    transform: [{ scaleY: 1 }],
-    fontSize: width * 0.045,
-    width: width * 0.1,
-    lineHeight: width * 0.06,
-    color: '#30397A',
-    marginBottom: height * 0.004,
   },
   numberTextView: {
     width: width * 0.1,
+  },
+  numberTextViewMargin: {
+    marginLeft: width * 0.006,
   },
   numberText: {
     fontFamily: 'sb-it-ver1',
@@ -199,6 +206,15 @@ const styles = StyleSheet.create({
     width: width * 0.1,
     textAlign: 'center',
     color: '#30397A',
+  },
+  numberTextGray: {
+    color: '#9E9E9E',
+  },
+  numberTextFaded: {
+    opacity: 0.3,
+  },
+  numberTextPink: {
+    color: '#EA5579',
   },
   remainView: {
     width: width * 0.17,

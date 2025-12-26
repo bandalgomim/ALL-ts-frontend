@@ -1,4 +1,4 @@
-import { View, Platform } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 if (Platform.OS === 'ios') {
@@ -10,6 +10,10 @@ if (Platform.OS === 'ios') {
 export const HeadNotch = () => {
   const insets = useSafeAreaInsets();
   return (
-    <View style={{paddingTop:  Platform.OS === 'ios' ? insets.top : 0}}/>
+    <View style={[styles.notch, { paddingTop: Platform.OS === 'ios' ? insets.top : 0 }]} />
   );
 };
+
+const styles = StyleSheet.create({
+  notch: {},
+});
