@@ -1,7 +1,7 @@
-import { StateDto } from "./config"
+import { StateDto } from './config';
 
 export interface patchIcon {
-    type: "team" | "league",
+    type: 'team' | 'league',
     id: number,
     uri: string | null
 }

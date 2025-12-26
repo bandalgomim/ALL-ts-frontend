@@ -31,12 +31,12 @@ export function MainProvider({ children }) {
 // 훅
 export const useMainState = () => {
   const ctx = useContext(MainStateContext);
-  if (!ctx) throw new Error('useMainState must be used within MainProvider');
+  if (!ctx) {throw new Error('useMainState must be used within MainProvider');}
   return ctx;
 };
 
 export const useMainActions = () => {
   const ctx = useContext(MainActionsContext);
-  if (!ctx) throw new Error('useMainActions must be used within MainProvider');
+  if (!ctx) {throw new Error('useMainActions must be used within MainProvider');}
   return ctx;
 };

@@ -1,4 +1,4 @@
-import { StateDto } from "./config"
+import { StateDto } from './config';
 
 export interface patchIsTeamSelected {
     teamId: number | null

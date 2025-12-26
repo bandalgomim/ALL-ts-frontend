@@ -1,4 +1,4 @@
-import { AppleRequestResponse } from "@invertase/react-native-apple-authentication"
+import { AppleRequestResponse } from '@invertase/react-native-apple-authentication';
 
 export interface postSignUpReqDto {
     id: string,

@@ -1,17 +1,15 @@
-import React, { useCallback, useContext, useMemo, useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, Image, Text, PanResponder, Animated } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Header from './headers/Header';
 import Mode from './mode/mode';
 import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '@/global';
-import { useLeagueState, useLeagueActions } from '@context/league.context';
 import { matchDto } from '@model/main.dto';
 import MatchList from '@components/matchBar/matchList';
 import LeageTeamListBar from '@components/league/leageTeamList';
 import { getLeagueResDto } from '@model/league.dto';
-import { PostState } from '@model/config';
-import { localData, localDataMmkv } from '@IAM/localData';
+import { localDataMmkv } from '@IAM/localData';
 
 interface LeagueCalendarProps {
   data: getLeagueResDto;
@@ -86,7 +84,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height * 0.01, height*0.163] : [height * 0.01, height*0.126], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.01, height * 0.163] : [height * 0.01, height * 0.126], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({
@@ -107,7 +105,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
         style={[
           styles.calendarView,
           calendarAnimatedStyle,
-          zIndex ? styles.zIndexHigh : styles.zIndexLow
+          zIndex ? styles.zIndexHigh : styles.zIndexLow,
         ]}
       >
         <LeageTeamListBar data={data}/>
@@ -117,7 +115,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
             style={[
               styles.leagueBackground,
               styles.leagueBackgroundMonth,
-              mode === 'm' ? styles.visible : styles.hidden
+              mode === 'm' ? styles.visible : styles.hidden,
             ]}
             source={require('@assets/calendar/leagueBackground.png')}
           />
@@ -126,7 +124,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
             style={[
               styles.leagueBackground,
               styles.leagueBackgroundWeek,
-              mode === 'w' ? styles.visible : styles.hidden
+              mode === 'w' ? styles.visible : styles.hidden,
             ]}
             source={require('@assets/calendar/leagueBackground_s.png')}
           />
@@ -169,7 +167,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   CalendarContainer: {

@@ -1,4 +1,3 @@
-import { StateDto } from './config';
 
 export interface platform {
     platformId: number | null,

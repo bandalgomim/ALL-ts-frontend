@@ -73,12 +73,12 @@ export function LogoModalProvider({ children }: { children: ReactNode }) {
 
 export const useLogoModalState = (): LogoModalState => {
   const ctx = useContext(LogoModalStateContext);
-  if (!ctx) throw new Error('useLogoModalState must be used within LogoModalProvider');
+  if (!ctx) {throw new Error('useLogoModalState must be used within LogoModalProvider');}
   return ctx;
 };
 
 export const useLogoModalActions = (): LogoModalActions => {
   const ctx = useContext(LogoModalActionsContext);
-  if (!ctx) throw new Error('useLogoModalActions must be used within LogoModalProvider');
+  if (!ctx) {throw new Error('useLogoModalActions must be used within LogoModalProvider');}
   return ctx;
 };

@@ -53,12 +53,12 @@ export function SearchProvider({ children }: { children: ReactNode }) {
 
 export const useSearchState = (): SearchState => {
   const ctx = useContext(SearchStateContext);
-  if (!ctx) throw new Error('useSearchState must be used within SearchProvider');
+  if (!ctx) {throw new Error('useSearchState must be used within SearchProvider');}
   return ctx;
 };
 
 export const useSearchActions = (): SearchActions => {
   const ctx = useContext(SearchActionsContext);
-  if (!ctx) throw new Error('useSearchActions must be used within SearchProvider');
+  if (!ctx) {throw new Error('useSearchActions must be used within SearchProvider');}
   return ctx;
 };

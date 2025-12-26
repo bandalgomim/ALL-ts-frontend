@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet,  Image, ImageBackground, Text, View } from 'react-native';
-import { height, width } from '@/global';
+import { StyleSheet, ImageBackground, Text, View } from 'react-native';
+import { width } from '@/global';
 import FastImage from 'react-native-fast-image';
 
 
@@ -27,7 +27,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
 
   const logoImageStyle = { width: size * 0.8, height: size * 0.8 };
   const fontSizeStyle = { fontSize: initial.length < 4 ? size * 0.6 : size * 0.5 };
-  
+
   return (
       <ImageBackground
         source={req}
@@ -37,7 +37,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
           resizeMode="contain"
           source={{ uri: logo as string }}
           style={logoImageStyle}
-        /> : 
+        /> :
         <View>
           <Text style={[styles.fontBlueBig, fontSizeStyle]}>{initial}</Text>
         </View>}

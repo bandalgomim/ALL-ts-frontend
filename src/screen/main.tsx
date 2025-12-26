@@ -13,8 +13,8 @@ import { hookRefetch } from '@hooks/refetch.hook';
 import { PostState } from '@model/config';
 
 const MainScreen = () => {
-  const { setMainRes } = useMainActions()  
-  const mainRes = useMainState() as PostState<getMainResDto>
+  const { setMainRes } = useMainActions();
+  const mainRes = useMainState() as PostState<getMainResDto>;
   console.log('MainScreen 렌더링,', mainRes.loading);
 
   const refetch = useCallback(() => {

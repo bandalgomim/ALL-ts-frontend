@@ -22,7 +22,7 @@ export default function TimedImageViewer({ images, isActive = true }: Props) {
 
   // ✅ 타이머는 isActive/이미지 세트 변경마다 재시작
   useEffect(() => {
-    if (!isActive || images.length <= 1) return;
+    if (!isActive || images.length <= 1) {return;}
     const id = setInterval(() => {
       setIndex(prev => (prev + 1) % images.length);
     }, INTERVAL_MS);

@@ -32,12 +32,12 @@ export function TeamProvider({ children }) {
 // 훅
 export const useTeamState = () => {
   const ctx = useContext(TeamStateContext);
-  if (!ctx) throw new Error('useTeamState must be used within TeamProvider');
+  if (!ctx) {throw new Error('useTeamState must be used within TeamProvider');}
   return ctx;
 };
 
 export const useTeamActions = () => {
   const ctx = useContext(TeamActionsContext);
-  if (!ctx) throw new Error('useTeamActions must be used within TeamProvider');
+  if (!ctx) {throw new Error('useTeamActions must be used within TeamProvider');}
   return ctx;
 };

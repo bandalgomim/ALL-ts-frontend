@@ -73,7 +73,7 @@ export const initialmatchRes = createInitial<getMatchResDto>({
   matchState: null,
   isMatchSelected: null,
   platform: null,
-  matchTime: null
+  matchTime: null,
 });
 
 interface filteredItems {

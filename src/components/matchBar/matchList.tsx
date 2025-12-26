@@ -18,7 +18,7 @@ const MatchList: React.FC<ContentsProps> = ({
   color,
   onScroll,
   scrollEventThrottle = 16,
-  headerHeight
+  headerHeight,
 }) => {
   const initialDateState = useMemo(
     () => Object.fromEntries(Object.keys(matchList).map((key) => [key, false])),
@@ -31,12 +31,12 @@ const MatchList: React.FC<ContentsProps> = ({
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     }
-    matchCountRef.current = 0
+    matchCountRef.current = 0;
     const rafId = requestAnimationFrame(() => {
       if (flatListRef.current) {
         flatListRef.current.scrollToOffset({ offset: 0, animated: false });
       }
-      matchCountRef.current = 0
+      matchCountRef.current = 0;
     });
     return () => cancelAnimationFrame(rafId);
   }, [initialDateState]);
@@ -49,7 +49,7 @@ const MatchList: React.FC<ContentsProps> = ({
     if (count % 10 === 0) {
       return <AdmobNativeAdSmall color={color}/>;
     }
-  }
+  };
   const onPressScore = (date: string) => {
     setDateScore(prev => {
       const newState = { ...prev, [date]: !prev[date] };
@@ -97,7 +97,7 @@ const MatchList: React.FC<ContentsProps> = ({
           />
           <View>
             <TouchableOpacity
-              onPress={()=>{onPressScore(sortedItems[0].matchDate)}}
+              onPress={()=>{onPressScore(sortedItems[0].matchDate);}}
             >
               <Text
                 style={[
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   scoreText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-    marginLeft: width*0.01,
+    marginLeft: width * 0.01,
     fontSize: width * 0.05,
     textAlign: 'center',
     marginBottom: -height * 0.00,

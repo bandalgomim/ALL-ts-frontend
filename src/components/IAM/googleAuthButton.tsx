@@ -1,32 +1,39 @@
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useContext, useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from "react-native";
-import { MainPageParamList } from "@model/navigation.dto";
-import { hookAuth } from "@hooks/IAM.hook";
-import { useLeagueState, useLeagueActions } from "@context/league.context";
-import { useMainActions } from "@context/main.context";
-import { useMatchActions } from "@context/match.context";
-import { useTeamState, useTeamActions } from "@context/team.context";
-import { height, width } from "@/global";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useCallback, useEffect, useState } from 'react';
+import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { MainPageParamList } from '@model/navigation.dto';
+import { hookAuth } from '@hooks/IAM.hook';
+import { useLeagueActions } from '@context/league.context';
+import { useMainActions } from '@context/main.context';
+import { useMatchActions } from '@context/match.context';
+import { useTeamActions } from '@context/team.context';
+import { height, width } from '@/global';
 
 interface GoogleAuthButtonProps {
-  type: "in" | "up";       // "in" → Sign in / "up" → Sign up
+  type: 'in' | 'up';
 }
 
 const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
-  // type 에 따라 버튼 텍스트 결정
-  const buttonText = type === "up" ? "Sign up with Google" : "Sign in with Google";
-  const { setMainRes } = useMainActions()
-  const {setTeamRes} = useTeamActions();
+  const buttonText = type === 'up' ? 'Sign up with Google' : 'Sign in with Google';
+  const { setMainRes } = useMainActions();
+  const { setTeamRes } = useTeamActions();
   const { setLeagueRes } = useLeagueActions();
   const { setMatchRes } = useMatchActions();
-  const [res, setRes] = useState<boolean | string>("초기");
+  const [res, setRes] = useState<boolean | string>('초기');
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
-  const navigateMain = () => {
+
+  const navigateMain = useCallback(() => {
     navigationMain.replace('MainScreen', undefined);
-  };
+  }, [navigationMain]);
+
+  const handleLogin = useCallback(async (loginType: string) => {
+    await GoogleSignin.signIn();
+    const { idToken } = await GoogleSignin.getTokens();
+    setRes(await hookAuth({ idToken: idToken }, loginType === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes));
+  }, [setMainRes, setTeamRes, setLeagueRes, setMatchRes]);
+
   useEffect(() => {
     if (res === true) {
       navigateMain();
@@ -43,53 +50,48 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ type }) => {
             },
             {
               text: '예',
-              style: 'destructive',   // iOS: 빨간 버튼
-              onPress: () => {handleLogin('up');}
+              style: 'destructive',
+              onPress: () => { handleLogin('up'); },
             },
           ],
-          { cancelable: true } 
+          { cancelable: true },
         );
-      } else {Alert.alert(
-        '계정이 이미 존재합니다',
-        '로그인 하시겠습니까?',
-        [
-          {
-            text: '아니오',
-            style: 'cancel',
-            onPress: () => {},
-          },
-          {
-            text: '예',
-            style: 'destructive',   // iOS: 빨간 버튼
-            onPress: () => {handleLogin('in');}
-          },
-        ],
-        { cancelable: true } 
-      );}
+      } else {
+        Alert.alert(
+          '계정이 이미 존재합니다',
+          '로그인 하시겠습니까?',
+          [
+            {
+              text: '아니오',
+              style: 'cancel',
+              onPress: () => {},
+            },
+            {
+              text: '예',
+              style: 'destructive',
+              onPress: () => { handleLogin('in'); },
+            },
+          ],
+          { cancelable: true },
+        );
+      }
     }
-  }, [res]);
- 
+  }, [res, navigateMain, type, handleLogin]);
+
   useEffect(() => {
     GoogleSignin.configure({
-      // ✅ 반드시 Web Client ID (서버 검증용)
       webClientId: '596242806015-8hn1iublav6tt7imq47nrci7ejgv1129.apps.googleusercontent.com',
-      // ✅ iOS Client ID (plist에 있는 client_id, 선택이지만 넣어주면 안전)
       iosClientId: '596242806015-l6dcqkfo99c3j6tk8smlqs94pn37138o.apps.googleusercontent.com',
-      offlineAccess: true, // refresh token 필요 시
-      forceCodeForRefreshToken: true, // serverAuthCode 발급 필요 시
+      offlineAccess: true,
+      forceCodeForRefreshToken: true,
     });
   }, []);
 
-  const handleLogin = async (type: string) => {
-    const userInfo = await GoogleSignin.signIn();
-    const { idToken, accessToken } = await GoogleSignin.getTokens();
-    setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'google', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
-  };
   return (
-    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=>handleLogin(type)}>
+    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={() => handleLogin(type)}>
       <View style={styles.contentWrapper}>
         <Image
-          source={require("@assets/auth/Google.webp")}
+          source={require('@assets/auth/Google.webp')}
           style={styles.icon}
           resizeMode="contain"
         />

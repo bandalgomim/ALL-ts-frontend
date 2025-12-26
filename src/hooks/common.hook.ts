@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { localData } from '@IAM/localData';
-import { scheduleTodayMatches } from '@notification/scheduleTodayMatches';
 
 export const commonPostHook = async (
     method: string,
@@ -18,7 +17,7 @@ export const commonPostHook = async (
           'RefreshToken': refreshToken ?? '',
           'Content-Type': 'application/json',
         },
-        ...(data && { data }) // ⬅️ data가 있을 때만 포함
+        ...(data && { data }), // ⬅️ data가 있을 때만 포함
       };
     try {
         const response = await axios(req);

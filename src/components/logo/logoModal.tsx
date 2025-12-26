@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -41,9 +41,9 @@ const LogoModal: React.FC = () => {
         toValue: SCREEN_HEIGHT,
         duration: 300,
         useNativeDriver: true,
-      })
+      }),
     ]).start(() => {
-      close()
+      close();
     });
   };
 
@@ -64,7 +64,7 @@ const LogoModal: React.FC = () => {
           toValue: 0,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     } else if (translateY._value === 0) {
       // 모달이 열려있는 상태에서 닫힐 때만 애니메이션 실행
@@ -78,7 +78,7 @@ const LogoModal: React.FC = () => {
           toValue: SCREEN_HEIGHT,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     }
   }, [visible, translateY]);
@@ -156,7 +156,7 @@ const LogoModal: React.FC = () => {
             useNativeDriver: true,
           }),
         ]).start();
-      }
+      },
     })
   ).current;
 

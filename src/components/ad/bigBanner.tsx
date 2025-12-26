@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Button, Image, ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Platform, StyleSheet, Text, View } from 'react-native';
 import {
   NativeAd,
   TestIds,
-  AdEventType,
   NativeAdView,
   NativeAsset,
   NativeAssetType,
   NativeMediaView,
-} from "react-native-google-mobile-ads";
-import { height, width } from "@/global";
+} from 'react-native-google-mobile-ads';
+import { height, width } from '@/global';
 
 
 type AdUnitIdType = string;
 
 const AD_UNIT_ID: AdUnitIdType = Platform.select({
-  ios: "ca-app-pub-4702221338725869/9501829039",
-  android: TestIds.NATIVE
+  ios: 'ca-app-pub-4702221338725869/9501829039',
+  android: TestIds.NATIVE,
 }) as AdUnitIdType;
 
 interface AdmobNativeAdProps {
   color: string
-};
+}
 
 const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
   const [nativeAd, setNativeAd] = useState<NativeAd>();
@@ -110,40 +109,40 @@ const AdmobNativeAdBig: React.FC<AdmobNativeAdProps> = ({color}) => {
 
 const styles = StyleSheet.create({
   imageBackground: {
-    justifyContent: "center",
+    justifyContent: 'center',
     width: width * 0.93,
     height: height * 0.17,
-    alignItems: "center",
+    alignItems: 'center',
   },
   nativeAdView: {
     flexDirection: 'row',
     width: width * 0.93,
     height: height * 0.152,
     marginTop: -height * 0.01,
-    alignItems: "center",
+    alignItems: 'center',
   },
   mediaContainer: {
     marginLeft: width * 0.015,
     marginTop: height * 0.0007,
     aspectRatio: 1,
-    backgroundColor: "black",
+    backgroundColor: 'black',
     width: width * 0.31,
     height: width * 0.31,
     overflow: 'hidden',
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 13,
   },
   mediaView: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   contentContainer: {
     width: width * 0.605,
-    alignItems: "center",
+    alignItems: 'center',
   },
   headlineContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
     width: width * 0.55,
     paddingRight: width * 0.01,
@@ -151,10 +150,10 @@ const styles = StyleSheet.create({
     marginTop: height * 0.01,
   },
   headlineBlue: {
-    backgroundColor: "#30397A",
+    backgroundColor: '#30397A',
   },
   headlineWhite: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   headlineText: {
     textAlign: 'left',
@@ -169,14 +168,14 @@ const styles = StyleSheet.create({
     marginTop: height * 0.005,
   },
   ctaRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginLeft: width * 0.11,
     marginBottom: height * 0.01,
   },
   adLabelContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     width: width * 0.26,
     marginRight: width * 0.02,
   },
@@ -190,19 +189,19 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   ctaButton: {
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
     paddingLeft: width * 0.01,
     paddingRight: width * 0.01,
     width: width * 0.17,
     height: height * 0.037,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   ctaButtonBlue: {
-    backgroundColor: "#30397A",
+    backgroundColor: '#30397A',
   },
   ctaButtonPink: {
-    backgroundColor: "#EA5579",
+    backgroundColor: '#EA5579',
   },
   ctaText: {
     textAlign: 'center',

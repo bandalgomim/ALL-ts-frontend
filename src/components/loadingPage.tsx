@@ -20,7 +20,7 @@ const LoadingScreen: React.FC<logoProps> = ({ color }) => {
   return (
     <View style={[
       styles.LoadingContainer,
-      color === 'blue' ? styles.bgWhite : styles.bgBlue
+      color === 'blue' ? styles.bgWhite : styles.bgBlue,
     ]}>
       <View style={styles.logo}>
         <Text style={[styles.text1, styles.logoText1, style]}>ALL</Text>

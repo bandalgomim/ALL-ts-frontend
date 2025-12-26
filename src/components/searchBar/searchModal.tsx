@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   TextInput,
@@ -31,17 +31,17 @@ const SCREEN_HEIGHT = height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const SearchModal: React.FC = () => {
-  
-  const { close } = useSearchActions()
+
+  const { close } = useSearchActions();
   const { visible } = useSearchState();
   const [query, setQuery] = useState<string>('');
   const [filteredTeams, setFilteredTeams] = useState<filteredItems[]>([]);
   const [isFocused, setIsFocused] = useState(false);
-  const searchTagRes  = useSearchTagState() as PostState<filteredItems>
+  const searchTagRes  = useSearchTagState() as PostState<filteredItems>;
 
   // 드래그 중인지 상태 추가
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = (teamId: number) => {
@@ -123,8 +123,8 @@ const filteredResults = items
     return (
       <TouchableOpacity
         onPress={() => {
-          if (item.teamId) navigateTeam(item.teamId);
-          else if (item.leagueId) navigateLeague(item.leagueId);
+          if (item.teamId) {navigateTeam(item.teamId);}
+          else if (item.leagueId) {navigateLeague(item.leagueId);}
         }}
       >
         <View style={styles.resultItemContainer}>

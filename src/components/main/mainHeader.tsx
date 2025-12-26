@@ -1,5 +1,5 @@
-import React, { useContext, useCallback, useEffect } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { width, height } from '@/global';
 import { useNavigation } from '@react-navigation/native';
@@ -48,7 +48,7 @@ export const MainHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',   // 가로 배치
-    justifyContent: "space-between",  // 양 끝 정렬
+    justifyContent: 'space-between',  // 양 끝 정렬
     alignItems: 'center',   // 수직 정렬 (선택 사항)
   },
   headerSize: {

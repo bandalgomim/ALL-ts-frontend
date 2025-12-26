@@ -31,12 +31,12 @@ export function MatchProvider({ children }) {
 // 훅
 export const useMatchState = () => {
   const ctx = useContext(MatchStateContext);
-  if (!ctx) throw new Error('useMatchState must be used within MatchProvider');
+  if (!ctx) {throw new Error('useMatchState must be used within MatchProvider');}
   return ctx;
 };
 
 export const useMatchActions = () => {
   const ctx = useContext(MatchActionsContext);
-  if (!ctx) throw new Error('useMatchActions must be used within MatchProvider');
+  if (!ctx) {throw new Error('useMatchActions must be used within MatchProvider');}
   return ctx;
 };

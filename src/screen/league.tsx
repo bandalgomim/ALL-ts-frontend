@@ -1,24 +1,21 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LeagueCalendar from '@components/calendar/LeagueCalendar';
 import LeagueHeader from '@components/league/leagueHeader';
 import { hookLeague } from '@hooks/league.hook';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import LoadingScreen from '@components/loadingPage';
 import { getLeagueReqQueryDto, getLeagueResDto } from '@model/league.dto';
 import MainTabBar from '@components/main/mainTabBar';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '@model/navigation.dto';
 import { HeadNotch } from '@components/notch';
 import { useLeagueState, useLeagueActions } from '@context/league.context';
 import { height, width } from '@/global';
 import Logo from '@components/logo';
 import { hookRefetch } from '@hooks/refetch.hook';
-import { hookIsLogin } from '@hooks/IAM.hook';
 import { PostState } from '@model/config';
 
 const LeagueScreen = () => {
-  
+
   const { setLeagueRes } = useLeagueActions();
   const leagueRes = useLeagueState() as PostState<getLeagueResDto>;
   console.log('LeagueScreen 렌더링,', leagueRes.loading);
@@ -27,7 +24,7 @@ const LeagueScreen = () => {
 
   const refetch = useCallback(() => {
     return hookLeague('GET' as string, {leagueId: leagueId}, setLeagueRes);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [leagueId, setLeagueRes]);
   hookRefetch(refetch, setLeagueRes);
 
@@ -52,7 +49,6 @@ const LeagueScreen = () => {
           <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
         </View>
       </View>
-      {console.log('Rendering LeagueScreen')}
     </View>
   );
 };

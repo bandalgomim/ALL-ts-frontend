@@ -77,7 +77,7 @@ const StackNavigator = () => {
             options={{ freezeOnBlur: true }}
           />
           <Stack.Screen
-            name='OnboardingScreen'
+            name="OnboardingScreen"
             component={OnboardingScreen}
             options={{freezeOnBlur: true}}
             />

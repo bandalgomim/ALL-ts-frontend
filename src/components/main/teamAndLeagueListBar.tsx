@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import SearchBar from '@components/searchBar/searchBar';
 import { leagueDto, patchMainReqDto, teamDto } from '@model/main.dto';
@@ -10,7 +10,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { transformToPatchMainReqDto } from './util';
 import { width, height } from '@/global';
 import { hookMain } from '@hooks/main.hook';
-import { AuthContext } from '@context/auth.context';
 
 interface ContentsProps {
   teamAndLeagueList: (teamDto | leagueDto)[] | null;
@@ -28,7 +27,7 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   const navigationTeam = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigationLeague = useNavigation<StackNavigationProp<LeaguePageParamList>>();
   const navigateTeam = useCallback(
-    
+
     (teamId: number) => {
       navigationTeam.navigate('TeamScreen', { teamId: teamId });
     },
@@ -114,9 +113,9 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   );
 
   const getItemKey = useCallback((item: teamDto | leagueDto, index: number) => {
-    if ('teamId' in item) return `team-${item.teamId}`;
-    if ('leagueId' in item) return `league-${item.leagueId}`;
-    if ('box' in item) return `empty-${index}`;
+    if ('teamId' in item) {return `team-${item.teamId}`;}
+    if ('leagueId' in item) {return `league-${item.leagueId}`;}
+    if ('box' in item) {return `empty-${index}`;}
     return String(index);
   }, []);
 

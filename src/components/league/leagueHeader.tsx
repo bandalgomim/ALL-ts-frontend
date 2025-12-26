@@ -1,16 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SearchBar from '@components/searchBar/searchBar';
 import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import IsSelected from '@components/isSelected';
 import { width, height } from '@/global';
-import { useLeagueState, useLeagueActions } from '@context/league.context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LeagueRankList from './leagueRankList';
 import LogoPicker from '@components/logo/logoPicker';
-import { refetchDto } from '@model/refetch.dto';
 import RefreshButton from '@components/refresh';
-import { PostState } from '@model/config';
 import { getLeagueResDto } from '@model/league.dto';
 
 interface LeagueHeaderProps {
@@ -22,32 +19,32 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
   const [record, setRecord] = useState(false);
 
   function detectLang(text: string, size: 'big' | 'medium' | 'small') {
-      if (!text) {return;}
-      if (size === 'big') {
-          return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameBig]}>{text}</Text>);
-      } else if (size === 'medium') {
-          return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameMedium]}>{text}</Text>);
-      } 
-      else if (size === 'small') {
-          return (<Text style={[styles.baseInfoText, styles.headerTeamInfoNameSmall]}>{text}</Text>);
-      } else {return;}
-    }
-    function detectLangth(text: string) {
-        let textlength = 0;
-        const hasKR = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
-        const hasEnglish = (text: string) => {return /[a-zA-Z]/.test(text);};
-  
-        for (let i = 0; i < text.length; i++) {
-          if (hasKR(text[i])) {
-            textlength += 2; // 한글은 2로 계산
-          } else if (hasEnglish(text[i])) {
-            textlength += 1; // 영어는 1로 계산
-          } else {
-            textlength += 1; // 기타 문자는 1로 계산
-          }
-        }
-        return textlength;
+    if (!text) { return; }
+    if (size === 'big') {
+      return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameBig]}>{text}</Text>);
+    } else if (size === 'medium') {
+      return (<Text style={[styles.baseInfoText, styles.LeagueInfoNameMedium]}>{text}</Text>);
+    } else if (size === 'small') {
+      return (<Text style={[styles.baseInfoText, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+    } else { return; }
+  }
+
+  function detectLangth(inputText: string) {
+    let textlength = 0;
+    const hasKR = (char: string) => { return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(char); };
+    const hasEnglish = (char: string) => { return /[a-zA-Z]/.test(char); };
+
+    for (let i = 0; i < inputText.length; i++) {
+      if (hasKR(inputText[i])) {
+        textlength += 2;
+      } else if (hasEnglish(inputText[i])) {
+        textlength += 1;
+      } else {
+        textlength += 1;
       }
+    }
+    return textlength;
+  }
 
   return (
     <View style={[styles.container, styles.containerSize]}>
@@ -56,77 +53,77 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
       />
       <View style={styles.LeagueInfoContainer}>
 
-        <View style={[styles.LeagueInfoTextContainer ]}>
+        <View style={styles.LeagueInfoTextContainer}>
             {data?.league?.leagueName ? (() => {
-                          const leagueNameSplit = data?.league?.leagueName.split(' ');
-                          const textLength = detectLangth(data?.league?.leagueName);
-                          if (leagueNameSplit.length === 1) {
-                            if (textLength < 9) {
-                              return (
-                                  detectLang(leagueNameSplit[0], 'big')
-                              );
-                            } else {
-                              return (
-                                  detectLang(leagueNameSplit[0], 'medium')
-                              )
-                            }
-                          } else if (leagueNameSplit.length === 2) {
-                            if (textLength < 9) {
-                              return (
-                                <View style={styles.flexRow}>
-                                  {detectLang(leagueNameSplit[0], 'big')}
-                                  {detectLang(leagueNameSplit[1], 'big')}
-                                </View>
-                              );
-                            } else{
-                              return (
-                                <>
-                                  {detectLang(leagueNameSplit[0], 'small')}
-                                  {detectLang(leagueNameSplit[1], 'small')}
-                                </>
-                              );
-                            }
-                          } else {
-                            if (textLength < 8) {
-                              return (
-                                <View style={styles.flexRow}>
-                                  {detectLang(leagueNameSplit[0], 'big')}
-                                  {detectLang(leagueNameSplit[1], 'big')}
-                                  {detectLang(leagueNameSplit[2], 'big')}
-                                </View>
-                              );
-                            } else {
-                              const first = `${leagueNameSplit[0]} ${leagueNameSplit[1]}`;
-                              const second = `${leagueNameSplit[1]} ${leagueNameSplit[2]}`;
-                              if (detectLangth(first) <= detectLangth(second)) {
-                                return (
-                                  <>
-                                    <View style={styles.flexRow}>
-                                      {detectLang(leagueNameSplit[0], 'small')}
-                                      {detectLang(leagueNameSplit[1], 'small')}
-                                    </View>
-                                    <>
-                                      {detectLang(leagueNameSplit[2], 'small')}
-                                    </>
-                                  </>
-                                );
-                              } else {
-                                return (
-                                  <>
-                                    <>
-                                      {detectLang(leagueNameSplit[0], 'small')}
-                                    </>
-                                    <View style={styles.flexRow}>
-                                      {detectLang(leagueNameSplit[1], 'small')}
-                                      {detectLang(leagueNameSplit[2], 'small')}
-                                    </View>
-                                  </>
-                                );
-                              }
-                            }
-                          }
-                        })() : null}
-            
+              const leagueNameSplit = data?.league?.leagueName.split(' ');
+              const textLength = detectLangth(data?.league?.leagueName);
+              if (leagueNameSplit.length === 1) {
+                if (textLength < 9) {
+                  return (
+                    detectLang(leagueNameSplit[0], 'big')
+                  );
+                } else {
+                  return (
+                    detectLang(leagueNameSplit[0], 'medium')
+                  );
+                }
+              } else if (leagueNameSplit.length === 2) {
+                if (textLength < 9) {
+                  return (
+                    <View style={styles.flexRow}>
+                      {detectLang(leagueNameSplit[0], 'big')}
+                      {detectLang(leagueNameSplit[1], 'big')}
+                    </View>
+                  );
+                } else {
+                  return (
+                    <>
+                      {detectLang(leagueNameSplit[0], 'small')}
+                      {detectLang(leagueNameSplit[1], 'small')}
+                    </>
+                  );
+                }
+              } else {
+                if (textLength < 8) {
+                  return (
+                    <View style={styles.flexRow}>
+                      {detectLang(leagueNameSplit[0], 'big')}
+                      {detectLang(leagueNameSplit[1], 'big')}
+                      {detectLang(leagueNameSplit[2], 'big')}
+                    </View>
+                  );
+                } else {
+                  const first = `${leagueNameSplit[0]} ${leagueNameSplit[1]}`;
+                  const second = `${leagueNameSplit[1]} ${leagueNameSplit[2]}`;
+                  if (detectLangth(first) <= detectLangth(second)) {
+                    return (
+                      <>
+                        <View style={styles.flexRow}>
+                          {detectLang(leagueNameSplit[0], 'small')}
+                          {detectLang(leagueNameSplit[1], 'small')}
+                        </View>
+                        <>
+                          {detectLang(leagueNameSplit[2], 'small')}
+                        </>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <>
+                          {detectLang(leagueNameSplit[0], 'small')}
+                        </>
+                        <View style={styles.flexRow}>
+                          {detectLang(leagueNameSplit[1], 'small')}
+                          {detectLang(leagueNameSplit[2], 'small')}
+                        </View>
+                      </>
+                    );
+                  }
+                }
+              }
+            })() : null}
+
             <Text style={[styles.baseInfoText, styles.LeagueInfoEtc]}>{`${data?.league?.countryName} ${data?.league?.sportName}`}</Text>
         </View>
         <View style={styles.TeamLogo}>
@@ -151,7 +148,7 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
             />
             <RefreshButton refetch={refetch} />
           </View>
-          
+
         </View>
 
       </View>

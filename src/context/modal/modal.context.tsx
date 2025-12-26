@@ -54,12 +54,12 @@ export function ModalProvider({ children }: { children: ReactNode }) {
 // --- Hooks ---
 export const useModalState = (): ModalState => {
   const ctx = useContext(ModalStateContext);
-  if (!ctx) throw new Error('useModalState must be used within ModalProvider');
+  if (!ctx) {throw new Error('useModalState must be used within ModalProvider');}
   return ctx;
 };
 
 export const useModalActions = (): ModalActions => {
   const ctx = useContext(ModalActionsContext);
-  if (!ctx) throw new Error('useModalActions must be used within ModalProvider');
+  if (!ctx) {throw new Error('useModalActions must be used within ModalProvider');}
   return ctx;
 };

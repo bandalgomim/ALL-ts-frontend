@@ -6,7 +6,7 @@ import { hookFcmToken } from './IAM.hook';
 import { getApp } from '@react-native-firebase/app';
 
 const useDailyTask = () => {
-  const { setSearchTagRes } = useSearchTagActions()
+  const { setSearchTagRes } = useSearchTagActions();
   useEffect(() => {
     const runDailyTask = async () => {
       try {

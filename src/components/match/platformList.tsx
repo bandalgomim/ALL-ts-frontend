@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
-import { FlatList, TouchableOpacity, StyleSheet, Linking, View, Text, Platform, ImageBackground } from 'react-native';
+import { FlatList, TouchableOpacity, StyleSheet, Linking, View, Text, ImageBackground } from 'react-native';
 import { platform } from '@model/match.dto';
 import { width, height } from '@/global';
-import { Image } from 'react-native';
 
 interface ContentsProps {
   platformList: platform[];
@@ -21,7 +20,7 @@ const openUrlHandle = async (url: string) => {
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
   const hasReplayType = platformList.some(item => item.platfromMatchUrlType === 'replay');
   if (!hasReplayType && type === 'replay') {
-    type = 'root'
+    type = 'root';
   }
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
@@ -126,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     width: width * 0.21,
     textAlign: 'center',
-    
+
   },
   frontDateBar: {
     width: width * 0.06,

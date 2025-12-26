@@ -10,7 +10,7 @@ interface ModeProps {
 }
 
 const Mode: React.FC<ModeProps> = ({ type, mode, setMode }) => {
-  console.log(mode)
+  console.log(mode);
   let typeColor: StyleProp<ViewStyle | TextStyle> = [];
 
   if(type === 'league') {

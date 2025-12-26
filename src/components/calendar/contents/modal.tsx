@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,7 +8,6 @@ import {
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from 'react-native';
 import { width, height } from '@/global';
 import MatchList from '@components/matchBar/matchList';
@@ -19,16 +18,16 @@ const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const MatchModal: React.FC = () => {
   const { visible, contents } = useModalState(); // 상태 구독
-  const { close } = useModalActions(); 
+  const { close } = useModalActions();
   const safemodalContents = contents || {};
 
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0.5)).current;
-  
+
   // 드래그 중인지 여부 상태
   const [isDragging, setIsDragging] = useState(false);
-  
+
   // 마지막 드래그 위치 추적
   const lastDragPos = useRef(0);
 
@@ -44,9 +43,9 @@ const MatchModal: React.FC = () => {
         toValue: SCREEN_HEIGHT,
         duration: 300,
         useNativeDriver: true,
-      })
+      }),
     ]).start(() => {
-      close()
+      close();
     });
   };
 
@@ -56,7 +55,7 @@ const MatchModal: React.FC = () => {
       // 모달 열기 애니메이션 (기존 코드 유지)
       translateY.setValue(SCREEN_HEIGHT);
       backdropOpacity.setValue(0);
-      
+
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 0.5,
@@ -67,7 +66,7 @@ const MatchModal: React.FC = () => {
           toValue: 0,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     } else if (translateY._value === 0) {
       // 모달이 열려있는 상태에서 닫힐 때만 애니메이션 실행
@@ -81,7 +80,7 @@ const MatchModal: React.FC = () => {
           toValue: SCREEN_HEIGHT,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     }
   }, [visible, translateY]);
@@ -91,12 +90,12 @@ const MatchModal: React.FC = () => {
     PanResponder.create({
       // 터치 시작 시
       onStartShouldSetPanResponder: () => true,
-      
+
       // 움직임 시작 시
       onMoveShouldSetPanResponder: (_, gestureState) => {
         return Math.abs(gestureState.dy) > 10;
       },
-      
+
       // 패널 포착 시 상태 초기화
       onPanResponderGrant: () => {
         setIsDragging(true);
@@ -104,24 +103,24 @@ const MatchModal: React.FC = () => {
         translateY.setOffset(0);
         translateY.setValue(0);
       },
-      
+
       // 드래그 중 실시간 업데이트
       onPanResponderMove: (_, gestureState) => {
         // 아래로만 드래그 가능
         if (gestureState.dy > 0) {
           translateY.setValue(gestureState.dy);
           lastDragPos.current = gestureState.dy;
-          
+
           // 드래그에 따른 백드롭 투명도 조정
           const newOpacity = Math.max(0, 0.5 - (gestureState.dy / 300));
           backdropOpacity.setValue(newOpacity);
         }
       },
-      
+
       // 드래그 종료 시
       onPanResponderRelease: () => {
         setIsDragging(false);
-        
+
         // 임계값 이상 드래그 시 모달 닫기
         if (lastDragPos.current > DISMISS_THRESHOLD) {
           closeModal();
@@ -142,7 +141,7 @@ const MatchModal: React.FC = () => {
           ]).start();
         }
       },
-      
+
       // 터치 취소 시
       onPanResponderTerminate: () => {
         setIsDragging(false);
@@ -159,7 +158,7 @@ const MatchModal: React.FC = () => {
             useNativeDriver: true,
           }),
         ]).start();
-      }
+      },
     })
   ).current;
 
@@ -199,7 +198,7 @@ const MatchModal: React.FC = () => {
           </View>
           <Text style={styles.text}>matchs of day</Text>
         </View>
-        
+
         {/* 컨텐츠 영역 - MatchList (드래그 불가) */}
         <View style={styles.contentContainer}>
           {contents && Object.keys(safemodalContents).length > 0 ? (
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
   // 모달 헤더 영역 (드래그 가능)
   modalHeader: {
     width: '100%',
-    paddingTop: height* 0.005,
+    paddingTop: height * 0.005,
     alignItems: 'center',
     backgroundColor: 'white', // 배경색 설정
     borderTopLeftRadius: 20,

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { teamDto, leagueDto, patchMainReqBodyDto } from '@model/main.dto';
 
 export const transformToPatchMainReqDto = (list: (teamDto | leagueDto)[]): patchMainReqBodyDto[] => {

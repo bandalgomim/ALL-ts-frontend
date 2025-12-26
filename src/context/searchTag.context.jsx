@@ -31,12 +31,12 @@ export function SearchTagProvider({ children }) {
 // 훅
 export const useSearchTagState = () => {
   const ctx = useContext(SearchTagStateContext);
-  if (!ctx) throw new Error('useSearchTagState must be used within SearchTagProvider');
+  if (!ctx) {throw new Error('useSearchTagState must be used within SearchTagProvider');}
   return ctx;
 };
 
 export const useSearchTagActions = () => {
   const ctx = useContext(SearchTagActionsContext);
-  if (!ctx) throw new Error('useSearchTagActions must be used within SearchTagProvider');
+  if (!ctx) {throw new Error('useSearchTagActions must be used within SearchTagProvider');}
   return ctx;
 };

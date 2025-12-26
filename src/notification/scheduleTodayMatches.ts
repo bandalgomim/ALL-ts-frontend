@@ -1,8 +1,8 @@
 import notifee, { TimestampTrigger, TriggerType, AndroidImportance } from '@notifee/react-native';
-import { matchDto, matchListDto } from '@model/main.dto';
+import { matchListDto } from '@model/main.dto';
 
 export async function scheduleTodayMatches(matchList: matchListDto) {
-  if (!matchList) return;
+  if (!matchList) {return;}
 
   // 오늘 날짜 기준 (자정 0시로 맞춤)
   const today = new Date();
@@ -20,10 +20,10 @@ export async function scheduleTodayMatches(matchList: matchListDto) {
     const matchDay = new Date(year, month - 1, day);
 
     // 오늘~7일 사이만 필터링
-    if (matchDay < today || matchDay >= weekLater) continue;
+    if (matchDay < today || matchDay >= weekLater) {continue;}
 
     for (const match of matches) {
-      const { matchId, matchDate, matchTime, homeTeamInit, awayTeamInit, homeTeamName, awayTeamName } = match;
+      const { matchId, matchTime, homeTeamInit, awayTeamInit } = match;
       const [hour, minute] = matchTime.split(':').map(Number);
 
       const matchDateTime = new Date(year, month - 1, day, hour, minute);

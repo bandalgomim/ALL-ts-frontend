@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,15 +9,15 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { width, height } from '@/global';
-import { ModalContext, useModalNextMatchActions, useModalNextMatchState } from '@context/modal/modalNextMatch.context';
+import { useModalNextMatchActions, useModalNextMatchState } from '@context/modal/modalNextMatch.context';
 import MatchList from './matchBar/matchList';
 
 const SCREEN_HEIGHT = height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
 const NextMatchModal: React.FC = () => {
-  const { close } = useModalNextMatchActions()
-  const { visible, contents } = useModalNextMatchState()
+  const { close } = useModalNextMatchActions();
+  const { visible, contents } = useModalNextMatchState();
 
 
   // 애니메이션 값 설정
@@ -42,10 +42,10 @@ const NextMatchModal: React.FC = () => {
         toValue: SCREEN_HEIGHT,
         duration: 300,
         useNativeDriver: true,
-      })
+      }),
     ]).start(() => {
       close();
-      
+
     });
   };
 
@@ -66,7 +66,7 @@ const NextMatchModal: React.FC = () => {
           toValue: 0,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     } else if (translateY._value === 0) {
       // 모달이 열려있는 상태에서 닫힐 때만 애니메이션 실행
@@ -80,7 +80,7 @@ const NextMatchModal: React.FC = () => {
           toValue: SCREEN_HEIGHT,
           duration: 300,
           useNativeDriver: true,
-        })
+        }),
       ]).start();
     }
   }, [visible, translateY]);
@@ -158,7 +158,7 @@ const NextMatchModal: React.FC = () => {
             useNativeDriver: true,
           }),
         ]).start();
-      }
+      },
     })
   ).current;
 
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   // 모달 헤더 영역 (드래그 가능)
   modalHeader: {
     width: '100%',
-    paddingTop: height* 0.005,
+    paddingTop: height * 0.005,
     alignItems: 'center',
     backgroundColor: 'white', // 배경색 설정
     borderTopLeftRadius: 20,

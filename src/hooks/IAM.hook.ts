@@ -1,10 +1,9 @@
-import { getLoginReqDto, patchFcmTokenReqDto, postSignUpReqDto } from '@model/IAM.dto';
+import { getLoginReqDto, patchFcmTokenReqDto } from '@model/IAM.dto';
 import axios from 'axios';
 import { localData } from '@IAM/localData';
 import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } from '@reducers/apiReducer';
-import { getMessaging, getToken, registerDeviceForRemoteMessages } from '@react-native-firebase/messaging';
+import { getMessaging, getToken } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
-import { getVersion } from 'react-native-device-info';
 import { getDeviceVersion } from '@utils/deviceVersion';
 
 export const hookAuth = async (
@@ -17,7 +16,7 @@ export const hookAuth = async (
     setMatchRes: (res: any) => void
 ) => {
     // 입력값 검증
-    if (data.idToken === null || data.idToken === "") {return;}
+    if (data.idToken === null || data.idToken === '') {return;}
     // 모든 상태 초기화
     setMainRes(initialmainRes);
     setTeamRes(initialteamRes);
@@ -55,7 +54,7 @@ export const hookDeleteAccount = async (
     } catch (error) {
         console.error('DeleteAccount 요청 실패:', error);
     }
-}
+};
 
 export const hookRefreshToken = async () => {
     try {
@@ -68,21 +67,21 @@ export const hookRefreshToken = async () => {
 
 export const hookVersionCheck = async() => {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/versionCheck'
-        const ver = await getDeviceVersion()
-        console.log(ver)
+        const url = 'https://all-ts-backend-production.up.railway.app/versionCheck';
+        const ver = await getDeviceVersion();
+        console.log(ver);
         const response = await axios({
             method: 'POST',
             url: url,  // 올바른 URL 설정
             data: ver ,  // POST, PUT, DELETE일 경우 payload
         });
-        return response.data.result
+        return response.data.result;
 
     } catch (error) {
         console.error('hookVersionCheck 요청 실패:', error);
     }
-}
- 
+};
+
 export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
     try {
         const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
@@ -98,7 +97,7 @@ export const hookIsLogin = async (navigation: () => void) => {
     return Boolean(await localData.get('RefreshToken'));
     };
     const isLogin = await checkRefreshToken();
-    if (!isLogin) { navigation() }
+    if (!isLogin) { navigation(); }
 };
 
 export const commonIAMHook = async (

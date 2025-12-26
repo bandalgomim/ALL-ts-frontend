@@ -1,4 +1,4 @@
-import './src/utils/wdr'
+import './src/utils/wdr';
 
 import { AppRegistry } from 'react-native';
 import App from './App';
@@ -10,8 +10,8 @@ console.disableYellowBox = true;
 
 // ApiProvider로 App을 감싸서 제공
 const AppWithProvider = () => (
-  
-  
+
+
   <ApiProvider>
     <App />
   </ApiProvider>

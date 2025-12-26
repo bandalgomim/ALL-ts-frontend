@@ -91,7 +91,7 @@ export async function initializeNotifications() {
     console.log('딥링크 실행:', deepLink);
     Linking.openURL(deepLink);
   });
-  
+
   getInitialNotification(getMessaging(getApp())).then(remoteMessage => {
     if (remoteMessage) {
       const { screen, matchId } = remoteMessage.data || {};

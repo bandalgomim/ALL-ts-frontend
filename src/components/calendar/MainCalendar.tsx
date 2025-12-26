@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, PanResponder, Animated } from 'react-native';
 import MainHeader from './headers/MainHeader';
 import Contents from './contents/contents';
@@ -8,7 +8,7 @@ import { width, height } from '@/global';
 import { getMainResDto, leagueDto, matchDto, teamDto } from '@model/main.dto';
 import MatchList from '@components/matchBar/matchList';
 import TeamAndLeagueListBar from '@components/main/teamAndLeagueListBar';
-import { localData, localDataMmkv } from '@IAM/localData';
+import { localDataMmkv } from '@IAM/localData';
 
 interface MainCalendarProps {
   data: getMainResDto;
@@ -47,7 +47,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
       }
     });
 
-    return { week: weekResult, month: monthResult };;
+    return { week: weekResult, month: monthResult };
   }, [weekDates, monthDates, data.matchList]);
 
   const panResponder = useMemo(
@@ -82,7 +82,7 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
   const calendarAnimatedStyle = {
     height: animatedHeight.interpolate({
       inputRange: [0, 1],
-      outputRange: mode === 'm' ? [height * 0.02, height*0.18] : [height * 0.04, 0], // 접힘/펼침 높이(px) 원하는 값으로 조정
+      outputRange: mode === 'm' ? [height * 0.02, height * 0.18] : [height * 0.04, 0], // 접힘/펼침 높이(px) 원하는 값으로 조정
       extrapolate: 'clamp',
     }),
     opacity: animatedHeight.interpolate({

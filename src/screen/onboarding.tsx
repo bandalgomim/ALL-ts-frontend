@@ -86,20 +86,26 @@ export default function OnboardingScreen() {
   const [current, setCurrent] = useState(0);
   const isFocused = useIsFocused();
 
-  const renderItem = ({ item, index }: any) => (
-    <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-      <View>
-        <TimedImageViewer
-          images={item.source}
-          isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
-        />
+  const renderItem = ({ item, index }: any) => {
+    const slideStyle = item.backgroundColor === 'white' ? styles.slideWhite : styles.slideBlue;
+    const textViewStyle = item.backgroundColor === 'white' ? styles.textViewWhite : styles.textViewBlue;
+    const textStyle = item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue;
+
+    return (
+      <View style={[styles.slide, slideStyle]}>
+        <View>
+          <TimedImageViewer
+            images={item.source}
+            isActive={isFocused && current === index}
+          />
+        </View>
+        <View style={[styles.textView, styles.textViewOpacity, textViewStyle]}>
+          <Text style={[styles.title, textStyle]}>{item.title}</Text>
+          <Text style={[styles.text, textStyle]}>{item.text}</Text>
+        </View>
       </View>
-      <View style={[styles.textView, {backgroundColor: item.backgroundColor, opacity: 0.9}]}>
-        <Text style={[styles.title, item.backgroundColor === "white" ? styles.textForWhite : styles.textForBlue]}>{item.title}</Text>
-        <Text style={[styles.text, item.backgroundColor === "white" ? styles.textForWhite : styles.textForBlue]}>{item.text}</Text>
-      </View>
-    </View>
-  );
+    );
+  };
     // ✅ Next 버튼
     const renderNextButton = () => (
       <View style={styles.buttonContainer}>
@@ -135,18 +141,23 @@ export default function OnboardingScreen() {
   );
 }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center'},
-      textView: { marginTop: -height*0.235, width: width, height: height*0.08, justifyContent: 'center' },
+      slide: { flex: 1, alignItems: 'center' },
+      slideWhite: { backgroundColor: 'white' },
+      slideBlue: { backgroundColor: '#30397A' },
+      textView: { marginTop: -height * 0.235, width: width, height: height * 0.08, justifyContent: 'center' },
+      textViewOpacity: { opacity: 0.9 },
+      textViewWhite: { backgroundColor: 'white' },
+      textViewBlue: { backgroundColor: '#30397A' },
       title: { fontSize: 25, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 19, textAlign: 'center', lineHeight: 22 },
-      dot: { backgroundColor: '#cbd5e1', borderWidth:0},
-      activeDot: { backgroundColor: '#EA5579', width: 18, borderWidth:0 },
+      dot: { backgroundColor: '#cbd5e1', borderWidth: 0 },
+      activeDot: { backgroundColor: '#EA5579', width: 18, borderWidth: 0 },
       buttonContainer: {
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 8,
         backgroundColor: '#EA5579',
-        width: width*0.15,
+        width: width * 0.15,
         justifyContent: 'center',
         alignItems: 'center',
       },
@@ -177,9 +188,13 @@ export default function OnboardingScreen() {
       textForBlue: {
         color: 'white',
         textShadowColor: '#242b5c',
+        textShadowOffset: { width: 1, height: 3 },
+        textShadowRadius: 3,
       },
       textForWhite: {
         color: '#30397A',
         textShadowColor: '#bdb4b4',
+        textShadowOffset: { width: 1, height: 3 },
+        textShadowRadius: 3,
       },
     });

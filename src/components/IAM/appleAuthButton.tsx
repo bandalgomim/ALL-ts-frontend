@@ -1,28 +1,28 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useContext, useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from "react-native";
-import { MainPageParamList } from "@model/navigation.dto";
-import { hookAuth } from "@hooks/IAM.hook";
-import { useLeagueState, useLeagueActions } from "@context/league.context";
-import { useMainActions } from "@context/main.context";
-import { useMatchActions } from "@context/match.context";
-import { useTeamState, useTeamActions } from "@context/team.context";
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { MainPageParamList } from '@model/navigation.dto';
+import { hookAuth } from '@hooks/IAM.hook';
+import { useLeagueActions } from '@context/league.context';
+import { useMainActions } from '@context/main.context';
+import { useMatchActions } from '@context/match.context';
+import { useTeamActions } from '@context/team.context';
 import { height, width } from '@/global';
 
 interface AppleAuthButtonProps {
-  type: "in" | "up";       // "in" → Sign in / "up" → Sign up
+  type: 'in' | 'up';       // "in" → Sign in / "up" → Sign up
 }
 
 const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
   // type 에 따라 버튼 텍스트 결정
-  const buttonText = type === "up" ? "Sign up with Apple" : "Sign in with Apple";
-  const { setMainRes } = useMainActions()
+  const buttonText = type === 'up' ? 'Sign up with Apple' : 'Sign in with Apple';
+  const { setMainRes } = useMainActions();
   const {setTeamRes} = useTeamActions();
   const { setLeagueRes } = useLeagueActions();
   const { setMatchRes } = useMatchActions();
-  const [res, setRes] = useState<boolean | string>("초기값");
+  const [res, setRes] = useState<boolean | string>('초기값');
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = () => {
     navigationMain.replace('MainScreen', undefined);
@@ -44,10 +44,10 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
             {
               text: '예',
               style: 'destructive',
-              onPress: () => {handleLogin('up');}
+              onPress: () => {handleLogin('up');},
             },
           ],
-          { cancelable: true } 
+          { cancelable: true }
         );
       }
       else {Alert.alert(
@@ -64,15 +64,15 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
           {
             text: '예',
             style: 'destructive',
-            onPress: () => {handleLogin('in');}
+            onPress: () => {handleLogin('in');},
           },
         ],
-        { cancelable: true } 
-      
+        { cancelable: true }
+
       );}
     }
   }, [res]);
-  
+
 
 
   const handleLogin = async (type: string) => {
@@ -80,14 +80,14 @@ const AppleAuthButton: React.FC<AppleAuthButtonProps> = ({ type }) => {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     });
-    setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'apple', setMainRes, setTeamRes, setLeagueRes, setMatchRes))
+    setRes(await hookAuth({idToken: idToken}, type === 'in' ? 'login' : 'signUp', 'apple', setMainRes, setTeamRes, setLeagueRes, setMatchRes));
   };
   return (
     <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=>handleLogin(type)}>
       <View style={styles.contentWrapper}>
         {/* PNG 로고 */}
         <Image
-          source={require("@assets/auth/Apple.png")}
+          source={require('@assets/auth/Apple.png')}
           style={styles.icon}
           resizeMode="contain"
         />

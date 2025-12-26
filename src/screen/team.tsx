@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import TeamCalendar from '@components/calendar/TeamCalendar';
-import TeamHeader from '@components/teamHeader';
-import { hookTeam } from '@hooks/team.hook';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import LoadingScreen  from '@components/loadingPage';
-import { getTeamReqQueryDto, getTeamResDto } from '@model/team.dto';
-import MainTabBar from '@components/main/mainTabBar';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { IAMPageParamList } from '@model/navigation.dto';
-import { HeadNotch } from '@components/notch';
-import { useTeamState, useTeamActions } from '@context/team.context';
 import { height, width } from '@/global';
+import TeamCalendar from '@components/calendar/TeamCalendar';
+import LoadingScreen from '@components/loadingPage';
 import Logo from '@components/logo';
+import MainTabBar from '@components/main/mainTabBar';
+import { HeadNotch } from '@components/notch';
+import TeamHeader from '@components/teamHeader';
+import { useTeamActions, useTeamState } from '@context/team.context';
 import { hookRefetch } from '@hooks/refetch.hook';
-import { hookIsLogin } from '@hooks/IAM.hook';
+import { hookTeam } from '@hooks/team.hook';
 import { PostState } from '@model/config';
+import { getTeamReqQueryDto, getTeamResDto } from '@model/team.dto';
+import { useRoute } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const TeamScreen = () => {
   const {setTeamRes} = useTeamActions();
@@ -53,7 +50,6 @@ const TeamScreen = () => {
             <Text style={styles.sloganText}>All  Sports  Scheduler</Text>
           </View>
         </View>
-        {console.log('Rendering TeamScreen')}
     </View>
   );
 };

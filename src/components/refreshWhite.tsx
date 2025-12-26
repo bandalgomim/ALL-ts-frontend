@@ -9,7 +9,7 @@ const RefreshButtonWhite: React.FC<refetchDto> = ({ refetch }) => {
   return (
     <View>
       <TouchableOpacity style={styles.refreshButton} onPress={() => refetch()}>
-        <Icon name={'autorenew'} size={height*0.035} color={'white'} />
+        <Icon name={'autorenew'} size={height * 0.035} color={'white'} />
       </TouchableOpacity>
     </View>
   );

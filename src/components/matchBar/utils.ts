@@ -1,7 +1,7 @@
 import { matchDto } from '@model/main.dto';
 
 const formatMatchDate = (matchDate: string): string => {
-  return matchDate.replace(' ', 'T')
+  return matchDate.replace(' ', 'T');
 };
 
 export const binarySearchClosestMatch = (matchList: matchDto[]) => {

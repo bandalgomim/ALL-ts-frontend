@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MainPageParamList } from '@model/navigation.dto';
 import { width, height } from '@/global';
@@ -26,8 +26,8 @@ const MainTabBar: React.FC<MainTabBarProps> = ({ color }) => {
             {
               backgroundColor: pressed
                 ? (color === 'blue' ? '#1a2150' : '#e0e0e0') // 터치 시 색상
-                : (color === 'blue' ? '#30397A' : 'white')
-            }
+                : (color === 'blue' ? '#30397A' : 'white'),
+            },
           ]}
         >
           <Icon name={'home'} size={30} color={color === 'blue' ? 'white' : '#30397A'} />

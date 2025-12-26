@@ -20,7 +20,7 @@ const StartScreen = () => {
 useEffect(() => {
     const runStartTask = async () => {
     try {
-        const verCheck = await hookVersionCheck()
+        const verCheck = await hookVersionCheck();
         if (!localDataMmkv.get('mode')) {
           localDataMmkv.set('mode', 'w');
         }

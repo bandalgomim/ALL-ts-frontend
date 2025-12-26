@@ -25,7 +25,7 @@ export function hookRefetch(
 
   const run = useCallback(() => {
     hookIsLogin(navigateIAM);
-    if (inFlight.current || !isMounted.current) return;
+    if (inFlight.current || !isMounted.current) {return;}
     inFlight.current = true;
     Promise.resolve(refetch()).finally(() => {
       inFlight.current = false;
@@ -39,8 +39,8 @@ export function hookRefetch(
       return () => {
         hookPageState({ type: 'LOADING' });// debounce
            // ✅ blur 시점
-        if (!isMounted.current) return;
-        
+        if (!isMounted.current) {return;}
+
       };
     }, [run, hookPageState])
   );
@@ -49,7 +49,7 @@ export function hookRefetch(
   useEffect(() => {
     const sub = navigation.addListener('beforeRemove', () => {
       hookPageState({ type: 'LOADING' });
-      if (!isMounted.current) return;
+      if (!isMounted.current) {return;}
            // ✅ 네비게이션 이탈 직전
     });
     return sub;
@@ -60,7 +60,7 @@ export function hookRefetch(
     const sub = AppState.addEventListener('change', next => {
       const wasBg = /inactive|background/.test(appState.current);
       appState.current = next;
-      if (wasBg && next === 'active' && isFocused) run();
+      if (wasBg && next === 'active' && isFocused) {run();}
     });
     return () => sub.remove();
   }, [isFocused, run]);
@@ -71,7 +71,7 @@ export function hookRefetch(
       hookPageState({ type: 'LOADING' });
       isMounted.current = false;
       // 언마운트 도중 setState 경고 방지: isMounted 가드로 이미 보호
-      
+
     };
   }, [hookPageState]);
 }

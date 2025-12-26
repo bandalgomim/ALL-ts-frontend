@@ -1,5 +1,5 @@
-import React, { useCallback, useContext } from 'react';
-import { StyleSheet, Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { height, width } from '@/global';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { useLogoModalActions } from '@context/modal/logoModal.context';
@@ -13,13 +13,13 @@ interface TeamOrLogoPros {
 const LogoPicker: React.FC<TeamOrLogoPros> = ({ type, id, uri }) => {
   const { open} = useLogoModalActions();
   const onPressDate = useCallback((type: TeamOrLogoPros['type'], id: number, uri: string ) => {
-    open({'type': type, 'id': id, 'uri': uri})
+    open({'type': type, 'id': id, 'uri': uri});
   }, [id, uri, type]);
 
   return (
     <View>
       <TouchableOpacity style={styles.optionsButton} onPress={() => onPressDate(type, id, uri)}>
-        <Icon name={'options-vertical'} size={height*0.03} color={'#30397A'} />
+        <Icon name={'options-vertical'} size={height * 0.03} color={'#30397A'} />
       </TouchableOpacity>
     </View>
   );

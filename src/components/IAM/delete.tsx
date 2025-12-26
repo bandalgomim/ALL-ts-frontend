@@ -1,21 +1,21 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, ImageBackground, Alert } from 'react-native';
 import { width, height } from '@/global';
 import { hookDeleteAccount } from '@hooks/IAM.hook';
-import { useLeagueState, useLeagueActions } from '@context/league.context';
+import { useLeagueActions } from '@context/league.context';
 import { useMainActions } from '@context/main.context';
 import { useMatchActions } from '@context/match.context';
-import { useTeamState, useTeamActions } from '@context/team.context';
+import { useTeamActions } from '@context/team.context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IAMPageParamList } from '@model/navigation.dto';
 
 const DeleteButton = () => {
-  const { setMainRes } = useMainActions()
+  const { setMainRes } = useMainActions();
   const {setTeamRes} = useTeamActions();
   const { setLeagueRes } = useLeagueActions();
   const { setMatchRes } = useMatchActions();
-  const [res, setRes] = useState<boolean | string>("초기값");
+  const [res, setRes] = useState<boolean | string>('초기값');
   const navigationIAM = useNavigation<StackNavigationProp<IAMPageParamList>>();
   const navigateIAM = useCallback(() => {
     navigationIAM.replace('IAMScreen', {state: true});
@@ -27,8 +27,8 @@ const DeleteButton = () => {
       Alert.alert('계정 삭제 완료', '이용해주셔서 감사합니다.', [
         { text: '확인', onPress: () => {
           navigateIAM();
-        } }
-      ])
+        } },
+      ]);
     } else if (res === false) {
       Alert.alert('계정 삭제 실패', '다시 시도해주세요.');
     }
@@ -50,7 +50,7 @@ const DeleteButton = () => {
           text: '예',
           style: 'destructive',   // iOS: 빨간 버튼
           onPress: async () => {
-            setRes(await hookDeleteAccount( setMainRes, setTeamRes, setLeagueRes, setMatchRes))
+            setRes(await hookDeleteAccount( setMainRes, setTeamRes, setLeagueRes, setMatchRes));
           },
         },
       ],

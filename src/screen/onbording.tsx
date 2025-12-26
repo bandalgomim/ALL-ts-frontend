@@ -95,8 +95,8 @@ export default function OnboardingScreen() {
         />
       </View>
       <View style={[styles.textView, {backgroundColor: item.backgroundColor, opacity: 0.9}]}>
-        <Text style={[styles.title, item.backgroundColor === "white" ? styles.textForWhite : styles.textForBlue]}>{item.title}</Text>
-        <Text style={[styles.text, item.backgroundColor === "white" ? styles.textForWhite : styles.textForBlue]}>{item.text}</Text>
+        <Text style={[styles.title, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.title}</Text>
+        <Text style={[styles.text, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.text}</Text>
       </View>
     </View>
   );
@@ -136,7 +136,7 @@ export default function OnboardingScreen() {
 }
     const styles = StyleSheet.create({
       slide: { flex: 1, alignItems: 'center'},
-      textView: { marginTop: -height*0.235, width: width, height: height*0.08, justifyContent: 'center' },
+      textView: { marginTop: -height * 0.235, width: width, height: height * 0.08, justifyContent: 'center' },
       title: { fontSize: 25, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 19, textAlign: 'center', lineHeight: 22 },
       dot: { backgroundColor: '#cbd5e1', borderWidth:0},
@@ -146,7 +146,7 @@ export default function OnboardingScreen() {
         paddingVertical: 8,
         borderRadius: 8,
         backgroundColor: '#EA5579',
-        width: width*0.15,
+        width: width * 0.15,
         justifyContent: 'center',
         alignItems: 'center',
       },
@@ -158,7 +158,7 @@ export default function OnboardingScreen() {
         textShadowColor: '#af405b', // 그림자 색상
         textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
         textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
+        width: width * 0.15,
         textAlign: 'center',
       },
       nextText: {
@@ -168,7 +168,7 @@ export default function OnboardingScreen() {
         textShadowColor: '#af405b', // 그림자 색상
         textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
         textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
+        width: width * 0.15,
         textAlign: 'center',
       },
       doneText: {
@@ -178,7 +178,7 @@ export default function OnboardingScreen() {
         textShadowColor: '#af405b', // 그림자 색상
         textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
         textShadowRadius: 3, // 그림자 반경
-        width: width*0.15,
+        width: width * 0.15,
         textAlign: 'center',
       },
       textForBlue: {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, Image, PanResponder, Animated } from 'react-native';
 import Contents from './contents/contents';
 import Mode from './mode/mode';
@@ -8,7 +8,7 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { matchDto } from '@model/main.dto';
 import MatchList from '@components/matchBar/matchList';
 import { getTeamResDto } from '@model/team.dto';
-import { localData, localDataMmkv } from '@IAM/localData';
+import { localDataMmkv } from '@IAM/localData';
 
 interface TeamCalendarProps {
   data: getTeamResDto;
@@ -100,7 +100,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
     <View
       style={[
         styles.CalendarContainer,
-        mode === 'm' ? styles.calendarMonth : styles.calendarWeek
+        mode === 'm' ? styles.calendarMonth : styles.calendarWeek,
       ]}
       {...panResponder.panHandlers}
     >
@@ -111,7 +111,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
             styles.teamBackground,
             mode === 'm'
               ? styles.teamBackgroundMonth
-              : styles.hidden
+              : styles.hidden,
           ]}
           source={require('@assets/calendar/teamBackground-test.png')}
         />
@@ -121,7 +121,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
             styles.teamBackground,
             mode === 'w'
               ? styles.teamBackgroundWeek
-              : styles.hidden
+              : styles.hidden,
           ]}
           source={require('@assets/calendar/teamBackground_s-test.png')}
         />
@@ -164,7 +164,7 @@ const TeamCalendar: React.FC<TeamCalendarProps> = ({ data }) => {
 
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   CalendarContainer: {
@@ -239,6 +239,6 @@ const styles = StyleSheet.create({
     height: height * 0.62,
 
   },
-  calendarView: {}
+  calendarView: {},
 });
 export default React.memo(TeamCalendar);

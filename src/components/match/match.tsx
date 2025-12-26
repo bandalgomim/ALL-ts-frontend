@@ -144,7 +144,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
             </TouchableOpacity>
             <View style={styles.dateContainer}>
               <Text style={styles.fontDate}>
-                {match.matchDate ? match.matchDate.split("T")[0] : '0000'}
+                {match.matchDate ? match.matchDate.split('T')[0] : '0000'}
               </Text>
               <Text style={styles.fontTime}>
                 {match.matchDate ? match.matchTime : '0000'}
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     fontSize: height * 0.05,
     width: width * 0.5,
     textAlign: 'center',
-    
+
   },
   fontBlueSmall: {
     fontFamily: 'sb-it-ver1',

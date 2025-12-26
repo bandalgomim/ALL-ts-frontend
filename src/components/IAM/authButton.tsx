@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, ImageBackground } from 'react-nativ
 import { width, height } from '@/global';
 
 interface ContentsProps {
-  type: "in" | "up",
+  type: 'in' | 'up',
   snsView: boolean,
   setType: (type: 'in' | 'up') => void,
   setSnsView: (view: boolean) => void,
@@ -16,7 +16,7 @@ const AuthButton: React.FC<ContentsProps> = ({ type, snsView, setType, setSnsVie
     } else if(type === 'up') {
         uri = require('@assets/match/platform/coupang.png');
     }
-    
+
   const onPress = () => {
 // 이미 공유드린 패턴 요약
 setType(type);
@@ -28,7 +28,7 @@ if (!snsView) {
   setTimeout(() => setSnsView(true), 300);
 }
 
-    
+
   };
 
   return (
@@ -39,7 +39,7 @@ if (!snsView) {
         style={[styles.box]}
       >
         <Text style={[styles.boxText]}>
-            {type === "in" ? '로그인' : "회원가입"}
+            {type === 'in' ? '로그인' : '회원가입'}
         </Text>
       </ImageBackground>
     </TouchableOpacity>

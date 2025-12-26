@@ -1,5 +1,5 @@
 // Contents.tsx
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { DAYS_OF_WEEK } from '@components/calendar/utills';
 import { matchListDto } from '@model/main.dto';
@@ -19,7 +19,7 @@ interface ContentsProps {
 }
 
 const Contents: React.FC<ContentsProps> = ({
-  monthDates, weekDates, month, color, mode, matchList, goToPrevious, goToNext
+  monthDates, weekDates, month, color, mode, matchList, goToPrevious, goToNext,
 }) => {
 
   ('Contents.tsx');
@@ -47,7 +47,7 @@ const Contents: React.FC<ContentsProps> = ({
     if (day instanceof Date) {
       const matchInfo = groupedMatches ? groupedMatches[date] : null;
       if (matchInfo) {
-        open({'contents':matchInfo})
+        open({'contents':matchInfo});
       }
     }
   }, [groupedMatches]);
@@ -56,7 +56,7 @@ const Contents: React.FC<ContentsProps> = ({
     <View
       style={[
         styles.calendarContainer,
-        mode === 'm' ? styles.monthModeContainer : styles.weekModeContainer
+        mode === 'm' ? styles.monthModeContainer : styles.weekModeContainer,
       ]}
     >
       <View style={styles.weekRow}>

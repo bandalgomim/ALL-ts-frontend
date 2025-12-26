@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
 import { width, height } from '@/global';
-import { ModalContext, useSearchActions } from '@context/modal/search.context';
+import { useSearchActions } from '@context/modal/search.context';
 
 interface SearchBarPros {
     type: string | null;

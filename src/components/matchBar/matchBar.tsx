@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '@model/main.dto';
 import MatchScore from './matchScore';
@@ -9,20 +9,19 @@ import { MatchPageParamList } from '@model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '@/global';
 import { useModalActions } from '@context/modal/modal.context';
-import { ModalContext as ModalNextuseMatchActions, useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
+import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
 
 interface MatchBarPros {
-  match: matchDto; // Assuming match is your interface from earlier
+  match: matchDto;
   color: string;
-  scoreState: boolean
+  scoreState: boolean;
 }
 
 const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
-  const { close: closeModal } = useModalActions(); 
+  const { close: closeModal } = useModalActions();
   const { close: closeNextMatchModal } = useModalNextMatchActions();
   const [score, setScore] = useState(scoreState);
   useEffect(() => {
-    // 알림 초기화
     setScore(scoreState);
   }, [scoreState]);
 
@@ -33,15 +32,14 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
       ? styles.textWhite
       : styles.textRed;
 
-
   const onPressScore = () => {
     setScore(!score);
   };
   const navigationMatch = useNavigation<StackNavigationProp<MatchPageParamList>>();
 
   const navigateMatch = (matchId: string) => {
-    closeModal(); // 모달 닫기
-    closeNextMatchModal(); // 다음 경기 모달 닫기
+    closeModal();
+    closeNextMatchModal();
     navigationMatch.navigate('MatchScreen', { matchId: matchId });
   };
 
@@ -71,11 +69,9 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
                   styles.stateText,
                   styleColor,
                   styles.stateStatusText,
-                  {
-                    color: match.matchState === 'live'
-                      ? (color === 'red' ? '#30397A' : '#EA5579')
-                      : styleColor.color
-                  },
+                  match.matchState === 'live'
+                    ? (color === 'red' ? styles.stateLiveBlue : styles.stateLivePink)
+                    : undefined,
                 ]}
               >{`${match.matchState}`}</Text>
             </View>
@@ -156,6 +152,12 @@ const styles = StyleSheet.create({
     width: width * 0.21,
     fontSize: width * 0.075,
   },
+  stateLiveBlue: {
+    color: '#30397A',
+  },
+  stateLivePink: {
+    color: '#EA5579',
+  },
   homeTeamNameContainer: {
     marginRight: width * 0.01,
     width: width * 0.132,
@@ -181,7 +183,6 @@ const styles = StyleSheet.create({
   textLeft: {
     textAlign: 'left',
   },
-  // 공통 텍스트 그림자 베이스
   textShadowBase: {
     textShadowRadius: 3,
   },
@@ -213,5 +214,5 @@ const styles = StyleSheet.create({
 export default React.memo(MatchBar, (prev, next) => {
   return prev.match.matchId === next.match.matchId &&
          prev.color === next.color &&
-         prev.scoreState === next.scoreState; // 🔥 이걸 꼭 추가
+         prev.scoreState === next.scoreState;
 });

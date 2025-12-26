@@ -31,12 +31,12 @@ export function LeagueProvider({ children }) {
 // 훅
 export const useLeagueState = () => {
   const ctx = useContext(LeagueStateContext);
-  if (!ctx) throw new Error('useLeagueState must be used within LeagueProvider');
+  if (!ctx) {throw new Error('useLeagueState must be used within LeagueProvider');}
   return ctx;
 };
 
 export const useLeagueActions = () => {
   const ctx = useContext(LeagueActionsContext);
-  if (!ctx) throw new Error('useLeagueActions must be used within LeagueProvider');
+  if (!ctx) {throw new Error('useLeagueActions must be used within LeagueProvider');}
   return ctx;
 };

@@ -17,47 +17,49 @@ interface TeamHeaderProps {
 }
 
 const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
-  const { open } = useModalNextMatchActions()
+  const { open } = useModalNextMatchActions();
   const [record, setRecord] = useState(false);
 
   function detectLang(text: string, size: 'big' | 'small' | 'medium') {
-    if (!text) {return;}
+    if (!text) { return; }
     if (size === 'big') {
-        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
-    }  else if (size === 'medium') {
-        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameMedium]}>{text}</Text>);
+      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameLarge]}>{text}</Text>);
+    } else if (size === 'medium') {
+      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameMedium]}>{text}</Text>);
     } else if (size === 'small') {
-        return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
-    } else {return;}
+      return (<Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{text}</Text>);
+    } else { return; }
   }
-  function detectLangth(text: string) {
-      let textlength = 0;
-      const hasKR = (text: string) => {return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);};
-      const hasEnglish = (text: string) => {return /[a-zA-Z]/.test(text);};
 
-      for (let i = 0; i < text.length; i++) {
-        if (hasKR(text[i])) {
-          textlength += 2; // 한글은 2로 계산
-        } else if (hasEnglish(text[i])) {
-          textlength += 1; // 영어는 1로 계산
-        } else {
-          textlength += 1; // 기타 문자는 1로 계산
-        }
+  function detectLangth(inputText: string) {
+    let textlength = 0;
+    const hasKR = (char: string) => { return /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(char); };
+    const hasEnglish = (char: string) => { return /[a-zA-Z]/.test(char); };
+
+    for (let i = 0; i < inputText.length; i++) {
+      if (hasKR(inputText[i])) {
+        textlength += 2;
+      } else if (hasEnglish(inputText[i])) {
+        textlength += 1;
+      } else {
+        textlength += 1;
       }
-      return textlength;
     }
+    return textlength;
+  }
 
   const onPressRemain = useCallback(() => {
-      const matchInfo = findNext(data.matchList)
-      if (matchInfo) {
-        open(matchInfo)
-      ;}
-  }, [data]);
+    if (!data?.matchList) { return; }
+    const matchInfo = findNext(data.matchList);
+    if (matchInfo) {
+      open(matchInfo);
+    }
+  }, [data, open]);
 
   const getRankSuffix = (rank: string): string => {
-    if (rank === '1') return 'st';
-    if (rank === '2') return 'nd';
-    if (rank === '3') return 'rd';
+    if (rank === '1') { return 'st'; }
+    if (rank === '2') { return 'nd'; }
+    if (rank === '3') { return 'rd'; }
     return 'th';
   };
 
@@ -67,17 +69,16 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
       <View style={[styles.teamInfoContainer, styles.headerTeamInfoContainer]}>
         <View style={[styles.teamLogo, styles.headerTeamLogo]}>
           <TeamOrLeagueLogo
-            logo={data?.team?.teamLogo}
+            logo={data?.team?.teamLogo ?? null}
             type={'big'}
-            initial={data?.team?.teamInit}
+            initial={data?.team?.teamInit ?? ''}
           />
-
         </View>
         <View style={styles.logoPickerContainer}>
           <LogoPicker
             type={'team'}
-            id={data?.team?.teamId}
-            uri={data?.team?.teamLogo}
+            id={data?.team?.teamId ?? 0}
+            uri={data?.team?.teamLogo ?? ''}
           />
         </View>
         <View style={[styles.teamInfo, styles.headerTeamInfo]}>
@@ -93,7 +94,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                     </>
                   );
                 } else {
-                  if(textLength < 14){
+                  if (textLength < 14) {
                     return (
                       <>
                         <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
@@ -102,10 +103,11 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                     );
                   } else {
                     return (
-                    <>
-                      <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
-                      {detectLang(teamNameSplit[0], 'small')}
-                    </>)
+                      <>
+                        <Text style={[styles.teamInfoName, styles.headerTeamInfoNameSmall]}>{null}</Text>
+                        {detectLang(teamNameSplit[0], 'small')}
+                      </>
+                    );
                   }
                 }
               } else if (teamNameSplit.length === 2) {
@@ -116,8 +118,8 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                       {detectLang(teamNameSplit[1], 'big')}
                     </View>
                   );
-                } else{
-                  if(textLength < 14) {
+                } else {
+                  if (textLength < 14) {
                     return (
                       <View style={styles.flexRow}>
                         {detectLang(teamNameSplit[0], 'medium')}
@@ -130,7 +132,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
                         {detectLang(teamNameSplit[0], 'small')}
                         {detectLang(teamNameSplit[1], 'small')}
                       </View>
-                    )
+                    );
                   }
                 }
               } else {
@@ -174,15 +176,15 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
               }
             })() : null}
             <Text style={[styles.teamInfoEtc, styles.headerTeamInfoEtc]}>
-              {`${data?.team?.countryName} ${data?.team?.sportName}`.length > 13 
-              ? `${data?.team?.sportName}/${data?.team?.leagueName}` 
-              : `${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
+              {`${data?.team?.countryName} ${data?.team?.sportName}`.length > 13
+                ? `${data?.team?.sportName}/${data?.team?.leagueName}`
+                : `${data?.team?.countryName} ${data?.team?.sportName}/${data?.team?.leagueName}`}
             </Text>
           </View>
           <View>
             <IsSelected
-              isSelected={data?.team?.isTeamSelected}
-              teamId={data?.team?.teamId}
+              isSelected={data?.team?.isTeamSelected ?? null}
+              teamId={data?.team?.teamId ?? null}
               leagueId={null}
               matchId={null}
             />
@@ -196,27 +198,31 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
         </TouchableOpacity>
         {record && (
           <View style={styles.record}>
-            {data?.team.rank.length == 1 ? <View style={styles.recordRankBox}>
-              <Text style={[styles.recordText, styles.recordRank]}>{data?.team?.rank}</Text>
-              <Text style={[styles.recordText, styles.recordRankSuffix]}>{getRankSuffix(data?.team?.rank)}</Text>
-            </View>: <View style={styles.recordRankBox}>
-              <Text style={[styles.recordText, styles.recordRank, {fontSize: width*0.19, width: width*0.16, marginTop: height*0.01}]}>{data?.team?.rank}</Text>
-              <Text style={[styles.recordText, styles.recordRankSuffix, {width: width*0.035}]}>{null}</Text>
-            </View>}
+            {(data?.team as any)?.rank?.length === 1 ? (
+              <View style={styles.recordRankBox}>
+                <Text style={[styles.recordText, styles.recordRank]}>{(data?.team as any)?.rank}</Text>
+                <Text style={[styles.recordText, styles.recordRankSuffix]}>{getRankSuffix((data?.team as any)?.rank)}</Text>
+              </View>
+            ) : (
+              <View style={styles.recordRankBox}>
+                <Text style={[styles.recordText, styles.recordRankDouble]}>{(data?.team as any)?.rank}</Text>
+                <Text style={[styles.recordText, styles.recordRankSuffixNarrow]}>{null}</Text>
+              </View>
+            )}
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum]}>{data?.team?.win}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum]}>{(data?.team as any)?.win}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>WIN</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>{data?.team?.draw}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordGray]}>{(data?.team as any)?.draw}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>DRAW</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, {opacity: 0.3}]}>{data?.team?.lose}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordFaded]}>{(data?.team as any)?.lose}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel]}>LOSE</Text>
             </View>
             <View style={styles.recordItemBox}>
-              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>{data?.team?.point}</Text>
+              <Text style={[styles.recordText, styles.recordItemNum, styles.recordPink]}>{(data?.team as any)?.point}</Text>
               <Text style={[styles.recordText, styles.recordItemLabel, styles.recordPink]}>POINT</Text>
             </View>
             <TouchableOpacity onPress={onPressRemain} style={styles.recordImageContainer}>
@@ -246,7 +252,6 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     marginBottom: -height * 0.01,
   },
-  searchBarContainer: {}, 
   teamInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -286,7 +291,6 @@ const styles = StyleSheet.create({
     marginBottom: height * -0.02,
     zIndex: 3,
   },
-  // 공통 텍스트 스타일
   baseText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
@@ -299,18 +303,18 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.015,
   },
   headerTeamInfoNameLarge: {
-    height: height*0.085,
+    height: height * 0.085,
     fontSize: width * 0.15,
     marginBottom: -height * 0.01,
   },
   headerTeamInfoNameMedium: {
-    height: height*0.085,
+    height: height * 0.085,
     fontSize: width * 0.11,
-    paddingTop: height*0.02,
+    paddingTop: height * 0.02,
     marginBottom: -height * 0.01,
   },
   headerTeamInfoNameSmall: {
-    height: height*0.05,
+    height: height * 0.05,
     fontSize: width * 0.083,
     marginBottom: -height * 0.01,
   },
@@ -334,12 +338,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     transform: [{ rotate: '-7deg' }],
     marginTop: -height * 0.03,
-    
   },
   recordText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
-
   },
   recordRankBox: {
     flexDirection: 'row',
@@ -352,9 +354,20 @@ const styles = StyleSheet.create({
     width: width * 0.085,
     textAlign: 'center',
   },
+  recordRankDouble: {
+    fontSize: width * 0.19,
+    width: width * 0.16,
+    marginTop: height * 0.01,
+    textAlign: 'center',
+  },
   recordRankSuffix: {
     fontSize: width * 0.13,
     width: width * 0.11,
+    marginBottom: height * 0.011,
+  },
+  recordRankSuffixNarrow: {
+    fontSize: width * 0.13,
+    width: width * 0.035,
     marginBottom: height * 0.011,
   },
   recordItemBox: {
@@ -377,6 +390,9 @@ const styles = StyleSheet.create({
   },
   recordPink: {
     color: '#EA5579',
+  },
+  recordFaded: {
+    opacity: 0.3,
   },
   recordImageContainer: {
     width: width * 0.17,

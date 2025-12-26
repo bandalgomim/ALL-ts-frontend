@@ -5,7 +5,6 @@ import DeleteButton from '@components/IAM/delete';
 import LogoutButton from '@components/IAM/logout';
 
 // ✅ moti로 교체
-import { MotiView, AnimatePresence } from 'moti';
 
 const UserScreen = () => {
   const [snsView, setSnsView] = useState<boolean>(false);
@@ -35,8 +34,7 @@ const UserScreen = () => {
             <DeleteButton/>
           </View>
         </View>
-        <View style={styles.snsWrapper}>
-        </View>
+        <View style={styles.snsWrapper} />
       </View>
     </View>
   );

@@ -1,14 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet, ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { TeamPageParamList } from '@model/navigation.dto';
 import { getLeagueResDto, teamDto } from '@model/league.dto';
 import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '@/global';
-import { useLeagueState, useLeagueActions } from '@context/league.context';
 import DraggableFlatList from 'react-native-draggable-flatlist';
-import { PostState } from '@model/config';
 
 interface LeageTeamListBarProps {
   data: getLeagueResDto;
@@ -20,7 +18,7 @@ const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
   };
 
   const renderItem = useCallback(( {item, index}: { item: teamDto, index: number } ) => {
-    if (String(item.rank) === '0') return null;
+    if (String(item.rank) === '0') {return null;}
     const isLast = index === data.teamList.length - 1;
     return (
       <View key={index} style={[styles.box, styles.boxSize, isLast ? styles.boxMarginLast : styles.boxMargin]}>
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3, // 그림자 반경
     fontSize:width * 0.05,
     marginTop: -height * 0.002,
-  }
+  },
 });
 
 export default React.memo(LeageTeamListBar);

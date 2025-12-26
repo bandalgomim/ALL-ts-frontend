@@ -1,5 +1,5 @@
 import { StateDto } from './config';
-import { matchDto, matchListDto } from './main.dto';
+import { matchListDto } from './main.dto';
 
 export interface teamDto {
     teamId: number,

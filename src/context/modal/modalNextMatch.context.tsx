@@ -53,12 +53,12 @@ export function ModalNextMatchProvider({ children }: { children: ReactNode }) {
 
 export const useModalNextMatchState = (): ModalNextMatchState => {
   const ctx = useContext(ModalNextMatchStateContext);
-  if (!ctx) throw new Error('useModalNextMatchState must be used within ModalNextMatchProvider');
+  if (!ctx) {throw new Error('useModalNextMatchState must be used within ModalNextMatchProvider');}
   return ctx;
 };
 
 export const useModalNextMatchActions = (): ModalNextMatchActions => {
   const ctx = useContext(ModalNextMatchActionsContext);
-  if (!ctx) throw new Error('useModalNextMatchActions must be used within ModalNextMatchProvider');
+  if (!ctx) {throw new Error('useModalNextMatchActions must be used within ModalNextMatchProvider');}
   return ctx;
 };

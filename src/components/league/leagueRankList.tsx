@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { height, width } from '@/global';
 import { teamDto } from '@model/league.dto';
 import FastImage from 'react-native-fast-image';
-import { ModalContext } from '@context/modal/modal.context';
 import { matchListDto } from '@model/main.dto';
 import { findNextInLeague } from '@components/calendar/utills';
 import { useNavigation } from '@react-navigation/native';
@@ -12,43 +11,40 @@ import { TeamPageParamList } from '@model/navigation.dto';
 import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
 
 interface LeagueRankListProps {
-    teamList: teamDto[]
-    matchList: matchListDto
+    teamList: teamDto[];
+    matchList: matchListDto;
 }
 
 const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) => {
     const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const navigateTeam = (teamId: number) => {
+    const navigateTeam = useCallback((teamId: number) => {
       navigation.navigate('TeamScreen', { teamId: teamId });
-    };
-    console.log(teamList);
+    }, [navigation]);
 
   const sortedItems = useMemo(() => {
     return [...teamList].sort((a, b) => {
-      // 먼저 section 기준 정렬
       if (a.sectionIdx !== b.sectionIdx) {
         return b.sectionIdx - a.sectionIdx;
-      } else if (a.section && b.section){
+      } else if (a.section && b.section) {
         const sectionCompare = a.section.localeCompare(b.section);
-        if (sectionCompare !== 0) {return sectionCompare;}
-
+        if (sectionCompare !== 0) { return sectionCompare; }
       }
-      return a.rank - b.rank;
+      return Number(a.rank) - Number(b.rank);
     });
   }, [teamList]);
 
-  const { open } = useModalNextMatchActions()
+  const { open } = useModalNextMatchActions();
   const onPressRemain = useCallback((teamId: number) => {
       const matchInfo = findNextInLeague(matchList, teamId);
       if (matchInfo) {
-        open(matchInfo)
-      ;}
-  }, [matchList]);
+        open(matchInfo);
+      }
+  }, [matchList, open]);
+
   const getRankSuffix = useCallback((rank: string): string => {
-    if (rank === '1') {return 'st';}
-    if (rank === '2') {return 'nd';}
-    if (rank === '3') {return 'rd';}
+    if (rank === '1') { return 'st'; }
+    if (rank === '2') { return 'nd'; }
+    if (rank === '3') { return 'rd'; }
     return 'th';
   }, []);
 
@@ -56,7 +52,6 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
     ({ item, index }: { item: teamDto; index: number }) => {
       if (String(item.rank) === '0') {return null;}
 
-      // boolean 강제 + 이전 아이템과 section 비교
       const prev = index > 0 ? sortedItems[index - 1] : undefined;
       const showSection = !!item.section && (index === 0 || prev?.section !== item.section);
       const [a = '', b = ''] = (item.section ?? '').split(' ');
@@ -148,7 +143,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.005,
     marginBottom: height * 0.002,
   },
-  // 공통 폰트 베이스 스타일
   baseText: {
     fontFamily: 'sb-it-ver1',
     color: '#30397A',
@@ -206,7 +200,6 @@ const styles = StyleSheet.create({
     width: width * 0.1,
     textAlign: 'center',
   },
-  // 색상 변형 스타일
   textGray: {
     color: '#9E9E9E',
   },

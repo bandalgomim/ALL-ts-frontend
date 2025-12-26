@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Button, Image, ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Image, ImageBackground, Platform, StyleSheet, Text, View } from 'react-native';
 import {
   NativeAd,
   TestIds,
-  AdEventType,
   NativeAdView,
   NativeAsset,
   NativeAssetType,
-  NativeMediaView,
-} from "react-native-google-mobile-ads";
-import { height, width } from "@/global";
+} from 'react-native-google-mobile-ads';
+import { height, width } from '@/global';
 
 
 type AdUnitIdType = string;
 
 const AD_UNIT_ID: AdUnitIdType = Platform.select({
   ios: TestIds.NATIVE/*'ca-app-pub-4702221338725869/9501829039'*/,
-  android: TestIds.NATIVE
+  android: TestIds.NATIVE,
 }) as AdUnitIdType;
 
 interface AdmobNativeAdProps {
   color: string
-};
+}
 
 const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
   const [nativeAd, setNativeAd] = useState<NativeAd>();
@@ -68,14 +66,14 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
       <NativeAdView nativeAd={nativeAd} style={styles.nativeAdView}>
         <View style={styles.iconContainer}>
           <NativeAsset assetType={NativeAssetType.ICON}>
-            <Image source={{ uri: nativeAd.icon?.url }} width={width*0.1} height={width*0.1} borderRadius={8}/>
+            <Image source={{ uri: nativeAd.icon?.url }} width={width * 0.1} height={width * 0.1} borderRadius={8}/>
           </NativeAsset>
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.headlineRow}>
             <View style={styles.headlineContainer}>
               <NativeAsset assetType={NativeAssetType.HEADLINE}>
-                <Text 
+                <Text
                   numberOfLines={1}
                   style={[styles.teamName, hedlineColor, styles.headlineText]}
                 >{nativeAd.headline}</Text>
@@ -110,21 +108,21 @@ const AdmobNativeAdSmall: React.FC<AdmobNativeAdProps> = ({color}) => {
 
 const styles = StyleSheet.create({
   imageBackground: {
-    justifyContent: "center",
+    justifyContent: 'center',
     width: width * 0.93,
     height: height * 0.075,
-    alignItems: "center",
+    alignItems: 'center',
   },
   nativeAdView: {
     flexDirection: 'row',
     width: width * 0.9,
     height: height * 0.06,
     marginTop: -height * 0.01,
-    alignItems: "center",
+    alignItems: 'center',
   },
   iconContainer: {
     width: width * 0.135,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginLeft: width * 0.013,
     marginTop: height * 0.0007,
   },
@@ -165,20 +163,20 @@ const styles = StyleSheet.create({
     height: height * 0.032,
   },
   ctaButton: {
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
     paddingLeft: width * 0.01,
     paddingRight: width * 0.01,
     width: width * 0.17,
     height: height * 0.037,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginLeft: width * 0.026,
   },
   ctaButtonBlue: {
-    backgroundColor: "#30397A",
+    backgroundColor: '#30397A',
   },
   ctaButtonPink: {
-    backgroundColor: "#EA5579",
+    backgroundColor: '#EA5579',
   },
   ctaText: {
     textAlign: 'left',

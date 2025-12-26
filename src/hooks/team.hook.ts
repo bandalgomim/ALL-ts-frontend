@@ -12,4 +12,4 @@ export const hookTeam = async (
     Object.entries(data as unknown as getTeamReqQueryDto).forEach(([key, value]) => {if(value !== null){query.append(key, String(value));}});
     const getUrl = url + '?' + query.toString();
     await commonPostHook(method, getUrl, null, setTeamRes );
-}
+};
