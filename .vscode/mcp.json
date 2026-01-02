@@ -1,9 +1,21 @@
 {
-    "servers": {
-      "Context7": {
-        "type": "stdio",
-        "command": "npx",
-        "args": ["-y", "@upstash/context7-mcp@latest"]
-      }
+  "servers": {
+    "Context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem"],
+      "cwd": "/Users/victoriamelnikova/Documents/GitHub/ALL-ts-frontend"
+    },
+    "shell": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@mako10k/mcp-shell-server@latest"],
+      "cwd": "/Users/victoriamelnikova/Documents/GitHub/ALL-ts-frontend"
     }
   }
+}
