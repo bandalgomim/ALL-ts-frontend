@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, ImageBackground, Text, View } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, Image } from 'react-native';
 import { width } from '@/global';
 import FastImage from 'react-native-fast-image';
 
@@ -48,7 +48,7 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
         source={req}
         style={logoViewStyle}
       >
-        {logo !== null ? <FastImage
+        {logo !== null ? <Image
           resizeMode="contain"
           source={{ uri: logo as string }}
           style={logoImageStyle}
