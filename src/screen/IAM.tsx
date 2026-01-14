@@ -53,6 +53,11 @@ const IAMScreen = () => {
               </MotiView>
             )}
           </AnimatePresence>
+          <Text style={styles.legalDisclaimerText}>
+            THIS IS AN UNOFFICIAL APP AND IS NOT AFFILIATED WITH,
+ENDORSED BY, OR SPONSORED BY ANY LEAGUE, TEAM, OR ORGANIZATION.
+DATA PROVIDED BY API-SPORTS AND PANDASCORE.
+</Text>
         </View>
       </View>
     </View>
@@ -65,6 +70,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  legalDisclaimerText: {
+    color: '#EA5579',
+    fontFamily: 'sb-it-ver1',
+    fontSize: width * 0.04,
+    textAlign: 'center',
+    marginTop: height * 0.025,
+    width: width * 0.8,
   },
   LogoContainer: {
     marginTop: height * 0.1,
