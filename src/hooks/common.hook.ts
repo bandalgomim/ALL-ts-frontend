@@ -21,6 +21,7 @@ export const commonPostHook = async (
       };
     try {
         const response = await axios(req);
+        console.log(response.data.result)
         if (!response.headers.authorization) {
             let resultKeys = null;
             if (response.data.result) {resultKeys = Object.keys(response.data.result);}

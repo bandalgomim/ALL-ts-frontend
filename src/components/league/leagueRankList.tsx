@@ -21,17 +21,24 @@ const LeagueRankList: React.FC<LeagueRankListProps> = ({teamList, matchList}) =>
       navigation.navigate('TeamScreen', { teamId: teamId });
     }, [navigation]);
 
-  const sortedItems = useMemo(() => {
-    return [...teamList].sort((a, b) => {
-      if (a.sectionIdx !== b.sectionIdx) {
-        return b.sectionIdx - a.sectionIdx;
-      } else if (a.section && b.section) {
-        const sectionCompare = a.section.localeCompare(b.section);
-        if (sectionCompare !== 0) { return sectionCompare; }
-      }
-      return Number(a.rank) - Number(b.rank);
-    });
-  }, [teamList]);
+const sortedItems = useMemo(() => {
+  return [...teamList].sort((a, b) => {
+    if (a.sectionIdx !== b.sectionIdx) {
+      return b.sectionIdx - a.sectionIdx; // 기존 로직 유지(내림차순)
+    }
+
+    if (a.section && b.section) {
+      const sectionCompare = a.section.localeCompare(b.section);
+      if (sectionCompare !== 0) {return sectionCompare;}
+    }
+
+    const ar = a.rank === '-' ? Number.POSITIVE_INFINITY : Number(a.rank);
+    const br = b.rank === '-' ? Number.POSITIVE_INFINITY : Number(b.rank);
+
+    return ar - br; // 숫자 작은 rank가 위
+  });
+}, [teamList]);
+
 
   const { open } = useModalNextMatchActions();
   const onPressRemain = useCallback((teamId: number) => {
@@ -221,6 +228,7 @@ const styles = StyleSheet.create({
     height: width * 0.09,
   },
   recordTextOnImage: {
+    fontFamily: 'sb-it-ver1',
     position: 'absolute',
     color: 'white',
     fontSize: width * 0.04,

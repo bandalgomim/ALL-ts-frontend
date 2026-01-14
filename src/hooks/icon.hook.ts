@@ -1,5 +1,6 @@
 import { commonPostHook } from './common.hook';
 import { patchIcon } from '@model/Icon.dto';
+import { domain } from '@/global';
 
 export const hookIcon = async (
     method: string,
@@ -7,6 +8,6 @@ export const hookIcon = async (
     setTypeRes: (res: any) => void
   ) => {
     setTypeRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/icon';
+    const url = `${domain}icon`;
     await commonPostHook(method, url, data, setTypeRes, true);
   };

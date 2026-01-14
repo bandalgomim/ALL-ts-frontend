@@ -1,5 +1,6 @@
 import { commonPostHook } from './common.hook';
 import { patchIsSelected, patchIsTeamSelected } from '@model/isSelected.dto';
+import { domain } from '@/global';
 
 export const hookIsSelected = async (
     method: string,
@@ -7,7 +8,7 @@ export const hookIsSelected = async (
     setMainRes: (res: any) => void
   ) => {
     setMainRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/isSelected';
+    const url = `${domain}isSelected`;
     const query = new URLSearchParams();
     Object.entries(data as unknown as patchIsTeamSelected).forEach(([key, value]) => {
       if (value !== null) {query.append(key, String(value));}

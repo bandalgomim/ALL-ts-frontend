@@ -5,6 +5,7 @@ import { initialmainRes, initialteamRes, initialLeagueRes, initialmatchRes } fro
 import { getMessaging, getToken } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
 import { getDeviceVersion } from '@utils/deviceVersion';
+import { domain } from '@/global';
 
 export const hookAuth = async (
     data: getLoginReqDto,
@@ -23,7 +24,7 @@ export const hookAuth = async (
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
     // API 호출
-    const url = `https://all-ts-backend-production.up.railway.app/auth/IAM/${type}/${idp}`;
+    const url = `${domain}auth/${type}/${idp}`;
     const res = await commonIAMHook('post', url, data);
     try {
         if (res === true) {
@@ -45,7 +46,7 @@ export const hookDeleteAccount = async (
     setTeamRes(initialteamRes);
     setLeagueRes(initialLeagueRes);
     setMatchRes(initialmatchRes);
-    const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/delete';
+    const url = `${domain}auth/IAM/delete`;
     const res = await commonIAMHook('DELETE', url, null);
     try {
         await localData.delete('RefreshToken');
@@ -58,7 +59,7 @@ export const hookDeleteAccount = async (
 
 export const hookRefreshToken = async () => {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/auth/IAM/refreshToken';
+        const url = `${domain}auth/IAM/refreshToken`;
         await commonIAMHook('GET', url, null);
     } catch (error) {
         console.error('RefreshToken 요청 실패:', error);
@@ -67,7 +68,7 @@ export const hookRefreshToken = async () => {
 
 export const hookVersionCheck = async() => {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/versionCheck';
+        const url = `${domain}versionCheck`;
         const ver = await getDeviceVersion();
         console.log(ver);
         const response = await axios({
@@ -84,7 +85,7 @@ export const hookVersionCheck = async() => {
 
 export const hookFcmToken = async (data:patchFcmTokenReqDto)=> {
     try {
-        const url = 'https://all-ts-backend-production.up.railway.app/fcmToken';
+        const url = `${domain}fcmToken`;
         await commonIAMHook('PATCH', url, data);
     } catch (error) {
         console.error('hookFcmToken 요청 실패:', error);

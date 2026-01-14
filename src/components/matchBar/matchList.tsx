@@ -19,6 +19,7 @@ const MatchList: React.FC<ContentsProps> = ({
   scrollEventThrottle = 16,
   headerHeight,
 }) => {
+  console.log("✅ MatchList rendered", matchList);
   const initialDateState = useMemo(
     () => Object.fromEntries(Object.keys(matchList).map((key) => [key, false])),
     [matchList]

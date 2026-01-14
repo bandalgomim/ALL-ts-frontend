@@ -61,13 +61,19 @@ const Contents: React.FC<ContentsProps> = ({
       ]}
     >
       <View style={styles.weekRow}>
-        {DAYS_OF_WEEK.map((day, index) => (
+        {DAYS_OF_WEEK.map((day, index) => {
+          const isSunday = index === 0;
+          const isSaturday = index === 6;
+          return (
           <View key={index} style={styles.dayContainer}>
-            {day === 'S'
-              ? <Text style={[fontColor[0], styles.dayText, styles.sunday]}>{day}</Text>
-              : <Text style={[fontColor[0], styles.dayText]}>{day}</Text>}
+              <Text style={[fontColor[0], styles.dayText, 
+                isSunday && styles.sunday,
+                isSaturday && styles.saturday,
+                ]}>{day}</Text>
+
           </View>
-        ))}
+          );
+      })}
       </View>
       {mode === 'm' ? monthViewDaysRows.map((rowDays, rowIndex) => (
         <DayRow
@@ -127,6 +133,9 @@ const styles = StyleSheet.create({
   },
   sunday: {
     color: '#DB3D3D',
+  },
+  saturday: {
+    color: '#7c92ecff',
   },
   currentMonthDayWhite: {
     color: '#F5CEDF',

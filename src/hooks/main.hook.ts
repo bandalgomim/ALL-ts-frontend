@@ -1,5 +1,6 @@
 import { commonPostHook } from './common.hook';
 import { getMainResQueryDto } from '@model/main.dto';
+import { domain } from '@/global';
 
 export const hookMain = async (
     method: string,
@@ -11,7 +12,7 @@ export const hookMain = async (
     }
     console.log('요청');
     setMainRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/main';
+    const url = `${domain}main`;
     if (method === 'GET'){
         await commonPostHook(method, url, null, setMainRes );
     } else if (method === 'PATCH') {

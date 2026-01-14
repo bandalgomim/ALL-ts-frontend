@@ -1,4 +1,5 @@
 import { commonPostHook } from './common.hook';
+import { domain } from '@/global';
 
 export const hookSearchTag = async (
     method: string,
@@ -6,6 +7,6 @@ export const hookSearchTag = async (
     setSearchTagRes: (res: any) => void
   ) => {
     setSearchTagRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/searchTag';
+    const url = `${domain}searchTag`;
     await commonPostHook(method, url, data, setSearchTagRes, false);
   };

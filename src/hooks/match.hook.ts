@@ -1,5 +1,6 @@
 import { commonPostHook } from './common.hook';
 import { getMatchResQueryDto } from '@model/match.dto';
+import { domain } from '@/global';
 
 export const hookMatch = async (
     method: string,
@@ -7,7 +8,7 @@ export const hookMatch = async (
     setMatchRes: (res: any) => void
 ) => {
     setMatchRes({ type: 'LOADING' });
-    const url = 'https://all-ts-backend-production.up.railway.app/match';
+    const url = `${domain}match`;
     const query = new URLSearchParams();
 
     Object.entries(data as unknown as getMatchResQueryDto).forEach(([key, value]) => {
