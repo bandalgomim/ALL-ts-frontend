@@ -35,6 +35,8 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
       uri = require('@assets/match/platform/spotv.png');
     } else if(item.platformName === 'coupang') {
       uri = require('@assets/match/platform/coupang.png');
+    } else if(item.platformName === 'chzzk') {
+      uri = require('@assets/match/platform/chzzk.png');
     }
 
     // marginRight: 다음 아이템이 있으면 10, 마지막이면 0

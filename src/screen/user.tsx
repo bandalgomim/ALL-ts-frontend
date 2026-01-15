@@ -17,7 +17,7 @@ const UserScreen = () => {
           <Text style={[styles.textBase, styles.text3, styles.textWhite]}>ts</Text>
         </View>
         <View>
-          <Text style={[styles.textBase, styles.text4, styles.textWhite]}>
+          <Text style={[styles.textBase, styles.text4]}>
             All  Sports  Scheduler
           </Text>
         </View>
