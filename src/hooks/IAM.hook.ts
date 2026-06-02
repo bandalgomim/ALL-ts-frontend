@@ -70,7 +70,7 @@ export const hookVersionCheck = async() => {
     try {
         const url = `${domain}versionCheck`;
         const ver = await getDeviceVersion();
-        console.log(ver);
+        console.log("version", ver.appVersion);
         const response = await axios({
             method: 'POST',
             url: url,  // 올바른 URL 설정

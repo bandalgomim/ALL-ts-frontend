@@ -18,10 +18,6 @@ const openUrlHandle = async (url: string) => {
 };
 
 const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
-  const hasReplayType = platformList.some(item => item.platfromMatchUrlType === 'replay');
-  if (!hasReplayType && type === 'replay') {
-    type = 'root';
-  }
 
   const renderItem = useCallback(({ item, index }: { item: platform, index: number }) => {
     let uri = require('@assets/match/platform/none.png');
@@ -56,7 +52,7 @@ const PlatformList: React.FC<ContentsProps> = ({ platformList, type }) => {
               style={[styles.box]}
             >
               <Text style={[styles.boxText]}>
-                {item.platformName}
+                {item.platformName ? item.platformName : 'NONE'}
               </Text>
             </ImageBackground>
           </View>

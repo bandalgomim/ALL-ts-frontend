@@ -13,5 +13,5 @@ export const colors = {
 
 export const { width, height } = Dimensions.get('window');
 
-export const domain = 'https://all-ts-backend-production.up.railway.app/';
-//export const domain = 'http://localhost:3000/';
+//export const domain = 'https://all-ts-backend-production.up.railway.app/';
+export const domain = 'http://localhost:3000/';

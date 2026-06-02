@@ -34,10 +34,6 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
     height: size * 0.8,
   }), [size]);
 
-  const fontSizeStyle = useMemo(() => ({
-    fontSize: initial.length < 4 ? size * 0.6 : size * 0.5,
-  }), [initial.length, size]);
-
   const logoViewStyle = useMemo(() => [
     styles.logoView,
     { width: size },
@@ -48,14 +44,11 @@ const TeamOrLeagueLogo: React.FC<TeamOrLogoPros> = ({ logo, type, initial }) => 
         source={req}
         style={logoViewStyle}
       >
-        {logo !== null ? <Image
+        <Image
           resizeMode="contain"
           source={{ uri: logo as string }}
           style={logoImageStyle}
-        /> :
-        <View>
-          <Text style={[styles.fontBlueBig, fontSizeStyle]}>{initial}</Text>
-        </View>}
+        />
       </ImageBackground>
   );
 };
