@@ -342,7 +342,7 @@ const SearchModal: React.FC = () => {
 
 const styles = StyleSheet.create({
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: '#000',
   },
   backdropTouchable: {
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   dragBackground: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     zIndex: 1,
   },
   flatList: {

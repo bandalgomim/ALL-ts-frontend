@@ -1,6 +1,6 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
 export const localData = {
     set: async (key: string, value: string | null = null) => {
@@ -33,7 +33,7 @@ export const localData = {
 
 
 // MMKV 인스턴스 생성 (앱 전체에서 하나만 생성)
-export const storage = new MMKV();
+export const storage = createMMKV();
 
 export const localDataMmkv = {
   /**
@@ -44,7 +44,7 @@ export const localDataMmkv = {
   set: (key: string, value: string | null = null) => {
     try {
       if (value === null) {
-        storage.delete(key); // null이면 키 삭제
+        storage.remove(key); // null이면 키 삭제
         return;
       }
       storage.set(key, value);
@@ -74,7 +74,7 @@ export const localDataMmkv = {
    */
   delete: (key: string) => {
     try {
-      storage.delete(key);
+      storage.remove(key);
       // console.log('데이터 삭제 완료:', key);
     } catch (error: any) {
       console.error('데이터 삭제 실패:', key, error);

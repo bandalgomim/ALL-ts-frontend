@@ -22,6 +22,6 @@ module.exports = {
         },
       },
     ],
-    'react-native-reanimated/plugin', // 이 줄은 마지막에 위치해야 함
+    'react-native-worklets/plugin', // reanimated 4: worklets 플러그인, 반드시 마지막
   ],
 };
