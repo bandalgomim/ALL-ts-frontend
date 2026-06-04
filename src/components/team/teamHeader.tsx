@@ -1,15 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import SearchBar from './searchBar/searchBar';
-import TeamOrLeagueLogo from './teamOrLeagueLogo';
-import IsSelected from './isSelected';
-import RefreshButton from './refresh';
+import SearchBar from '../searchBar/searchBar';
+import IsSelected from '../isSelected';
+import RefreshButton from '../refresh';
 import { width, height } from '@/global';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
-import { findNext } from './calendar/utills';
-import LogoPicker from './logo/logoPicker';
+import { findNext } from '../calendar/utills';
+import LogoPicker from '../logo/logoPicker';
 import { getTeamResDto } from '@model/team.dto';
+import EmblemBig from '../emblem/EmblemBig';
 
 interface TeamHeaderProps {
   refetch: () => Promise<void>;
@@ -68,9 +68,8 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ refetch, data }) => {
       <SearchBar type="blue" />
       <View style={[styles.teamInfoContainer, styles.headerTeamInfoContainer]}>
         <View style={[styles.teamLogo, styles.headerTeamLogo]}>
-          <TeamOrLeagueLogo
+          <EmblemBig
             logo={data?.team?.teamLogo ?? null}
-            type={'big'}
             initial={data?.team?.teamInit ?? ''}
           />
         </View>

@@ -142,12 +142,12 @@ ALL-ts-frontend/
 │   │   ├── 📁 logo/              # 로고 컴포넌트
 │   │   ├── 📁 onboarding/        # 온보딩 컴포넌트
 │   │   ├── customHeader.tsx      # 커스텀 헤더
-│   │   ├── loadingPage.tsx       # 로딩 화면
+│   │   ├── Loading.tsx       # 로딩 화면
 │   │   ├── notch.tsx             # 노치 처리
 │   │   └── refresh.tsx           # 새로고침 컴포넌트
 │   │
 │   ├── 📁 navigation/            # 네비게이션
-│   │   └── stackNavigater.tsx    # 스택 네비게이터
+│   │   └── stackNavigator.tsx    # 스택 네비게이터
 │   │
 │   ├── 📁 context/               # React Context (상태 관리)
 │   │   ├── api.context.jsx       # API 프로바이더 (통합)

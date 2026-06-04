@@ -7,8 +7,8 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '@/global';
 import { getMainResDto, leagueDto, matchDto, teamDto } from '@model/main.dto';
 import MatchList from '@components/matchBar/matchList';
-import TeamAndLeagueListBar from '@components/main/teamAndLeagueListBar';
 import { localDataMmkv } from '@IAM/localData';
+import EmblemList from '@/components/main/EmblemList';
 
 interface MainCalendarProps {
   data: getMainResDto;
@@ -96,8 +96,8 @@ const MainCalendar: React.FC<MainCalendarProps> = ({ data }) => {
     <View>
       <View style={styles.CalendarContainer}>
         <Animated.View style={[calendarAnimatedStyle, styles.animatedContainer, zIndex ? styles.zIndexHigh : styles.zIndexLow]}>
-          <TeamAndLeagueListBar
-            teamAndLeagueList={data?.teamAndLeagueList as (teamDto | leagueDto)[]}
+          <EmblemList
+            data={data?.teamAndLeagueList as (teamDto | leagueDto)[]}
           />
           <View style={styles.contentWrapper} {...panResponder.panHandlers}>
             <MainHeader

@@ -7,7 +7,7 @@ import { goToPrevious, goToNext, getMonthDates, getWeekDates } from './utills';
 import { width, height } from '@/global';
 import { matchDto } from '@model/main.dto';
 import MatchList from '@components/matchBar/matchList';
-import LeageTeamListBar from '@components/league/leageTeamList';
+import EmblemList from '@/components/league/EmblemList';
 import { getLeagueResDto } from '@model/league.dto';
 import { localDataMmkv } from '@IAM/localData';
 
@@ -108,7 +108,7 @@ const LeagueCalendar: React.FC<LeagueCalendarProps> = ({ data }) => {
           zIndex ? styles.zIndexHigh : styles.zIndexLow,
         ]}
       >
-        <LeageTeamListBar data={data}/>
+        <EmblemList data={data}/>
         <View>
           <Image
             resizeMode="contain"

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import MatchModal from '@components/calendar/contents/modal';
-import SearchModal from './searchBar/searchModal';
-import NextMatchModal from './nextMatchModal';
-import LogoModal from './logo/logoModal';
+import MatchModal from '@components/modal/MatchModal';
+import SearchModal from '@components/modal/searchModal';
+import NextMatchModal from '@components/modal/nextMatchModal';
+import LogoModal from '@components/modal/logoModal';
 
-const CustomHeader = () => {
+const ModalContainer = () => {
   return (
     <View style={styles.container}>
       <MatchModal />
@@ -17,7 +17,7 @@ const CustomHeader = () => {
   );
 };
 
-export default CustomHeader;
+export default ModalContainer;
 
 const styles = StyleSheet.create({
   container: {

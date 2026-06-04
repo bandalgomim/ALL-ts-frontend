@@ -1,16 +1,15 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import MainScreen from '@screens/main';
-import TeamScreen from '@screens/team';
-import LeagueScreen from '@screens/league';
-import MatchScreen from '@screens/match';
-import IAMScreen from '@screens/IAM';
-import CustomHeader from '@components/customHeader';
-import UserScreen from '@screens/user';
-import StartScreen from '@screens/start';
-import OnboardingScreen from '@screens/onboarding';
-
+import MainScreen from '@screen/main';
+import TeamScreen from '@screen/team';
+import LeagueScreen from '@screen/league';
+import MatchScreen from '@screen/match';
+import IAMScreen from '@screen/IAM';
+import ModalContainer from '@components/modal/ModalContainer';
+import UserScreen from '@screen/user';
+import StartScreen from '@screen/start';
+import OnboardingScreen from '@screen/onboarding';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -82,7 +81,7 @@ const StackNavigator = () => {
             options={{freezeOnBlur: true}}
             />
         </Stack.Navigator>
-        <CustomHeader/>
+        <ModalContainer/>
     </NavigationContainer>
   );
 };

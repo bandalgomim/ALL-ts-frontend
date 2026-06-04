@@ -4,7 +4,7 @@ import LeagueCalendar from '@components/calendar/LeagueCalendar';
 import LeagueHeader from '@components/league/leagueHeader';
 import { hookLeague } from '@hooks/league.hook';
 import { useRoute } from '@react-navigation/native';
-import LoadingScreen from '@components/loadingPage';
+import LoadingScreen from '@/screen/Loading.screen';
 import { getLeagueReqQueryDto, getLeagueResDto } from '@model/league.dto';
 import MainTabBar from '@components/main/mainTabBar';
 import { HeadNotch } from '@components/notch';

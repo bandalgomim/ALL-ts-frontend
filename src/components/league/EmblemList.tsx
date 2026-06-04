@@ -3,15 +3,15 @@ import React, { useCallback } from 'react';
 import { View, StyleSheet, ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { TeamPageParamList } from '@model/navigation.dto';
 import { getLeagueResDto, teamDto } from '@model/league.dto';
-import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '@/global';
 import DraggableFlatList from 'react-native-draggable-flatlist';
+import EmblemMiddle from '../emblem/EmblemMiddle';
 
-interface LeageTeamListBarProps {
+interface EmblemListProps {
   data: getLeagueResDto;
 }
-const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
+const EmblemList: React.FC<EmblemListProps> = ({ data }) => {
   const navigation = useNavigation<StackNavigationProp<TeamPageParamList>>();
   const navigateTeam = (teamId: number) => {
     navigation.navigate('TeamScreen', { teamId: teamId });
@@ -26,9 +26,8 @@ const LeageTeamListBar: React.FC<LeageTeamListBarProps> = ({ data }) => {
           style={styles.teamButton}
           onPress={()=>{navigateTeam(item.teamId);}}
         >
-          <TeamOrLeagueLogo
+          <EmblemMiddle
             logo={item.teamLogo}
-            type={'middle'}
             initial={item.teamInit}
           />
           <Text style={styles.teamName}>{item.teamInit}</Text>
@@ -120,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(LeageTeamListBar);
+export default React.memo(EmblemList);

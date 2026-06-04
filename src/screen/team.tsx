@@ -1,10 +1,10 @@
 import { height, width } from '@/global';
 import TeamCalendar from '@components/calendar/TeamCalendar';
-import LoadingScreen from '@components/loadingPage';
+import LoadingScreen from '@/screen/Loading.screen';
 import Logo from '@components/logo';
 import MainTabBar from '@components/main/mainTabBar';
 import { HeadNotch } from '@components/notch';
-import TeamHeader from '@components/teamHeader';
+import TeamHeader from '@/components/team/teamHeader';
 import { useTeamActions, useTeamState } from '@context/team.context';
 import { hookRefetch } from '@hooks/refetch.hook';
 import { hookTeam } from '@hooks/team.hook';

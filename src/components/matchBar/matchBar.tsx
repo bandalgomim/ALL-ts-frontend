@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import { matchDto } from '@model/main.dto';
-import MatchScore from './matchScore';
+import ScoreSmall from '../score/ScoreSmall';
 import IsSelected from '@components/isSelected';
-import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import { useNavigation } from '@react-navigation/native';
 import { MatchPageParamList } from '@model/navigation.dto';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { width, height } from '@/global';
 import { useModalActions } from '@context/modal/modal.context';
 import { useModalNextMatchActions } from '@context/modal/modalNextMatch.context';
+import EmblemSmall from '../emblem/EmblemSmall';
 
 interface MatchBarPros {
   match: matchDto;
@@ -83,27 +83,25 @@ const MatchBar: React.FC<MatchBarPros> = ({ match, color, scoreState }) => {
             <View style={styles.homeTeamNameContainer}>
               <Text style={[styles.teamName, styleColor, styles.textRight]}>{match.homeTeamInit}</Text>
             </View>
-            <TeamOrLeagueLogo logo={match.hometeamLogo} type={'small'} initial={match.homeTeamInit}/>
+            <EmblemSmall logo={match.hometeamLogo} initial={match.homeTeamInit}/>
             <TouchableOpacity
               style={[styles.matchBar, styles.scoreContainer]}
               onPress={onPressScore}
             >
-              <MatchScore
+              <ScoreSmall
                 score={score === true ? match.homeTeamScore : '?'}
                 color={color}
-                type={'small'}
               />
               <Text style={[styles.teamName, styleColor, styles.scoreSeparator]}>
                 {' '}
                 :{' '}
               </Text>
-              <MatchScore
+              <ScoreSmall
                 score={score === true ? match.awayTeamScore : '?'}
                 color={color}
-                type={'small'}
               />
             </TouchableOpacity>
-            <TeamOrLeagueLogo logo={match.awayteamLogo} type={'small'} initial={match.awayTeamInit}/>
+            <EmblemSmall logo={match.awayteamLogo} initial={match.awayTeamInit}/>
             <View style={styles.awayTeamNameContainer}>
               <Text style={[styles.teamName, styleColor, styles.textLeft]}>{match.awayTeamInit}</Text>
             </View>

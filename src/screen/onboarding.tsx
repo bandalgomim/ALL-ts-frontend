@@ -3,10 +3,10 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import { View, Text, StyleSheet } from 'react-native';
 import { height, width } from '@/global';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import TimedImageViewer from '@components/onboarding/timedImageViewer';
+import TimedImageViewer from '@components/main/onboarding/timedImageViewer';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList } from '@model/navigation.dto';
-import { localData } from '@/utils/localData';
+import { localData } from '@IAM/localData';
 
 const slides = [
   {
@@ -79,49 +79,43 @@ const slides = [
 export default function OnboardingScreen() {
   const navigationMain = useNavigation<StackNavigationProp<MainPageParamList>>();
   const navigateMain = async () => {
-      await localData.set('onboarding', 'true');
+      await localData.set('onbording', 'true');
       navigationMain.replace('MainScreen', undefined);
     };
 
   const [current, setCurrent] = useState(0);
   const isFocused = useIsFocused();
 
-  const renderItem = ({ item, index }: any) => {
-    const slideStyle = item.backgroundColor === 'white' ? styles.slideWhite : styles.slideBlue;
-    const textViewStyle = item.backgroundColor === 'white' ? styles.textViewWhite : styles.textViewBlue;
-    const textStyle = item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue;
-
-    return (
-      <View style={[styles.slide, slideStyle]}>
-        <View>
-          <TimedImageViewer
-            images={item.source}
-            isActive={isFocused && current === index}
-          />
-        </View>
-        <View style={[styles.textView, styles.textViewOpacity, textViewStyle]}>
-          <Text style={[styles.title, textStyle]}>{item.title}</Text>
-          <Text style={[styles.text, textStyle]}>{item.text}</Text>
-        </View>
+  const renderItem = ({ item, index }: any) => (
+    <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
+      <View>
+        <TimedImageViewer
+          images={item.source}
+          isActive={isFocused && current === index} // ✅ 현재 슬라이드만 재생
+        />
       </View>
-    );
-  };
+      <View style={[styles.textView, styles.textViewOpacity, {backgroundColor: item.backgroundColor}]}>
+        <Text style={[styles.title, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.title}</Text>
+        <Text style={[styles.text, item.backgroundColor === 'white' ? styles.textForWhite : styles.textForBlue]}>{item.text}</Text>
+      </View>
+    </View>
+  );
     // ✅ Next 버튼
     const renderNextButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={[styles.buttonTextBase, styles.nextText]}>다음</Text>
+        <Text style={styles.nextText}>다음</Text>
       </View>
     );
     // ✅ Skip 버튼
     const renderSkipButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={[styles.buttonTextBase, styles.skipText]}>완료</Text>
+        <Text style={styles.skipText}>완료</Text>
       </View>
     );
     // ✅ Done 버튼
     const renderDoneButton = () => (
       <View style={styles.buttonContainer}>
-        <Text style={[styles.buttonTextBase, styles.doneText]}>완료</Text>
+        <Text style={styles.doneText}>완료</Text>
       </View>
     );
   return (
@@ -141,17 +135,13 @@ export default function OnboardingScreen() {
   );
 }
     const styles = StyleSheet.create({
-      slide: { flex: 1, alignItems: 'center' },
-      slideWhite: { backgroundColor: 'white' },
-      slideBlue: { backgroundColor: '#30397A' },
+      slide: { flex: 1, alignItems: 'center'},
       textView: { marginTop: -height * 0.235, width: width, height: height * 0.08, justifyContent: 'center' },
       textViewOpacity: { opacity: 0.9 },
-      textViewWhite: { backgroundColor: 'white' },
-      textViewBlue: { backgroundColor: '#30397A' },
       title: { fontSize: 25, fontWeight: '800', textAlign: 'center', marginBottom: 10 },
       text: { fontSize: 19, textAlign: 'center', lineHeight: 22 },
-      dot: { backgroundColor: '#cbd5e1', borderWidth: 0 },
-      activeDot: { backgroundColor: '#EA5579', width: 18, borderWidth: 0 },
+      dot: { backgroundColor: '#cbd5e1', borderWidth:0},
+      activeDot: { backgroundColor: '#EA5579', width: 18, borderWidth:0 },
       buttonContainer: {
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -161,29 +151,36 @@ export default function OnboardingScreen() {
         justifyContent: 'center',
         alignItems: 'center',
       },
-      // 공통 버튼 텍스트 베이스 스타일
-      buttonTextBase: {
+      // ✅ 버튼 텍스트 개별 스타일
+      skipText: {
         color: 'white',
         fontSize: 16,
-        textShadowColor: '#af405b',
-        textShadowOffset: { width: 1, height: 3 },
-        textShadowRadius: 3,
+        fontWeight: '600',
+        textShadowColor: '#af405b', // 그림자 색상
+        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+        textShadowRadius: 3, // 그림자 반경
         width: width * 0.15,
         textAlign: 'center',
       },
-      skipText: {
-        fontWeight: '600',
-      },
       nextText: {
+        color: 'white',
+        fontSize: 16,
         fontWeight: '700',
+        textShadowColor: '#af405b', // 그림자 색상
+        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+        textShadowRadius: 3, // 그림자 반경
+        width: width * 0.15,
+        textAlign: 'center',
       },
       doneText: {
+        color: 'white',
+        fontSize: 16,
         fontWeight: '800',
-      },
-      // 공통 텍스트 그림자 베이스
-      textShadowBase: {
-        textShadowOffset: { width: 1, height: 3 },
-        textShadowRadius: 3,
+        textShadowColor: '#af405b', // 그림자 색상
+        textShadowOffset: { width: 1, height: 3 }, // 그림자의 오프셋
+        textShadowRadius: 3, // 그림자 반경
+        width: width * 0.15,
+        textAlign: 'center',
       },
       textForBlue: {
         color: 'white',

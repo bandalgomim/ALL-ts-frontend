@@ -2,8 +2,6 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { getMatchResDto, platform } from '@model/match.dto';
 import SearchBar from '@components/searchBar/searchBar';
-import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
-import MatchScore from '@components/matchBar/matchScore';
 import IsSelected from '@components/isSelected';
 import { useNavigation } from '@react-navigation/native';
 import { TeamPageParamList } from '@model/navigation.dto';
@@ -11,6 +9,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PlatformList from './platformList';
 import { width, height } from '@/global';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import EmblemBig from '../emblem/EmblemBig';
+import ScoreBig from '../score/ScoreBig';
 
 interface MatchPros {
   match: getMatchResDto;
@@ -74,9 +74,8 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
         <View style={styles.homeTeamContainer}>
           <TouchableOpacity onPress={navigateToHomeTeam}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo
+              <EmblemBig
                 logo={match?.hometeamLogo}
-                type={'big'}
                 initial={match?.homeTeamInit as string}
               />
               <View style={styles.teamInfoContainer}>
@@ -99,10 +98,9 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
           </TouchableOpacity>
           <View style={styles.scoreContainer}>
             <TouchableOpacity onPress={onPressHomeTeamScore}>
-              <MatchScore
+              <ScoreBig
                 score={homeTeamScore === true ? (match.homeTeamScore as number) : '?'}
                 color={'blue'}
-                type={'big'}
               />
             </TouchableOpacity>
           </View>
@@ -125,7 +123,7 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
         <View style={styles.awayTeamContainer}>
           <TouchableOpacity onPress={navigateToAwayTeam}>
             <View style={styles.teamLogoContainer}>
-              <TeamOrLeagueLogo logo={match?.awayteamLogo} type={'big'} initial={match?.awayTeamInit as string}/>
+              <EmblemBig logo={match?.awayteamLogo} initial={match?.awayTeamInit as string}/>
               <View style={styles.teamInfoContainer}>
                 <View style={styles.teamNameContainer}>
                   <Text style={[styles.fontBlueBig]}>{match.awayTeamInit}</Text>
@@ -140,10 +138,9 @@ const Match: React.FC<MatchPros> = ({ match, refetch }) => {
           </TouchableOpacity>
           <View style={styles.scoreContainer}>
             <TouchableOpacity onPress={onPressAwayTeamScore}>
-              <MatchScore
+              <ScoreBig
                 score={awayTeamScore === true ? (match.awayTeamScore as number) : '?'}
                 color={'white'}
-                type={'big'}
               />
             </TouchableOpacity>
           </View>

@@ -4,21 +4,21 @@ import SearchBar from '@components/searchBar/searchBar';
 import { leagueDto, patchMainReqDto, teamDto } from '@model/main.dto';
 import { useNavigation } from '@react-navigation/native';
 import { LeaguePageParamList, TeamPageParamList } from '@model/navigation.dto';
-import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { transformToPatchMainReqDto } from './util';
 import { width, height } from '@/global';
 import { hookMain } from '@hooks/main.hook';
+import EmblemMiddle from '../emblem/EmblemMiddle';
 
 interface ContentsProps {
-  teamAndLeagueList: (teamDto | leagueDto)[] | null;
+  data: (teamDto | leagueDto)[] | null;
 }
 interface emptyProps {
   box: null;
 }
 
-const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) => {
+const EmblemList: React.FC<ContentsProps> = ({ data }) => {
   const [list, setList] = useState<(teamDto | leagueDto | emptyProps)[] | null>(null);
   const [patch, setPatch] = useState<patchMainReqDto>({
     method: 'PATCH',
@@ -42,18 +42,18 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
   );
 
   useEffect(() => {
-    if (!teamAndLeagueList) {
+    if (!data) {
       setList(Array(4).fill({ box: null }));
-    } else if (teamAndLeagueList.length < 4) {
+    } else if (data.length < 4) {
       const filled = [
-        ...teamAndLeagueList,
-        ...Array.from({ length: 4 - teamAndLeagueList.length }, () => ({ box: null })),
+        ...data,
+        ...Array.from({ length: 4 - data.length }, () => ({ box: null })),
       ];
       setList(filled);
     } else {
-      setList(teamAndLeagueList);
+      setList(data.slice(0, 4));
     }
-  }, [teamAndLeagueList]);
+  }, [data]);
   useEffect(() => {
     hookMain('PATCH' as string, patch.data, () => {} );
   }, [patch.data]);
@@ -99,9 +99,8 @@ const TeamAndLeagueListBar: React.FC<ContentsProps> = ({ teamAndLeagueList }) =>
               disabled={isActive}
               style={isActive ? styles.touchableActive : styles.touchable}
             >
-              <TeamOrLeagueLogo
+              <EmblemMiddle
                 logo={'teamId' in item ? item.teamLogo : item.leagueLogo}
-                type={'middle'}
                 initial={'teamId' in item ? item.teamInit : item.leagueInit}
               />
             </TouchableOpacity>
@@ -205,4 +204,4 @@ const styles = StyleSheet.create({
     marginTop: height * -0.009,
   },
 });
-export default React.memo(TeamAndLeagueListBar);
+export default React.memo(EmblemList);

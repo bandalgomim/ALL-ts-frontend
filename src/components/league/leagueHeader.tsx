@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SearchBar from '@components/searchBar/searchBar';
-import TeamOrLeagueLogo from '@components/teamOrLeagueLogo';
 import IsSelected from '@components/isSelected';
 import { width, height } from '@/global';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +8,7 @@ import LeagueRankList from './leagueRankList';
 import LogoPicker from '@components/logo/logoPicker';
 import RefreshButton from '@components/refresh';
 import { getLeagueResDto } from '@model/league.dto';
+import EmblemBig from '../emblem/EmblemBig';
 
 interface LeagueHeaderProps {
   refetch: () => Promise<void>;
@@ -134,9 +134,8 @@ const LeagueHeader: React.FC<LeagueHeaderProps> = ({ refetch, data }) => {
               uri={data?.league?.leagueLogo || ''}
             />
           </View>
-          <TeamOrLeagueLogo
+          <EmblemBig
             logo={data?.league?.leagueLogo}
-            type={'big'}
             initial={data?.league?.leagueInit}
           />
           <View>

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import Match from '@components/match/match';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { hookMatch } from '@hooks/match.hook';
-import LoadingScreen from '@components/loadingPage';
+import LoadingScreen from '@/screen/Loading.screen';
 import { View, StyleSheet } from 'react-native';
 import MainTabBar from '@components/main/mainTabBar';
 import { getMatchResDto, getMatchResQueryDto } from '@model/match.dto';

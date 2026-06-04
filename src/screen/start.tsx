@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import LoadingScreen  from '@components/loadingPage';
+import LoadingScreen  from '@/screen/Loading.screen';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainPageParamList, OnboardingPageParamList } from '@model/navigation.dto';

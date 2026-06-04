@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import StackNavigator from './src/navigation/stackNavigater';
+import StackNavigator from './src/navigation/stackNavigator';
 import { initializeNotifications } from './src/notification/initializeNotifications';
 import { getMessaging, onMessage } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';

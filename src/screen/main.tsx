@@ -4,7 +4,7 @@ import MainCalendar from '@components/calendar/MainCalendar';
 import Logo from '@components/logo';
 import { hookMain } from '@hooks/main.hook';
 import { MainHeader } from '@components/main/mainHeader';
-import LoadingScreen from '@components/loadingPage';
+import LoadingScreen from '@/screen/Loading.screen';
 import { width, height } from '@/global';
 import { HeadNotch } from '@components/notch';
 import { useMainActions, useMainState } from '@context/main.context';

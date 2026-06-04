@@ -3,24 +3,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   Modal,
   Animated,
+  Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
 import { width, height } from '@/global';
-import { useModalNextMatchActions, useModalNextMatchState } from '@context/modal/modalNextMatch.context';
-import MatchList from './matchBar/matchList';
+import { useLogoModalActions, useLogoModalState } from '@context/modal/logoModal.context';
+import LogoImgPicker from '@components/logo/logoImgPicker';
 
-const SCREEN_HEIGHT = height;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DISMISS_THRESHOLD = 100; // 모달이 닫히는 드래그 거리 임계값
 
-const NextMatchModal: React.FC = () => {
-  const { close } = useModalNextMatchActions();
-  const { visible, contents } = useModalNextMatchState();
-
-
+const LogoModal: React.FC = () => {
+  const { close} = useLogoModalActions();
+  const { visible, contents } = useLogoModalState();
+  const safeLogoModalContents = contents || {};
   // 애니메이션 값 설정
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0.5)).current;
@@ -46,7 +45,6 @@ const NextMatchModal: React.FC = () => {
       }),
     ]).start(() => {
       close();
-
     });
   };
 
@@ -197,21 +195,13 @@ const NextMatchModal: React.FC = () => {
           <View style={styles.handleContainer}>
             <View style={styles.handleBar} />
           </View>
-          <Text style={styles.text}>Matches remaining</Text>
         </View>
-
+        <LogoImgPicker
+            type={safeLogoModalContents.type || 'default'}
+            id={safeLogoModalContents.id || 0}
+            uri={safeLogoModalContents.uri || ''}
+        />
         {/* 컨텐츠 영역 - MatchList (드래그 불가) */}
-        <View style={styles.contentContainer}>
-          {contents ? (
-            <View style={styles.matchListWrapper}>
-              <MatchList matchList={contents} color="blue" />
-            </View>
-          ) : (
-            <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>No matches available</Text>
-            </View>
-          )}
-        </View>
       </Animated.View>
     </Modal>
   );
@@ -228,25 +218,23 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     position: 'absolute',
-    left: 0,
+    left: width * 0.1,
     right: 0,
     top: height * 0.25,
-    width: width,
-    height: height * 0.53,
+    width: width * 0.8,
+    height: height * 0.15,
     backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
     overflow: 'hidden',
   },
-  // 모달 헤더 영역 (드래그 가능)
   modalHeader: {
     width: '100%',
     paddingTop: height * 0.005,
     alignItems: 'center',
-    backgroundColor: 'white', // 배경색 설정
+    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // 드래그 영역임을 알리는 약간의 그림자 효과
     zIndex: 10,
   },
   handleContainer: {
@@ -262,39 +250,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     borderRadius: 3,
   },
-  text: {
-    fontSize: width * 0.09,
-    fontFamily: 'sb-it-ver1',
-    color: '#30397A',
-    textShadowColor: '#bdb4b4',
-    textShadowOffset: { width: 1, height: 2 },
-    textShadowRadius: 3,
-    marginBottom: height * 0.01,
-    textAlign: 'center',
-  },
-  // 컨텐츠 영역 (드래그 불가)
-  contentContainer: {
-    flex: 1,
-    width: '100%',
-    marginTop: height * 0.01,
-    alignItems: 'center', // 컨텐츠 중앙 정렬 추가
-  },
-  // MatchList를 감싸는 컨테이너 추가
-  matchListWrapper: {
-    width: width * 0.95, // 약간의 여백을 두고 중앙 정렬
-    height: height * 0.42,
-    alignSelf: 'center',
-  },
-  emptyContainer: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emptyText: {
-    color: '#30397A',
-    fontSize: 16,
-  },
 });
 
-export default React.memo(NextMatchModal);
+export default React.memo(LogoModal);
