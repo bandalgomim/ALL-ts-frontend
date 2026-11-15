@@ -5,7 +5,7 @@
 **여러 종목, 여러 리그에 흩어진 "내 팀"의 경기 일정과 하이라이트를 한 앱에서**
 
 <img src="docs/images/screens/main-favorites.jpg" width="200" />&nbsp;&nbsp;
-<img src="docs/images/screens/team-rank.jpg" width="200" />&nbsp;&nbsp;
+<img src="docs/images/screens/league-lck.jpg" width="200" />&nbsp;&nbsp;
 <img src="docs/images/screens/match-after.jpg" width="200" />
 
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat&logo=react&logoColor=61DAFB)
@@ -52,13 +52,13 @@
 
 **ALL'ts**는 축구·야구·e스포츠를 아우르는 **팀 중심 통합 스케줄러**입니다.
 
-| 기능 | 설명 |
-|---|---|
-| 🗓 통합 스케줄링 | 종목과 리그에 상관없이 선호 팀의 경기를 하나의 달력(월/주간)에 모아 표시 |
-| 🔔 푸시 알림 | 스케줄링한 경기의 **시작**과 **하이라이트 업로드**를 FCM으로 알림 |
-| 🎬 영상 연결 | YouTube·OTT에 흩어진 하이라이트/다시보기를 **AI로 분류**해 경기에 연결 |
-| 📊 순위·스코어 | 팀/리그 순위, 실시간 경기 상태(END·LIVE·NEXT)와 스코어 |
-| 🎨 아이콘 커스터마이징 | 팀·리그 아이콘을 사용자 이미지로 교체 |
+| 기능                   | 설명                                                                     |
+| ---------------------- | ------------------------------------------------------------------------ |
+| 🗓 통합 스케줄링       | 종목과 리그에 상관없이 선호 팀의 경기를 하나의 달력(월/주간)에 모아 표시 |
+| 🔔 푸시 알림           | 스케줄링한 경기의 **시작**과 **하이라이트 업로드**를 FCM으로 알림        |
+| 🎬 영상 연결           | YouTube·OTT에 흩어진 하이라이트/다시보기를 **AI로 분류**해 경기에 연결   |
+| 📊 순위·스코어         | 팀/리그 순위, 실시간 경기 상태(END·LIVE·NEXT)와 스코어                   |
+| 🎨 아이콘 커스터마이징 | 팀·리그 아이콘을 사용자 이미지로 교체                                    |
 
 ### 담당
 
@@ -99,11 +99,11 @@ flowchart TB
     EXT --> L1 --> L2
 ```
 
-| 계층 | 기술 | 역할 |
-|---|---|---|
-| Frontend | React Native | iOS 앱, Google/Apple 소셜 로그인, FCM 수신 |
-| Backend | Express(TypeScript), MySQL, Redis, Firebase | REST API, 데이터 관리·캐싱, 푸시 발송, GitHub 연동 CI/CD (Railway) |
-| Local / AI | Python, APScheduler, Mistral 7B | 외부 데이터 수집·전처리, 영상 메타데이터 추론 |
+| 계층       | 기술                                        | 역할                                                               |
+| ---------- | ------------------------------------------- | ------------------------------------------------------------------ |
+| Frontend   | React Native                                | iOS 앱, Google/Apple 소셜 로그인, FCM 수신                         |
+| Backend    | Express(TypeScript), MySQL, Redis, Firebase | REST API, 데이터 관리·캐싱, 푸시 발송, GitHub 연동 CI/CD (Railway) |
+| Local / AI | Python, APScheduler, Mistral 7B             | 외부 데이터 수집·전처리, 영상 메타데이터 추론                      |
 
 ---
 
@@ -164,15 +164,15 @@ sequenceDiagram
 
 **Presentation(route) → Service(controller/service) → Data Access(dao/sql)** 로 도메인별 수직 분리했습니다.
 
-| 모듈 | 역할 |
-|---|---|
-| `team` · `league` · `match` · `main` | 앱의 각 화면에 대응하는 API |
-| `isSelected` | 선호 팀·리그·경기 선택 처리 |
-| `IAM` · `fcmToken` | 사용자 관리, 푸시 토큰 관리 |
-| `scheduler` | 로컬 서버와 일정 데이터 송수신 |
-| `matchData/rank` · `uri` · `translator` | 순위, 영상 URL, AI 추론 결과 처리 |
-| `searchTag` · `icon` · `versionCheck` | 검색 태그, 아이콘 교체, 앱 강제 업데이트 체크 |
-| `utils` · `tasks` | JWT 미들웨어 등 공통 함수, 서버 초기화 작업 |
+| 모듈                                    | 역할                                          |
+| --------------------------------------- | --------------------------------------------- |
+| `team` · `league` · `match` · `main`    | 앱의 각 화면에 대응하는 API                   |
+| `isSelected`                            | 선호 팀·리그·경기 선택 처리                   |
+| `IAM` · `fcmToken`                      | 사용자 관리, 푸시 토큰 관리                   |
+| `scheduler`                             | 로컬 서버와 일정 데이터 송수신                |
+| `matchData/rank` · `uri` · `translator` | 순위, 영상 URL, AI 추론 결과 처리             |
+| `searchTag` · `icon` · `versionCheck`   | 검색 태그, 아이콘 교체, 앱 강제 업데이트 체크 |
+| `utils` · `tasks`                       | JWT 미들웨어 등 공통 함수, 서버 초기화 작업   |
 
 ### 3-4. 인증
 
@@ -193,15 +193,15 @@ sequenceDiagram
 
 **18개 테이블**, 핵심 엔티티는 `team` · `league` · `user`.
 
-| 설계 포인트 | 결정 | 이유 |
-|---|---|---|
-| 팀·리그 PK | 외부 API의 ID를 그대로 사용 | 수집 데이터와 내부 데이터 간 ID 변환 비용 제거 |
-| 경기 PK | `날짜-홈팀ID-원정팀ID-더블헤더` 문자열 | 야구 더블헤더까지 포함해 경기를 명확히 식별하는 자연키 |
-| 팀↔리그 관계 | `affiliation` / `season` / `season_team_record` 분리 | "소속", "시즌 참가", "시즌 성적"은 성격과 변경 주기가 다른 정보 |
-| 선호 항목 해제 | 행 삭제 대신 `is_selected = false` | 선택·해제가 빈번해 삭제/생성 오버헤드를 줄임 |
-| 선호 순서 | `team_list` · `league_list`에 `index` 컬럼 | 메인 화면 노출 순서를 사용자가 결정 |
-| 리그 구분 | `league_type` = regular / cup | 국가별 정규 리그와 다국가 컵 대회 구분 |
-| 아이콘 | 팀·리그 공용 `icon` 테이블, 이미지는 기기에 저장 | 성격이 같아 하나로 운영, 서버엔 경로만 보관 |
+| 설계 포인트    | 결정                                                 | 이유                                                            |
+| -------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| 팀·리그 PK     | 외부 API의 ID를 그대로 사용                          | 수집 데이터와 내부 데이터 간 ID 변환 비용 제거                  |
+| 경기 PK        | `날짜-홈팀ID-원정팀ID-더블헤더` 문자열               | 야구 더블헤더까지 포함해 경기를 명확히 식별하는 자연키          |
+| 팀↔리그 관계   | `affiliation` / `season` / `season_team_record` 분리 | "소속", "시즌 참가", "시즌 성적"은 성격과 변경 주기가 다른 정보 |
+| 선호 항목 해제 | 행 삭제 대신 `is_selected = false`                   | 선택·해제가 빈번해 삭제/생성 오버헤드를 줄임                    |
+| 선호 순서      | `team_list` · `league_list`에 `index` 컬럼           | 메인 화면 노출 순서를 사용자가 결정                             |
+| 리그 구분      | `league_type` = regular / cup                        | 국가별 정규 리그와 다국가 컵 대회 구분                          |
+| 아이콘         | 팀·리그 공용 `icon` 테이블, 이미지는 기기에 저장     | 성격이 같아 하나로 운영, 서버엔 경로만 보관                     |
 
 ---
 
